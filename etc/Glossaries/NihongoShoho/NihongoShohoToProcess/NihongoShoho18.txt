@@ -1,0 +1,49 @@
+﻿壁/かべ/pared
+地図/ちず/mapa
+黒板/こくばん/pizarra, encerado
+カレンダー/カレンダー/calendario
+カーテン/カーテン/cortina, cartón
+テープレコーダー/テープレコーダー/grabadora de cassette
+裏/うら/forro, reverso, parte trasera
+引き出し/ひきだし/cajón, acción de abrir un cajón
+出入り口/でいりぐち/Puerta (de entrada y salida)
+戸/と/puerta (de estilo japonés)
+鍵/かぎ/llave
+洋服箪笥/ようふくだんす/armario ropero (estilo occidental)
+看板/かんばん/cartel, señal, póster
+ロッカー/ロッカー/taquilla (para guardar objetos)
+金庫/きんこ/caja de caudales, caja fuerte
+人形/にんぎょう/muñeco, muñeca
+本箱/ほんばこ/caja de libros, estantería pequeña
+花瓶/かびん/florero, jarrón
+火/ひ/fuego, llama
+ガラス/硝子/vidrio, cristal (de una ventana)(カ) 
+旗/はた/bandera
+ポケット/ポケット/bolsillo
+大切/たいせつ/importante (adj.な)
+貼る/はる/pegar, encolar (か)
+足す/たす/sumar
+掛ける/かける/colgar
+閉める/しめる/cerrar
+消す/けす/apagar, borrar
+入れる/いれる/meter, entrar
+かける/かける/echar (la llave)
+しまう/しまう/terminar, hacer algo completamente
+吊す/つるす/colgar
+飾る/かざる/decorar, adornar, poner de adorno
+挿す/さすす/poner (flores en un florero)
+点く/つく/prenderse, encenderse
+消える/きえる/apagarse
+割れる/われる/romperse, producirse una rotura
+割る/わる/dividir, cortar, romper, partir por la mitad
+開く/あく/abrirse
+閉まる/しまる/cerrarse
+かかる/かかる/acción de cerrar (que realiza la llave)
+立てる/たてる/levantar, izar
+並ぶ/ならぶ/alinearse, estar alineado
+並べる/ならべる/alinear, colocar
+引く/ひく/restar
+掛ける/かける/multiplicar
+割る/わる/dividir
+
+

@@ -1,0 +1,1264 @@
+06
+rose
+flower
+shop, store
+flower shop
+hundred, 100
+clothing store, haberdasher's
+underwear
+thousand, 1000
+hair, wool
+nylon
+money
+ten thousand, 10000
+ballpoint pen, biro
+bookshop, book store
+tobacconist
+shoe shop, shoe store
+greengrocer, vegetable store
+pharmacy
+medicine, remedy
+water
+hot water
+how much? (cost)
+big
+small
+expensive, high
+cheap
+short
+long
+thick, wide
+thin, slender
+cold (of things)
+hot (of things)
+pretty, clean
+strong, well, healthy
+buy
+please give, please do
+all, in all
+Well then
+Thank you
+about, (approximate) amount
+# yen
+# spoonsful, # glasses
+07
+tomorrow
+today
+the day after tomorrow
+the day before yesterday
+yesterday
+1st (day of the month)
+2nd, 2 days
+3rd, 3 days
+4th, 4 days
+5th, 5 days
+6th, 6 days
+7th, 7 days
+8th, 8 days
+9th, 9 days
+10th, 10 days
+20th, 20 days
+embassy
+bank
+January
+February
+March
+April
+May
+June
+July
+August
+September
+October
+November
+December
+this month
+next month
+last month
+birthday
+country
+university
+this year
+# year
+# months
+one month, 1 month
+# weeks
+one week, 1 week
+one day, 1 day
+hotel
+apartment, flat
+spring
+summer
+autumn, fall
+winter
+when?
+warm
+hot (of weather etc.)
+cool
+cold (of weather etc.)
+go
+come
+enter, go in
+begin ("N ga")
+be born
+# years (age)
+08
+Sunday
+Monday
+Tuesday
+Wednesday
+Thursday
+Friday
+Saturday
+studying, study
+park, public park
+(physical) exercise
+walk, go for a walk
+badminton
+volleyball
+table tennis, pingpong
+cleaning, clean
+laundry, do the washing
+shopping, go shopping
+matter, affair, thing (abstract)
+letter
+piano
+song
+every day
+work
+character, symbol
+pen
+tea, green tea
+cake, sweet
+how?
+what kind of?
+difficult
+interesting, entertaining
+busy
+pleasant, enjoyable
+wide, spacious
+narrow, cramped
+high, expensive
+low
+thick, fat (book, ...)
+thin, light (book, colour, ...)
+new
+old
+declicious
+bad-asting, unappetizing
+not exist (= "arimasen", plain)
+various
+do
+read
+write, draw
+see, watch, look at
+hear, listen to
+play (piano, guitar, ...)
+sing
+eat
+drink; take (medicine)
+inhale; smoke
+very; serious, awful
+(not) too much (with -ve)
+However
+(to) somewhere
+(to) nowhere (with -ve)
+-day (of the week)
+you (pl.)
+# times
+go
+09
+morning
+now
+# o'clock
+4 o'clock, 4:00
+7 o'clock, 7:00
+9 o'clock, 9:00
+half past # (... o'clock)
+# minutes
+10 minutes
+# minutes past (... o'clock)
+# minutes to (... o'clock)
+every morning
+every evening
+teaching, lesson
+a.m., morning
+p.m., afternoon
+lunch break
+time, period, # hours
+bus
+airplane
+this morning
+yesterday evening
+company
+be, be in a place (animate)
+female, woman
+illness, ill
+body
+town
+sound
+# seconds
+one month, 1 month
+half a year, 6 months
+(about) how long?, how much?
+early
+late
+dark
+dirty
+lonely
+healthy, robust
+lively, bustling
+quiet
+get up
+lie down, go to bed
+end, come to an end ("N ga")
+become
+take, cost (time, ..., "N ga")
+walk
+return, go home
+paint
+await, wait for ("N wo")
+already
+(not) yet, still
+on foot, by walking
+about, approximately (time)
+school
+student
+come
+red
+teacher, professor
+last month
+this year
+10
+weather
+rain
+thunder
+wind (wind blows)
+climate
+season
+moon, month
+same (as: "N to")
+throughout
+snow
+sky
+city
+place
+food
+address
+cherry (blossom, tree)
+thing, goods
+ashtray
+table
+basket
+Hokkaido (Jap. island)
+Okinawa (Jap. island)
+Mount Fuji
+Ginza (area in Tokyo)
+Shinjuku (area in Tokyo)
+good
+bad
+fall (rain, snow)
+sound, ring (thunder, bell)
+blow (wind, instrument)
+differ (from: "N to")
+stop, cease ("N ga")
+become clear (weather)
+become cloudy
+probably, perhaps
+most, number one
+electricity, (electric) light
+illness, ill
+north
+south
+east
+west
+country, birthplace
+Tokyo (Jap. city)
+high, expensive
+town
+11
+literature
+father, my father
+father (hon.)
+sightseeing
+friend
+engineerng, industry
+technique, art
+senior, one's senior (student)
+talk, story, tale
+department store
+forest, woods
+foreign country, abroad
+journey, trip, travel
+practical training
+skiing
+ocean, sea
+country, countryside
+oneself (by oneself)
+film, movie
+cinema, movie theatre
+music
+concert
+restaurant
+washroom
+hand
+something forgotten, lost article
+learn
+take it easy, relax
+swim
+work
+stay
+send out, put out
+wash
+take, get
+go back, come back, return
+go out
+together (with: "N to")
+what? (also "nan")
+something
+nothing (with -ve)
+how many ...? (with a counter)
+how many people?
+next month
+Japanese (language)
+factory
+eat
+food
+(postage) stamp
+letter
+company, business
+12
+engagement, promise
+coffee shop
+bus stop
+opposite, opposition
+direction, side
+food (for animals), bait
+question, ask a question
+marriage, marry
+fight, have a fight
+competition, compete, race
+judo (Jap. martial art)
+mother, my mother
+consultation, consult
+pot, saucepan
+kettle
+luggage
+ticket
+clothes, kimono (Jap. garment)
+thread
+nearby, close (to: "kara")
+far, distant
+phone, telephone (-call)
+make a call, phone
+meet ("N ni, N to")
+get on, ride ("N ni")
+(come to a) stop
+get off (vehicle)
+give (to an animal, a child)
+teach, tell
+talk together, discuss
+talk
+cut
+cook (rice)
+heat (water), boil
+carry, transport
+sell
+sew
+ahead
+yes (agreement)
+Mr (male, informal)
+electricity, (electric) light
+electric train, train
+car, automobile
+bicycle, bike
+blue, green
+dog
+character, symbol
+(postage) stamp
+13
+tooth
+face
+breakfast
+bath (take a bath)
+dinner, supper
+before, in front of (N)
+taxi, cab
+exchange student, foreign student
+foot, leg
+mirror
+beard, moustache
+chopsticks
+dictionary (look up in a dictionary)
+hiragana (Jap. syllables)
+katakana (Jap. syllables)
+kanji, Chinese character
+left
+right (direction)
+(Western-style) clothes
+pyjamas
+cold (catch a cold)
+injury (sustain an injury)
+news
+photograph (take a photograph)
+match, game
+prize
+name
+last week
+polish, brush (teeth)
+rest, be absent from
+open, hold (an event)
+raise
+shave
+use
+pull, catch, look up
+correct, repair, mend
+lower
+bend ("N wo")
+take off (clothes)
+fall, tumble (down)
+be surprised
+become tired
+get dirty
+die
+make noise, make a commotion
+copy, take (photograph)
+win
+receive
+be happy, rejoice
+steal
+always
+some time ago, a while ago
+And, And then
+After that
+Therefore, And so
+morning
+a.m., morning
+p.m., afternoon
+a little, some, a few
+hear, listen to
+English (language)
+body
+14
+library (room)
+mathematics, maths
+shelf
+date
+line
+number
+class
+signature, sign
+next week
+other
+match
+window
+scrap (of paper)
+doctor
+smoking room
+car
+car park, parking area
+wastepaper basket, bin
+baseball
+sports field, sports ground
+belongings, possessions
+flavour, taste
+dense, dark
+bright
+sweet
+hot, spicy, salty
+fine, good, splendid
+borrow
+show
+lend
+return, give back, put back
+be clear, understand ("N ga")
+open ("N wo")
+turn on (electricity, ...)
+help, lend a hand
+tidy up
+have, hold
+throw away
+call
+stop ("N wo")
+do, play
+put, place
+a little, just a moment
+first, to begin with
+Well, Well then
+Excuse me.
+Please. (do, give, ...)
+I am sorry.
+bring
+await, wait for ("N wo")
+paper
+letter
+write, put down
+buy
+thing, goods
+shopping
+food
+building
+colour
+yellow
+15
+time, when
+greeting, greet, recognize
+daytime
+on-reading (Chinese reading)
+kun-reading (Jap. reading of a kanji)
+forest, grove
+cow, bull, ox
+pig
+mouse, rat
+year; age
+thanks, bow (thank)
+response, answer, reply
+say
+get to know, learn of
+part, separate (from: "N to")
+cry, make a sound (animal)
+ask, enquire; visit, call on
+ask, request
+answer
+apologize
+finish ("V(i)-")
+finish eating
+more (not comparison)
+slowly, at ease
+well, often
+again
+first, for the first time
+Well
+Good morning.
+(formal)
+Good night.
+(formal)
+Good evening.
+Good bye.
+Thank you.
+.. very much.
+Don't mention it., Not at all.
+How are you?
+I'm sorry.
+I humbly receive.
+(said before a meal)
+Thanks for the meal.
+So long. (when leaving home)
+I am back. (when returning home)
+woof (= sound of a dog)
+miaow (= sound of a cat)
+moo (= sound of a cow)
+oink (= sound of a pig)
+squeak (= sound of a mouse)
+clock, watch
+night
+Hello., Good day.
+this month
+read
+music
+healthy, robust
+return, go home
+place
+kitchen
+16
+cafeteria; dining hall
+meal
+shower
+company president; manager; director
+(your) mother
+trade; business; commerce
+study; research; investigation
+(your) older brother
+(my) older brother
+government; administration
+government official
+junior high school
+principal; headmaster
+(your) older sister
+(my) older sister
+(female) nurse
+(my) younger brother
+senior high school
+(my) younger sister
+to raise umbrella
+here: to write on a typewriter
+to bathe; to bask in the sun; to shower
+to stand (up); to erect
+to work; to serve
+to run
+to fly; to jump; to hurry
+17
+brown
+garments
+sweater; jumper
+(your) wife
+muffler; scarf
+(finger) ring
+glove
+sun
+moon
+star
+grass
+to wear; to put on (lower body)
+to wear (upper body)
+to tie (e.g. a tie); to fasten
+to put on (head)
+to wind; to coil; to roll
+to get in; to insert
+to shine; to glitter; to be bright
+to bloom
+to grow
+18
+wall
+map
+blackboard
+calendar
+curtain
+tape recorder
+reverse side; wrong side; back
+drawer; drawing out
+exit and entrance
+door (Japanese style)
+key
+Western clothes cupboard
+sign; signboard; doorplate; poster
+locker
+safe; vault; treasury
+doll; puppet; figure
+bookcase
+(flower) vase
+fire; flame; blaze
+glass; pane
+flag
+pocket
+important
+to stick; to paste
+to add (numbers)
+to hang
+(vt) to close; to shut
+to turn off power
+to put in; to let in
+to lock (e.g. with a key)
+to keep; to store up
+(vt) to hang
+to decorate; to ornament; to adorn
+to pierce; to sting; to pin down; to stitch
+to catch fire; (electricity) comes on
+to go out; to vanish
+(vi) to break; to split; to be smashed; to crack; to be torn
+(vt) to break; to split; to crack; to smash
+to be open
+(vi) to close; to be closed
+(vt) to stand (sth.) up; to erect (sth.)
+(vi) to line up; to stand in a line
+(vt) to line up; to set up
+tu subtract; to pull off
+to multiply
+to divide
+19
+intention; plan
+electrical egineering
+future; prospects
+department of a university; undergraduate
+graduate school
+Masters degree program
+course; curriculum
+Masters degree course
+doctoral course
+examination; test; study
+telegram
+trader; shopkeeper; merchant
+musician
+newspaper reporter
+scholar
+painter; artist
+mayor
+bank employee; banker
+tennis
+Tokyo University
+to think; to feel
+to consider
+to take test
+to bake; to grill
+to lose; to be defeated
+20
+meat
+cooking; cuisine
+odour; smell; fragrance; aroma
+soy sauce
+salt
+sugar
+soya bean
+tofu; bean-curd
+raw materials
+miso soup
+flour
+bag; sack
+skin; leather; fur
+geta (Japanese footwear); wooden clogs
+bamboo; middle (of a three-tier ranking system)
+flute; pipe
+knitting wool
+uncooked rice
+alcohol; sake
+strawberry
+jam
+butter
+grapes
+(grape) wine
+ocean water
+voice
+composition; writing
+homework
+soap
+good; nice; pleasant; ok
+heavy
+many; numerous
+funny; amusing
+unpleasant
+regrettable; unfortunately
+to prepare (food)
+to be able to; to be ready; to occur
+here: to spice
+to remain; to be left
+to knit
+to take; to pick up
+to drop; to lose; to let fall
+to pick up; to find; to gather
+to remember; to memorize
+to forget
+(vi) to pass; to go beyond; to elapse; to exceed
+to drink too much
+to laugh; to smile
+very; awfully; exceedingly
+carelessly; thoughtlessly; inadvertently
+just (now); unintentionally
+people say that; to look like
+(with -te form:) to try
+to finish; to do something completely; to put away
+21
+outside
+weather forecast
+temperature
+evening
+beginning; start; origin
+parents; both parents
+siblings; brothers and sisters
+fields
+living; life (one's daily existence); livelihood
+goods; article; thing
+he; boyfriend
+she; girl friend; sweetheart
+ship; boat; watercraft; shipping; vessel; steamship
+typhoon
+eyeglass lens
+fire
+problem; question
+answer; response
+earthquake
+(suffix) meeting; assembly; party; association; club
+festival; feast
+festival; feast
+eye; eyeball
+nice to wear
+happy; glad; pleasant
+dangerous
+easy; plain; simple
+right; just; correct
+sad; sorrowful
+kindness; gentleness
+diligent; serious; honest
+brightness; cheerfulness; melodious
+fame
+(vi) to be continued
+to collapse; to crumble
+to hang down; to fall
+to be stormy; to be rough; to lose one's temper
+to till; to plow; to cultivate
+to settle in (place); to take (seat, position); to study (under teacher)
+to sink; to feel depressed
+(vi) to collapse; to go bankrupt; to fall
+to build; to construct
+(vt) to end; to stop; to cease; to resign
+to cry; to sing (bird)
+as ever; as usual; the same
+people say that; to look like
+according to
+this way as well
+22
+sport
+classical music
+paddle; racket
+stereo
+record
+picture; drawing; painting; sketch
+chocolate
+practice
+field
+time
+coffee
+beer
+wanted; wished for; in need of; desired
+liking; fondness; love
+very likeable; like very much
+dislike; hate
+freedom; liberty
+(vt) to collect; to assemble
+for example; e.g.
+23
+French language
+German language
+Chinese language
+word
+next to; next door to
+speaking voice; talking voice
+tape
+(audio) recording
+conversation
+swimming
+operation; motion; driving
+playing cards
+sleight of hand; conjuring trick; magic; juggling
+motorcycle (lit: auto-bi(ke))
+Chinese-style noodles
+ear
+mouth; orifice; opening
+drink; beverage
+skill; skillful; dexterity
+unskillful; poor; awkward
+to be able to
+(vt) to investigate; to check up
+to be heard; to be audible
+to be seen; to be in sight; to seem
+to hear; to listen; to ask
+ship; boat; watercraft; shipping; vessel; steamship
+(vt) to row; to scull; to pedal
+about
+while; during
+24
+family; members of a family
+height; stature
+height (of body); stature
+student days
+basketball
+player (in game)
+bachelorhood; single; unmarried; celibate
+(someone else's) child
+complexion
+fever; temperature
+37,5 degree
+side; direction
+lover; sweetheart
+(my) wife
+(my) husband
+(your) husband
+free time; leisure
+stomach
+throat
+dizziness; giddiness
+nausea; sickness in the stomach
+rabbit; hare; cony
+giraffe
+neck
+elephant
+nose
+one's body weight
+hair
+ice; shaved ice
+pole; rod; stick
+cheek
+form; shape; figure; type
+painful
+pretty; cute; lovely
+(idiom) must not do
+to measure; to weigh; to survey
+to become empty; to be less crowded
+(vi) to get dry
+to look for
+(idiom) well, in this case
+(idiom) Take care of yourself
+It's bad! Don't do it!
+cardinal number suffix
+meter
+centimeter; centi-
+period; epoch; era
+counter for occurrences and degree
+part; percentage
+kilo-; kilogram; kilometre
+25
+pronunciation
+number; figure
+grammar
+pork
+beef
+writing brush
+population
+whale
+left; left (hand) side
+right side; right hand
+village
+footbool; soccer
+animal
+price; cost
+tail (animal)
+(public) park
+flower; flowering plant
+plot of land; lot; soil
+Japanese fritter
+Yokohama
+Mt. Everest
+how; in what way; how about
+easy to write
+strong; powerful; mighty
+popularity; prosperous
+(vi) to increase; to multiply
+latest; most recent; nowadays
+extremely
+once; one time; on one occasion
+than
+degree; extent; bounds; limit
+to have done (something)
+(suffix) easy; (to do sth) easily
+26
+art gallery; art museum
+exhibition
+Japanese paintings
+genuine article
+road; street; way; method
+corner
+bridge
+official; duty; person in charge
+caution; being careful; attention
+stairs
+entrance; gate; approach; mouth
+passage; pathway
+line; track; roadbed
+slope; hill
+rule; regulations
+button
+bell
+(na)
+straight (ahead); direct
+to take (photo)
+(vi, vt) to ask; to inquire
+to pass (by); to go through; to walk along; to pass exams
+to turn; to bend
+to cross over; to go across
+to be crowded
+to be crowded
+to rise
+to arise; to ascend; to go up
+to protect; to obey; to guard
+(vt) to push; to press; to stamp (i.e. a passport)
+(vi) to pass; to go beyond; to elapse; to exceed
+to bear fruit; to ripen
+certainly; without fail
+fairly; quite
+gradually; steadily; quietly; slowly; soon
+well; well then
+27
+meeting; person sent to pick up an arrival
+preparation
+tasks; things to do
+oversleeping; late riser
+alarm clock
+hindrance; intrusion
+seat
+hostel; dormitory
+feeling; sensation; mood
+to be careful; to pay attention; to take care
+traffic accident
+underground train; subway
+lesson; class work
+accident; incident; trouble; circumstances; reasons
+why?; how; in what way; what for
+to hurry; to rush
+(vi) to gather; to collect; to assemble
+to change (clothes)
+to glide; to slide; to slip
+to be sufficient; to be enough
+to be late; to be delayed; to fall behind schedule
+immediately; soon; easily; right (near); honest; upright
+urgent; sudden; steep
+so; like this; in this way
+very hard; with utmost effort; with all one's might
+come (int); come now
+from; since; because
+(suffix) ~ being the case; because ~
+in order to; so that; in spite of; although
+only; just; as
+28
+hospitalization
+calling on someone who is ill; enquiry
+condition; state; manner; health
+generally; ordinarily; usually; train that stops at every station
+(rice) gruel
+(rice) gruel
+sickroom; hospital room
+which house number?
+fourth floor
+end (e.g. of street); edge; tip; margin; point
+mistake
+all night long; all through the night
+leaving hospital
+now; this time; next time; another time
+door knocking
+injection
+second block
+house number ten
+school entrance ceremony
+last year
+graduation exercises
+next year
+Yamada (surename)
+Saburou (first name) (Saburo indicates that he is the third son)
+exit; gateway; way out; outlet; leak; vent
+such; like this
+such; like that; that sort of
+such; so; that; sort of
+awful; dreadful; terrible; very
+to miss someone (something)
+to become thin; to lose weight; to reduce (one's) weight; to slim
+to sleep
+to cause that somebody falls asleep
+to reside; to live in; to inhabit; to dwell
+to escape; to run away
+considerably; a lot
+(idiom) certain; sure; definite; if I'm not mistaken; if I remember correctly
+afterwards
+Ah!
+(idiom) Excuse me for disturbing (interrupting) you
+(idiom) How are you?
+(idiom) Excuse me, I'm leaving
+such as
+but; however
+approximately; just; only; merely; nothing but
+(suffix) appears like
+number; issue
+-floor (counter); stories
+district of a town; city block (of irregular size)
+house number; address
+29
+marriage ceremony; wedding
+present; gift
+commemoration; memory
+information card; invitation card
+address; direction
+for the sake of
+commemoration photograph
+wristwatch
+information; guidance; leading
+invitation
+introduction
+to give; to raise
+to give
+to give
+to receive
+to send
+to be saved; to be helpful
+to take someone (of lower status) along
+to be worried; to be bothered
+to help; to save; to rescue
+to give
+30
+judo tournament
+overall victory; championship
+gymnastics; physical exercises
+running
+hip
+rest; break
+art; technique
+direct; immediate; personal; firsthand
+person
+beginning; first
+floor
+timing
+explanation; exposition
+practical
+imitation
+model; style; shape
+report; paper
+meaning; significance
+dictation
+question; query
+identification papers
+opinion; view
+lonely; lonesome; solitary; desolate
+painful; heart-breaking
+simple
+to sit
+(vt) to move; to set in motion
+to take (e.g. time)
+to put together
+to repeat; to do something over again
+to grow accustomed to
+to choose; to select
+to close (a book)
+to get angry
+be surprised; be amazed; be frightened
+to begin with; first of all
+soon; later
+usually; generally
+occasionally
+gradually; by degrees
+never; by no means
+(idiom) congratulations
+31
+purse; wallet
+calamity; misfortune
+pickpocket
+station attendant
+police
+communication
+policeman
+on the way; en route
+robbery; burglary
+police; policeman
+thief; burglar; robber; theft
+respect
+program (e.g. TV)
+the world; society; the universe
+use; utilization; application
+mind; heart; spirit
+every month; each month; monthly
+issue (publications)
+development; exploitation
+machine; mechanism
+Meiji period (1868-1912)
+there isn't; doesn't have
+young
+pitiful; a pity
+to scold
+(vt) to break; to break down
+to praise; to admire; to speak well
+to step on; to tread on
+to strike; to hit
+to kill
+to catch; to arrest; to seize
+to torment
+to bite; to chew
+to kick
+to love
+to perform; to do
+happiness; blessedness
+finally
+this time
+however; while; even if
+and; thereupon
+(idiom) What a bad luck!
+pitiful; a pity
+(idiom) What a pity!
+32
+scenery; scene; landscape
+coast; beach
+summer vacation; summer holiday
+chance; opportunity
+fishing; angling
+fish angling
+cost; expense
+stopping one night
+stopping two nights
+price of the hotel
+Japanese hotel; inn
+price of the food
+traveling expenses
+souvenir
+reservation; booking
+plant; vegetation
+example
+rich man
+rich man
+in front of station
+woman
+male; man
+dance
+rest; holiday; absence
+guest; customer
+SKIP: 2-3-6 RadicalNr: 40 Grade: 3 Readings: KYAKU, KAKU
+guest; customer
+unreasonable; impossible
+to need
+(vt) to pass; to go through
+to grow fat (stout, plump); to become fat
+to raise (child); to be brought up; to grow (up)
+to give (an example)
+to finish; to end; to be completed
+to communicate
+to arrive at; to reach
+to dance; to jump
+to err; to make a mistake
+if; in case; supposing
+example; even if; if; though; although
+but; however
+(suffix) cost; expense
+less than
+more than
+33
+desire; wish
+desire; wish
+elevator
+I; me; myself
+entrance
+(idiom) after a long time
+biology
+last year
+morning sun
+return; coming back
+meeting place
+knowing; acquaintance
+export
+relation; connection
+thing; article; goods
+import
+imported articles
+Kobayashi (surename)
+Yamamoto (surename)
+comfort; ease
+(IV) to be; to come
+(idiom) stay well!
+(idiom) welcome
+(idiom) you're welcome!
+(suffix) Mr. or Mrs.
+(suffix) Mr (junior); boy
+34
+you (informal)
+departure
+JAL; Japan Air Lines
+an aeroplane of the JAL
+attendant; companion
+I (male)
+juice; soft drink; deuce
+ice cream
+help; aid
+calculation; account
+calculation; account
+feast; treating (someone)
+space; interval
+airport
+harbour; port
+Japanese emperor (1926-1989)
+circumference; surroundings; circulation
+preparation
+whisky
+horse
+(respectfully, idiom) who are you?
+(idiom) this person
+to pay
+really; truly
+specially; deliberately
+well; well then
+yeah; uh huh
+come (int); come now
+hello (informal)
+oh; ah
+oh! (surprise)
+to obey respectfully
+(idiom) excuse me for being late
+(termination suffix in female language)
+isn't it?
+but; however
+(male language)
+(female language)
+(female language)
+(suffix) departure; beginning
+(suffix) counter for suits of clothing; arriving at ..

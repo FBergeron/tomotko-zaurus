@@ -1,0 +1,10 @@
+Files: bin/toMOTko apps/Applications/toMOTko.desktop pics/toMOTko.png pics/SequenceMapPortrait.png pics/SequenceMapLandscape.png help/en/html/toMOTko.html help/en/html/toMOTko-Quiz.html help/en/html/toMOTko-GlossaryManager.html help/en/html/toMOTko-Preferences.html help/en/html/toMOTko-Digraphs.html help/en/html/img/quiz.png help/en/html/img/termEdition.png help/en/html/img/glossaryManager.png help/en/html/img/search.png help/en/html/img/preferencesQuiz.png help/en/html/img/sequenceEditor.png help/en/html/img/preferencesLanguages.png help/en/html/img/preferencesFonts.png help/en/html/img/preferencesInterface.png help/ja/html/toMOTko.html help/ja/html/toMOTko-Quiz.html help/ja/html/toMOTko-GlossaryManager.html help/ja/html/toMOTko-Preferences.html help/ja/html/toMOTko-Digraphs.html help/ja/html/img/quiz.png help/ja/html/img/termEdition.png help/ja/html/img/glossaryManager.png help/ja/html/img/search.png help/ja/html/img/preferencesQuiz.png help/ja/html/img/sequenceEditor.png help/ja/html/img/preferencesLanguages.png help/ja/html/img/preferencesFonts.png help/ja/html/img/preferencesInterface.png i18n/en/toMOTko.qm i18n/fr/toMOTko.qm i18n/ja/toMOTko.qm i18n/es/toMOTko.qm i18n/zh/toMOTko.qm lib/toMOTko/digraphs.conf
+Priority: optional
+Section: qpe/applications
+Maintainer: Frederic Bergeron <fbergeron@tomotko.sourceforge.net>
+Architecture: arm
+Version: 0.11.0
+Depends: qpe-base ($QPE_VERSION),libz_1.2.3
+Licence: GPLv2
+Description: Vocabulary application
+ Small application helping to learn new vocabulary.

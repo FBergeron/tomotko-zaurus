@@ -1,0 +1,8 @@
+[Desktop Entry]
+Comment=Vocabulary Program
+Exec=toMOTko
+Icon=toMOTko
+Type=Application
+Name=toMOTko
+Display=640x480/144dpi,480x640/144dpi
+CanFastload=1

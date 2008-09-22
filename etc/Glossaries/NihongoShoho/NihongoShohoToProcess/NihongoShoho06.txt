@@ -1,0 +1,42 @@
+﻿薔薇/ばら/rosa
+花/はな/flor
+店/みせ/tienda
+花屋/はなや/floristería
+百/ひゃく/100, cien
+用品店/ようひんてん/sastrería
+下着/したぎ/ropa interior
+千/せん/1000, mil
+毛/け/pelo
+ナイロン/ナイロン/nylon
+お金/おかね/dinero
+一万/いちまん/10000, diez mil
+ボールペン/ボールペン/bolígrafo
+本屋/ほんや/librería
+煙草屋/たばこや/estanco (たばこ屋)
+靴屋/くつや/zapatería
+八百屋/やおや/verdulería
+薬屋/たず/farmacia
+薬/くすり/medicina
+水/みず/agua
+お湯/おゆ/agua caliente
+幾ら/いくら/cuánto
+大きい/おおきい/grande
+小さい/ちいさい/pequeño
+高い/たかい/caro
+安い/ま/barato
+短い/みじかい/corto
+長い/ながい/largo
+太い/ふとい/grueso, gordo
+細い/ほそい/fino, delgado
+冷たい/つめたい/frío (al tacto)
+熱い/あつい/caliente (al tacto)
+奇麗/きれい/belleza, limpieza (adj.な) (か)
+丈夫/じょうぶ/buena salud, fuerza (adj.な)
+買う/かう/comprar
+下さい/ください/por favor (démelo)
+全部/ぜんぶ/todo
+それでは/それでは/en ese caso, bien
+有り難う御座います/ありがとうございます/gracias (か)
+位/くらい/aproximadamente
+～円/えん/yen
+～杯/ぱい/(sufijo contador de vasos o tazas de liquido)

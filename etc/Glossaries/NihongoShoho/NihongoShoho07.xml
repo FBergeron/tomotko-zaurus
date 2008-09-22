@@ -1,0 +1,723 @@
+<?xml version="1.0"?>
+<glossary name="日本語初歩 07">
+    <term id="1">
+        <trans lang="en">
+            <word>tomorrow</word>
+        </trans>
+        <trans lang="es">
+            <word>mañana</word>
+        </trans>
+        <trans lang="ja">
+            <word>明日</word>
+            <alt>あした</alt>
+        </trans>
+    </term>
+    <term id="2">
+        <trans lang="en">
+            <word>today</word>
+        </trans>
+        <trans lang="es">
+            <word>hoy</word>
+        </trans>
+        <trans lang="ja">
+            <word>今日</word>
+            <alt>きょう</alt>
+        </trans>
+    </term>
+    <term id="3">
+        <trans lang="en">
+            <word>the day after tomorrow</word>
+        </trans>
+        <trans lang="es">
+            <word>pasado mañana</word>
+        </trans>
+        <trans lang="ja">
+            <word>明後日</word>
+            <alt>あさって</alt>
+        </trans>
+    </term>
+    <term id="4">
+        <trans lang="en">
+            <word>the day before yesterday</word>
+        </trans>
+        <trans lang="es">
+            <word>antes de ayer</word>
+        </trans>
+        <trans lang="ja">
+            <word>一昨日</word>
+            <alt>おととい</alt>
+        </trans>
+    </term>
+    <term id="5">
+        <trans lang="en">
+            <word>yesterday</word>
+        </trans>
+        <trans lang="es">
+            <word>ayer</word>
+        </trans>
+        <trans lang="ja">
+            <word>昨日</word>
+            <alt>きのう</alt>
+        </trans>
+    </term>
+    <term id="6">
+        <trans lang="en">
+            <word>1st (day of the month)</word>
+        </trans>
+        <trans lang="es">
+            <word>día 1 del mes</word>
+        </trans>
+        <trans lang="ja">
+            <word>一日</word>
+            <alt>ついたち</alt>
+        </trans>
+    </term>
+    <term id="7">
+        <trans lang="en">
+            <word>2nd, 2 days</word>
+        </trans>
+        <trans lang="es">
+            <word>día 2 del mes, 2 días</word>
+        </trans>
+        <trans lang="ja">
+            <word>二日</word>
+            <alt>ふつか</alt>
+        </trans>
+    </term>
+    <term id="8">
+        <trans lang="en">
+            <word>3rd, 3 days</word>
+        </trans>
+        <trans lang="es">
+            <word>día 3 del mes, 3 días</word>
+        </trans>
+        <trans lang="ja">
+            <word>三日</word>
+            <alt>みっか</alt>
+        </trans>
+    </term>
+    <term id="9">
+        <trans lang="en">
+            <word>4th, 4 days</word>
+        </trans>
+        <trans lang="es">
+            <word>día 4 del mes, 4 días</word>
+        </trans>
+        <trans lang="ja">
+            <word>四日</word>
+            <alt>よっか</alt>
+        </trans>
+    </term>
+    <term id="10">
+        <trans lang="en">
+            <word>5th, 5 days</word>
+        </trans>
+        <trans lang="es">
+            <word>día 5 del mes, 5 días</word>
+        </trans>
+        <trans lang="ja">
+            <word>五日</word>
+            <alt>いつか</alt>
+        </trans>
+    </term>
+    <term id="11">
+        <trans lang="en">
+            <word>6th, 6 days</word>
+        </trans>
+        <trans lang="es">
+            <word>día 6 del mes, 6 días</word>
+        </trans>
+        <trans lang="ja">
+            <word>六日</word>
+            <alt>むいか</alt>
+        </trans>
+    </term>
+    <term id="12">
+        <trans lang="en">
+            <word>7th, 7 days</word>
+        </trans>
+        <trans lang="es">
+            <word>día 7 del mes, 7 días</word>
+        </trans>
+        <trans lang="ja">
+            <word>七日</word>
+            <alt>なのか</alt>
+        </trans>
+    </term>
+    <term id="13">
+        <trans lang="en">
+            <word>8th, 8 days</word>
+        </trans>
+        <trans lang="es">
+            <word>día 8 del mes, 8 días</word>
+        </trans>
+        <trans lang="ja">
+            <word>八日</word>
+            <alt>ようか</alt>
+        </trans>
+    </term>
+    <term id="14">
+        <trans lang="en">
+            <word>9th, 9 days</word>
+        </trans>
+        <trans lang="es">
+            <word>día 9 del mes, 9 días</word>
+        </trans>
+        <trans lang="ja">
+            <word>九日</word>
+            <alt>ここのか</alt>
+        </trans>
+    </term>
+    <term id="15">
+        <trans lang="en">
+            <word>10th, 10 days</word>
+        </trans>
+        <trans lang="es">
+            <word>día 10 del mes, 10 días</word>
+        </trans>
+        <trans lang="ja">
+            <word>十日</word>
+            <alt>とおか</alt>
+        </trans>
+    </term>
+    <term id="16">
+        <trans lang="en">
+            <word>20th, 20 days</word>
+        </trans>
+        <trans lang="es">
+            <word>día 20 del mes, 20 días</word>
+        </trans>
+        <trans lang="ja">
+            <word>二十日</word>
+            <alt>はつか</alt>
+        </trans>
+    </term>
+    <term id="17">
+        <trans lang="en">
+            <word>embassy</word>
+        </trans>
+        <trans lang="es">
+            <word>embajada</word>
+        </trans>
+        <trans lang="ja">
+            <word>大使館</word>
+            <alt>たいしかん</alt>
+        </trans>
+    </term>
+    <term id="18">
+        <trans lang="en">
+            <word>bank</word>
+        </trans>
+        <trans lang="es">
+            <word>banco</word>
+        </trans>
+        <trans lang="ja">
+            <word>銀行</word>
+            <alt>たず</alt>
+        </trans>
+    </term>
+    <term id="19">
+        <trans lang="en">
+            <word>January</word>
+        </trans>
+        <trans lang="es">
+            <word>Enero</word>
+        </trans>
+        <trans lang="ja">
+            <word>一月</word>
+            <alt>いちがつ</alt>
+        </trans>
+    </term>
+    <term id="20">
+        <trans lang="en">
+            <word>February</word>
+        </trans>
+        <trans lang="es">
+            <word>Febrero</word>
+        </trans>
+        <trans lang="ja">
+            <word>二月</word>
+            <alt>ま</alt>
+        </trans>
+    </term>
+    <term id="21">
+        <trans lang="en">
+            <word>March</word>
+        </trans>
+        <trans lang="es">
+            <word>Marzo</word>
+        </trans>
+        <trans lang="ja">
+            <word>三月</word>
+            <alt>さんがつ</alt>
+        </trans>
+    </term>
+    <term id="22">
+        <trans lang="en">
+            <word>April</word>
+        </trans>
+        <trans lang="es">
+            <word>Abril</word>
+        </trans>
+        <trans lang="ja">
+            <word>四月</word>
+            <alt>しがつ</alt>
+        </trans>
+    </term>
+    <term id="23">
+        <trans lang="en">
+            <word>May</word>
+        </trans>
+        <trans lang="es">
+            <word>Mayo</word>
+        </trans>
+        <trans lang="ja">
+            <word>五月</word>
+            <alt>ごがつ</alt>
+        </trans>
+    </term>
+    <term id="24">
+        <trans lang="en">
+            <word>June</word>
+        </trans>
+        <trans lang="es">
+            <word>Junio</word>
+        </trans>
+        <trans lang="ja">
+            <word>六月</word>
+            <alt>ろくがつ</alt>
+        </trans>
+    </term>
+    <term id="25">
+        <trans lang="en">
+            <word>July</word>
+        </trans>
+        <trans lang="es">
+            <word>Julio</word>
+        </trans>
+        <trans lang="ja">
+            <word>七月</word>
+            <alt>しちがつ</alt>
+        </trans>
+    </term>
+    <term id="26">
+        <trans lang="en">
+            <word>August</word>
+        </trans>
+        <trans lang="es">
+            <word>Agosto</word>
+        </trans>
+        <trans lang="ja">
+            <word>八月</word>
+            <alt>はちがつ</alt>
+        </trans>
+    </term>
+    <term id="27">
+        <trans lang="en">
+            <word>September</word>
+        </trans>
+        <trans lang="es">
+            <word>Septiembre</word>
+        </trans>
+        <trans lang="ja">
+            <word>九月</word>
+            <alt>くがつ</alt>
+        </trans>
+    </term>
+    <term id="28">
+        <trans lang="en">
+            <word>October</word>
+        </trans>
+        <trans lang="es">
+            <word>Octubre</word>
+        </trans>
+        <trans lang="ja">
+            <word>十月</word>
+            <alt>じゅうがつ</alt>
+        </trans>
+    </term>
+    <term id="29">
+        <trans lang="en">
+            <word>November</word>
+        </trans>
+        <trans lang="es">
+            <word>Noviembre</word>
+        </trans>
+        <trans lang="ja">
+            <word>十一月</word>
+            <alt>じゅういちがつ</alt>
+        </trans>
+    </term>
+    <term id="30">
+        <trans lang="en">
+            <word>December</word>
+        </trans>
+        <trans lang="es">
+            <word>Deciembre</word>
+        </trans>
+        <trans lang="ja">
+            <word>十二月</word>
+            <alt>じゅうにがつ</alt>
+        </trans>
+    </term>
+    <term id="31">
+        <trans lang="en">
+            <word>this month</word>
+        </trans>
+        <trans lang="es">
+            <word>este mes</word>
+        </trans>
+        <trans lang="ja">
+            <word>今月</word>
+            <alt>こんげつ</alt>
+        </trans>
+    </term>
+    <term id="32">
+        <trans lang="en">
+            <word>next month</word>
+        </trans>
+        <trans lang="es">
+            <word>el mes que viene</word>
+        </trans>
+        <trans lang="ja">
+            <word>来月</word>
+            <alt>らいげつ</alt>
+        </trans>
+    </term>
+    <term id="33">
+        <trans lang="en">
+            <word>last month</word>
+        </trans>
+        <trans lang="es">
+            <word>el mes pasado</word>
+        </trans>
+        <trans lang="ja">
+            <word>先月</word>
+            <alt>せんげつ</alt>
+        </trans>
+    </term>
+    <term id="34">
+        <trans lang="en">
+            <word>birthday</word>
+        </trans>
+        <trans lang="es">
+            <word>cumpleaños</word>
+        </trans>
+        <trans lang="ja">
+            <word>誕生日</word>
+            <alt>たんじょうび</alt>
+        </trans>
+    </term>
+    <term id="35">
+        <trans lang="en">
+            <word>country</word>
+        </trans>
+        <trans lang="es">
+            <word>país</word>
+        </trans>
+        <trans lang="ja">
+            <word>国</word>
+            <alt>くに</alt>
+        </trans>
+    </term>
+    <term id="36">
+        <trans lang="en">
+            <word>university</word>
+        </trans>
+        <trans lang="es">
+            <word>universidad</word>
+        </trans>
+        <trans lang="ja">
+            <word>大学</word>
+            <alt>だいがく</alt>
+        </trans>
+    </term>
+    <term id="37">
+        <trans lang="en">
+            <word>this year</word>
+        </trans>
+        <trans lang="es">
+            <word>este año</word>
+        </trans>
+        <trans lang="ja">
+            <word>今年</word>
+            <alt>ことし</alt>
+        </trans>
+    </term>
+    <term id="38">
+        <trans lang="en">
+            <word># year</word>
+        </trans>
+        <trans lang="es">
+            <word>(año)</word>
+        </trans>
+        <trans lang="ja">
+            <word>～年</word>
+            <alt>ねん</alt>
+        </trans>
+    </term>
+    <term id="39">
+        <trans lang="en">
+            <word># months</word>
+        </trans>
+        <trans lang="es">
+            <word>(mes)</word>
+        </trans>
+        <trans lang="ja">
+            <word>～月</word>
+            <alt>がつ</alt>
+        </trans>
+    </term>
+    <term id="40">
+        <trans lang="en">
+            <word>one month, 1 month</word>
+        </trans>
+        <trans lang="es">
+            <word>un mes</word>
+        </trans>
+        <trans lang="ja">
+            <word>一ヶ月</word>
+            <alt>いっかげつ</alt>
+        </trans>
+    </term>
+    <term id="41">
+        <trans lang="en">
+            <word># weeks</word>
+        </trans>
+        <trans lang="es">
+            <word>(semanas) </word>
+        </trans>
+        <trans lang="ja">
+            <word>～週間</word>
+            <alt>しゅうかん</alt>
+        </trans>
+    </term>
+    <term id="42">
+        <trans lang="en">
+            <word>one week, 1 week</word>
+        </trans>
+        <trans lang="es">
+            <word>una semana</word>
+        </trans>
+        <trans lang="ja">
+            <word>一週間</word>
+            <alt>いっしゅうかん</alt>
+        </trans>
+    </term>
+    <term id="43">
+        <trans lang="en">
+            <word>one day, 1 day</word>
+        </trans>
+        <trans lang="es">
+            <word>un día</word>
+        </trans>
+        <trans lang="ja">
+            <word>一日</word>
+            <alt>いちにち</alt>
+        </trans>
+    </term>
+    <term id="44">
+        <trans lang="en">
+            <word>hotel</word>
+        </trans>
+        <trans lang="es">
+            <word>hotel</word>
+        </trans>
+        <trans lang="ja">
+            <word>ホテル</word>
+            <alt>ホテル</alt>
+        </trans>
+    </term>
+    <term id="45">
+        <trans lang="en">
+            <word>apartment, flat</word>
+        </trans>
+        <trans lang="es">
+            <word>apartamento</word>
+        </trans>
+        <trans lang="ja">
+            <word>アパート</word>
+            <alt>アパート</alt>
+        </trans>
+    </term>
+    <term id="46">
+        <trans lang="en">
+            <word>spring</word>
+        </trans>
+        <trans lang="es">
+            <word>primavera</word>
+        </trans>
+        <trans lang="ja">
+            <word>春</word>
+            <alt>はる</alt>
+        </trans>
+    </term>
+    <term id="47">
+        <trans lang="en">
+            <word>summer</word>
+        </trans>
+        <trans lang="es">
+            <word>verano</word>
+        </trans>
+        <trans lang="ja">
+            <word>夏</word>
+            <alt>なつ</alt>
+        </trans>
+    </term>
+    <term id="48">
+        <trans lang="en">
+            <word>autumn, fall</word>
+        </trans>
+        <trans lang="es">
+            <word>otoño</word>
+        </trans>
+        <trans lang="ja">
+            <word>秋</word>
+            <alt>あき</alt>
+        </trans>
+    </term>
+    <term id="49">
+        <trans lang="en">
+            <word>winter</word>
+        </trans>
+        <trans lang="es">
+            <word>invierno</word>
+        </trans>
+        <trans lang="ja">
+            <word>冬</word>
+            <alt>ふゆ</alt>
+        </trans>
+    </term>
+    <term id="50">
+        <trans lang="en">
+            <word>when?</word>
+        </trans>
+        <trans lang="es">
+            <word>cuándo</word>
+        </trans>
+        <trans lang="ja">
+            <word>何時</word>
+            <alt>いつ</alt>
+        </trans>
+    </term>
+    <term id="51">
+        <trans lang="en">
+            <word>warm</word>
+        </trans>
+        <trans lang="es">
+            <word>templado</word>
+        </trans>
+        <trans lang="ja">
+            <word>暖かい</word>
+            <alt>あたたかい</alt>
+        </trans>
+    </term>
+    <term id="52">
+        <trans lang="en">
+            <word>hot (of weather etc.)</word>
+        </trans>
+        <trans lang="es">
+            <word>calor (temperatura ambiente)</word>
+        </trans>
+        <trans lang="ja">
+            <word>暑い</word>
+            <alt>あつい</alt>
+        </trans>
+    </term>
+    <term id="53">
+        <trans lang="en">
+            <word>cool</word>
+        </trans>
+        <trans lang="es">
+            <word>fresco</word>
+        </trans>
+        <trans lang="ja">
+            <word>涼しい</word>
+            <alt>すずしい</alt>
+        </trans>
+    </term>
+    <term id="54">
+        <trans lang="en">
+            <word>cold (of weather etc.)</word>
+        </trans>
+        <trans lang="es">
+            <word>frío (temperatura ambiente)</word>
+        </trans>
+        <trans lang="ja">
+            <word>寒い</word>
+            <alt>さむい</alt>
+        </trans>
+    </term>
+    <term id="55">
+        <trans lang="en">
+            <word>go</word>
+        </trans>
+        <trans lang="es">
+            <word>ir</word>
+        </trans>
+        <trans lang="ja">
+            <word>行く</word>
+            <alt>いく</alt>
+        </trans>
+    </term>
+    <term id="56">
+        <trans lang="en">
+            <word>come</word>
+        </trans>
+        <trans lang="es">
+            <word>venir</word>
+        </trans>
+        <trans lang="ja">
+            <word>来る</word>
+            <alt>くる</alt>
+        </trans>
+    </term>
+    <term id="57">
+        <trans lang="en">
+            <word>enter, go in</word>
+        </trans>
+        <trans lang="es">
+            <word>entrar</word>
+        </trans>
+        <trans lang="ja">
+            <word>入る</word>
+            <alt>はいる</alt>
+        </trans>
+    </term>
+    <term id="58">
+        <trans lang="en">
+            <word>begin ("N ga")</word>
+        </trans>
+        <trans lang="es">
+            <word>empezar</word>
+        </trans>
+        <trans lang="ja">
+            <word>始まる</word>
+            <alt>はじまる</alt>
+        </trans>
+    </term>
+    <term id="59">
+        <trans lang="en">
+            <word>be born</word>
+        </trans>
+        <trans lang="es">
+            <word>nacer</word>
+        </trans>
+        <trans lang="ja">
+            <word>生まれる</word>
+            <alt>うまれる</alt>
+        </trans>
+    </term>
+    <term id="60">
+        <trans lang="en">
+            <word># years (age)</word>
+        </trans>
+        <trans lang="es">
+            <word>(sufijo para contar la edad)</word>
+        </trans>
+        <trans lang="ja">
+            <word>～歳</word>
+            <alt>さい</alt>
+        </trans>
+    </term>
+</glossary>

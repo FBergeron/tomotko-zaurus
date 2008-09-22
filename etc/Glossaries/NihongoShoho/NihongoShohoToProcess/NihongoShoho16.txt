@@ -1,0 +1,28 @@
+﻿食堂/しょくどう/comedor, cantina
+食事/しょくじ/comida (vする)
+シャワー/シャワー/ducha
+会社/かいしゃ/compañía, corporación
+お母さん/おかあさん/madre (honorífico, femenino)
+商売/しょうばい/negocio (vする), comercio, transacción, ocupación
+研究/けんきゅう/estudio (vする), investigación
+お兄さん/おにいさん/hermano mayor (honorífico, masculino)
+兄/あに/hermano mayor (humilde, femenino)
+政府/せいふ/gobierno, administración
+役人/やくにん/funcionario
+中学校/ちゅうがっこう/Instituto de Bachillerato Medio
+校長/こうちょう/director de instituto o de colegio
+お姉さん/おねえさん/hermana mayor (honorífico)
+姉/あね/hermana mayor (humilde, femenino)
+看護婦/かんごふ/enfermera (femenino)
+弟/おとうと/hermano menor (humilde, masculino)
+高校/こうこう/Instituto de Bachillerato Superior
+妹/いもうと/hermana menor (humilde, femenino)
+指す/さす/llevar un paraguas abierto, llevar en ristre
+打つ/うつ/golpear, pulsar
+浴びる/あびる/ducharse, bañarse en algo que viene de arriba (agua, rayos de sol)
+立つ/たつ/estar de pié, ponerse en pié, erguirse, izarse
+勤める/つとめる/estar empleado en, estar al servicio de, ocupar el puesto de, ser diligente, trabajar para, hacer el papel de
+走る/はしる/correr (五段動詞)
+飛ぶ/とぶ/volar, saltar
+
+

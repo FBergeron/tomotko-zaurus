@@ -1,0 +1,47 @@
+﻿外/そと/exterior
+天気予報/てんきよほう/parte meteorológico, predicción del tiempo
+気温/きおん/temperatura
+夕方/ゆうがた/atardecer, anochecer
+初め/はじめ/principio, comienzo
+両親/りょうしん/padres (padre y madre)
+兄弟/きょうだい/hermanos (humilde, masculino)
+田畑/たはた/campo de cultivo (de secano), sembrados
+生活/せいかつ/vida (vする), lo cotidiano
+品物/しなもの/artículos, cosas
+彼/かれ/él, novio (masculino)
+彼女/かのじょ/ella, novia (femenino)
+船/ふね/barco
+台風/たいふう/tifón
+玉/たま/bola, esfera, pelota
+火事/かじ/incendio
+問題/もんだい/pregunta, problema
+答え/こたえ/respuesta
+地震/じしん/terremoto, temblor de tierra
+会/かい/reunión (vする), fiesta, asociación, club
+祭り/まつり/festival, fiesta
+目/め/ojo
+履きよい/はきよい/cómodo (de llevar puesto)
+履きやすい/はきやすい/cómodo (de llevar puesto)
+嬉しい/うれしい/feliz, alegre, contento
+危ない/あぶない/peligroso, ¡Cuidado!
+易しい/やさしい/fácil, sencillo
+正しい/ただしい/correcto, exacto, sincero, perfecto
+悲しい/かなしい/triste
+親切/しんせつ/amabilidad (adj.な)
+真面目/まじめ/diligente (adj.な), serio, honesto 
+朗らか/ほがらか/brillo (adj.な), alegrías
+有名/ゆうめい/fama (adj.な)
+続く/つづく/continuar, seguir
+くずれる/くずれる/estropearse
+下がる/さがる/bajar
+荒れる/あれる/estar borrascoso, encresparse
+耕す/たがやす/cultivar, arar
+就く/つく/empezar a trabajar de
+沈む/しずむ/hundirse, estar deprimido
+倒れる/たおれる/caerse, derrumbarse
+建てる/たてる/construir
+止める/やめる/parar de, dejar de, cesar de
+泣く/なく/llorar
+相変わらず/あいかわらず/como siempre, como de costumbre, lo mismo
+
+

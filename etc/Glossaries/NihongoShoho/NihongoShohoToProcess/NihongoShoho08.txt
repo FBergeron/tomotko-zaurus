@@ -1,0 +1,66 @@
+﻿日曜日/にちようび/Domingo
+土曜日/どようび/Sábado
+金曜日/きんようび/Viernes
+月曜日/げつようび/Lunes
+火曜日/かようび/Martes
+水曜日/すいようび/Miércoles
+木曜日/もくようび/Jueves
+勉強/べんきょう/estudio (vする)
+公園/こうえん/parque (público)
+運動/うんどう/movimiento, ejercicio (vする)
+散歩/さんぽ/paseo, caminata (vする)
+バドミントン/バドミントン/badminton
+バレーボール/バレーボール/balón volea
+ピンポン/ピンポン/ping-pong
+掃除/そうじ/limpieza (vする)
+洗濯/せんたく/lavado, colada (vする)
+買い物/かいもの/compras
+事/こと/asunto, circunstancia
+手紙/てがみ/carta (postal)
+ピアノ/ピアノ/piano
+歌/うた/canción
+毎日/まいにち/cada día
+仕事/しごと/trabajo, empleo
+字/じ/caracter, letra
+パン/パン/pan
+お茶/ま/té (té verde japonés)
+お菓子/おかし/cosas de picar, aperitivo, dulce
+どう/どう/cómo
+どんな/どんな/qué, de qué tipo
+難しい/むずかしい/difícil
+面白い/おもしろい/interesante
+忙しい/いそがしい/ocupado
+楽しい/たのしい/divertido, entretenido
+広い/ひろい/amplio, espacioso
+狭い/せまい/estrecho
+高い/たかい/alto, caro
+低い/ひくい/bajo
+厚い/あつい/grueso, espeso
+薄い/うすい/fino, diluído
+新しい/あたらしい/nuevo
+古い/ふるい/antiguo, viejo
+美味しい/おいしい/delicioso, de buen sabor, rico (か)
+不味い/まずい/insípido, de mal sabor (か)
+ない/ない/(partícula negativa)
+色々/いろいろ/varios (adj.な) (か)
+する/する/hacer
+読む/よむ/leer
+書く/かく/escribir
+見る/みる/ver, mirar
+聞く/きく/oír, escuchar
+弾く/ひく/tocar (el piano, la guitarra)
+歌う/うたう/cantar
+食べる/たべる/comer
+飲む/のむ/beber
+吸う/すう/fumar, sorber, beber sopa
+大変/たいへん/muchísimo, horror (adj.な)
+余り/あまり/no mucho (か)
+しかし/しかし/pero, sin embargo
+どうですか/どうですか/¿cómo es?
+何処か/どこか/en algún sitio
+どこへも/どこへも/en ningún sitio
+～曜日/ようび/(sufijo de día de la semana)
+～方/かた/(sufijo plural para personas)
+～回/かい/(contador para número de veces)
+
+

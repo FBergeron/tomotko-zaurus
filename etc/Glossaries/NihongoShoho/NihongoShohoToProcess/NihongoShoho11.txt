@@ -1,0 +1,38 @@
+﻿文学/ぶんがく/literatura
+父/ちち/padre (humilde)
+お父さん/おとうさん/padre (honorífico)
+見物/けんぶつ/visita turística (vする)
+友達/ともだち/amigo
+工業/こうぎょう/industria, fábrica
+技術/ぎじゅつ/tecnología, técnica
+先輩/せんぱい/compañero mayor (en los estudios, en el trabajo, etc)
+話/はなし/conversación, charla
+デパート/デパート/grandes almacenes
+森/もり/bosque, selva
+外国/がいこく/el extranjero, un país extranjero
+旅行/りょこう/viaje (vする)
+実習/じっしゅう/práctica, entrenamiento (vする)
+スキー/スキー/esquí
+海/うみ/el mar, la playa
+田舎/いなか/rural, campesino
+自分/たず/yo mismo, uno mismo
+映画館/えいがかん/cine (edificio)
+映画/えいが/cine (película)
+音楽会/おんがくかい/concierto, recital
+音楽/おんがく/música
+レストラン/レストラン/restaurante
+洗面所/せんめんじょ/lavabos (w.c.)
+手/て/mano
+忘れ物/われすもの/objeto perdido, objeto olvidado
+習う/ならう/aprender
+遊ぶ/あそぶ/jugar, ir de visita
+泳ぐ/およぐ/nadar
+働く/はたらく/trabajar
+出す/だす/sacar, enviar
+洗う/あらう/lavar
+取る/とる/traer
+戻る/もどる/regresar
+出かける/でかける/salir, irse
+一緒/いっしょ/juntos
+
+

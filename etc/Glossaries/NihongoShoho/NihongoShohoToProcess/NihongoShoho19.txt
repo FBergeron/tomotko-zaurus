@@ -1,0 +1,25 @@
+﻿つもり/つもり/intención
+電気工学/でんきこうがく/ingeniería eléctrica
+将来/しょうらい/futuro, en perspectiva
+学部/がくぶ/facultad, escuela universitaria
+大学院/だいがくいん/facultad de postgrado, escuela de postgrado
+修士課程/しゅうしかてい/curso para licenciados, licenciatura, licenciado
+博士課程/はくしかてい/curso de doctorado
+試験/しけん/examen (vする)
+電報/でんぽう/telegrama
+商人/しょうにん/mercader, comerciante, tendero
+音楽家/おんがくか/músico
+新聞記者/しんぶんきしゃ/periodista
+学者/がくしゃ/investigador
+画家/がか/pintor (artista)
+市長/しちょう/alcalde
+銀行員/ぎんこういん/empleado de banca, banquero
+テニス/テニス/tenis
+東京大学/とうきょうだいがく/Universidad de Tokio
+思う/おもう/creer, pensar, sentir
+考える/かんがえる/considerar, pensar
+受ける/うける/recibir, hacer (un examen), acometer (una tarea)
+焼く/やく/cocinar a la plancha o a la parrilla
+負ける/まける/perder, ser derrotado
+
+

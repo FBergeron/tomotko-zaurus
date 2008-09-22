@@ -1,0 +1,6 @@
+#!/bin/sh
+
+if [ -d /home/zaurus/.toMOTko ] 
+    then
+    cp -a /home/zaurus/.toMOTko /home/zaurus/.toMOTko-before-0.11.0
+fi

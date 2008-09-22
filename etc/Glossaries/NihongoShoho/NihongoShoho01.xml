@@ -1,0 +1,486 @@
+<?xml version='1.0'?>
+
+<glossary name='日本語初歩 01' id='0'>
+  <term id='1'>
+    <trans lang='en'>
+      <word>Japanese (language)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>日本語</word>
+      <alt>にほんご</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>idioma japonés</word>
+    </trans>
+  </term>
+  <term id='2'>
+    <trans lang='en'>
+      <word>teacher</word>
+    </trans>
+    <trans lang='ja'>
+      <word>先生</word>
+      <alt>せんせい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>profesor, maestro</word>
+    </trans>
+  </term>
+  <term id='3'>
+    <trans lang='en'>
+      <word>student</word>
+    </trans>
+    <trans lang='ja'>
+      <word>学生</word>
+      <alt>がくせい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Estudiante</word>
+    </trans>
+  </term>
+  <term id='4'>
+    <trans lang='en'>
+      <word>female, woman</word>
+    </trans>
+    <trans lang='ja'>
+      <word>女</word>
+      <alt>おんな</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>mujer (femenino)</word>
+    </trans>
+  </term>
+  <term id='5'>
+    <trans lang='en'>
+      <word>English (language)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>英語</word>
+      <alt>えいご</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>idioma inglés</word>
+    </trans>
+  </term>
+  <term id='6'>
+    <trans lang='en'>
+      <word>male, man</word>
+    </trans>
+    <trans lang='ja'>
+      <word>男</word>
+      <alt>おとこ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>hombre (masculino)</word>
+    </trans>
+  </term>
+  <term id='7'>
+    <trans lang='en'>
+      <word>person</word>
+    </trans>
+    <trans lang='ja'>
+      <word>人</word>
+      <alt>ひと</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Persona</word>
+    </trans>
+  </term>
+  <term id='8'>
+    <trans lang='en'>
+      <word>person (hon.)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>（この）方</word>
+      <alt>（この）かた</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(esta) persona (cortesía)</word>
+    </trans>
+  </term>
+  <term id='9'>
+    <trans lang='en'>
+      <word>Japan</word>
+    </trans>
+    <trans lang='ja'>
+      <word>日本</word>
+      <alt>にほん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Japón</word>
+    </trans>
+  </term>
+  <term id='10'>
+    <trans lang='en'>
+      <word>France</word>
+    </trans>
+    <trans lang='ja'>
+      <word>フランス</word>
+      <alt>フランス</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Francia</word>
+    </trans>
+  </term>
+  <term id='11'>
+    <trans lang='en'>
+      <word>America, USA</word>
+    </trans>
+    <trans lang='ja'>
+      <word>アメリカ</word>
+      <alt>アメリカ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>América</word>
+    </trans>
+  </term>
+  <term id='12'>
+    <trans lang='en'>
+      <word>Indonesia</word>
+    </trans>
+    <trans lang='ja'>
+      <word>インドネシア</word>
+      <alt>インドネシア</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Indonesia</word>
+    </trans>
+  </term>
+  <term id='13'>
+    <trans lang='en'>
+      <word>China</word>
+    </trans>
+    <trans lang='ja'>
+      <word>中国</word>
+      <alt>ちゅうごくア</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>China</word>
+    </trans>
+  </term>
+  <term id='14'>
+    <trans lang='en'>
+      <word>Thailand</word>
+    </trans>
+    <trans lang='ja'>
+      <word>タイ</word>
+      <alt>タイ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Tailandia</word>
+    </trans>
+  </term>
+  <term id='15'>
+    <trans lang='en'>
+      <word>Australia</word>
+    </trans>
+    <trans lang='ja'>
+      <word>オーストラリア</word>
+      <alt>オーストラリア</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Australia</word>
+    </trans>
+  </term>
+  <term id='16'>
+    <trans lang='en'>
+      <word>England, UK</word>
+    </trans>
+    <trans lang='ja'>
+      <word>イギリス</word>
+      <alt>イギリス</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Inglaterra</word>
+    </trans>
+  </term>
+  <term id='17'>
+    <trans lang='en'>
+      <word>Malaysia</word>
+    </trans>
+    <trans lang='ja'>
+      <word>マレーシア</word>
+      <alt>マレーシア</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Malasia</word>
+    </trans>
+  </term>
+  <term id='18'>
+    <trans lang='en'>
+      <word>Singapore</word>
+    </trans>
+    <trans lang='ja'>
+      <word>シンガポール</word>
+      <alt>シンガポール</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Singapur</word>
+    </trans>
+  </term>
+  <term id='19'>
+    <trans lang='en'>
+      <word>Philipines</word>
+    </trans>
+    <trans lang='ja'>
+      <word>フィリピン</word>
+      <alt>フィリピン</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Filipinas</word>
+    </trans>
+  </term>
+  <term id='20'>
+    <trans lang='en'>
+      <word>India</word>
+    </trans>
+    <trans lang='ja'>
+      <word>インド</word>
+      <alt>インド</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>India</word>
+    </trans>
+  </term>
+  <term id='21'>
+    <trans lang='en'>
+      <word>forest, grove</word>
+    </trans>
+    <trans lang='ja'>
+      <word>林</word>
+      <alt>はやし</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Hayashi (nombre propio)</word>
+    </trans>
+  </term>
+  <term id='22'>
+    <trans lang='en'>
+      <word>I, me</word>
+    </trans>
+    <trans lang='ja'>
+      <word>私</word>
+      <alt>わたし</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Yo</word>
+    </trans>
+  </term>
+  <term id='23'>
+    <trans lang='en'>
+      <word>you</word>
+    </trans>
+    <trans lang='ja'>
+      <word>あなた</word>
+      <alt>あなた</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Tú</word>
+    </trans>
+  </term>
+  <term id='24'>
+    <trans lang='en'>
+      <word>who? (hon.)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>どなた</word>
+      <alt>どなた</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>quién (forma cortés)</word>
+    </trans>
+  </term>
+  <term id='25'>
+    <trans lang='en'>
+      <word>who?</word>
+    </trans>
+    <trans lang='ja'>
+      <word>誰</word>
+      <alt>だれ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Quién</word>
+    </trans>
+  </term>
+  <term id='26'>
+    <trans lang='en'>
+      <word>this (pre-N)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>此の</word>
+      <alt>この</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Este</word>
+    </trans>
+  </term>
+  <term id='27'>
+    <trans lang='en'>
+      <word>that (near you, pre-N)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>その</word>
+      <alt>その</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Ese</word>
+    </trans>
+  </term>
+  <term id='28'>
+    <trans lang='en'>
+      <word>that (over there, pre-N)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>あの</word>
+      <alt>あの</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Aquel</word>
+    </trans>
+  </term>
+  <term id='29'>
+    <trans lang='en'>
+      <word>which? (pre-N)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>どの</word>
+      <alt>どの</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Cual</word>
+    </trans>
+  </term>
+  <term id='30'>
+    <trans lang='en'>
+      <word>yes (acknowledgement)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>はい</word>
+      <alt>はい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>Sí</word>
+    </trans>
+  </term>
+  <term id='31'>
+    <trans lang='en'>
+      <word>no</word>
+    </trans>
+    <trans lang='ja'>
+      <word>いいえ</word>
+      <alt>いいえ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>No</word>
+    </trans>
+  </term>
+  <term id='32'>
+    <trans lang='en'>
+      <word>Hello., Good day.</word>
+    </trans>
+    <trans lang='ja'>
+      <word>こんにちは</word>
+      <alt>こんにちは</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>buenos días</word>
+    </trans>
+  </term>
+  <term id='33'>
+    <trans lang='en'>
+      <word>Pleased to meet you.</word>
+    </trans>
+    <trans lang='ja'>
+      <word>始めまして</word>
+      <alt>はじめまして</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(saludo al conocer a alguien)</word>
+    </trans>
+  </term>
+  <term id='34'>
+    <trans lang='en'>
+      <word>How do you do?</word>
+    </trans>
+    <trans lang='ja'>
+      <word>どうぞ 宜しく</word>
+      <alt>どうぞよろしく</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(saludo)</word>
+    </trans>
+  </term>
+  <term id='35'>
+    <trans lang='en'>
+      <word>person from</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～人</word>
+      <alt>～じん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo de nacionalidad)</word>
+    </trans>
+  </term>
+  <term id='36'>
+    <trans lang='en'>
+      <word>Mr, Mrs, Miss</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～さん</word>
+      <alt>～さん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo de cortesía para nombres de persona)</word>
+    </trans>
+  </term>
+  <term id='37'>
+    <trans lang='en'>
+      <word>language of</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～語</word>
+      <alt>～ご</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo de idioma)</word>
+    </trans>
+  </term>
+</glossary>
+

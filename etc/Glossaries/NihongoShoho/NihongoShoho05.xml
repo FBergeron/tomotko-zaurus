@@ -1,0 +1,876 @@
+<?xml version='1.0'?>
+
+<glossary name='日本語初歩 05' id='0'>
+  <term id='1'>
+    <trans lang='en'>
+      <word>apple</word>
+    </trans>
+    <trans lang='ja'>
+      <word>林檎</word>
+      <alt>りんご</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>manzana</word>
+    </trans>
+  </term>
+  <term id='2'>
+    <trans lang='en'>
+      <word>thirty, 30</word>
+    </trans>
+    <trans lang='ja'>
+      <word>三十</word>
+      <alt>さんじゅう</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>30, treinta</word>
+    </trans>
+  </term>
+  <term id='3'>
+    <trans lang='en'>
+      <word>one, 1</word>
+    </trans>
+    <trans lang='ja'>
+      <word>一つ</word>
+      <alt>ひとつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>1, uno</word>
+    </trans>
+  </term>
+  <term id='4'>
+    <trans lang='en'>
+      <word>two, 2</word>
+    </trans>
+    <trans lang='ja'>
+      <word>二つ</word>
+      <alt>ふたつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>2, dos</word>
+    </trans>
+  </term>
+  <term id='5'>
+    <trans lang='en'>
+      <word>three, 3</word>
+    </trans>
+    <trans lang='ja'>
+      <word>三つ</word>
+      <alt>みっつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>3, tres</word>
+    </trans>
+  </term>
+  <term id='6'>
+    <trans lang='en'>
+      <word>four, 4</word>
+    </trans>
+    <trans lang='ja'>
+      <word>四つ</word>
+      <alt>よっつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>4, cuatro</word>
+    </trans>
+  </term>
+  <term id='7'>
+    <trans lang='en'>
+      <word>five, 5</word>
+    </trans>
+    <trans lang='ja'>
+      <word>五つ</word>
+      <alt>いつつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>5, cinco</word>
+    </trans>
+  </term>
+  <term id='8'>
+    <trans lang='en'>
+      <word>six, 6</word>
+    </trans>
+    <trans lang='ja'>
+      <word>六つ</word>
+      <alt>むっつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>6, seis</word>
+    </trans>
+  </term>
+  <term id='9'>
+    <trans lang='en'>
+      <word>seven, 7</word>
+    </trans>
+    <trans lang='ja'>
+      <word>七つ</word>
+      <alt>ななつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>7, siete</word>
+    </trans>
+  </term>
+  <term id='10'>
+    <trans lang='en'>
+      <word>eight, 8</word>
+    </trans>
+    <trans lang='ja'>
+      <word>八つ</word>
+      <alt>やっつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>8, ocho</word>
+    </trans>
+  </term>
+  <term id='11'>
+    <trans lang='en'>
+      <word>nine, 9</word>
+    </trans>
+    <trans lang='ja'>
+      <word>九つ</word>
+      <alt>ここのつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>9, nueve</word>
+    </trans>
+  </term>
+  <term id='12'>
+    <trans lang='en'>
+      <word>ten, 10</word>
+    </trans>
+    <trans lang='ja'>
+      <word>十</word>
+      <alt>とお</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>10, diez</word>
+    </trans>
+  </term>
+  <term id='13'>
+    <trans lang='en'>
+      <word>1, one</word>
+    </trans>
+    <trans lang='ja'>
+      <word>一</word>
+      <alt>いち</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>1, uno</word>
+    </trans>
+  </term>
+  <term id='14'>
+    <trans lang='en'>
+      <word>2, two</word>
+    </trans>
+    <trans lang='ja'>
+      <word>二</word>
+      <alt>に</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>2, dos</word>
+    </trans>
+  </term>
+  <term id='15'>
+    <trans lang='en'>
+      <word>3, three</word>
+    </trans>
+    <trans lang='ja'>
+      <word>三</word>
+      <alt>さん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>3, tres</word>
+    </trans>
+  </term>
+  <term id='16'>
+    <trans lang='en'>
+      <word>4, four</word>
+    </trans>
+    <trans lang='ja'>
+      <word>四</word>
+      <alt>よん, し</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>4, cuatro</word>
+    </trans>
+  </term>
+  <term id='17'>
+    <trans lang='en'>
+      <word>5, five</word>
+    </trans>
+    <trans lang='ja'>
+      <word>五</word>
+      <alt>ご</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>5, cinco</word>
+    </trans>
+  </term>
+  <term id='18'>
+    <trans lang='en'>
+      <word>6, six</word>
+    </trans>
+    <trans lang='ja'>
+      <word>六</word>
+      <alt>たず</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>6, seis</word>
+    </trans>
+  </term>
+  <term id='19'>
+    <trans lang='en'>
+      <word>7, seven</word>
+    </trans>
+    <trans lang='ja'>
+      <word>七</word>
+      <alt>しち, なな</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>7, siete</word>
+    </trans>
+  </term>
+  <term id='20'>
+    <trans lang='en'>
+      <word>8, eight</word>
+    </trans>
+    <trans lang='ja'>
+      <word>八</word>
+      <alt>はち</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>8, ocho</word>
+    </trans>
+  </term>
+  <term id='21'>
+    <trans lang='en'>
+      <word>9, nine</word>
+    </trans>
+    <trans lang='ja'>
+      <word>九</word>
+      <alt>く, くゅう</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>9, nueve</word>
+    </trans>
+  </term>
+  <term id='22'>
+    <trans lang='en'>
+      <word>10, ten</word>
+    </trans>
+    <trans lang='ja'>
+      <word>十</word>
+      <alt>じゅう</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>10, diez</word>
+    </trans>
+  </term>
+  <term id='23'>
+    <trans lang='en'>
+      <word>mandarin, Japanese orange</word>
+    </trans>
+    <trans lang='ja'>
+      <word>蜜柑</word>
+      <alt>みかん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>mandarina, clementina</word>
+    </trans>
+  </term>
+  <term id='24'>
+    <trans lang='en'>
+      <word>child</word>
+    </trans>
+    <trans lang='ja'>
+      <word>子供</word>
+      <alt>こども</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>niño</word>
+    </trans>
+  </term>
+  <term id='25'>
+    <trans lang='en'>
+      <word>child</word>
+    </trans>
+    <trans lang='ja'>
+      <word>子</word>
+      <alt>こ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>niño</word>
+    </trans>
+  </term>
+  <term id='26'>
+    <trans lang='en'>
+      <word>one (person), alone (by oneself)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>一人</word>
+      <alt>ひとり</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>una persona, solo</word>
+    </trans>
+  </term>
+  <term id='27'>
+    <trans lang='en'>
+      <word>two (persons)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>二人</word>
+      <alt>ふたり</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>dos personas, en pareja</word>
+    </trans>
+  </term>
+  <term id='28'>
+    <trans lang='en'>
+      <word>everyone</word>
+    </trans>
+    <trans lang='ja'>
+      <word>皆</word>
+      <alt>みんな</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>todos</word>
+    </trans>
+  </term>
+  <term id='29'>
+    <trans lang='en'>
+      <word>elementary school, primary school</word>
+    </trans>
+    <trans lang='ja'>
+      <word>小学校</word>
+      <alt>しょうがっこう</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>escuela elemental</word>
+    </trans>
+  </term>
+  <term id='30'>
+    <trans lang='en'>
+      <word>pupil</word>
+    </trans>
+    <trans lang='ja'>
+      <word>生徒</word>
+      <alt>せいと</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>alumno</word>
+    </trans>
+  </term>
+  <term id='31'>
+    <trans lang='en'>
+      <word>teacup, rice bowl</word>
+    </trans>
+    <trans lang='ja'>
+      <word>茶碗</word>
+      <alt>ちゃわん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>cuenco para arroz</word>
+    </trans>
+  </term>
+  <term id='32'>
+    <trans lang='en'>
+      <word>postcard</word>
+    </trans>
+    <trans lang='ja'>
+      <word>葉書</word>
+      <alt>はがき</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>tarjeta (postal)</word>
+    </trans>
+  </term>
+  <term id='33'>
+    <trans lang='en'>
+      <word>envelope</word>
+    </trans>
+    <trans lang='ja'>
+      <word>封筒</word>
+      <alt>ふうとう</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>sobre (postal)</word>
+    </trans>
+  </term>
+  <term id='34'>
+    <trans lang='en'>
+      <word>(postage) stamp</word>
+    </trans>
+    <trans lang='ja'>
+      <word>切手</word>
+      <alt>きって</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>sello (postal)</word>
+    </trans>
+  </term>
+  <term id='35'>
+    <trans lang='en'>
+      <word>plate</word>
+    </trans>
+    <trans lang='ja'>
+      <word>皿</word>
+      <alt>さら</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>plato</word>
+    </trans>
+  </term>
+  <term id='36'>
+    <trans lang='en'>
+      <word>handkerchief</word>
+    </trans>
+    <trans lang='ja'>
+      <word>ハンカチ</word>
+      <alt>ハンカチ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>pañuelo</word>
+    </trans>
+  </term>
+  <term id='37'>
+    <trans lang='en'>
+      <word>bicycle, bike</word>
+    </trans>
+    <trans lang='ja'>
+      <word>自転車</word>
+      <alt>じてんしゃ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>bicicleta</word>
+    </trans>
+  </term>
+  <term id='38'>
+    <trans lang='en'>
+      <word>typewriter</word>
+    </trans>
+    <trans lang='ja'>
+      <word>タイプライター</word>
+      <alt>タイプライター</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>máquina de escribir</word>
+    </trans>
+  </term>
+  <term id='39'>
+    <trans lang='en'>
+      <word>camera</word>
+    </trans>
+    <trans lang='ja'>
+      <word>カメラ</word>
+      <alt>カメラ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>cámara</word>
+    </trans>
+  </term>
+  <term id='40'>
+    <trans lang='en'>
+      <word>magazine</word>
+    </trans>
+    <trans lang='ja'>
+      <word>雑誌</word>
+      <alt>ざっし</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>revista</word>
+    </trans>
+  </term>
+  <term id='41'>
+    <trans lang='en'>
+      <word>bottle</word>
+    </trans>
+    <trans lang='ja'>
+      <word>瓶</word>
+      <alt>びん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>botella</word>
+    </trans>
+  </term>
+  <term id='42'>
+    <trans lang='en'>
+      <word>banana</word>
+    </trans>
+    <trans lang='ja'>
+      <word>バナナ</word>
+      <alt>バナナ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>banana, plátano (tipo Canarias)</word>
+    </trans>
+  </term>
+  <term id='43'>
+    <trans lang='en'>
+      <word>cigarette</word>
+    </trans>
+    <trans lang='ja'>
+      <word>煙草</word>
+      <alt>たばこ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>cigarrillos, tabaco (か)</word>
+    </trans>
+  </term>
+  <term id='44'>
+    <trans lang='en'>
+      <word>insect</word>
+    </trans>
+    <trans lang='ja'>
+      <word>虫</word>
+      <alt>むし</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>insecto</word>
+    </trans>
+  </term>
+  <term id='45'>
+    <trans lang='en'>
+      <word>sparrow</word>
+    </trans>
+    <trans lang='ja'>
+      <word>雀</word>
+      <alt>すずめ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>gorrión</word>
+    </trans>
+  </term>
+  <term id='46'>
+    <trans lang='en'>
+      <word>dove</word>
+    </trans>
+    <trans lang='ja'>
+      <word>鳩</word>
+      <alt>はと</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>paloma, pichón</word>
+    </trans>
+  </term>
+  <term id='47'>
+    <trans lang='en'>
+      <word>how many?</word>
+    </trans>
+    <trans lang='ja'>
+      <word>幾つ</word>
+      <alt>いくつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>cuántos (か)</word>
+    </trans>
+  </term>
+  <term id='48'>
+    <trans lang='en'>
+      <word>red</word>
+    </trans>
+    <trans lang='ja'>
+      <word>赤い</word>
+      <alt>あかい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>colorado, rojo</word>
+    </trans>
+  </term>
+  <term id='49'>
+    <trans lang='en'>
+      <word>blue, green</word>
+    </trans>
+    <trans lang='ja'>
+      <word>青い</word>
+      <alt>あおい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>azul claro, verde pálido</word>
+    </trans>
+  </term>
+  <term id='50'>
+    <trans lang='en'>
+      <word>white</word>
+    </trans>
+    <trans lang='ja'>
+      <word>白い</word>
+      <alt>しろい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>blanco</word>
+    </trans>
+  </term>
+  <term id='51'>
+    <trans lang='en'>
+      <word>black</word>
+    </trans>
+    <trans lang='ja'>
+      <word>黒い</word>
+      <alt>くろい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>negro</word>
+    </trans>
+  </term>
+  <term id='52'>
+    <trans lang='en'>
+      <word>yellow</word>
+    </trans>
+    <trans lang='ja'>
+      <word>黄色い</word>
+      <alt>きいろい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>amarillo</word>
+    </trans>
+  </term>
+  <term id='53'>
+    <trans lang='en'>
+      <word>many, much, lots of</word>
+    </trans>
+    <trans lang='ja'>
+      <word>沢山</word>
+      <alt>たくさん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>mucho (か)</word>
+    </trans>
+  </term>
+  <term id='54'>
+    <trans lang='en'>
+      <word>many (people)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>大勢</word>
+      <alt>おおぜい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>muchas (personas)</word>
+    </trans>
+  </term>
+  <term id='55'>
+    <trans lang='en'>
+      <word>a little</word>
+    </trans>
+    <trans lang='ja'>
+      <word>少し</word>
+      <alt>すこし</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>un poco</word>
+    </trans>
+  </term>
+  <term id='56'>
+    <trans lang='en'>
+      <word>so, that way</word>
+    </trans>
+    <trans lang='ja'>
+      <word>そう</word>
+      <alt>そう</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>así, de esa manera</word>
+    </trans>
+  </term>
+  <term id='57'>
+    <trans lang='en'>
+      <word>only, nothing but (with -ve)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>しか</word>
+      <alt>しか</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>solamente</word>
+    </trans>
+  </term>
+  <term id='58'>
+    <trans lang='en'>
+      <word># persons</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～人</word>
+      <alt>じん、にん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo para contar personas)</word>
+    </trans>
+  </term>
+  <term id='59'>
+    <trans lang='en'>
+      <word>-s (plural suffix, for some nouns)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～達</word>
+      <alt>たち</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo de plural para seres vivos)</word>
+    </trans>
+  </term>
+  <term id='60'>
+    <trans lang='en'>
+      <word># sheets, # flat things</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～枚</word>
+      <alt>まい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo para contar objetos planos)</word>
+    </trans>
+  </term>
+  <term id='61'>
+    <trans lang='en'>
+      <word># machines, # vehicles</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～台</word>
+      <alt>だい</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo para contar máquinas)</word>
+    </trans>
+  </term>
+  <term id='62'>
+    <trans lang='en'>
+      <word># volumes, # books</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～冊</word>
+      <alt>さつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo para contar libros)</word>
+    </trans>
+  </term>
+  <term id='63'>
+    <trans lang='en'>
+      <word># sticks, # cylindrical objects</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～本</word>
+      <alt>ほん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo para contar objetos largos)</word>
+    </trans>
+  </term>
+  <term id='64'>
+    <trans lang='en'>
+      <word># pairs (of footwear)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～足</word>
+      <alt>そく</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo para contar pares de zapatos)</word>
+    </trans>
+  </term>
+  <term id='65'>
+    <trans lang='en'>
+      <word># animals</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～匹</word>
+      <alt>ひき</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo para contar animales pequeños)</word>
+    </trans>
+  </term>
+  <term id='66'>
+    <trans lang='en'>
+      <word># birds</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～羽</word>
+      <alt>わ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo para contar aves)</word>
+    </trans>
+  </term>
+  <term id='67'>
+    <trans lang='en'>
+      <word># buildings</word>
+    </trans>
+    <trans lang='ja'>
+      <word>～軒</word>
+      <alt>けん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>(sufijo para contar casas)</word>
+    </trans>
+  </term>
+</glossary>
+

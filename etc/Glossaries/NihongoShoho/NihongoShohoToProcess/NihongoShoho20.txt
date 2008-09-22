@@ -1,0 +1,52 @@
+﻿肉/にく/carne
+料理/りょうり/cocina (vする)
+匂い/におい/olor (bueno o malo), fragancia, aroma, perfume
+醤油/しょうゆ/salsa de soja
+正油/しょうゆ/salsa de soja (ortografía incorrecta, error común)
+塩/しお/sal
+砂糖/さとう/azúcar
+大豆/だいず/judía de soja
+豆腐/とうふ/tofu, cuajada de soja
+原料/げんりょう/materia prima, ingredientes
+味噌汁/みそしる/sopa de miso (soja fermentada)
+小麦粉/こむぎこ/harina de trigo
+袋/ふくろ/bolsa, saco
+革/かわ/cuero
+下駄/げた/geta (calzado japonés)
+竹/たけ/bambú
+笛/ふえ/flauta
+毛糸/けいと/lana para hacer punto
+苺/いちご/fresón, fresa
+ジャム/ジャム/confitura, mermelada
+バター/バター/mantequilla
+葡萄/ぶどう/uvas (か)
+葡萄酒/ぶどうしゅ/vino (de uva)(ぶどう酒)
+海水/かいすい/agua de mar
+声/こえ/voz
+作文/さくぶん/composición, escrito
+宿題/しゅくだい/tareas (para casa), trabajos (para casa)
+石鹸/せっけん/jabón
+良い/よい/bueno, agradable
+重い/おもい/pesado
+多い/おおい/numeroso
+少ない/すくない/escaso, poco
+可笑しい/おかしい/extraño, extravagante, ridículo, estrambótico
+嫌/いや/desagradable, en desacuerdo (adj.な)
+残念/ざんねん/deplorable (adj.な), lamentable, desilusionante, (qué lástima)
+作る/つくる/hacer, crear, fabricar, preparar, componer, construir
+出来る/できる/ser capaz de, estar preparado, ocurrir
+付ける/つける/sazonar
+残る/のこる/quedar
+編む/あむ/hacer punto, tricotar
+取る/とる/sacar, extraer, recolectar
+落とす/おとす/dejar caer (dándose cuenta o no), perder
+拾う/ひろう/recoger, encontrar
+覚える/おぼえる/recordar, aprender de memoria, saber de memoria
+忘れる/わすれる/olvidar, olvidarse por descuido
+飲み過ぎる/のみすぎる/beber en exceso
+笑う/わらう/reír, sonreír
+とても/とても/mucho, un montón
+うっかり/うっかり/por descuido, inadvertidamente
+つい/つい/sin querer, sin ser consciente de ello
+
+

@@ -1,0 +1,58 @@
+﻿歯/は/diente
+顔/かお/cara (de una persona)
+朝御飯/あさごはん/desayuno (朝ご飯)
+お風呂/おふろ/baño
+晩御飯/ばんごはん/cena (晩ご飯)
+前/まえ/antes, menos (xx minutos)
+タクシー/タクシー/taxi
+留学生/りゅうがくせい/estudiante extranjero
+足/あし/pierna, pie
+鏡/かがみ/espejo
+髭/ひげ/bigote, barba
+箸/はし/palillos (de comer)
+辞書/じしょ/diccionario
+平仮名/ひらがな/hiragana
+片仮名/かたかな/katakana
+漢字/かんじ/ideogramas (de origen chino)
+左/ひだり/izquierda
+右/たず/derecha
+洋服/ようふく/ropa (de estilo occidental)
+寝巻/ねまき/pijama
+風邪を引く/かぜをひく/resfriarse (か)
+怪我/けが/herida (vする)
+ニュース/ニュース/noticias
+写真/しゃしん/fotografía
+試合/しあい/partido, competición
+賞品/しょうひん/premio
+名前/なまえ/nombre
+先週/せんしゅう/la semana pasada
+磨く/みがく/cepillar, lavarse (los dientes)
+休む/やすむ/descansar, estar de vacaciones
+開く/ひらく/abrir
+上げる/あげる/subir, elevar
+剃る/そる/afeitar, afeitarse
+使う/つかう/utilizar, emplear
+辞書を引く/ひく/buscar (en un diccionario)
+治す/なおす/curar
+下げる/さげる/bajar
+曲げる/まげる/doblar
+脱ぐ/ぬぐ/desvestirse
+風邪を引く/ひく/resfriarse (か)
+転ぶ/ころぶ/caerse
+驚く/おどろく/sorprenderse
+疲れる/つかれる/cansarse
+汚れる/よごれる/ensuciar
+死ぬ/しぬ/morir
+騒ぐ/さわぐ/alborotar
+写す/うつす/grabar (en pelicula), hacer (fotos)
+勝つ/かつ/ganar
+貰う/もらう/recibir
+喜ぶ/よろこぶ/alegrarse
+盗む/ぬすむ/robar
+何時も/いつも/siempre, casi siempre
+さっき/さっき/hace tiempo
+そして/そして/y
+それから/それから/y entonces, despues
+それで/それで/y, a partir de entonces
+
+

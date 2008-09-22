@@ -1,0 +1,41 @@
+﻿天気/てんき/el tiempo (atmosférico)
+雨/あめ/lluvia
+雷/かみなり/relámpago, trueno
+風/かぜ/viento
+気候/きこう/el clima
+季節/きせつ/estación (4 estaciones del año)
+同じ/おなじ/igual, mismo, idéntico
+一年中/いちねんじゅう/todo el año
+雪/ゆき/nieve
+空/そら/cielo
+都会/とかい/ciudad
+所/ところ/lugar, sitio
+食べ物/たべもの/comida
+住所/じゅうしょ/domicilio, dirección (postal)
+桜/さくら/cerezo
+物/もの/cosa, objeto
+灰皿/はいざら/cenicero
+テーブル/たず/mesa
+籠/かご/cesta, jaula
+北海道/ほっかいどう/Hokkaido (isla norte del Japón)
+沖縄/おきなわ/Okinawa (archipiélago al sur del Japón)
+富士山/ふじさん/Monte Fuji
+銀座/ぎんざ/Ginza (nombre de un barrio)
+新宿/しんじゅく/Shinjuku (nombre de un barrio)
+いい/いい/bueno
+悪い/わるい/malo
+降る/ふる/caer (p.ej. lluvia)
+鳴る/なる/sonar (un trueno)
+吹く/ふく/soplar (p.ej. El viento)
+違う/ちがう/diferir, ser diferente
+止む/やむ/cesar, parar, terminar
+晴れる/はれる/hacer buen tiempo, parar de llover
+曇る/くもる/estar nublado
+多分/たぶん/quizás
+一番/いちばん/el mejor, el primero, el número 1
+と/と/y
+でしょう/でしょう/espero que, creo que, imagino que
+～かった/～かった/(sufijo de pasado)
+～中/～じゅう/durante
+
+

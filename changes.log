@@ -1,0 +1,138 @@
+Version 0.11.0 (2008-08-26)
+
+- Reimplemented revealing sequence tool.
+- Added Search tool.
+- Added preferences option to show alt value in list of terms.
+- Save preferences and marked items in compressed binary.
+- Dropped support for legacy data format.
+
+
+Version 0.10.0 (2008-07-06)
+
+- Added image support for terms.
+- Added support for tree and subtree manipulations (copy, cut, paste, import, export).
+- Changed data format to use file system hierarchy and zip files.
+- Various bug fixes.
+
+
+Version 0.9.2 (2008-03-16)
+
+- Fixed copy-cut-paste bug reported by Kurochka.
+- Fixed bug #1872216 : Added test before copying previous data in preinst script.
+
+
+Version 0.9.1 (2007-12-22)
+
+- Fixed crash bug with cut & paste reported by Kurochka.
+
+
+Version 0.9.0 (2007-12-20)
+
+- Implemented cut, copy, and paste for vocabularies and folders.
+- Added scrolling capabilities with arrow keys for Quiz.
+- Got rid of LegacyVocabParser for deprecated glossary XML format.
+- Save vocabulary tree in compressed binary.
+- Began adding support for Chinese (still embryonary).
+- Improved persistence management for keyboard accelerators.
+- Save Quiz state (per language pair).
+- Improved column width management for lists.
+- Added Properties panel showing author, dates, and counters.
+- Added Preferences option to hide Quiz's buttons.
+- Added Maximize button for Quiz and Glossary Manager.
+- Added missing digraphs.
+- Put digraph definitions in a separate text file (/opt/Qtopia/lib/toMOTko/digraphs.conf).
+- Compressed glossary files (using zlib).
+- Added installation script that backup previous data.
+- Various bug fixes.
+
+
+Version 0.8.0 (2007-10-17)
+
+- Added missing digraphs.
+- Fixed comment update bug in the quiz.
+- Fixed multiple terms deletion.
+- Improved FileDialog for import/export feature.
+- Improved menus' look with icons.
+- Added keyboard accelerators.
+- Show word count in congratulation message.
+
+
+Version 0.7.0 (2007-09-07)
+
+- Fixed duplicate folder id bug.
+- Improved layout update for QuizFrame when changing font.
+- Added Language Selection dialog box for import/export.
+- Shortened some strings in Spanish to make them fit in Portrait mode.
+- Save the state of expanded/collapsed tree nodes in Glossary Manager.
+- Display Undefined string in gray when a glossary contains no word in 
+  a language shown in the list of terms in the Glossary Manager.
+- Fixed lost selection bug when switching language or changing the state
+  of the filter.
+
+
+Version 0.6.0 (2007-08-18)
+
+- Added built-in support for accents (digraphs).
+- Added support for other languages.
+- Added font overrides per language.
+- Internationalized the interface in French, Spanish and Japanese (partially).
+- Changed the data format from XML to binary for optimization (disk space and speed).
+- Converted existing glossaries.
+- Dropped very first glossary file format.
+
+
+Version 0.5.0 (2007-06-17)
+
+- Implemented (partially) Cut/Copy/Paste feature (works only for terms).
+- Added font preferences.
+- Implemented multiple words deletion.
+- Optimized data saving when closing the application.
+- Added buttons to check all terms of glossary or inverse the selection.
+- Improved application's icon.
+
+
+Version 0.4.2 (2007-04-14)
+
+- Fixed crash bug when starting a quiz with no selected words.
+- Show a dialog message when no files are importable.
+
+
+Version 0.4.1 (2007-04-08)
+
+- Fixed launcher icon bug.
+
+
+Version 0.4.0 (2007-04-07)
+
+- Implemented glossary Import/Export functionality.
+- Optimized icons to XPM files.
+- Added online help.
+- Generated doxygen documentation.
+- Improved Glossary Manager's portrait layout.
+- Added Resume quiz feature.
+- Inserted Quiz's completion progress bar.
+- Fixed small bugs.
+
+
+Version 0.3.0 (2007-02-03)
+
+- Implemented preferences dialog to specify quiz length and modes. 
+- Improved the word selection for quiz. Except for the last word, the quiz should not ask the same word twice in a row. 
+- Fixed bug occurring with an empty quiz.
+
+
+Version 0.2.0 (2007-01-04)
+
+- Added a Glossary Manager that allows users to create more than one collection of words and to organize them in a hierarchical structure. It also features the ability to mark words for study instead of asking all the words.
+
+
+Version 0.1.1 (2007-01-01)
+
+- Bug fix : Escaped XML special characters <, > and & when saving data.
+
+
+Version 0.1.0 (2006-11-13)
+
+- First release (good enough to learn a single list of words).
+
+

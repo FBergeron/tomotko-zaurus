@@ -1,0 +1,382 @@
+<?xml version='1.0'?>
+
+<glossary name='日本語初歩 04' id='0'>
+  <term id='1'>
+    <trans lang='en'>
+      <word>behind (N)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>後ろ</word>
+      <alt>うしろ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>detrás</word>
+    </trans>
+  </term>
+  <term id='2'>
+    <trans lang='en'>
+      <word>garden</word>
+    </trans>
+    <trans lang='ja'>
+      <word>庭</word>
+      <alt>にわ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>jardín</word>
+    </trans>
+  </term>
+  <term id='3'>
+    <trans lang='en'>
+      <word>tree, wood</word>
+    </trans>
+    <trans lang='ja'>
+      <word>木</word>
+      <alt>き</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>árbol, madera</word>
+    </trans>
+  </term>
+  <term id='4'>
+    <trans lang='en'>
+      <word>pond</word>
+    </trans>
+    <trans lang='ja'>
+      <word>池</word>
+      <alt>いけ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>piscina, estanque</word>
+    </trans>
+  </term>
+  <term id='5'>
+    <trans lang='en'>
+      <word>bird</word>
+    </trans>
+    <trans lang='ja'>
+      <word>鳥</word>
+      <alt>とり</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>ave, pollo</word>
+    </trans>
+  </term>
+  <term id='6'>
+    <trans lang='en'>
+      <word>fish</word>
+    </trans>
+    <trans lang='ja'>
+      <word>魚</word>
+      <alt>さかな</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>pez, pescado</word>
+    </trans>
+  </term>
+  <term id='7'>
+    <trans lang='en'>
+      <word>office (room)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>事務室</word>
+      <alt>じむしつ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>despacho</word>
+    </trans>
+  </term>
+  <term id='8'>
+    <trans lang='en'>
+      <word>before, in front of (N)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>前</word>
+      <alt>まえ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>delante</word>
+    </trans>
+  </term>
+  <term id='9'>
+    <trans lang='en'>
+      <word>dog</word>
+    </trans>
+    <trans lang='ja'>
+      <word>犬</word>
+      <alt>いぬ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>perro</word>
+    </trans>
+  </term>
+  <term id='10'>
+    <trans lang='en'>
+      <word>cat</word>
+    </trans>
+    <trans lang='ja'>
+      <word>猫</word>
+      <alt>ねこ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>gato</word>
+    </trans>
+  </term>
+  <term id='11'>
+    <trans lang='en'>
+      <word>goldfish</word>
+    </trans>
+    <trans lang='ja'>
+      <word>金魚</word>
+      <alt>きんぎょ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>pez de colores</word>
+    </trans>
+  </term>
+  <term id='12'>
+    <trans lang='en'>
+      <word>chicken, hen</word>
+    </trans>
+    <trans lang='ja'>
+      <word>鶏</word>
+      <alt>にわとり</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>pollo, ave de corral</word>
+    </trans>
+  </term>
+  <term id='13'>
+    <trans lang='en'>
+      <word>building</word>
+    </trans>
+    <trans lang='ja'>
+      <word>建物</word>
+      <alt>たてもの</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>edificio</word>
+    </trans>
+  </term>
+  <term id='14'>
+    <trans lang='en'>
+      <word>library</word>
+    </trans>
+    <trans lang='ja'>
+      <word>図書館</word>
+      <alt>としょかん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>biblioteca</word>
+    </trans>
+  </term>
+  <term id='15'>
+    <trans lang='en'>
+      <word>toilet</word>
+    </trans>
+    <trans lang='ja'>
+      <word>トイレ</word>
+      <alt>トイレ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>w.c.</word>
+    </trans>
+  </term>
+  <term id='16'>
+    <trans lang='en'>
+      <word>East</word>
+    </trans>
+    <trans lang='ja'>
+      <word>東</word>
+      <alt>ひがし</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>este, oriente</word>
+    </trans>
+  </term>
+  <term id='17'>
+    <trans lang='en'>
+      <word>West</word>
+    </trans>
+    <trans lang='ja'>
+      <word>西</word>
+      <alt>にし</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>oeste, occidente</word>
+    </trans>
+  </term>
+  <term id='18'>
+    <trans lang='en'>
+      <word>South</word>
+    </trans>
+    <trans lang='ja'>
+      <word>南</word>
+      <alt>みなみ</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>sur</word>
+    </trans>
+  </term>
+  <term id='19'>
+    <trans lang='en'>
+      <word>North</word>
+    </trans>
+    <trans lang='ja'>
+      <word>北</word>
+      <alt>きた</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>norte</word>
+    </trans>
+  </term>
+  <term id='20'>
+    <trans lang='en'>
+      <word>gate</word>
+    </trans>
+    <trans lang='ja'>
+      <word>門</word>
+      <alt>もん</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>puerta, portal</word>
+    </trans>
+  </term>
+  <term id='21'>
+    <trans lang='en'>
+      <word>where?, which side?</word>
+    </trans>
+    <trans lang='ja'>
+      <word>どちら</word>
+      <alt>どちら</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>por dónde</word>
+    </trans>
+  </term>
+  <term id='22'>
+    <trans lang='en'>
+      <word>here, this side</word>
+    </trans>
+    <trans lang='ja'>
+      <word>こちら</word>
+      <alt>こちら</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>por aquí</word>
+    </trans>
+  </term>
+  <term id='23'>
+    <trans lang='en'>
+      <word>there, that side (near you)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>そちら</word>
+      <alt>そちら</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>por ahí</word>
+    </trans>
+  </term>
+  <term id='24'>
+    <trans lang='en'>
+      <word>there, that side (over there)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>あちら</word>
+      <alt>あちら</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>por allí</word>
+    </trans>
+  </term>
+  <term id='25'>
+    <trans lang='en'>
+      <word>be (s.th. animate in a place)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>居る（居ます）</word>
+      <alt>いる（います）</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>ser (cortesía)(para seres)</word>
+    </trans>
+  </term>
+  <term id='26'>
+    <trans lang='en'>
+      <word>someone (hon.)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>何方か</word>
+      <alt>どなたか</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>alguien</word>
+    </trans>
+  </term>
+  <term id='27'>
+    <trans lang='en'>
+      <word>no one (with -ve, hon.), anyone in a neg. sentence</word>
+    </trans>
+    <trans lang='ja'>
+      <word>何方も</word>
+      <alt>どなたも</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>nadie</word>
+    </trans>
+  </term>
+  <term id='28'>
+    <trans lang='en'>
+      <word>(to) somewhere</word>
+    </trans>
+    <trans lang='ja'>
+      <word>何処かに</word>
+      <alt>どこかに</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>por algún sitio</word>
+    </trans>
+  </term>
+  <term id='29'>
+    <trans lang='en'>
+      <word>(to) nowhere (with -ve)</word>
+    </trans>
+    <trans lang='ja'>
+      <word>何処にも</word>
+      <alt>どこにも</alt>
+    </trans>
+    
+  <trans lang='es'>
+      <word>por ningún sitio</word>
+    </trans>
+  </term>
+</glossary>
+

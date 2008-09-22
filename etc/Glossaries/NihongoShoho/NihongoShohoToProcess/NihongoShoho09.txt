@@ -1,0 +1,61 @@
+﻿朝/あさ/(por la) mañana
+今/いま/ahora
+九時/くじ/las 9 (horas)
+五分/ごふん/5 minutos
+五分過ぎ/ごふんすぎ/y 5 (minutos)
+九時半/くじはん/las 9 y media
+五分前/ごふんまえ/menos 5 (minutos)
+毎朝/まいあさ/cada mañana
+夜/よる/noche
+毎晩/まいばん/cada noche
+授業/じゅぎょう/los deberes (escolares)(vする)
+午前/ごぜん/por la mañana (a.m.)
+午後/ごご/por la tarde, por la noche (p.m.)
+昼休み/ひるやすみ/descanso del mediodía, recreo
+一時間/いちじかん/una hora
+バス/バス/autobús
+飛行機/ひこうき/avión, aeroplano
+今朝/たず/esta mañana
+夕べ/ゆうべ/anoche
+会社/かいしゃ/compañía, empresa, corporación
+色/いろ/color
+大人/おとな/adulto
+病気/びょうき/enfermedad
+体/からだ/cuerpo (humano), salud
+町/まち/ciudad, barrio, la calle
+音/ま/sonido
+六十秒/ろくじゅうびょう/60 segundos
+一ヶ月/いっかげつ/un mes
+半年/はんとし/medio año
+雪子/ゆきこ/Yukiko (nombre propio femenino)
+どの位/どのぐらい/aproximadamente cuánto (か)
+早い/はやい/pronto, rápido
+遅い/おそい/tarde, lento
+暗い/くらい/oscuro
+汚い/きたない/sucio
+寂しい/さびしい/solitario
+元気/げんき/buena salud, vigor (adj.な)
+賑やか/にぎやか/alegría, ánimo (adj.な)
+静か/しずか/tranquilidad, silencio (adj.な)
+起きる/おきる/levantarse, despertarse
+寝る/ねる/irse a la cama, dormirse
+終わる/おわる/terminar, cerrar
+なる/なる/llegar a ser, dar (las X horas)
+掛かる/かかる/se necesita, se tarda
+歩く/あるく/andar
+帰る/かえる/volver, regresar (五段動詞)
+塗る/ぬる/pintar
+待つ/まつ/esperar
+もう/もう/ya, enseguida
+未だ/まだ/todavía, aún
+頃/ごろ/aproximadamente (か)
+～時/じ/(hora)
+～分/ふん/(minutos)
+～過ぎ/すぎ/(y XX minutos)
+～半/はん/(mitad, medio)
+～前/まえ/(delante, menos XX minutos)
+～時間/じかん/(duración en horas)
+～秒/びょう/(segundos)
+～月/つき/(meses)
+
+

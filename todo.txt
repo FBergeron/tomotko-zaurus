@@ -1,0 +1,148 @@
+ToDo
+----
+In MainWindow, for cut/copy/paste, use the QObject context for the strings.
+Add symlinks for fr/es history pages.
+Mention that hoyahoya glossary has been added.
+Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
+Refactor the code in editResultTerm() and editTerm().  The code is similar.  Maybe using signal/slot approach could work. There is a good example of that in page 18 of my Qt book for the FindDialog.
+Remove prefs.xml file and remove PreferencesPaser now obsolete.
+Remove marked.xml file and remove MarkedItemParser now obsolete. 
+Remove Controller::deleteObsoleteData().
+Remove xml handling of pref data file.
+Try to use pictureflow (http://code.google.com/p/pictureflow/).
+Add an image preview in ZFileDialog.
+Release 0.12.0
+
+Reorganize SVN...  Maybe the website should be separated from the trunk?
+Remove code that remove prefs.xml file.  Now obsolete.
+Remove code that remove marked.xml file.  Now obsolete.
+
+Refactor save and load methods.  They look alike, I think it's possible do unify the process in a common method using parameters.
+
+I passed prefs to SequenceDialog.  Remove it if unused.
+Use ASSERT(), CHECK_PTR() and qDebug(), qWarning() and qFatal() --> See Debugging Techniques page in documentation.
+When we quit toMOTko, we should delete all files [0-9]+.tar.gz and tree.dat.gz.  These files are not used anymore.
+Verify licence for KanjiDrill4Top's images.
+Port to Windows? Linux? NCurses? Or big refactoring (reduce memory footprint + separate GUI from backend)?
+In the same way that Controller::getResolvedImagePath(), I should have the opposite function that takes an absolute path and reduce it to a relative path.  Maybe rename the functions with better names.
+In Controller.makeCopy(), verify if we should create the termCopy at all if we don't add translation.  A term with no translations should not exist.  If the term has no translations, delete it and don't add it to vocabCopy.
+Same thing for VocabularyManagerFrame.copyTerms().
+Concerning SearchDialog, refactor, if possible, ResultListItem and TermListItem.  I think I can have a common base class (edit:really?) so that doRemoveTerms() don't have to be duplicated in SearchDialog and VocabularyManagerFrame.  Other code could be refactored too like getFont(), setFont(), etc.  The doRemoveTerms() of SearchDialog is a little bit more general so start from it.  The vocabDetailsPropsPanel should be probably be a parameter.  If not null, we should updateCounters().  Maybe I will have to use multiple inheritance to do that maybe using a TermItem class?
+
+
+Should I deallocate sequences in Preferences's destructor?
+copyTerms(), pasteTerms() should be relocated (partially) into Controller.  Most probably that copy*() and paste*() too.
+When addVocab() returns NULL, we should display an error message.
+Controller should be renamed ToMOTko as it's the backend.  Maybe we should have a class Quiz to control/manage the quiz.
+Maybe Controller::writeVocabularyInXml() could be renamed like Vocabulary::operator<<( QTextStream& out, const Vocabulary& vocab )?
+Remove delimiter for binary format if possible.  Use container instead.  Not sure if it's that important.
+Bug : Sometimes (actually it's so rare that I cannot reproduce it), the arrow up and down don't work in the quiz.
+Bug : We start a quiz, when we have a word with a long comment, we scroll down.  We go back to Glossary Manager and restart the quiz, the comment field's scrollbar is still down.  It needs to be reset.  What happens if we have two questions with long comments in a row?  Curiously, sometimes the scrollbar is down, sometimes, it's up.  Anyway, we need to see the scrollbar up.
+Bug : If I have a term with a long comment, that I use up/down arrow.  Sometimes, if I maximize the comment field, the up/down arrow don't work in maximize mode.
+After importing a glossary, we should open the parent folder automatically, select the new glossary and ensure it's visible.
+Add a button allowing to show/hide hidden files/directories in ZFileDialog.
+Add a history section in website where we can see the evolution of the application with screenshots.
+Try to remove warnings caused by minizip (look here maybe : http://www.agavemountain.com/2007/09/dealing-with-c-unused-parameter.html)
+When we clear an image, we should delete it if it's a relative path, once ok has been clicked.
+Make the new imported vocabulary dirty and save it immediately?  Probably not needed as the data are saved immediately on disk.  If we set it to dirty, it will be written twice needlessly.
+If an import fails, clean the mess! (previously imported images and data).
+What to do if we remove a term with an image referred by another term? If the image is an external file, we leave the image untouched.  If the image is an internal file, we should check if it's referred by any other terms in the glossary before removing it.
+Controller::initRevealingSequence() should probably be moved to TermScheduler.
+Add a checkbox to specify if the image is animated or not? Probably not needed.
+Verify if mng images are supported.
+Check if it's possible to detect if an image is animated or not, and be smart about it.
+Replace Unicode by UnicodeUTF8 when reading/writing xml files.
+In QuizFrame::maximizeCommentField() and restoreCommentField(), I added setUpdatesEnabled() statements in hope of reducing flickering.  Doesn't seem to work.
+Refactor doRemoveTerms(): There are some duplicated code there. Should be moved to Controller too.
+What happens if file extensions are GIF, PNG, XML, ZIP (uppercase) instead of lowercase in zip file or elsewhere?
+On the Linux version (emulated qtopia), the quiz doesn't show the gif image.  Bug from Linux emulation?  Most probably.
+Remove/reduce flickering when max/minimizing in QuizFrame.
+Instead of using buttons to set/clear image, use a popup menu if possible.
+Improve the preferences' order controller.  Should look like in bios when setting the boot device order.  Maybe add a checkbox to show comments with last choice.  Or/and maybe use 2 panels from -> to with +/- (or up/down arrows) buttons to change the sequence.
+Not sure but could saveData methods be refactored.  They all look the same except a few details...
+Save/restore the state of the interface : quizPanel or managerPanel, selectedItem (tree, list, tabs, etc.)
+Import should be disabled when a glossary is selected.
+We should save other data in binary as well (prefs, markedItems, ...)
+If we remove a vocabulary or folder containing vocabularies with several languages, do we remove only the selected languages terms or all the translations?
+Maybe allow scaledImage.  setScaledContents() works only for pixmap.  If I want to scale an animated gif, I may have to implement the animation using a thread with many pixmap.  I'm not sure I want to go there...
+Use QBuffer to improve efficiency?
+Find extension and fix the assumption that the extension is 4 characters long.  Could be 5 I think.  Anyway, use QFileInfo::extension() method.
+Would it be possible to have a common base class for Folder and Vocabulary.  This would allow to remove a lot of unneeded if.
+Remove newTree->setDirty( true, true ) in loadVocabTree() unless other data upgrade is needed.
+Remove method Folder::load().  Data file handling is the responsability of the Controller.
+When we start a quiz, if there is a resumable quiz, a dialog appears.  If we close the dialog instead of clicking yes or no, we should not start the quiz.
+
+After adding a new term, if I click edit term, nothing happens.  I have to click the term to reset the selection.
+When loading an image that is too large to fit in the box, scale it.  setScaledContent() works well with a pixmap but doesn't with a movie.  So if I use that, I may have to add a checkbox to allow a user to specify if the image is animated or not.  Same thing if he wants to scale up the image or not?
+If we show the main window before loading data, the application would appear to be 6-7 seconds faster to launch.
+Localize creation and modification dates.  There is no support to do this in Qt.  I will have to implement it myself.
+If I make Properties less smart, I could remove its dependencies to Folder and Vocabulary. The processing code should be relocated when we call setFolder() and setVocabulary().
+If it's worth it, we could make a dedicated class for the clipboard of the Controller.
+Make the online available for operating systems supporting es and zh locales.  Probably have separate ipk files for each of them because takes space uselessly unless symbolic links work?
+TermScheduler should be split in two Quiz and Scheduler.  Scheduler file should be renamed if necessary.
+Fix Kurochka's bug about truncated buttons when using efont.  Check forum for details.
+Set buddy for qlabel?
+Repaint comment's QMultiEdit in the quiz.  The scrollbar is still buggy.  I need help on this one.  I have made a small data.xml file with only 2 words including "to take an examination" and I'm able to reproduce it at will. 
+Not sure but maybe that polish(), constPolish() or showEvent() could be useful to update the menus when changing fonts.
+In TermDialog, we create new instances of Edit's QActions.  Is it a good idea?
+Implement MyToolBar so I can add it to TermDialog with Copy/Cut/Paste buttons.  Apparently, it would be possible to do that subclassing QToolBar and having a constructor accepting a QWidget* for parent.  Check the source code in zaurus directory.  Also check ztenv's home page for the popup window.
+Set mimetype for copy/paste and use binary format instead of xml as it's probably faster.  If it makes sense, use more than one thread to do it.
+Same thing when we paste a term, should we paste all the translations or just the current languageone?
+Set copy/cut/paste enabled in function of selection and clipboard state.
+In saveData(), we should check the return value of deleteVocabMarkedForDeletion().
+Why does it pass more than one time in toggleMaximizeDetail?
+I've implemented VocabularyManagerFrame::pasteTerms() but it should rather be Vocabulary::paste().  In function of the component with the focus, we should dispatch paste() to the selected Vocabulary.  The vocabulary should try to parse the content of the clipboard (or ignore it -> remove the ErrorHandler or make it more discreet (cout?)) and do something with it.
+Write other vocabulary files (like animals, sports, countries, etc.) and publish them.
+Check error handling if we cannot open a data file.
+Reduce memory footprints.  Maybe we could have the option to use as much RAM as possible or the opposite.  For example, instead of loading all the glossaries at the beginning, we could only load them when needed.  Instead of using 8 MB of RAM, this will use 2 MB of RAM.  It may be a little bit slower for certain operations though.  Also, start time will decrease from 12-15secs to 5 secs.  This would also remove the needs to use threads for the loading.
+If we are looking at a word in the quiz, then we go to Glossary Manager to update the word, when we resume, we do not see the changes.  Maybe it's not the same reference.  Or maybe the use of signal/slot to update the word is necessary.
+Test what happens in case of file errors.
+Disable/enable copy/paste action buttons when needed.
+When a language selector is set to empty and Show all glossaries is enabled, should we see the glossaries?  Should the term list have only one column? or zero column?
+Check for memory leaks when deleting folders/vocabs for deep children.
+Maybe introduce an object Quiz.
+Clean code : separate GUI from Backend as much as possible to improve the design.
+Refactor PreferencesParser, use a Preferences object instead of copying all the data of preferences.  Use signals and slots to decouple everything?
+Maybe implement a ncurses layer (to learn it, convenient to use tomotko in text mode, improve design (GUI/model separation)).  If I ever do that, I will need to modularize the application (backend, QT frontend and ncurses frontend).  Maybe read http://sourceware.org/autobook/autobook/autobook_toc.html for proper way to build/configure the project.
+Make the load/saveData multithread to optimize.  I think that QThread is available in Qt3 so why not.  Use a dialog to show the progress.  In the first version, just displaying "Loading/Saving data..." should be enough.  After that, progressbar.
+There are other vocabulary files mentioned by Kurochka on WaKan's website.
+Make a website where people can upload/download theirs (something similar to vim's scripts).
+Check useful tooks like lint, etc.  Ask for code review on SF maybe?
+Use CHECK_PTR( menu ); ? Everytime we affect a pointer?  Check QMenu example and test to see if it's useful.
+In getNextTerm(), we should use a static QMap (or something similar) to store all the instances of Vocabulary and find it without using the VocabTree.  I tried but it didn't work...  Should try again.
+There is some work to do on memory management...  Who (Which class) is responsible for keeping/releasing memory.  Should we store references instead of copies (like Vocabulary.addTerm()).  etc...
+When inputting a very long text in the comment field in the TermDialog, if we close (X button) the dialog, an infinite loop occurs.
+When building tree at parsing step, use VocabTree methods if possible.
+Remove checkbox for root item or remove root item or remove header.
+Implement clean undo (Command and Memento patterns?)
+Could add a small icon in the term list to indicate if a picture is associated to a word.  Could count images too in stats.  Low priority.
+In order to strech gif that are not movies, maybe we could load the image first, check somehow if it's a movie (isNull() or something else).  If not, scale the image.
+Implement the concept of referenced/shared term (shortcut/alias).  For this, I think I will need to affect GUID (the file /opt/Qtopia/include/qpe/quuid.h may be interesting) for termId because they are separated in different files.  Also, I may need to have a special file just for referenced terms.  In this case, the regular data file will just link to an id to a shared term.  This way, we don't need to duplicate the data.  We must think about the import about that in the eventuality we want to share a data file with someone...  All this so we can have a same term in several glossaries.
+Remove unneeded comments everywhere.  Now that I use filesystem to store data, maybe I could use Linux's symbolic links to implement that.  Of course, this would probably not work on Windows though.  And when I think of it, it's probably not very safe and takes too double memory.  No...  Not a good idea.
+Put licence in header of source files.  Low priority.
+Add a menuitem to go to previously shown term.  Very low priority.
+We could compute some statistics for each term and show them.  The TermScheduler could use these data to initialize itself in a smarter way.
+Maybe put a rating per word (successes/asked times) in the list of term.  This way, we can quickly know which words to uncheck.
+Fix the scrollbar bug of textfield when new text is affected.
+Search functionality (as a substitute for dictionary but also to find a word that needs to be updated).
+Statistics (e.g. right answer rate, etc.)
+Maybe implement an automatic mode in which no need to click anything, like a slide show with no points (maybe learning mode).
+Make the application work on a desktop like a regular Qt app.  Try using same version of Qt first, otherwise the latest one.
+Check all classes and refactor private/public modifier access for methods and attributes.  Also check for constness and references or pointers.
+When saving and loading data, maybe put a progression bar somewhere because it may takes some time.  Unfortunately, QProgressBar is not included in the build for Zaurus :-(  As this would need more time to implement, it will have to wait as it's not prioritary.
+Is it costly to have QMap<int,QFont> in TermList.h?  Could we use a reference instead of copy the font values?
+Add support for sound file?
+Sort the languages in PreferencesDialog::initFontOverrides().
+In QuizFrame::event(), instead of using setFixedHeight(), it would probably be better to use setMinimumHeight() and setMaximumHeight().  Some times, the textfields are a little bit too large.  Restarting the application fixes that but still...
+Remove the code related to VocabTreeParser::folderIdList as it's no more required when releasing version 0.11.0.
+Add buttons to navigate to previous and next term when editing a term (suggested by koan).
+Check source code of http://sourceforge.net/projects/elsi/ for implementing the glossary dynamic section of the website eventually.  Using extjs could be interesting.
+Make toMOTko interoperable with other applications.  For example, Ctop made the following request : instead of copy-paste from zten/zbedic to toMOTko, could it be easier?  Another use case would be to search a selected (or current) word on zten.  Zten seems to support it.  (look for qcop, appMessage and dispatchMessager).
+Bug : On linux (in the emulator), if I use right key to scrollRight() a Quiz Field, then I make a selection and copy it.  It won't be copied in the clipboard.  As it seems to work on the zaurus, I will fix that later maybe.
+Controller::importData() could be refactored a little bit in order to reduce duplicated code when creating new Vocabulary.  As it would make the code a little harder to read, I think it's not worth it.
+Implement license field with dialog on import.  Implement this only if needed.
+Improve the search:
+- Consider to perform the search from the selected folder to reduce the results set.  Maybe add a folder selector in the dialog.
+- If I implement Next result, consider what to do if the languages change.  Maybe the languages should be remembered when making a query (and the View all terms and glossaries option as well?)  Consider also that the presentation has an influence because we can sort the results.  Should the model be sorted as well?  Do we have to duplicate the data or is it possible to use MVC with a QListView in Qt 2.3.2?
+
+
