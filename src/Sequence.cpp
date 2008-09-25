@@ -4,6 +4,9 @@ const int Sequence::MAX_ITEM = 5;
 const QString Sequence::itemString[] = { "a", "b", "c", "d", "e" };
 
 Sequence::Sequence( const QString& seqStr = QString::null ) : enabled( false ) {
+    if( seqStr.isEmpty() )
+        return;
+
     QString tempStr = seqStr;
     int indexOfColon = seqStr.find( ":" );
     if( indexOfColon != -1 ) {

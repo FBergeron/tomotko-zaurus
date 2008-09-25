@@ -95,6 +95,11 @@ Sequence SequenceDialog::getSequence() const {
 }
 
 void SequenceDialog::accept() {
+    if( sequenceLineLineEdit->text().isEmpty() ) {
+        QMessageBox::warning( this, QObject::tr( "Warning" ), tr( "SequenceIsEmpty" ) );
+        return;
+    }
+
     QString lastChar = sequenceLineLineEdit->text().right( 1 );
     if( lastChar == " " || lastChar == "+" ) {
         QMessageBox::warning( this, QObject::tr( "Warning" ), tr( "SequenceNotTerminated" ) );
@@ -104,11 +109,6 @@ void SequenceDialog::accept() {
     currGroup.append( items.top() );
     sequence.addGroup( currGroup );
     currGroup.clear();
-
-    if( sequence.isEmpty() ) {
-        QMessageBox::warning( this, QObject::tr( "Warning" ), tr( "SequenceIsEmpty" ) );
-        return;
-    }
 
     QDialog::accept();
 }
