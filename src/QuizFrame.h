@@ -158,7 +158,6 @@ private:
     QPushButton*                commentButton;
 
     ImageBox*                   imageBox;
-    QPushButton*                imageButton;
 
     bool                        buttonsHidden;
 
