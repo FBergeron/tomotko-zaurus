@@ -1,3 +1,9 @@
+Version 0.11.1 (2008-11-15)
+
+- Fixed uninitialized searchDialog pointer bug.
+- Fixed revealing sequence bug mentioned by Kurochka and confirmed by Scott Wallace.
+
+
 Version 0.11.0 (2008-08-26)
 
 - Reimplemented revealing sequence tool.

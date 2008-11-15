@@ -16,11 +16,7 @@ bool PreferencesParser::startElement( const QString&, const QString&, const QStr
         if( isQuizLengthValid )
             quizLength = tempQuizLength;
 
-        QStringList seqList = QStringList::split( QString( "," ), attribs.value( QString( "revealSeq" ) ) );
-        for( QStringList::ConstIterator it = seqList.begin(); it != seqList.end(); it++ ) {
-            QString seqStr = *it;
-            sequences.append( Sequence( seqStr ) );
-        }
+        // We ignore the revealSeq attribute voluntarily.  This way, the revealing sequences will contain the intial values.
 
         QString tempLanguageFilterEnabled = attribs.value( QString( "languageFilteredEnabled" ) );
         if( QString( "false" ) == tempLanguageFilterEnabled ) 
@@ -123,7 +119,7 @@ int PreferencesParser::getQuizLength() const {
     return( quizLength );
 }
 
-int PreferencesParser::getActiveRevealingSequenceCount() const {
+int PreferencesParser::getRevealingSequenceCount() const {
     return( sequences.count() );
 }
 

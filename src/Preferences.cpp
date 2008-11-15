@@ -34,7 +34,6 @@ bool Preferences::load() {
         QByteArray compressedData( prefsFile.readAll() );
         QByteArray data( Util::qUncompress( compressedData ) );
 
-
         QDataStream in( data, IO_ReadOnly );
 
         Q_UINT32                tempMagicNumber;
@@ -105,11 +104,13 @@ bool Preferences::load() {
             reader.setContentHandler( &parser );
             reader.parse( source );
             setQuizLength( parser.getQuizLength() );
-            int seqCount = parser.getActiveRevealingSequenceCount();
+            int seqCount = parser.getRevealingSequenceCount();
             if( seqCount > 0 ) {
                 clearRevealingSequences();
-                for( int i = 0; i < seqCount; i++ )
-                    addRevealingSequence( parser.getRevealingSequenceAt( i ) ); 
+                for( int i = 0; i < seqCount; i++ ) {
+                    Sequence seq = parser.getRevealingSequenceAt( i );
+                    addRevealingSequence( seq ); 
+                }
             }
             setInterfaceLanguage( parser.getInterfaceLanguage() );
             setDigraphEnabled( parser.isDigraphEnabled() );

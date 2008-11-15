@@ -139,12 +139,12 @@ What to do before a release
 - Upload latest ipk file: cadaver https://frs.sourceforge.net/f/fb/fbergeron/uploads and then: put toMOTko_x.y.z_arm.ipk
 - Update the change log file and its date (changes.log + www/en/history.shtml).
 - Create the new release on SourceForge (hide it first, then use preformatted format and insert enter in the text).
-- Upload the doxygen doc : cd $TOMOTKO_HOME/doc;rsync -ruv --exclude=.svn * fbergeron@tomotko.sourceforge.net:tomotko_html/doc
-- Upload the online doc : cd $TOMOTKO_HOME/help;rsync -ruv --exclude=.svn * fbergeron@tomotko.sourceforge.net:tomotko_html/help
+- Upload the doxygen doc : cd $TOMOTKO_HOME/doc;rsync -ruv --exclude=.svn * fbergeron@web.sourceforge.net:tomotko_html/doc
+- Upload the online doc : cd $TOMOTKO_HOME/help;rsync -ruv --exclude=.svn * fbergeron@web.sourceforge.net:tomotko_html/help
 - Upload the latest screenshots.
 - Write release notes and changes.
 - Check in all changes.
-- Upload new website : cd $TOMOTKO_HOME/www;rsync -ruv --exclude=.svn * fbergeron@tomotko.sourceforge.net:tomotko_html
+- Upload new website : cd $TOMOTKO_HOME/www;rsync -ruv --exclude=.svn * fbergeron@web.sourceforge.net:tomotko_html
 - Post news to announce the release.
 - Close bugs in bug tracker if any.
 - Do the same thing for Freshmeat, ELSI and http://www.handheld-linux.com (screenshots, release, changes).

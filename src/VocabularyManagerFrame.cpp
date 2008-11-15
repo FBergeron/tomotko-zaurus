@@ -10,7 +10,7 @@
 #include "icons/maximize.xpm"
 
 VocabularyManagerFrame::VocabularyManagerFrame( Controller* controller, QWidget *parent = 0, const char* name = 0 )
-    : QWidget( parent, name ), controller( controller ) {
+    : QWidget( parent, name ), searchDialog( NULL ), controller( controller ) {
     treePanel = new QVBox( this, "TreePanel" );
     treePanel->setSpacing( 2 );
 

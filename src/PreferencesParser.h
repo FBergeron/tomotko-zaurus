@@ -20,7 +20,7 @@ public:
     bool startElement( const QString&, const QString&, const QString&, const QXmlAttributes& attribs );
 
     int getQuizLength() const;
-    int getActiveRevealingSequenceCount() const;
+    int getRevealingSequenceCount() const;
     Sequence getRevealingSequenceAt( int index );
     QString getInterfaceLanguage() const;
     bool isDigraphEnabled() const;
