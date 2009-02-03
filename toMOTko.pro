@@ -110,4 +110,5 @@ TRANSLATIONS += i18n/en/toMOTko.ts \
             i18n/fr/toMOTko.ts \
             i18n/ja/toMOTko.ts \
             i18n/es/toMOTko.ts \
-            i18n/zh/toMOTko.ts
+            i18n/zh/toMOTko.ts \
+            i18n/de/toMOTko.ts

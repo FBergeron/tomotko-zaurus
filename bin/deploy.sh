@@ -34,3 +34,7 @@ if [ ! -d "$QPEDIR/i18n/zh" ]; then
     mkdir -p "$QPEDIR/i18n/zh"
 fi
 cp i18n/zh/toMOTko.qm $QPEDIR/i18n/zh
+if [ ! -d "$QPEDIR/i18n/de" ]; then
+    mkdir -p "$QPEDIR/i18n/de"
+fi
+cp i18n/de/toMOTko.qm $QPEDIR/i18n/de

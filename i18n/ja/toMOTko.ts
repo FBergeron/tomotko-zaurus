@@ -51,7 +51,7 @@
     </message>
     <message>
         <source>AboutMessage</source>
-        <translation>&lt;html&gt;&lt;h2&gt;toMOTko v0.11.1&lt;/h2&gt;&lt;p&gt;Small application to learn&lt;br/&gt;new vocabulary.&lt;/p&gt;&lt;p&gt;Written by Frederic Bergeron&lt;br/&gt;(&lt;tt&gt;fbergeron@users.sourceforge.net&lt;/tt&gt;)&lt;br/&gt;Copyright (c) 2006-2008&lt;/p&gt;&lt;p&gt;This program is distributed&lt;br/&gt;under the terms of the GPL v2.&lt;/p&gt;&lt;p&gt;For more information:&lt;br/&gt;&lt;tt&gt;http://tomotko.sourceforge.net&lt;/tt&gt;&lt;/p&gt;</translation>
+        <translation>&lt;html&gt;&lt;h2&gt;toMOTko v0.11.2&lt;/h2&gt;&lt;p&gt;Small application to learn&lt;br/&gt;new vocabulary.&lt;/p&gt;&lt;p&gt;Written by Frederic Bergeron&lt;br/&gt;(&lt;tt&gt;fbergeron@users.sourceforge.net&lt;/tt&gt;)&lt;br/&gt;Copyright (c) 2006-2008&lt;/p&gt;&lt;p&gt;This program is distributed&lt;br/&gt;under the terms of the GPL v2.&lt;/p&gt;&lt;p&gt;For more information:&lt;br/&gt;&lt;tt&gt;http://tomotko.sourceforge.net&lt;/tt&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -480,10 +480,6 @@ Overwrite the current assignment?</source>
     <message>
         <source>ParseError</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>NoResumableQuizAvailable</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>NewFolder</source>

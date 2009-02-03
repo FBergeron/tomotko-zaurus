@@ -74,7 +74,6 @@ private slots:
     void about();
     void startQuiz();
     void showQuiz();
-    void resumeQuiz();
     void invokeVocabularyManager();
     void importData();
     void exportData();

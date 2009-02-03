@@ -462,10 +462,6 @@ Overwrite the current assignment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>NoResumableQuizAvailable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>OperationSuccessful</source>
         <translation type="unfinished"></translation>
     </message>

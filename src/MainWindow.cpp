@@ -28,6 +28,7 @@
 #include "icons/flag_fr.xpm"
 #include "icons/flag_ja.xpm"
 #include "icons/flag_zh.xpm"
+#include "icons/flag_de.xpm"
 
 MainWindow::MainWindow( Controller* controller )
     : QMainWindow( 0, "example application main window", WDestructiveClose ), control( controller ) {
@@ -192,6 +193,8 @@ MainWindow::MainWindow( Controller* controller )
             langAction->setIconSet( ZPIXMAP( flag_ja_xpm ) );
         else if( langCode == QString( "zh" ) )
             langAction->setIconSet( ZPIXMAP( flag_zh_xpm ) );
+        else if( langCode == QString( "de" ) )
+            langAction->setIconSet( ZPIXMAP( flag_de_xpm ) );
 
         langAction->addTo( helpMenu );
         languageActionGroup->insert( langAction );
@@ -396,13 +399,6 @@ void MainWindow::startQuiz() {
         else
             quizFrame->startQuiz();
     }
-}
-
-void MainWindow::resumeQuiz() {
-    if( control->resumeQuiz() )
-        quizFrame->resumeQuiz();
-    else
-        QMessageBox::warning( this, QObject::tr( "Information" ), QObject::tr( "NoResumableQuizAvailable" ) );
 }
 
 void MainWindow::showQuiz() {

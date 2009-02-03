@@ -3,31 +3,31 @@
     <name>MainWindow</name>
     <message>
         <source>Actions</source>
-        <translation>Actions</translation>
+        <translation>Aktionen</translation>
     </message>
     <message>
         <source>StartQuiz</source>
-        <translation>Débuter le Quiz</translation>
+        <translation>Quiz beginnen</translation>
     </message>
     <message>
         <source>ManageGlossaries</source>
-        <translation>Administrer les glossaires</translation>
+        <translation>Glossare verwalten</translation>
     </message>
     <message>
         <source>Import...</source>
-        <translation>Importer...</translation>
+        <translation>Import...</translation>
     </message>
     <message>
         <source>Export...</source>
-        <translation>Exporter...</translation>
+        <translation>Export...</translation>
     </message>
     <message>
         <source>Preferences...</source>
-        <translation>Préférences...</translation>
+        <translation>Einstellungen...</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Quitter</translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <source>?</source>
@@ -35,164 +35,162 @@
     </message>
     <message>
         <source>About...</source>
-        <translation>À propos...</translation>
+        <translation>Über...</translation>
     </message>
     <message>
         <source>RestartQuiz</source>
-        <translation>Recommencer le Quiz</translation>
+        <translation>Quiz neu starten</translation>
     </message>
     <message>
         <source>ShowAllGlossariesAndTerms</source>
-        <translation>Voir tous les glossaires/mots</translation>
+        <translation>Zeige alle Glossare und Begriffe</translation>
     </message>
     <message>
         <source>AboutToMOTko...</source>
-        <translation>À propos de toMOTko...</translation>
+        <translation>Über toMOTko...</translation>
     </message>
     <message>
         <source>AboutMessage</source>
-        <translation>&lt;html&gt;&lt;h2&gt;toMOTko v0.11.2&lt;/h2&gt;&lt;p&gt;Petite application facilitant&lt;br/&gt;l&apos;apprentissage de vocabulaire.&lt;/p&gt;&lt;p&gt;Écrit par Frédéric Bergeron&lt;br/&gt;(&lt;tt&gt;fbergeron@users.sourceforge.net&lt;/tt&gt;)&lt;br/&gt;Copyright (c) 2006-2008&lt;/p&gt;&lt;p&gt;Ce programme est distribué&lt;br/&gt;sous la licence GPL v2.&lt;/p&gt;&lt;p&gt;Pour plus d&apos;informations:&lt;br/&gt;&lt;tt&gt;http://tomotko.sourceforge.net&lt;/tt&gt;&lt;/p&gt;</translation>
+        <translation>&lt;html&gt;&lt;h2&gt;toMOTko v0.11.2&lt;/h2&gt;&lt;p&gt;Eine kleine Applikation um neues&lt;br/&gt;Vokabular zu lernen.&lt;/p&gt;&lt;p&gt;Geschrieben von Frederic Bergeron&lt;br/&gt;(&lt;a href=&quot;mailto:fbergeron@users.sourceforge.net&quot;&gt;fbergeron@users.sourceforge.net&lt;/a&gt;)&lt;br/&gt;Copyright (c) 2006-2009&lt;/p&gt;&lt;p&gt;Diese Programm wird unter der&lt;br/&gt;GPL v2 verbreitet.&lt;/p&gt;&lt;p&gt;Mehr Informationen unter:&lt;br/&gt;&lt;a href=&quot;http://tomotko.sourceforge.net&quot;&gt;http://tomotko.sourceforge.net&lt;/a&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copier</translation>
+        <translation>Kopieren</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Couper</translation>
+        <translation>Ausschneiden</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Coller</translation>
+        <translation>Einfügen</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Dévoiler</translation>
+        <translation>Aufdecken</translation>
     </message>
     <message>
         <source>RightAnswer</source>
-        <translation>Bonne réponse</translation>
+        <translation>Richtige Antwort</translation>
     </message>
     <message>
         <source>WrongAnswer</source>
-        <translation>Mauvaise réponse</translation>
+        <translation>Falsche Antwort</translation>
     </message>
     <message>
         <source>EditQuizTerm</source>
-        <translation>Éditer un mot du quiz</translation>
+        <translation>Wort bearbeiten</translation>
     </message>
     <message>
         <source>AddFolder</source>
-        <translation>Ajouter dossier</translation>
+        <translation>Ordner hinzufügen</translation>
     </message>
     <message>
         <source>AddGlossary</source>
-        <translation>Ajouter glossaire</translation>
+        <translation>Glossar hinzufügen</translation>
     </message>
     <message>
         <source>RemoveItem</source>
-        <translation>Effacer l&apos;item</translation>
+        <translation>Eintrag entfernen</translation>
     </message>
     <message>
         <source>AddTerm</source>
-        <translation>Ajouter un mot</translation>
+        <translation>Wort hinzufügen</translation>
     </message>
     <message>
         <source>EditTerm</source>
-        <translation>Éditer un mot</translation>
+        <translation>Wort bearbeiten</translation>
     </message>
     <message>
         <source>RemoveTerm</source>
-        <translation>Effacer un ou des mots</translation>
+        <translation>Wort(e) entfernen</translation>
     </message>
     <message>
         <source>CheckAllTerms</source>
-        <translation>Cocher tous les mots</translation>
+        <translation>Alle Wörter wählen</translation>
     </message>
     <message>
         <source>InverseCheckedTerms</source>
-        <translation>Inverser la sélection des mots cochés</translation>
+        <translation>Auswahl invertieren</translation>
     </message>
     <message>
         <source>Maximize</source>
-        <translation>Agrandir</translation>
+        <translation>Maximieren</translation>
     </message>
     <message>
         <source>ConfirmResumeQuiz</source>
-        <translation>Il y a déjà un quiz en cours
-pour les langues sélectionnées.
-Voulez-vous continuer ce quiz?</translation>
+        <translation>Es wurde bereits ein Quiz für die gewählten Sprachen begonnen.&lt;br&gt;Möchten Sie es fortsetzen?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Oui</translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Non</translation>
+        <translation>Nein</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation>Rechercher...</translation>
+        <translation>Suche...</translation>
     </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
     <message>
         <source>LanguageFontOverrides</source>
-        <translation>Surdéfinitions par langue</translation>
+        <translation>Schriftsätze für Sprachen</translation>
     </message>
     <message>
         <source>Fonts</source>
-        <translation>Polices de caractères</translation>
+        <translation>Schriftsätze</translation>
     </message>
     <message>
         <source>BuiltInSupportForAccents</source>
-        <translation>Support intégré pour accents</translation>
+        <translation>Eingebaute Unterstützung für Accents</translation>
     </message>
     <message>
         <source>DigraphesEnabled</source>
-        <translation>Digraphes activés</translation>
+        <translation>Digraphen ein</translation>
     </message>
     <message>
         <source>StudyLanguages</source>
-        <translation>Langues pertinentes</translation>
+        <translation>Zu lernende Sprachen</translation>
     </message>
     <message>
         <source>Length</source>
-        <translation>Longueur</translation>
+        <translation>Länge</translation>
     </message>
     <message>
         <source>RevealingOrders</source>
-        <translation>Séquences de dévoilement</translation>
+        <translation>Aufdeckreihenfolge</translation>
     </message>
     <message>
         <source>QuizLengthShortest</source>
-        <translation>Le plus court (1)</translation>
+        <translation>Kurz (1)</translation>
     </message>
     <message>
         <source>QuizLengthMedium</source>
-        <translation>Moyen (3)</translation>
+        <translation>Mittel (3)</translation>
     </message>
     <message>
         <source>QuizLengthLongest</source>
-        <translation>Le plus long (5)</translation>
+        <translation>Lang (5)</translation>
     </message>
     <message>
         <source>LabelsFont</source>
-        <translation>Libelés</translation>
+        <translation>Beschriftungen</translation>
     </message>
     <message>
         <source>FieldsFont</source>
-        <translation>Champs</translation>
+        <translation>Felder</translation>
     </message>
     <message>
         <source>ResetDefaultValue</source>
-        <translation>Valeur orig.</translation>
+        <translation>Rücksetzen</translation>
     </message>
     <message>
         <source>Languages</source>
-        <translation>Langues</translation>
+        <translation>Sprachen</translation>
     </message>
     <message>
         <source>Quiz</source>
@@ -200,95 +198,88 @@ Voulez-vous continuer ce quiz?</translation>
     </message>
     <message>
         <source>Interface</source>
-        <translation>Interface</translation>
+        <translation>Schnittstelle</translation>
     </message>
     <message>
         <source>Preferences...</source>
-        <translation>Préférences</translation>
+        <translation>Einstellungen...</translation>
     </message>
     <message>
         <source>RevealingOrderMandatory</source>
-        <translation>Vous devez choisir au
-moins une séquence de
-dévoilement.  Créez-en
-une nouvelle au besoin.</translation>
+        <translation>Sie müssen zumindest eine Aufdeckreihenfolge wählen. Wenn keine verfügbar ist, erstellen Sie bitte eine.</translation>
     </message>
     <message>
         <source>VerySmall</source>
-        <translation>Très petit</translation>
+        <translation>Sehr klein</translation>
     </message>
     <message>
         <source>Small</source>
-        <translation>Petit</translation>
+        <translation>Klein</translation>
     </message>
     <message>
         <source>Medium</source>
-        <translation>Moyen</translation>
+        <translation>Mittel</translation>
     </message>
     <message>
         <source>Large</source>
-        <translation>Grand</translation>
+        <translation>Groß</translation>
     </message>
     <message>
         <source>VeryLarge</source>
-        <translation>Très grand</translation>
+        <translation>Sehr groß</translation>
     </message>
     <message>
         <source>StudyLanguagesMandatory</source>
-        <translation>Vous devez sélectionner
-au moins deux langues d&apos;intérêt
-(une langue source et
-une langue cible.)</translation>
+        <translation>Sie müssen zumindest zwei Studiensprachen wählen (eine Quell- und eine Zielsprache).</translation>
     </message>
     <message>
         <source>Keyboard Accelerators</source>
-        <translation>Raccourcis de clavier</translation>
+        <translation>Tastenkürzel</translation>
     </message>
     <message>
         <source>Action</source>
-        <translation>Action</translation>
+        <translation>Aktion</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>Touche</translation>
+        <translation>Taste</translation>
     </message>
     <message>
         <source>Clear key</source>
-        <translation>Effacer</translation>
+        <translation>Taste löschen</translation>
     </message>
     <message>
         <source>Set key</source>
-        <translation>Définir</translation>
+        <translation>Taste festlegen</translation>
     </message>
     <message>
         <source>&lt;press key&gt;</source>
-        <translation>&lt;Tapez raccourci&gt;</translation>
+        <translation>&lt;Taste drücken&gt;</translation>
     </message>
     <message>
         <source>Duplicate key binding</source>
-        <translation>Raccourci doublon</translation>
+        <translation>Doppelte Tastenbindung</translation>
     </message>
     <message>
         <source>Key &apos;</source>
-        <translation>Le raccourci &apos;</translation>
+        <translation>Taste &apos;</translation>
     </message>
     <message>
         <source>&apos;
 is currently assigned to
 &apos;</source>
         <translation>&apos;
-est déjà assigné à
+ist gegenwärtig
 &apos;</translation>
     </message>
     <message>
         <source>&apos;.
 Overwrite the current assignment?</source>
-        <translation>&apos;.
-Affecter le raccourci quand même?</translation>
+        <translation>&apos; zugewiesen. Zuweisung überschreiben?</translation>
     </message>
     <message>
         <source>Reset key</source>
-        <translation>Valeur orig.</translation>
+        <translation>Taste zurücksetzen</translation>
     </message>
     <message>
         <source>QuizOptions</source>
@@ -296,54 +287,54 @@ Affecter le raccourci quand même?</translation>
     </message>
     <message>
         <source>hideQuizButtons</source>
-        <translation>Cacher les boutons</translation>
+        <translation>Knöpfe verstecken</translation>
     </message>
     <message>
         <source>Add revealing sequence</source>
-        <translation>Ajouter une séquence de dévoilement</translation>
+        <translation>Aufdeckreihenfolge hinzufügen</translation>
     </message>
     <message>
         <source>Remove revealing sequence</source>
-        <translation>Enlever une séquence de dévoilement</translation>
+        <translation>Aufdeckreihenfolge entfernen</translation>
     </message>
     <message>
         <source>QuizWindow</source>
-        <translation>Fenêtre de Quiz</translation>
+        <translation>Quizfenster</translation>
     </message>
     <message>
         <source>GlossaryManagerOptions</source>
-        <translation>Liste de mots</translation>
+        <translation>Liste der Wörter</translation>
     </message>
     <message>
         <source>ShowAltInTermList</source>
-        <translation>Afficher la valeur du champs Alt./Phon.</translation>
+        <translation>Zeige alt./phon. Wert</translation>
     </message>
 </context>
 <context>
     <name>PropertiesPanel</name>
     <message>
         <source>Words</source>
-        <translation>Mots</translation>
+        <translation>Wörter</translation>
     </message>
     <message>
         <source>Glossaries</source>
-        <translation>Glossaires</translation>
+        <translation>Glossare</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Dossiers</translation>
+        <translation>Ordner</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Description</translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation>Contenu</translation>
+        <translation>Inhalt</translation>
     </message>
     <message>
         <source>Items</source>
-        <translation>Items</translation>
+        <translation>Einträge</translation>
     </message>
     <message>
         <source>Selected</source>
@@ -351,7 +342,7 @@ Affecter le raccourci quand même?</translation>
     </message>
     <message>
         <source>Checked</source>
-        <translation>Cochés</translation>
+        <translation>Gewählt</translation>
     </message>
     <message>
         <source>Total</source>
@@ -359,50 +350,50 @@ Affecter le raccourci quand même?</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation>Auteur</translation>
+        <translation>Autor</translation>
     </message>
     <message>
         <source>CreationDate</source>
-        <translation>Création</translation>
+        <translation>Erstellungsdatum</translation>
     </message>
     <message>
         <source>ModificationDate</source>
-        <translation>Modification</translation>
+        <translation>Änderungsdatum</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>ar</source>
-        <translation>Arabe</translation>
+        <translation>Arabisch</translation>
     </message>
     <message>
         <source>bg</source>
-        <translation>Bulgare</translation>
+        <translation>Bulgarisch</translation>
     </message>
     <message>
         <source>el</source>
-        <translation>Grec</translation>
+        <translation>Griechisch</translation>
     </message>
     <message>
         <source>it</source>
-        <translation>Italien</translation>
+        <translation>Italienisch</translation>
     </message>
     <message>
         <source>ko</source>
-        <translation>Koréen</translation>
+        <translation>Koreanisch</translation>
     </message>
     <message>
         <source>nl</source>
-        <translation>Néerlandais</translation>
+        <translation>Holländisch</translation>
     </message>
     <message>
         <source>pt</source>
-        <translation>Portuguais</translation>
+        <translation>Portugiesisch</translation>
     </message>
     <message>
         <source>ru</source>
-        <translation>Russe</translation>
+        <translation>Russisch</translation>
     </message>
     <message>
         <source>sw</source>
@@ -410,72 +401,67 @@ Affecter le raccourci quand même?</translation>
     </message>
     <message>
         <source>th</source>
-        <translation>Thaï</translation>
+        <translation>Thai</translation>
     </message>
     <message>
         <source>vi</source>
-        <translation>Vietnamien</translation>
+        <translation>Vietnamesisch</translation>
     </message>
     <message>
         <source>zh</source>
-        <translation>Chinois</translation>
+        <translation>Chinesisch</translation>
     </message>
     <message>
         <source>en</source>
-        <translation>Anglais</translation>
+        <translation>Englisch</translation>
     </message>
     <message>
         <source>fr</source>
-        <translation>Français</translation>
+        <translation>Französisch</translation>
     </message>
     <message>
         <source>es</source>
-        <translation>Espagnol</translation>
+        <translation>Spanisch</translation>
     </message>
     <message>
         <source>ja</source>
-        <translation>Japonais</translation>
+        <translation>Japanisch</translation>
     </message>
     <message>
         <source>de</source>
-        <translation>Allemand</translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <source>Edition</source>
-        <translation>Édition</translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Couper</translation>
+        <translation>Ausschneiden</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copier</translation>
+        <translation>Kopieren</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Coller</translation>
+        <translation>Einfügen</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation>Non défini</translation>
+        <translation>Undefiniert</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Erreur</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>ErrorSavingData</source>
-        <translation>Un problème est survenu
-durant la sauvegarde
-des données.
-Vérifiez l&apos;espace-disque et
-les droits d&apos;accès aux
-fichiers.</translation>
+        <translation>Ein Fehler ist beim Speichern aufgetreten. Prüfen Sie die Berechtigungen und freien Speicherplatz.</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Avertissement</translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <source>Information</source>
@@ -483,48 +469,46 @@ fichiers.</translation>
     </message>
     <message>
         <source>OperationSuccessful</source>
-        <translation>Opération réussie</translation>
+        <translation>Aktion erfolgreich</translation>
     </message>
     <message>
         <source>OperationFailed</source>
-        <translation>Opération échouée</translation>
-    </message>
-    <message>
-        <source>MyGlossaries</source>
-        <translation>Mes glossaires</translation>
+        <translation>Aktion fehlgeschlagen</translation>
     </message>
     <message>
         <source>ParseError</source>
-        <translation>Erreur de parsing à la
-ligne %1, colonne %2.
-%3.</translation>
+        <translation>Parse Fehler in Zeile %1, Spalte %2. %3.</translation>
+    </message>
+    <message>
+        <source>MyGlossaries</source>
+        <translation>Meine Glossare</translation>
     </message>
     <message>
         <source>NewFolder</source>
-        <translation>Nouveau dossier</translation>
+        <translation>Neuer Ordner</translation>
     </message>
     <message>
         <source>NewGlossary</source>
-        <translation>Nouveau glossaire</translation>
+        <translation>Neues Glossar</translation>
     </message>
 </context>
 <context>
     <name>QuizFrame</name>
     <message>
         <source>Reveal</source>
-        <translation>Dévoiler</translation>
+        <translation>Aufdecken</translation>
     </message>
     <message>
         <source>RightAnswer</source>
-        <translation>Bonne réponse</translation>
+        <translation>Richtige Antwort</translation>
     </message>
     <message>
         <source>WrongAnswer</source>
-        <translation>Mauvaise réponse</translation>
+        <translation>Falsche Antwort</translation>
     </message>
     <message>
         <source>EditWord</source>
-        <translation>Éditer le mot</translation>
+        <translation>Wort bearbeiten</translation>
     </message>
     <message>
         <source>???</source>
@@ -532,29 +516,19 @@ ligne %1, colonne %2.
     </message>
     <message>
         <source>NoTermsMarkedForStudy</source>
-        <translation>Le Quiz ne peut débuter car
-vous n&apos;avez spécifié aucun
-mot à étudier.  Utilisez
-le Gestionnaire de glossaires
-et cochez les mots désirés.</translation>
+        <translation>Keine Wörter in den gewählten Sprachen zum Lernen gewählt. Das Quiz kann nicht beginnen. Benutzen Sie die Glossarverwaltung um Wörter zu wählen.</translation>
     </message>
     <message>
         <source>WellDone</source>
-        <translation>Félicitations! Vous avez
-appris tous les %1 mots
-sélectionnés.  Utilisez
-le Gestionnaire de glossaires
-pour en étudier d&apos;autres.</translation>
+        <translation>Gut gemacht! Sie haben alle %1 gewählten Wörter gelernt. Wählen Sie andere Wörter in der Glossarverwaltung um mehr Vokabular zu lernen.</translation>
     </message>
     <message>
         <source>DissociatedWord</source>
-        <translation>Le mot a été dissocié
-de son glossaire original.  L&apos;édition
-est impossible via le Quiz.</translation>
+        <translation>Das Wort wurde von seinem ürsprünglichen Glossar deassoziiert. Es kann nicht vom Quiz aus bearbeitet werden.</translation>
     </message>
     <message>
         <source>Word/Expr.</source>
-        <translation>Mot/Expr.</translation>
+        <translation>Wort/Ausdr.</translation>
     </message>
     <message>
         <source>Alt./Phon.</source>
@@ -562,130 +536,124 @@ est impossible via le Quiz.</translation>
     </message>
     <message>
         <source>Examples/Comments</source>
-        <translation>Exemples/Commentaires</translation>
+        <translation>Beispiele/Kommentare</translation>
     </message>
     <message>
         <source>MaximizeComment</source>
-        <translation>Agrandir le champ Commentaires du quiz</translation>
+        <translation>Maximiere das Quiz Kommentar Feld</translation>
     </message>
     <message>
         <source>Image</source>
-        <translation>Image</translation>
+        <translation>Bild</translation>
     </message>
 </context>
 <context>
     <name>ScrollableLineEdit</name>
     <message>
         <source>Undo</source>
-        <translation>Annuler</translation>
+        <translation type="unfinished">Undo</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation>Refaire</translation>
+        <translation type="unfinished">Redo</translation>
     </message>
     <message>
         <source>Cut</source>
-        <translation>Couper</translation>
+        <translation>Ausschneiden</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Copier</translation>
+        <translation>Kopieren</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Coller</translation>
+        <translation>Einfügen</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Effacer</translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation>Sélectionner tout</translation>
+        <translation type="unfinished">Select All</translation>
     </message>
 </context>
 <context>
     <name>SearchDialog</name>
     <message>
         <source>Search</source>
-        <translation>Chercher</translation>
+        <translation>Suche</translation>
     </message>
     <message>
         <source>Results</source>
-        <translation>Résultats</translation>
+        <translation>Ergebnisse</translation>
     </message>
     <message>
         <source>Glossary</source>
-        <translation>Glossaire</translation>
+        <translation>Glossar</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Chemin</translation>
+        <translation>Ort</translation>
     </message>
     <message>
         <source>View Glossary</source>
-        <translation>Voir le glossaire</translation>
+        <translation>Glossar anzeigen</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation>Rechercher...</translation>
+        <translation>Suche...</translation>
     </message>
     <message>
         <source>Edit Term</source>
-        <translation>Éditer</translation>
+        <translation>Bearbeiten</translation>
     </message>
     <message>
         <source>Remove Term(s)</source>
-        <translation>Effacer</translation>
+        <translation>Entfernen</translation>
     </message>
     <message>
         <source>%1 term(s) found</source>
-        <translation>%1 mot(s) trouvé(s)</translation>
+        <translation>%1 Wort(e) gefunden</translation>
     </message>
     <message>
         <source>ConfirmRemoveSelectedTerms</source>
-        <translation>Êtes-vous certain de
-vouloir effacer le(s)
-mot(s) sélectionné(s)?</translation>
+        <translation>Möchten Sie wiklich die gewählten Worte entfernen?</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Oui</translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Non</translation>
+        <translation>Nein</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForRemoveTermsCaption</source>
-        <translation>Suppression de mots</translation>
+        <translation>Wörter entfernen</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForRemoveTerms</source>
-        <translation>Certains des mots
-sélectionnés contiennent des
-traductions dans plusieurs
-langues.  Indiquez les traductions
-à effacer.</translation>
+        <translation>Manche der gewählten Worte enthalten mehrere Übersetzungen in mehreren Sprachen. Bitte wählen Sie die zu löschenden Übersetzungen.</translation>
     </message>
 </context>
 <context>
     <name>SequenceDialog</name>
     <message>
         <source>Quiz</source>
-        <translation>Fenêtre de Quiz</translation>
+        <translation>Quizfenster</translation>
     </message>
     <message>
         <source>FirstLanguage</source>
-        <translation>Langue source</translation>
+        <translation>Erste Sprache</translation>
     </message>
     <message>
         <source>Word/Expr.</source>
-        <translation>Mot/Expr.</translation>
+        <translation>Wort/Ausdr.</translation>
     </message>
     <message>
         <source>TestLanguage</source>
-        <translation>Langue cible</translation>
+        <translation>Testsprache</translation>
     </message>
     <message>
         <source>Alt./Phon.</source>
@@ -693,41 +661,34 @@ langues.  Indiquez les traductions
     </message>
     <message>
         <source>Image</source>
-        <translation>Image</translation>
+        <translation>Bild</translation>
     </message>
     <message>
         <source>CommentLabelPanel</source>
-        <translation>Examples/Commentaires</translation>
+        <translation>Beispiele/Kommentare</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Séquence de dévoilement</translation>
+        <translation>Aufdeckreihenfolge</translation>
     </message>
     <message>
         <source>AddRevealingSequence</source>
-        <translation>Ajouter une séquence de dévoilement...</translation>
+        <translation>Aufdeckreihenfolge hinzufügen...</translation>
     </message>
     <message>
         <source>SequenceIsEmpty</source>
-        <translation>La séquence en courѕ d&apos;édition
-est vide.  Pour annuler l&apos;opération,
-cliquez sur Annuler pour fermer
-la fenêtre de dialogue.</translation>
+        <translation>Die gerade bearbeitete Aufdeckreihenfolge ist leer. Wenn Sie sie löschen möchten, wählen Sie &apos;Abbrechen&apos; um das Fenster zu schließen.</translation>
     </message>
     <message>
         <source>SequenceNotTerminated</source>
-        <translation>La séquence en cours d&apos;édition
-est invalide car elle ne se termine pas
-par un item dévoilable.  Veuillez ajouter
-un item dévoible ou effacer le dernier
-opérateur d&apos;union.</translation>
+        <translation>Die gerade bearbeitete Aufdeckreihenfolge endet nicht mit einem aufdeckbaren Eintrag. Entfernen Sie den letzen Operator oder fügen Sie einen aufdeckbaren Eintrag an.</translation>
     </message>
 </context>
 <context>
     <name>TermDialog</name>
     <message>
         <source>Word/Expr.</source>
-        <translation>Mot/Expr.</translation>
+        <translation>Wort/Ausdr.</translation>
     </message>
     <message>
         <source>Alt./Phon.</source>
@@ -735,232 +696,202 @@ opérateur d&apos;union.</translation>
     </message>
     <message>
         <source>Examples/Comments</source>
-        <translation>Exemples/Commentaires</translation>
+        <translation>Beispiele/Kommentare</translation>
     </message>
     <message>
         <source>EditTerm</source>
-        <translation>Édition d&apos;un mot</translation>
+        <translation>Wort bearbeiten</translation>
     </message>
     <message>
         <source>Image</source>
-        <translation>Image</translation>
+        <translation>Bild</translation>
     </message>
     <message>
         <source>setImage</source>
-        <translation>Choisir</translation>
+        <translation>Setzen</translation>
     </message>
     <message>
         <source>setImageTooltip</source>
-        <translation>Choisir image</translation>
+        <translation>Bild setzen</translation>
     </message>
     <message>
         <source>clearImage</source>
-        <translation>Effacer</translation>
+        <translation>Löschen</translation>
     </message>
     <message>
         <source>clearImageTooltip</source>
-        <translation>Effacer image</translation>
+        <translation>Bild löschen</translation>
     </message>
     <message>
         <source>SetImage...</source>
-        <translation>Choisir...</translation>
+        <translation>Bild setzen...</translation>
     </message>
 </context>
 <context>
     <name>TranslationSelectionDialog</name>
     <message>
         <source>Languages</source>
-        <translation>Langues</translation>
+        <translation>Sprachen</translation>
     </message>
     <message>
         <source>CheckAllLanguages</source>
-        <translation>Cocher toutes les langues</translation>
+        <translation>Alle Sprachen auswählen</translation>
     </message>
 </context>
 <context>
     <name>VocabularyManagerFrame</name>
     <message>
         <source>MultipleTranslationsDetectedForRemoveTermsCaption</source>
-        <translation>Suppression de mots</translation>
+        <translation>Wörter entfernen</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForRemoveTerms</source>
-        <translation>Certains des mots
-sélectionnés contiennent des
-traductions dans plusieurs
-langues.  Indiquez les traductions
-à effacer.</translation>
+        <translation>Manche der gewählten Worte enthalten mehrere Übersetzungen in mehreren Sprachen. Bitte wählen Sie die zu löschenden Übersetzungen.</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForImport</source>
-        <translation>Le fichier contient des mots
-traduits dans plusieurs langues.  
-Veuillez indiquer les traductions
-à importer.</translation>
+        <translation>Die Daten die Sie importieren möchten enthalten mehrere Übersetzungen. Bitte wählen Sie die zu importierenden Übersetzungen.</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForExport</source>
-        <translation>Le glossaire contient des mots
-traduits dans plusieurs langues.  
-Veuillez indiquer les traductions
-à exporter.</translation>
+        <translation>Die Daten die Sie exportieren möchten enthalten mehrere Übersetzungen. Bitte wählen Sie die zu exportierenden Übersetzungen.</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation>Oui</translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <source>No</source>
-        <translation>Non</translation>
+        <translation>Nein</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titre</translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <source>Glossaries</source>
-        <translation>Glossaires</translation>
+        <translation>Glossare</translation>
     </message>
     <message>
         <source>AddFolder</source>
-        <translation>Ajouter dossier</translation>
+        <translation>Ordner hinzufügen</translation>
     </message>
     <message>
         <source>AddGlossary</source>
-        <translation>Ajouter glossaire</translation>
+        <translation>Glossar hinzufügen</translation>
     </message>
     <message>
         <source>RemoveItem</source>
-        <translation>Effacer l&apos;item</translation>
+        <translation>Eintrag entfernen</translation>
     </message>
     <message>
         <source>Folder</source>
-        <translation>Dossier</translation>
+        <translation>Ordner</translation>
     </message>
     <message>
         <source>Glossary</source>
-        <translation>Glossaire</translation>
+        <translation>Glossar</translation>
     </message>
     <message>
         <source>CheckAllTerms</source>
-        <translation>Cocher tous les mots</translation>
+        <translation>Alle Wörter wählen</translation>
     </message>
     <message>
         <source>InverseCheckedTerms</source>
-        <translation>Inverser la sélection des mots cochés</translation>
+        <translation>Auswahl invertieren</translation>
     </message>
     <message>
         <source>AddTerm</source>
-        <translation>Ajouter un mot</translation>
+        <translation>Wort hinzufügen</translation>
     </message>
     <message>
         <source>EditTerm</source>
-        <translation>Éditer le mot</translation>
+        <translation>Wort bearbeiten</translation>
     </message>
     <message>
         <source>RemoveTerm</source>
-        <translation>Effacer un mot</translation>
+        <translation>Wort entfernen</translation>
     </message>
     <message>
         <source>GlossaryExportSuccessful</source>
-        <translation>Le glossaire a été exporté avec succès.</translation>
+        <translation>Das Glossar wurde erfolgreich exportiert.</translation>
     </message>
     <message>
         <source>ItemImportFailed</source>
-        <translation>Une erreur est survenue. Les
-données n&apos;ont pas pu
-être importées.</translation>
+        <translation>Ein Fehler ist aufgetreten. Es wurden keine Daten importiert.</translation>
     </message>
     <message>
         <source>ItemImportFailedZipFileExpected</source>
-        <translation>Format de fichier invalide.
-Un fichier .zip était attendu.
-Les données n&apos;ont pas pu être
-importées.</translation>
+        <translation>Falsches Dateiformat - keine Zip Datei. Es wurden keine Daten importiert.</translation>
     </message>
     <message>
         <source>GlossaryExportFailed</source>
-        <translation>Une erreur est survenue. Le
-glossaire n&apos;a pas pu être
-exporté.</translation>
+        <translation>Ein Fehler ist aufgetreten. Das Glossar wurde nicht exportiert.</translation>
     </message>
     <message>
         <source>ConfirmRemoveItem</source>
-        <translation>Êtes-vous certain de
-vouloir effacer cet item?</translation>
+        <translation>Möchten Sie diesen Eintrag wirklich entfernen?</translation>
     </message>
     <message>
         <source>ConfirmRemoveSelectedTerms</source>
-        <translation>Êtes-vous certain de
-vouloir effacer le(s)
-mot(s) sélectionné(s)?</translation>
+        <translation>Möchten Sie die gewählten Worte wirklich entfernen?</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Propriétés</translation>
+        <translation>Eigenschaften</translation>
     </message>
     <message>
         <source>MaximizeDetails</source>
-        <translation>Agrandir</translation>
+        <translation>Maximieren</translation>
     </message>
     <message>
         <source>Words</source>
-        <translation>Mots</translation>
+        <translation>Wörter</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForFolderExport</source>
-        <translation>Le dossier contient des mots
-traduits dans plusieurs langues.
-Veuillez indiquer les traductions
-à exporter.</translation>
+        <translation>Der Ordner enthält Wörter mit Übersetzungen in mehreren Sprachen. Bitte wählen Sie die zu exportierenden Übersetzungen.</translation>
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation>Le dossier a été exporté avec succès.</translation>
+        <translation>Der Ordner wurde erfolgreich exportiert.</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation>Une erreur est survenue. Le
-dossier n&apos;a pas pu être
-exporté.</translation>
+        <translation>Ein Fehler ist aufgetreten. Der Ordner wurde nicht exportiert.</translation>
     </message>
     <message>
         <source>Import...</source>
-        <translation>Importer...</translation>
+        <translation>Importieren...</translation>
     </message>
     <message>
         <source>ImportSuccessful</source>
-        <translation>Les données ont été importées avec succès.</translation>
+        <translation>Die Daten wurden erfolgreich importiert.</translation>
     </message>
     <message>
         <source>InvisibleImport</source>
         <translation>
 
-Les données importées sont invisibles 
-pour le moment.  Pour les voir, vous
-devez soit affecter les langues
-appropriées dans les sélecteurs ou
-cocher l&apos;option &quot;Voir tous
-les glossaires/mots&quot; du menu Actions.</translation>
+Die neuen Daten sind zur Zeit nicht sichtbar. Sie müssen die entsprechenden Sprachen wählen oder &quot;Zeige alle Glossare und Begriffe&quot; im Aktionen Menü wählen.</translation>
     </message>
     <message>
         <source>Export...</source>
-        <translation>Exporter...</translation>
+        <translation>Exportieren...</translation>
     </message>
 </context>
 <context>
     <name>ZFileDialog</name>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation type="unfinished">Name</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Taille</translation>
+        <translation type="unfinished">Size</translation>
     </message>
     <message>
         <source>Date</source>
-        <translation>Date</translation>
+        <translation type="unfinished">Datum</translation>
     </message>
 </context>
 </TS>
