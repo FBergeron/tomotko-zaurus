@@ -1,8 +1,6 @@
 ToDo
 ----
-In MainWindow, for cut/copy/paste, use the QObject context for the strings.
 Add symlinks for fr/es history pages.
-Mention that hoyahoya glossary has been added.
 Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Refactor the code in editResultTerm() and editTerm().  The code is similar.  Maybe using signal/slot approach could work. There is a good example of that in page 18 of my Qt book for the FindDialog.
 Remove prefs.xml file and remove PreferencesPaser now obsolete.

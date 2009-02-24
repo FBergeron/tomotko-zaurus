@@ -12,7 +12,6 @@ DigraphLineEdit::~DigraphLineEdit() {
 }
 
 void DigraphLineEdit::keyPressEvent( QKeyEvent* event ) {
-    //cout << "txt='" << event->text() << "' asc=" << event->ascii() << "; k=" << event->key() << " count=" << event->count() << endl;
     if( digraphEnabled ) {
         // We consider only printable keys.  Control keys are processed normally.
         // I'm not sure if this test covers all the cases though.

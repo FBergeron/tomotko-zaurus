@@ -2,18 +2,6 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Paste</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reveal</source>
         <translation type="unfinished"></translation>
     </message>
@@ -887,6 +875,10 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

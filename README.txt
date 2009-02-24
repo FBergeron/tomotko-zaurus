@@ -48,6 +48,16 @@ The same procedure works for Ubuntu.
 
 Common operations
 -----------------
+To generate/update the translation file (.ts) :
+
+$ lupdate -verbose toMOTko.pro
+
+
+To compile the string files (.qm) :
+
+$ lrelease -verbose toMOTko.pro
+
+
 To generate the project file (not needed anymore but just in case):
 
 $ progen -o toMOTko.pro
@@ -56,17 +66,6 @@ $ progen -o toMOTko.pro
 To build the Makefile :
 
 $ tmake -o Makefile toMOTko.pro
-
-
-To generate/update the translation file (.ts) :
-
-$ lupdate -verbose toMOTko.pro
-$ vim i18n/fr/toMOTko.ts
-
-
-To compile the string files (.qm) :
-
-$ lrelease -verbose toMOTko.pro
 
 
 To build the application on Linux :

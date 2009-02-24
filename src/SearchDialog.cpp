@@ -342,3 +342,6 @@ void SearchDialog::doRemoveTerms( bool allowSelectTrans = true, bool confirmBefo
     }
 }
 
+void SearchDialog::setDigraphEnabled( bool isDigraphEnabled ) {
+    queryField->setDigraphEnabled( isDigraphEnabled );
+}

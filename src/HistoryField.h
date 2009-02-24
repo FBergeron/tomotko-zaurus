@@ -10,7 +10,10 @@
 #define HISTORY_FIELD_H
 #include <iostream.h>
 #include <qcombobox.h>
+#include <qlineedit.h>
+#include <qapplication.h>
 #include <qwidget.h>
+#include "Util.h"
 
 class HistoryField : public QComboBox {
 
@@ -19,15 +22,25 @@ class HistoryField : public QComboBox {
 public:
 
     HistoryField( QWidget* parent, const char* name = 0 );
-    void activate();
+    //void activate();
+    bool isDigraphEnabled() const;
+
+public slots:
+
+    void setDigraphEnabled( bool isEnabled );
 
 protected:
 
-    void keyPressEvent( QKeyEvent* e );
+    bool eventFilter( QObject* obj, QEvent* event );
 
 signals:
 
     void returnPressed();
+
+private:
+
+    bool digraphEnabled;
+    QString buffer;
 
 };
 

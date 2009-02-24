@@ -104,7 +104,7 @@ ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, Q
     if( mode == AnyFile ) {
         QHBox* hbox = new QHBox( vbox );
         hbox->setSpacing(2);
-        new QLabel( "File", hbox );
+        new QLabel( tr( "File" ), hbox );
         selection = new QLineEdit( hbox );
     }
 

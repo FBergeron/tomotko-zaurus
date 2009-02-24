@@ -58,9 +58,9 @@ MainWindow::MainWindow( Controller* controller )
     connect( firstLanguageComboBox, SIGNAL( activated( const QString& ) ), this, SLOT( setFirstLanguage( const QString& ) ) );
     connect( testLanguageComboBox, SIGNAL( activated( const QString& ) ), this, SLOT( setTestLanguage( const QString& ) ) );
 
-    copyAction = Util::createAction( tr( "Copy" ), editcopy_xpm, this, SLOT( copy() ), CTRL + Key_C );
-    cutAction = Util::createAction( tr( "Cut" ), editcut_xpm, this, SLOT( cut() ), CTRL + Key_X );
-    pasteAction = Util::createAction( tr( "Paste" ), editpaste_xpm, this, SLOT( paste() ), CTRL + Key_V );
+    copyAction = Util::createAction( QObject::tr( "Copy" ), editcopy_xpm, this, SLOT( copy() ), CTRL + Key_C );
+    cutAction = Util::createAction( QObject::tr( "Cut" ), editcut_xpm, this, SLOT( cut() ), CTRL + Key_X );
+    pasteAction = Util::createAction( QObject::tr( "Paste" ), editpaste_xpm, this, SLOT( paste() ), CTRL + Key_V );
 
     progressBar = new QProgressBar( toolBar, "ProgressBar" );
     connect( controller, SIGNAL( progressChanged( int ) ), progressBar, SLOT( setProgress( int ) ) );

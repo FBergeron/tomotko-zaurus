@@ -33,6 +33,7 @@ public slots:
     void show();
     void updateFonts();
     void retranslateUi();
+    void setDigraphEnabled( bool isDigraphEnabled );
 
 signals:
 

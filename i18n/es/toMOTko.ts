@@ -54,18 +54,6 @@
         <translation>Mostrar todos los glosarios y palabras</translation>
     </message>
     <message>
-        <source>Copy</source>
-        <translation>Copiar</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation>Cortar</translation>
-    </message>
-    <message>
-        <source>Paste</source>
-        <translation>Pegar</translation>
-    </message>
-    <message>
         <source>Reveal</source>
         <translation>Revelar</translation>
     </message>
@@ -959,6 +947,10 @@ en el menú Acciones.</translation>
     <message>
         <source>Date</source>
         <translation>Fecha</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Archivo</translation>
     </message>
 </context>
 </TS>
