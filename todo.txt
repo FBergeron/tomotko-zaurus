@@ -9,6 +9,7 @@ Remove Controller::deleteObsoleteData().
 Remove xml handling of pref data file.
 Try to use pictureflow (http://code.google.com/p/pictureflow/).
 Add an image preview in ZFileDialog.
+Would it be possible to make the fields larger (see more than 1 row) (especially or only in portrait mode).
 Release 0.12.0
 
 Reorganize SVN...  Maybe the website should be separated from the trunk?

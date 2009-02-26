@@ -513,6 +513,7 @@ void QuizFrame::retranslateUi() {
     testLangTermLabel->setText( tr( "Word/Expr." ) );
     testLangTermAltButton->setText( tr( "???" ) );
     testLangTermButton->setText( tr( "???" ) );
+    imageBox->setText( tr( "Image" ) );
     commentLabel->setText( tr( "Examples/Comments" ) );
     commentButton->setText( tr( "???" ) );
 }
