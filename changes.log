@@ -1,4 +1,4 @@
-Version 0.11.2 (????-??-??)
+Version 0.11.2 (2009-03-02)
 
 - Translated the application in German.  Thanks to Christian Varga!
 - Fixed digraph bug in SearchDialog's query field.
