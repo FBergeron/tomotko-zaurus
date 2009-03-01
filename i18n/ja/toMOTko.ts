@@ -51,7 +51,7 @@
     </message>
     <message>
         <source>AboutMessage</source>
-        <translation>&lt;html&gt;&lt;h2&gt;toMOTko v0.11.2&lt;/h2&gt;&lt;p&gt;Small application to learn&lt;br/&gt;new vocabulary.&lt;/p&gt;&lt;p&gt;Written by Frederic Bergeron&lt;br/&gt;(&lt;tt&gt;fbergeron@users.sourceforge.net&lt;/tt&gt;)&lt;br/&gt;Copyright (c) 2006-2008&lt;/p&gt;&lt;p&gt;This program is distributed&lt;br/&gt;under the terms of the GPL v2.&lt;/p&gt;&lt;p&gt;For more information:&lt;br/&gt;&lt;tt&gt;http://tomotko.sourceforge.net&lt;/tt&gt;&lt;/p&gt;</translation>
+        <translation>&lt;html&gt;&lt;h2&gt;toMOTko v0.11.2&lt;/h2&gt;&lt;p&gt;外国語を勉強するためのアプリケーション&lt;/p&gt;&lt;p&gt;作成者：Frederic Bergeron&lt;br/&gt;(&lt;tt&gt;fbergeron@users.sourceforge.net&lt;/tt&gt;)&lt;br/&gt;(c) 2006-2009&lt;/p&gt;&lt;p&gt;使用許可：GPL v2.&lt;/p&gt;&lt;p&gt;詳しくは:&lt;br/&gt;&lt;tt&gt;http://tomotko.sourceforge.net&lt;/tt&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -79,7 +79,7 @@
     </message>
     <message>
         <source>RemoveItem</source>
-        <translation>アイテムを消す</translation>
+        <translation>項目を削除する</translation>
     </message>
     <message>
         <source>AddTerm</source>
@@ -103,7 +103,7 @@
     </message>
     <message>
         <source>Maximize</source>
-        <translation type="unfinished"></translation>
+        <translation>最大化</translation>
     </message>
     <message>
         <source>ConfirmResumeQuiz</source>
@@ -111,15 +111,15 @@
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">はい</translation>
+        <translation>はい</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">いいえ</translation>
+        <translation>いいえ</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
 </context>
 <context>
@@ -154,7 +154,7 @@
     </message>
     <message>
         <source>RevealingOrders</source>
-        <translation type="unfinished"></translation>
+        <translation>表示順番</translation>
     </message>
     <message>
         <source>QuizLengthShortest</source>
@@ -170,11 +170,11 @@
     </message>
     <message>
         <source>BuiltInSupportForAccents</source>
-        <translation type="unfinished"></translation>
+        <translation>アクセントのサポートをオン</translation>
     </message>
     <message>
         <source>DigraphesEnabled</source>
-        <translation>ダイグラフ　On</translation>
+        <translation>ダイグラフをオン</translation>
     </message>
     <message>
         <source>Fonts</source>
@@ -194,7 +194,7 @@
     </message>
     <message>
         <source>LanguageFontOverrides</source>
-        <translation type="unfinished"></translation>
+        <translation>言語のフォントのオーバーライト</translation>
     </message>
     <message>
         <source>Quiz</source>
@@ -250,7 +250,7 @@
     </message>
     <message>
         <source>Key &apos;</source>
-        <translation></translation>
+        <translation>キー　&apos;</translation>
     </message>
     <message>
         <source>&apos;
@@ -269,31 +269,31 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>QuizOptions</source>
-        <translation type="unfinished"></translation>
+        <translation>クイズ</translation>
     </message>
     <message>
         <source>hideQuizButtons</source>
-        <translation type="unfinished"></translation>
+        <translation>ボタンを隠す</translation>
     </message>
     <message>
         <source>Add revealing sequence</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい順番を加える</translation>
     </message>
     <message>
         <source>Remove revealing sequence</source>
-        <translation type="unfinished"></translation>
+        <translation>順番を削除する</translation>
     </message>
     <message>
         <source>QuizWindow</source>
-        <translation type="unfinished"></translation>
+        <translation>クイズのウィンドウ</translation>
     </message>
     <message>
         <source>ShowAltInTermList</source>
-        <translation type="unfinished"></translation>
+        <translation>発音を表示する</translation>
     </message>
     <message>
         <source>GlossaryManagerOptions</source>
-        <translation type="unfinished"></translation>
+        <translation>用語集マネジャー</translation>
     </message>
 </context>
 <context>
@@ -312,15 +312,15 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation>詳細</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation type="unfinished"></translation>
+        <translation>内容</translation>
     </message>
     <message>
         <source>Items</source>
-        <translation type="unfinished"></translation>
+        <translation>項目</translation>
     </message>
     <message>
         <source>Selected</source>
@@ -332,19 +332,19 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>Total</source>
-        <translation type="unfinished"></translation>
+        <translation>合計</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation type="unfinished"></translation>
+        <translation>作成者</translation>
     </message>
     <message>
         <source>CreationDate</source>
-        <translation type="unfinished"></translation>
+        <translation>作成日時</translation>
     </message>
     <message>
         <source>ModificationDate</source>
-        <translation type="unfinished"></translation>
+        <translation>更新日時</translation>
     </message>
 </context>
 <context>
@@ -455,11 +455,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>OperationSuccessful</source>
-        <translation type="unfinished"></translation>
+        <translation>作業終了</translation>
     </message>
     <message>
         <source>OperationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>作業できませんでした</translation>
     </message>
     <message>
         <source>MyGlossaries</source>
@@ -490,7 +490,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>WrongAnswer</source>
-        <translation></translation>
+        <translation>不正解</translation>
     </message>
     <message>
         <source>EditWord</source>
@@ -518,7 +518,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>WellDone</source>
-        <translation type="unfinished"></translation>
+        <translation>おめでとう！全ての%1の言葉を習いました。用語集マネジャーで違う言葉を選択して下さい。</translation>
     </message>
     <message>
         <source>DissociatedWord</source>
@@ -526,11 +526,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>MaximizeComment</source>
-        <translation type="unfinished"></translation>
+        <translation>コメントを最大化</translation>
     </message>
     <message>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>イメージ</translation>
     </message>
 </context>
 <context>
@@ -568,51 +568,51 @@ Overwrite the current assignment?</source>
     <name>SearchDialog</name>
     <message>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
     <message>
         <source>Results</source>
-        <translation type="unfinished"></translation>
+        <translation>結果</translation>
     </message>
     <message>
         <source>Glossary</source>
-        <translation type="unfinished">用語集</translation>
+        <translation>用語集</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished"></translation>
+        <translation>場所</translation>
     </message>
     <message>
         <source>View Glossary</source>
-        <translation type="unfinished"></translation>
+        <translation>用語集を見る</translation>
     </message>
     <message>
         <source>Search...</source>
-        <translation type="unfinished"></translation>
+        <translation>検索...</translation>
     </message>
     <message>
         <source>Edit Term</source>
-        <translation type="unfinished"></translation>
+        <translation>言葉を編集する</translation>
     </message>
     <message>
         <source>Remove Term(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>言葉を削除する</translation>
     </message>
     <message>
         <source>%1 term(s) found</source>
-        <translation type="unfinished"></translation>
+        <translation>%1個の言葉が見つかれました。</translation>
     </message>
     <message>
         <source>ConfirmRemoveSelectedTerms</source>
-        <translation type="unfinished"></translation>
+        <translation>本当にこれを削除してもいいですか？</translation>
     </message>
     <message>
         <source>Yes</source>
-        <translation type="unfinished">はい</translation>
+        <translation>はい</translation>
     </message>
     <message>
         <source>No</source>
-        <translation type="unfinished">いいえ</translation>
+        <translation>いいえ</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForRemoveTermsCaption</source>
@@ -627,7 +627,7 @@ Overwrite the current assignment?</source>
     <name>SequenceDialog</name>
     <message>
         <source>Quiz</source>
-        <translation type="unfinished">クイズ</translation>
+        <translation>クイズ</translation>
     </message>
     <message>
         <source>FirstLanguage</source>
@@ -635,7 +635,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>Word/Expr.</source>
-        <translation type="unfinished">言葉</translation>
+        <translation>言葉</translation>
     </message>
     <message>
         <source>TestLanguage</source>
@@ -643,23 +643,23 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>Alt./Phon.</source>
-        <translation type="unfinished">発音</translation>
+        <translation>発音</translation>
     </message>
     <message>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>イメージ</translation>
     </message>
     <message>
         <source>CommentLabelPanel</source>
-        <translation type="unfinished"></translation>
+        <translation>例/コメント</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation type="unfinished"></translation>
+        <translation>表示順番</translation>
     </message>
     <message>
         <source>AddRevealingSequence</source>
-        <translation type="unfinished"></translation>
+        <translation>新しい順番を加える</translation>
     </message>
     <message>
         <source>SequenceIsEmpty</source>
@@ -690,27 +690,27 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation>イメージ</translation>
     </message>
     <message>
         <source>setImage</source>
-        <translation type="unfinished"></translation>
+        <translation>指定</translation>
     </message>
     <message>
         <source>setImageTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>イメージを指定する</translation>
     </message>
     <message>
         <source>clearImage</source>
-        <translation type="unfinished"></translation>
+        <translation>消す</translation>
     </message>
     <message>
         <source>clearImageTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>イメージを消す</translation>
     </message>
     <message>
         <source>SetImage...</source>
-        <translation type="unfinished"></translation>
+        <translation>イメージを指定する ...</translation>
     </message>
 </context>
 <context>
@@ -756,7 +756,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>RemoveItem</source>
-        <translation>アイテムを消す</translation>
+        <translation>項目を削除する</translation>
     </message>
     <message>
         <source>Folder</source>
@@ -792,15 +792,15 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>GlossaryExportSuccessful</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポートができました</translation>
     </message>
     <message>
         <source>GlossaryExportFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポートができませんでした</translation>
     </message>
     <message>
         <source>ConfirmRemoveItem</source>
-        <translation type="unfinished"></translation>
+        <translation>本当にこれを削除してもいいですか？</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -812,19 +812,19 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>ConfirmRemoveSelectedTerms</source>
-        <translation type="unfinished"></translation>
+        <translation>本当にこれを削除してもいいですか？</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>プロパティ</translation>
     </message>
     <message>
         <source>MaximizeDetails</source>
-        <translation type="unfinished"></translation>
+        <translation>最大化</translation>
     </message>
     <message>
         <source>Words</source>
-        <translation type="unfinished">言葉</translation>
+        <translation>言葉</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForFolderExport</source>
@@ -832,23 +832,23 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポートができました</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポートができませんでした</translation>
     </message>
     <message>
         <source>Import...</source>
-        <translation type="unfinished">インポート...</translation>
+        <translation>インポート...</translation>
     </message>
     <message>
         <source>ImportSuccessful</source>
-        <translation type="unfinished"></translation>
+        <translation>インポートができました</translation>
     </message>
     <message>
         <source>ItemImportFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>インポートができませんでした</translation>
     </message>
     <message>
         <source>ItemImportFailedZipFileExpected</source>
@@ -860,7 +860,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>Export...</source>
-        <translation type="unfinished">エクスポート...</translation>
+        <translation>エクスポート...</translation>
     </message>
 </context>
 <context>
@@ -879,7 +879,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>File</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 </TS>

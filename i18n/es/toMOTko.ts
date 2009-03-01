@@ -47,7 +47,7 @@
     </message>
     <message>
         <source>AboutMessage</source>
-        <translation>&lt;html&gt;&lt;h2&gt;toMOTko v0.11.2&lt;/h2&gt;&lt;p&gt;Pequeña aplicación para aprender&lt;br/&gt;nuevo vocabulario.&lt;/p&gt;&lt;p&gt;Escrito por Frederic Bergeron&lt;br/&gt;(&lt;tt&gt;fbergeron@users.sourceforge.net&lt;/tt&gt;)&lt;br/&gt;Copyright (c) 2006-2008&lt;/p&gt;&lt;p&gt;toMOTko es software libre.&lt;br/&gt;Puede redistribuirlo y/o modificarlo&lt;br/&gt;bajo los términos de la GPL v2.&lt;/p&gt;&lt;p&gt;Para mas información:&lt;br/&gt;&lt;tt&gt;http://tomotko.sourceforge.net&lt;/tt&gt;&lt;/p&gt;</translation>
+        <translation>&lt;html&gt;&lt;h2&gt;toMOTko v0.11.2&lt;/h2&gt;&lt;p&gt;Pequeña aplicación para aprender&lt;br/&gt;nuevo vocabulario.&lt;/p&gt;&lt;p&gt;Escrito por Frederic Bergeron&lt;br/&gt;(&lt;tt&gt;fbergeron@users.sourceforge.net&lt;/tt&gt;)&lt;br/&gt;Copyright (c) 2006-2009&lt;/p&gt;&lt;p&gt;toMOTko es software libre.&lt;br/&gt;Puede redistribuirlo y/o modificarlo&lt;br/&gt;bajo los términos de la GPL v2.&lt;/p&gt;&lt;p&gt;Para mas información:&lt;br/&gt;&lt;tt&gt;http://tomotko.sourceforge.net&lt;/tt&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>ShowAllGlossariesAndTerms</source>
