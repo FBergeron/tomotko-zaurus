@@ -158,6 +158,7 @@ void SearchDialog::search() {
     }
     resultsListView->verticalScrollBar()->setValue( 0 );
     resultsCounterLabel->setText( tr( "%1 term(s) found" ).arg( results.count() ) );
+    updateUi();
 }
 
 void SearchDialog::reset() {
