@@ -16,7 +16,6 @@
 #include <qxml.h>
 #include <stdlib.h>
 #include "FolderParser.h"
-#include "MarkedItemsParser.h"
 #include "Preferences.h"
 #include "Sequence.h"
 #include "Term.h"

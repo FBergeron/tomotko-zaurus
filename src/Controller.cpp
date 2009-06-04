@@ -1056,6 +1056,12 @@ void Controller::saveMarkedItemsRec( Vocabulary* vocab, IdList& vocabIds, IdList
 }
 
 void Controller::loadMarkedItems( Folder* folder ) {
+    QFile markedXmlFile( markedXmlFilename );
+    if( markedXmlFile.exists() ) {
+        if( !markedXmlFile.remove() )
+            cerr << "Coul not remove file " << markedXmlFilename << ". Status=" << markedXmlFile.status() << endl;
+    }
+
     QFile markedFile( markedFilename );
     if( markedFile.exists() ) {
         if( !markedFile.open( IO_ReadOnly ) )
@@ -1086,18 +1092,6 @@ void Controller::loadMarkedItems( Folder* folder ) {
         markedFile.close();
         
         initMarkedForStudyRec( folder, tempFolderIds, tempVocabIds, tempTermIds );
-    }
-    else {
-        QFile markedXmlFile( markedXmlFilename );
-        if( markedXmlFile.exists() ) {
-            MarkedItemsParser parser;
-            QXmlInputSource source( markedXmlFile );
-            QXmlSimpleReader reader;
-            reader.setContentHandler( &parser );
-            reader.parse( source );
-            initMarkedForStudyRec( folder, *(parser.getMarkedFolders()), *(parser.getMarkedVocabs()), *(parser.getMarkedTerms()) );
-        }
-
     }
 }
 
