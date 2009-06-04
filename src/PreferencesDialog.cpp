@@ -603,7 +603,7 @@ void PreferencesDialog::keyPressEvent( QKeyEvent *evt ) {
 }
 
 void PreferencesDialog::addSequence() {
-    SequenceDialog dialog( prefs, this );
+    SequenceDialog dialog( this );
     dialog.showMaximized();
     int result = dialog.exec();
     if( result ) {

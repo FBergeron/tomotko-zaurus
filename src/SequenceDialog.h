@@ -22,7 +22,7 @@ class SequenceDialog : public QDialog {
     
 public:
 
-    SequenceDialog( Preferences* prefs, QWidget* parent );
+    SequenceDialog( QWidget* parent );
     ~SequenceDialog(); 
 
     Sequence getSequence() const;
@@ -49,8 +49,6 @@ private:
     bool isItemUsed( const Sequence::Item& item ) const;
     bool areItemsLeft() const;
     void setItemButtonsEnabled( bool isEnabled );
-
-    Preferences*                prefs;
 
     Sequence                    sequence;
 

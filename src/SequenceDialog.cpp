@@ -1,7 +1,7 @@
 #include "SequenceDialog.h"
 
-SequenceDialog::SequenceDialog( Preferences* prefs, QWidget* parent ) 
-    : QDialog( parent, 0, true ), prefs( prefs ) {
+SequenceDialog::SequenceDialog( QWidget* parent ) 
+    : QDialog( parent, 0, true ) {
     init();
 }
 
