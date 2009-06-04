@@ -974,11 +974,6 @@ QString Controller::convertPath( const QString& path, QMap<int,Folder*>& newFold
 }
 
 bool Controller::saveData() {
-    if( !deleteObsoleteData() ) {
-        // Just write a warning message.  We don't return( false ) here
-        // because we want to try to save the new data, at least.
-        cerr << "Could not delete obsolete data files." << endl;
-    }
     if( !deleteItemsMarkedForDeletion( vocabTree ) ) {
         // Just write a warning message.  We don't return( false ) here
         // because we want to try to save the new data, at least.
@@ -1460,19 +1455,4 @@ QValueList<TermKey> Controller::getSearchResults() const {
 
 int Controller::getSearchResultsCount() const {
     return( searchResults.count() );
-}
-
-bool Controller::deleteObsoleteData() {
-    QDir applDir( applicationDirName );
-    if( applDir.exists() ) {
-        QStringList fileList = applDir.entryList( "*.dat.z" );
-        for( QStringList::Iterator it = fileList.begin(); it != fileList.end(); it++ ) {
-            QString filename = *it;
-            if( filename.left( 5 ) != "quiz_" ) {
-                if( !QFile::remove( applicationDirName + "/" + filename ) )
-                    return( false );
-            }
-        }
-    }
-    return( true );
 }

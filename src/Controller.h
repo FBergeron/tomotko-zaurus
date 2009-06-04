@@ -145,7 +145,6 @@ private:
     Folder* makeCopy( Folder* folder, const QString& firstLang, const QString& testLang ) const;
 
     bool deleteItemsMarkedForDeletion( Folder* folder );
-    bool deleteObsoleteData();
 
     int findFolderId( const QString& filename ) const;
     int findParentFolderId( const QString& dirPath ) const;

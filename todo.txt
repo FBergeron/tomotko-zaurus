@@ -2,7 +2,6 @@ ToDo
 ----
 Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Refactor the code in editResultTerm() and editTerm().  The code is similar.  Maybe using signal/slot approach could work. There is a good example of that in page 18 of my Qt book for the FindDialog.
-Remove Controller::deleteObsoleteData().
 Remove xml handling of pref data file.
 Try to use pictureflow (http://code.google.com/p/pictureflow/).
 Add an image preview in ZFileDialog.
