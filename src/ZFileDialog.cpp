@@ -10,11 +10,9 @@
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qvbox.h>
-#include <qhbox.h>
 #include <qlistview.h>
 #include <qfileinfo.h>
 #include <qpixmap.h>
-#include <qlabel.h>
 #include <qlineedit.h>
 
 #include <qpe/mimetype.h>
@@ -119,12 +117,22 @@ ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, Q
     //   createDirBT->setSizePolicy( QSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum ) );  
     //   createDirBT->setFixedWidth( pixmap.width() );
 
-    fileLV = new QListView( vbox );
+    fileLVHBox = new QHBox( vbox );
+
+    fileLV = new QListView( fileLVHBox );
     fileLV->addColumn( tr( "Name" ) );
     fileLV->addColumn( tr( "Size" ) );
     fileLV->addColumn( tr( "Date" ) );
     if( mode == ExistingFiles )
         fileLV->setMultiSelection( true );
+
+    imagePreviewBox = new QVGroupBox( tr( "ImagePreview" ), fileLVHBox );
+    imagePreviewBox->hide();
+    imagePreview = new QLabel( imagePreviewBox );
+
+    showImagePreview = new QCheckBox( tr( "ShowImagePreview" ), vbox );
+    showImagePreview->setChecked( false );
+    connect( showImagePreview, SIGNAL( toggled( bool ) ), this, SLOT( toggleImagePreview( bool ) ) );
 
     showMaximized();
     currentDir.setSorting( QDir::Name | QDir::DirsFirst | QDir::IgnoreCase );
@@ -316,4 +324,11 @@ void ZFileDialog::itemSelected( ) {
     if( zitem->isSelected() && zitem->finfo.isFile() ) {
         selection->setText( zitem->finfo.fileName() );
     }
+}
+
+void ZFileDialog::toggleImagePreview( bool isOn ) {
+    if( isOn )
+        imagePreviewBox->show();
+    else
+        imagePreviewBox->hide();
 }

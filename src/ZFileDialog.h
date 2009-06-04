@@ -9,14 +9,20 @@
 #ifndef ZFILE_DIALOG_H
 #define ZFILE_DIALOG_H
 
+#include <qcheckbox.h>
 #include <qdialog.h>
 #include <qdir.h>
+#include <qhbox.h>
+#include <qlabel.h>
 #include <qpixmap.h>
+#include <iostream.h>
+#include <qvgroupbox.h>
 
 class QListView;
 class QComboBox;
 class QListViewItem;
 class QLineEdit;
+class QVGroupBox;
 
 class ZFileCustomFilter {
 
@@ -56,8 +62,12 @@ public:
 protected:
 
     QDir currentDir;
-    QListView *fileLV;
-    QComboBox *fstabCB;
+    QListView   *fileLV;
+    QComboBox   *fstabCB;
+    QCheckBox   *showImagePreview;
+    QVGroupBox  *imagePreviewBox;
+    QLabel      *imagePreview;
+    QHBox       *fileLVHBox;
 
     QStringList dir_list;
     QStringList filters;
@@ -85,6 +95,7 @@ protected slots:
     void fileClicked( QListViewItem *it );
     void parentDirClicked();
     void itemSelected();
+    void toggleImagePreview( bool isOn );
 
 };
 
