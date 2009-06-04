@@ -18,7 +18,6 @@ HEADERS += src/Base.h \
            src/DigraphMultiLineEdit.h \
            src/Sequence.h \
            src/Preferences.h \
-           src/PreferencesParser.h \
            src/MarkedItemsParser.h \
            src/PropertiesPanel.h \
            src/TermDialog.h \
@@ -67,7 +66,6 @@ SOURCES += src/Util.cpp \
            src/DigraphMultiLineEdit.cpp \
            src/Sequence.cpp \
            src/Preferences.cpp \
-           src/PreferencesParser.cpp \
            src/MarkedItemsParser.cpp \
            src/PropertiesPanel.cpp \
            src/TermDialog.cpp \

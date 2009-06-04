@@ -1,9 +1,7 @@
 ToDo
 ----
-Add symlinks for fr/es history pages.
 Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Refactor the code in editResultTerm() and editTerm().  The code is similar.  Maybe using signal/slot approach could work. There is a good example of that in page 18 of my Qt book for the FindDialog.
-Remove prefs.xml file and remove PreferencesPaser now obsolete.
 Remove marked.xml file and remove MarkedItemParser now obsolete. 
 Remove Controller::deleteObsoleteData().
 Remove xml handling of pref data file.
@@ -11,6 +9,9 @@ Try to use pictureflow (http://code.google.com/p/pictureflow/).
 Add an image preview in ZFileDialog.
 Would it be possible to make the fields larger (see more than 1 row) (especially or only in portrait mode).
 Release 0.12.0
+
+
+Remove prefsXmlFilename declaration and everything that's related to it.
 
 Reorganize SVN...  Maybe the website should be separated from the trunk?
 Remove code that remove prefs.xml file.  Now obsolete.

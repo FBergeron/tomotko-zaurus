@@ -10,7 +10,6 @@
 #include <qstring.h>
 #include <qvaluelist.h>
 #include <qpe/resource.h>
-#include "PreferencesParser.h"
 #include "Sequence.h"
 #include "Util.h"
 

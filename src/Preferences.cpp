@@ -24,6 +24,12 @@ Preferences::~Preferences() {
 }
 
 bool Preferences::load() {
+    QFile prefsXmlFile( prefsXmlFilename );
+    if( prefsXmlFile.exists() ) {
+        if( !prefsXmlFile.remove() )
+            cerr << "Could not remove file " << prefsXmlFilename << ". Status=" << prefsXmlFile.status() << endl;
+    }
+
     QFile prefsFile( prefsFilename );
     if( prefsFile.exists() ) {
         if( !prefsFile.open( IO_ReadOnly ) ) {
@@ -94,54 +100,6 @@ bool Preferences::load() {
         fontOverrideFamilies = tempFontOverrideFamilies;
         fontOverrideSizes = tempFontOverrideSizes;
         accel = tempAccel;
-    }
-    else {
-        QFile prefsXmlFile( prefsXmlFilename );
-        if( prefsXmlFile.exists() ) {
-            PreferencesParser parser;
-            QXmlInputSource source( prefsXmlFile );
-            QXmlSimpleReader reader;
-            reader.setContentHandler( &parser );
-            reader.parse( source );
-            setQuizLength( parser.getQuizLength() );
-            int seqCount = parser.getRevealingSequenceCount();
-            if( seqCount > 0 ) {
-                clearRevealingSequences();
-                for( int i = 0; i < seqCount; i++ ) {
-                    Sequence seq = parser.getRevealingSequenceAt( i );
-                    addRevealingSequence( seq ); 
-                }
-            }
-            setInterfaceLanguage( parser.getInterfaceLanguage() );
-            setDigraphEnabled( parser.isDigraphEnabled() );
-            setQuizButtonsHidden( parser.areQuizButtonsHidden() );
-            setAltInTermListShown( parser.isAltInTermListShown() );
-            setFirstLanguage( parser.getFirstLanguage() );
-            QValueList<QString> tempStudyLanguages( parser.getStudyLanguages() );
-            if( !tempStudyLanguages.isEmpty() ) {
-                studyLanguages.clear();
-                for( QValueList<QString>::ConstIterator it = tempStudyLanguages.begin(); it != tempStudyLanguages.end(); it++ ) {
-                    QString language(*it);
-                    addStudyLanguage( language );
-                    if( parser.isFontOverrideFamilyDefined( language ) )
-                        setFontOverrideFamily( language, parser.getFontOverrideFamily( language ) );
-                    if( parser.isFontOverrideSizeDefined( language ) )
-                        setFontOverrideSize( language, parser.getFontOverrideSize( language ) );
-                }
-            }
-            setTestLanguage( parser.getTestLanguage() );
-            setLabelsFontFamily( parser.getLabelsFontFamily() );
-            setLabelsFontSizeModifier( parser.getLabelsFontSizeModifier() );
-            setFontFamily( parser.getFontFamily() );
-            setFontSizeModifier( parser.getFontSizeModifier() );
-            setLanguageFilterEnabled( parser.isLanguageFilterEnabled() );
-            QValueList<int> closedFolders = parser.getClosedFolders();
-            for( QValueList<int>::ConstIterator it = closedFolders.begin(); it != closedFolders.end(); it++ )
-                setFolderOpen( *it, false );
-            QMap<int,int> accels = parser.getAccelerators();
-            for( QMap<int,int>::ConstIterator it = accels.begin(); it != accels.end(); it++ )
-                setAccelerator( (Action)it.key(), it.data() );
-        }
     }
     return( true );
 }
