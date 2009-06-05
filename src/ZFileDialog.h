@@ -16,7 +16,10 @@
 #include <qlabel.h>
 #include <qpixmap.h>
 #include <iostream.h>
-#include <qvgroupbox.h>
+#include <qvbox.h>
+#include <qhgroupbox.h>
+
+#include "PixMap.h"
 
 class QListView;
 class QComboBox;
@@ -65,7 +68,8 @@ protected:
     QListView   *fileLV;
     QComboBox   *fstabCB;
     QCheckBox   *showImagePreview;
-    QVGroupBox  *imagePreviewBox;
+    QHGroupBox  *imagePreviewBox;
+    QVBox       *imagePreviewWrapper;
     QLabel      *imagePreview;
     QHBox       *fileLVHBox;
 
@@ -81,6 +85,9 @@ protected:
 private:
 
     void insertDirEntry( const QString &label, const QString &path, QPixmap *pixmap = NULL );
+    void clearImagePreview();
+    void initImagePreview( const QString& imagePath ); 
+    void resizeImagePreview();
 
 protected:
 

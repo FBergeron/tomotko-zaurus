@@ -19,6 +19,7 @@
 #include <qpe/resource.h>
 
 #include "ZFileDialog.h"
+#include "icons/void.xpm"
 
 class ZFileItem : public QListViewItem {
 
@@ -126,10 +127,18 @@ ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, Q
     if( mode == ExistingFiles )
         fileLV->setMultiSelection( true );
 
-    imagePreviewBox = new QVGroupBox( tr( "ImagePreview" ), fileLVHBox );
-    imagePreviewBox->hide();
-    imagePreview = new QLabel( imagePreviewBox );
+    imagePreviewBox = new QHGroupBox( tr( "ImagePreview" ), fileLVHBox );
+    imagePreviewBox->setFixedWidth( 260 );
 
+    imagePreviewWrapper = new QVBox( imagePreviewBox );
+
+    imagePreview = new QLabel( imagePreviewWrapper );
+    //imagePreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Expanding ) );
+    imagePreview->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding ) );
+    imagePreview->setAlignment( AlignHCenter | AlignVCenter );
+    //imagePreview->setScaledContents( true );
+
+    imagePreviewBox->hide();
     showImagePreview = new QCheckBox( tr( "ShowImagePreview" ), vbox );
     showImagePreview->setChecked( false );
     connect( showImagePreview, SIGNAL( toggled( bool ) ), this, SLOT( toggleImagePreview( bool ) ) );
@@ -258,11 +267,19 @@ void ZFileDialog::show() {
 }
 
 void ZFileDialog::fileClicked( QListViewItem *it ) {
-    if( it == NULL ) 
+    if( it == NULL ) {
+        clearImagePreview();
         return;
+    }
     ZFileItem *zitem = (ZFileItem*)it;
     if( zitem->finfo.isDir() ) {
         setDir( zitem->finfo.absFilePath( ) );
+    }
+    else if( zitem->isSelected() && zitem->finfo.isFile() ) {
+        //selection->setText( zitem->finfo.fileName() );
+        if( showImagePreview->isChecked() ) { 
+            initImagePreview( zitem->finfo.absFilePath() );
+        }
     }
 }
 
@@ -318,12 +335,11 @@ void ZFileDialog::setSelection( const QString &name ) {
 
 void ZFileDialog::itemSelected( ) {
     QListViewItem *it = fileLV->selectedItem();
-    if( it == NULL ) 
+    if( it == NULL )
         return;
     ZFileItem *zitem = (ZFileItem*)it;
-    if( zitem->isSelected() && zitem->finfo.isFile() ) {
+    if( zitem->isSelected() && zitem->finfo.isFile() )
         selection->setText( zitem->finfo.fileName() );
-    }
 }
 
 void ZFileDialog::toggleImagePreview( bool isOn ) {
@@ -331,4 +347,54 @@ void ZFileDialog::toggleImagePreview( bool isOn ) {
         imagePreviewBox->show();
     else
         imagePreviewBox->hide();
+}
+
+void ZFileDialog::clearImagePreview() {
+    imagePreview->setPixmap( ZPIXMAP( void_xpm ) );
+    //tempImagePath = QString::null;
+    //imageFormat = QString::null;
+}
+
+void ZFileDialog::resizeImagePreview() {
+    QPixmap* pixmap = imagePreview->pixmap();
+
+    int w = pixmap->width();
+    int h = pixmap->height();
+    if( w > imagePreviewWrapper->width() ) {
+        h = imagePreviewWrapper->width() * h / w;
+        w = imagePreviewWrapper->width();
+    }
+    if( h > imagePreviewWrapper->height() ) {
+        w = imagePreviewWrapper->height() * w / h;
+        h = imagePreviewWrapper->height();
+    }
+
+    QPixmap scaledPixmap;
+    scaledPixmap.convertFromImage( pixmap->convertToImage().smoothScale( w, h ) ); 
+    imagePreview->setPixmap( scaledPixmap );
+}
+
+void ZFileDialog::initImagePreview( const QString& imagePath ) {
+    clearImagePreview();
+    if( !imagePath.isNull() ) {
+        QFileInfo info( imagePath );
+        if( info.exists() ) {
+            QString extension = info.extension( false ).upper();
+            if( extension == "GIF" || extension == "PNG" ) {
+                QString imageFormat = QPixmap::imageFormat( imagePath );
+                if( imageFormat == "GIF" || imageFormat == "PNG" ) {
+                    //tempImagePath = imagePath;
+                    if( imageFormat == "GIF" ) {
+                        //const QMovie& movie( imagePath );
+                        //image->setMovie( movie );
+                    }
+                    else if( imageFormat == "PNG" ) {
+                        QPixmap pixmap( imagePath );
+                        imagePreview->setPixmap( pixmap );
+                    }
+                    resizeImagePreview();
+                }
+            }
+        }
+    }
 }
