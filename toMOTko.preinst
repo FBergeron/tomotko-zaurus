@@ -2,5 +2,5 @@
 
 if [ -d /home/zaurus/.toMOTko ] 
     then
-    cp -a /home/zaurus/.toMOTko /home/zaurus/.toMOTko-before-0.11.2
+    cp -a /home/zaurus/.toMOTko /home/zaurus/.toMOTko-before-0.12
 fi

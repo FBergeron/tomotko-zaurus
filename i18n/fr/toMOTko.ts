@@ -51,7 +51,7 @@
     </message>
     <message>
         <source>AboutMessage</source>
-        <translation>&lt;html&gt;&lt;h2&gt;toMOTko v0.11.2&lt;/h2&gt;&lt;p&gt;Petite application facilitant&lt;br/&gt;l&apos;apprentissage de vocabulaire.&lt;/p&gt;&lt;p&gt;Écrit par Frédéric Bergeron&lt;br/&gt;(&lt;a href=&quot;mailto:fbergeron@users.sourceforge.net&quot;&gt;fbergeron@users.sourceforge.net&lt;/a&gt;)&lt;br/&gt;Copyright (c) 2006-2009&lt;/p&gt;&lt;p&gt;Ce programme est distribué&lt;br/&gt;sous la licence GPL v2.&lt;/p&gt;&lt;p&gt;Pour plus d&apos;informations:&lt;br/&gt;&lt;tt&gt;http://tomotko.sourceforge.net&lt;/tt&gt;&lt;/p&gt;</translation>
+        <translation>&lt;html&gt;&lt;h2&gt;toMOTko v0.12&lt;/h2&gt;&lt;p&gt;Petite application facilitant&lt;br/&gt;l&apos;apprentissage de vocabulaire.&lt;/p&gt;&lt;p&gt;Écrit par Frédéric Bergeron&lt;br/&gt;(&lt;a href=&quot;mailto:fbergeron@users.sourceforge.net&quot;&gt;fbergeron@users.sourceforge.net&lt;/a&gt;)&lt;br/&gt;Copyright (c) 2006-2009&lt;/p&gt;&lt;p&gt;Ce programme est distribué&lt;br/&gt;sous la licence GPL v2.&lt;/p&gt;&lt;p&gt;Pour plus d&apos;informations:&lt;br/&gt;&lt;tt&gt;http://tomotko.sourceforge.net&lt;/tt&gt;&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -953,6 +953,18 @@ les glossaires/mots&quot; du menu Actions.</translation>
     <message>
         <source>File</source>
         <translation>Fichier</translation>
+    </message>
+    <message>
+        <source>ImagePreview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ShowImagePreview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>test</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -881,5 +881,17 @@ Overwrite the current assignment?</source>
         <source>File</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ImagePreview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ShowImagePreview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>test</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
