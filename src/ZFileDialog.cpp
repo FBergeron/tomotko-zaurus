@@ -10,9 +10,11 @@
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qvbox.h>
+#include <qhbox.h>
 #include <qlistview.h>
 #include <qfileinfo.h>
 #include <qpixmap.h>
+#include <qlabel.h>
 #include <qlineedit.h>
 
 #include <qpe/mimetype.h>
@@ -83,7 +85,8 @@ protected:
 };
 
 ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, QWidget *parent ) :
-    QDialog( parent, "zfiledialog", true ), mode( mode ), customFilter( NULL ) {
+    QDialog( parent, "zfiledialog", true ), mode( mode ), customFilter( NULL ),
+        imagePreviewEnabled( false ), imagePreviewDirty( false ) {
     setCaption( title );
 
     //  setMinimumWidth( 200 );
@@ -93,18 +96,16 @@ ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, Q
     QBoxLayout *l = new QVBoxLayout( this );
     l->setMargin( 2 );
 
-    QVBox* vbox = new QVBox( this );
+    vbox = new QVBox( this );
     vbox->setSpacing(2);
     vbox->setMargin(2);
     l->addWidget( vbox );
 
-    QHBox* hbox;
-
     if( mode == AnyFile ) {
-        QHBox* hbox = new QHBox( vbox );
-        hbox->setSpacing(2);
-        new QLabel( tr( "File" ), hbox );
-        selection = new QLineEdit( hbox );
+        QHBox* hboxFilename = new QHBox( vbox );
+        hboxFilename->setSpacing(2);
+        new QLabel( tr( "File" ), hboxFilename );
+        selection = new QLineEdit( hboxFilename );
     }
 
     hbox = new QHBox( vbox );
@@ -118,30 +119,36 @@ ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, Q
     //   createDirBT->setSizePolicy( QSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum ) );  
     //   createDirBT->setFixedWidth( pixmap.width() );
 
-    fileLVHBox = new QHBox( vbox );
 
-    fileLV = new QListView( fileLVHBox );
+    mainPanel = new QWidget( vbox );
+    mainPanelLayout = new QBoxLayout( mainPanel, QBoxLayout::LeftToRight );
+    mainPanelLayout->setSpacing( 2 );
+
+    fileLVBox = new QVBox( mainPanel );
+
+    fileLV = new QListView( fileLVBox );
     fileLV->addColumn( tr( "Name" ) );
     fileLV->addColumn( tr( "Size" ) );
     fileLV->addColumn( tr( "Date" ) );
     if( mode == ExistingFiles )
         fileLV->setMultiSelection( true );
 
-    imagePreviewBox = new QHGroupBox( tr( "ImagePreview" ), fileLVHBox );
-    imagePreviewBox->setFixedWidth( 260 );
+    showImagePreview = new QCheckBox( tr( "ShowImagePreview" ), fileLVBox );
+    showImagePreview->setChecked( false );
+    connect( showImagePreview, SIGNAL( toggled( bool ) ), this, SLOT( setImagePreviewEnabled( bool ) ) );
+
+    imagePreviewBox = new QHGroupBox( tr( "ImagePreview" ), mainPanel );
 
     imagePreviewWrapper = new QVBox( imagePreviewBox );
-
     imagePreview = new QLabel( imagePreviewWrapper );
-    //imagePreview->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Expanding ) );
     imagePreview->setSizePolicy( QSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding ) );
     imagePreview->setAlignment( AlignHCenter | AlignVCenter );
-    //imagePreview->setScaledContents( true );
+    imagePreview->setMinimumSize( 260, 260 );
+
+    mainPanelLayout->addWidget( fileLVBox, 1 );
+    mainPanelLayout->addWidget( imagePreviewBox );
 
     imagePreviewBox->hide();
-    showImagePreview = new QCheckBox( tr( "ShowImagePreview" ), vbox );
-    showImagePreview->setChecked( false );
-    connect( showImagePreview, SIGNAL( toggled( bool ) ), this, SLOT( toggleImagePreview( bool ) ) );
 
     showMaximized();
     currentDir.setSorting( QDir::Name | QDir::DirsFirst | QDir::IgnoreCase );
@@ -157,6 +164,8 @@ ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, Q
     if( mode == AnyFile ) {
         connect( fileLV, SIGNAL( selectionChanged() ), this, SLOT( itemSelected() ) );
     }  
+
+    imagePreview->installEventFilter( this );
 }
 
 void ZFileDialog::insertDirEntry( const QString &label, const QString &path, QPixmap *pixmap ) {
@@ -269,15 +278,17 @@ void ZFileDialog::show() {
 void ZFileDialog::fileClicked( QListViewItem *it ) {
     if( it == NULL ) {
         clearImagePreview();
+        imagePreviewPath = QString();
         return;
     }
     ZFileItem *zitem = (ZFileItem*)it;
     if( zitem->finfo.isDir() ) {
+        clearImagePreview();
+        imagePreviewPath = QString();
         setDir( zitem->finfo.absFilePath( ) );
     }
     else if( zitem->isSelected() && zitem->finfo.isFile() ) {
-        //selection->setText( zitem->finfo.fileName() );
-        if( showImagePreview->isChecked() ) { 
+        if( imagePreviewEnabled ) { 
             initImagePreview( zitem->finfo.absFilePath() );
         }
     }
@@ -335,31 +346,41 @@ void ZFileDialog::setSelection( const QString &name ) {
 
 void ZFileDialog::itemSelected( ) {
     QListViewItem *it = fileLV->selectedItem();
-    if( it == NULL )
+    if( it == NULL ) 
         return;
     ZFileItem *zitem = (ZFileItem*)it;
-    if( zitem->isSelected() && zitem->finfo.isFile() )
+    if( zitem->isSelected() && zitem->finfo.isFile() ) {
         selection->setText( zitem->finfo.fileName() );
+    }
 }
 
-void ZFileDialog::toggleImagePreview( bool isOn ) {
-    if( isOn )
+void ZFileDialog::setImagePreviewEnabled( bool isOn ) {
+    if( isOn ) {
+        imagePreviewEnabled = true;
         imagePreviewBox->show();
-    else
+        fileClicked( fileLV->selectedItem() );
+    }
+    else {
+        imagePreviewEnabled = false;
         imagePreviewBox->hide();
+        showImagePreview->setChecked( false );
+    }
+}
+
+bool ZFileDialog::isImagePreviewEnabled() const {
+    return( imagePreviewEnabled );
 }
 
 void ZFileDialog::clearImagePreview() {
     imagePreview->setPixmap( ZPIXMAP( void_xpm ) );
-    //tempImagePath = QString::null;
-    //imageFormat = QString::null;
 }
 
 void ZFileDialog::resizeImagePreview() {
-    QPixmap* pixmap = imagePreview->pixmap();
-
-    int w = pixmap->width();
-    int h = pixmap->height();
+    if( imagePreviewPath.isNull() || !imagePreviewEnabled )
+        return;
+    QPixmap pixmap( imagePreviewPath );
+    int w = pixmap.width();
+    int h = pixmap.height();
     if( w > imagePreviewWrapper->width() ) {
         h = imagePreviewWrapper->width() * h / w;
         w = imagePreviewWrapper->width();
@@ -368,9 +389,8 @@ void ZFileDialog::resizeImagePreview() {
         w = imagePreviewWrapper->height() * w / h;
         h = imagePreviewWrapper->height();
     }
-
     QPixmap scaledPixmap;
-    scaledPixmap.convertFromImage( pixmap->convertToImage().smoothScale( w, h ) ); 
+    scaledPixmap.convertFromImage( pixmap.convertToImage().smoothScale( w, h ) ); 
     imagePreview->setPixmap( scaledPixmap );
 }
 
@@ -383,18 +403,49 @@ void ZFileDialog::initImagePreview( const QString& imagePath ) {
             if( extension == "GIF" || extension == "PNG" ) {
                 QString imageFormat = QPixmap::imageFormat( imagePath );
                 if( imageFormat == "GIF" || imageFormat == "PNG" ) {
-                    //tempImagePath = imagePath;
                     if( imageFormat == "GIF" ) {
-                        //const QMovie& movie( imagePath );
-                        //image->setMovie( movie );
+                        const QMovie& movie( imagePath );
+                        imagePreview->setMovie( movie );
                     }
                     else if( imageFormat == "PNG" ) {
-                        QPixmap pixmap( imagePath );
-                        imagePreview->setPixmap( pixmap );
+                        imagePreviewPath = imagePath;
+                        imagePreview->setText( " " ); // To make sure that a resize event will be spawned when calling adjustSize() below. 
+                        imagePreview->adjustSize(); // This will generate a Resize event that will trigger resizeImagePreview() in eventFilter().
+                        imagePreviewDirty = true;
+
                     }
-                    resizeImagePreview();
+
                 }
             }
         }
     }
+}
+
+bool ZFileDialog::eventFilter( QObject* target, QEvent* evt ) {
+    // Small hack to manage imagePreviewResize properly.
+    if( target == imagePreview ) {
+        if( evt->type() == QEvent::Resize && imagePreviewDirty ) {
+            resizeImagePreview();
+            imagePreviewDirty = false;
+        }
+    }
+   return( QDialog::eventFilter( target, evt ) ); 
+}
+
+void ZFileDialog::updateGeometry() {
+    QSize size( width(), height() );
+    if( size.width() > size.height() ) {
+        mainPanelLayout->setDirection( QBoxLayout::LeftToRight );
+    }
+    else {
+        mainPanelLayout->setDirection( QBoxLayout::TopToBottom );
+    }
+
+    vbox->layout()->invalidate();
+    layout()->invalidate();
+    layout()->activate();
+}
+
+void ZFileDialog::resizeEvent( QResizeEvent* evt ) {
+    updateGeometry();
 }

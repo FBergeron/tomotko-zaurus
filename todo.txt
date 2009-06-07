@@ -1,5 +1,8 @@
 ToDo
 ----
+Fix ZFileDialog bug, why do we need to use the mouse with the FileDialog?  When using the arrow keys, we should see the image previews change.  Maybe the code introduced in fileClicked should be moved to itemSelected() instead.  Also, when setImagePreviewEnabled(), call itemSelected().
+Make sure that the commented line in ZFileDialog is correct.
+I think that we should remove the installEventFilter statement in ImageBox.
 Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Refactor the code in editResultTerm() and editTerm().  The code is similar.  Maybe using signal/slot approach could work. There is a good example of that in page 18 of my Qt book for the FindDialog.
 Try to use pictureflow (http://code.google.com/p/pictureflow/).

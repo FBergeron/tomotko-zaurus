@@ -14,6 +14,7 @@
 #include <qdir.h>
 #include <qhbox.h>
 #include <qlabel.h>
+#include <qmovie.h>
 #include <qpixmap.h>
 #include <iostream.h>
 #include <qvbox.h>
@@ -65,13 +66,18 @@ public:
 protected:
 
     QDir currentDir;
+    QHBox       *hbox;
+    QVBox       *vbox;
     QListView   *fileLV;
     QComboBox   *fstabCB;
     QCheckBox   *showImagePreview;
     QHGroupBox  *imagePreviewBox;
     QVBox       *imagePreviewWrapper;
     QLabel      *imagePreview;
-    QHBox       *fileLVHBox;
+    QVBox       *fileLVBox;
+
+    QWidget     *mainPanel;
+    QBoxLayout  *mainPanelLayout;
 
     QStringList dir_list;
     QStringList filters;
@@ -82,12 +88,17 @@ protected:
 
     ZFileCustomFilter *customFilter;
 
+    bool imagePreviewEnabled;
+    bool imagePreviewDirty;
+    QString imagePreviewPath;
+
 private:
 
     void insertDirEntry( const QString &label, const QString &path, QPixmap *pixmap = NULL );
     void clearImagePreview();
     void initImagePreview( const QString& imagePath ); 
     void resizeImagePreview();
+    bool eventFilter( QObject* target, QEvent* evt );
 
 protected:
 
@@ -96,13 +107,19 @@ protected:
     int insertDirTree( const QString &label, QString basePath, const QString &path, bool subCheck,
     QPixmap *pixmap = NULL );
 
+public slots:
+
+    void updateGeometry();
+
 protected slots:
 
     void dirSelected( int idx );
     void fileClicked( QListViewItem *it );
     void parentDirClicked();
     void itemSelected();
-    void toggleImagePreview( bool isOn );
+    void setImagePreviewEnabled( bool isOn );
+    bool isImagePreviewEnabled() const;
+    void resizeEvent( QResizeEvent* evt );
 
 };
 
