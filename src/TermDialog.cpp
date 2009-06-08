@@ -182,7 +182,7 @@ void TermDialog::setImage() {
     if( tempImagePath )
         dir = QFileInfo( tempImagePath ).dir();
 
-    ZFileDialog dialog( tr( "SetImage..." ), dir.path(), ZFileDialog::ExistingFile, this );
+    ZFileDialog dialog( tr( "SetImage..." ), dir.path(), ZFileDialog::ExistingFile, true, this );
     QStringList allowedExtensions = QStringList::split( QString( "," ), QString( ".gif,.png" ) );
     dialog.setFilters( allowedExtensions );
 

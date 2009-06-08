@@ -13,8 +13,18 @@ void PropertiesPanel::setVocabulary( Vocabulary* vocab ) {
 
     descriptionMultiLineEdit->setText( editedVocab->getDescription() );
     authorLineEdit->setText( editedVocab->getAuthor() );
-    creationDateValueLabel->setText( editedVocab->getCreationDate().toString() );
-    modificationDateValueLabel->setText( editedVocab->getModificationDate().toString() );
+
+    QDateTime creationDate = editedVocab->getCreationDate();
+    QString creationDateStr;
+    creationDateStr.sprintf( "%04d/%02d/%02d %02d:%02d", creationDate.date().year(), creationDate.date().month(), creationDate.date().day(),
+        creationDate.time().hour(), creationDate.time().minute() );
+    creationDateValueLabel->setText( creationDateStr );
+
+    QDateTime modifDate = editedVocab->getModificationDate();
+    QString modifDateStr;
+    modifDateStr.sprintf( "%04d/%02d/%02d %02d:%02d", modifDate.date().year(), modifDate.date().month(), modifDate.date().day(),
+        modifDate.time().hour(), modifDate.time().minute() );
+    modificationDateValueLabel->setText( modifDateStr );
 
     updateCounters();
 
@@ -28,8 +38,18 @@ void PropertiesPanel::setFolder( Folder* folder ) {
 
     descriptionMultiLineEdit->setText( editedFolder->getDescription() );
     authorLineEdit->setText( editedFolder->getAuthor() );
-    creationDateValueLabel->setText( editedFolder->getCreationDate().toString() );
-    modificationDateValueLabel->setText( editedFolder->getModificationDate().toString() );
+
+    QDateTime creationDate = editedFolder->getCreationDate();
+    QString creationDateStr;
+    creationDateStr.sprintf( "%04d/%02d/%02d %02d:%02d", creationDate.date().year(), creationDate.date().month(), creationDate.date().day(),
+        creationDate.time().hour(), creationDate.time().minute() );
+    creationDateValueLabel->setText( creationDateStr );
+
+    QDateTime modifDate = editedFolder->getModificationDate();
+    QString modifDateStr;
+    modifDateStr.sprintf( "%04d/%02d/%02d %02d:%02d", modifDate.date().year(), modifDate.date().month(), modifDate.date().day(),
+        modifDate.time().hour(), modifDate.time().minute() );
+    modificationDateValueLabel->setText( modifDateStr );
 
     updateCounters();
 

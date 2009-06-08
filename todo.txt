@@ -73,7 +73,6 @@ When we start a quiz, if there is a resumable quiz, a dialog appears.  If we clo
 After adding a new term, if I click edit term, nothing happens.  I have to click the term to reset the selection.
 When loading an image that is too large to fit in the box, scale it.  setScaledContent() works well with a pixmap but doesn't with a movie.  So if I use that, I may have to add a checkbox to allow a user to specify if the image is animated or not.  Same thing if he wants to scale up the image or not?
 If we show the main window before loading data, the application would appear to be 6-7 seconds faster to launch.
-Localize creation and modification dates.  There is no support to do this in Qt.  I will have to implement it myself.
 If I make Properties less smart, I could remove its dependencies to Folder and Vocabulary. The processing code should be relocated when we call setFolder() and setVocabulary().
 If it's worth it, we could make a dedicated class for the clipboard of the Controller.
 Make the online available for operating systems supporting es and zh locales.  Probably have separate ipk files for each of them because takes space uselessly unless symbolic links work?

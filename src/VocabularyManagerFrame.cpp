@@ -287,7 +287,7 @@ void VocabularyManagerFrame::importData() {
         FolderTreeItem* folderItem = (FolderTreeItem*)selectedItem;
         Folder* folder = folderItem->getFolder(); 
         QDir dir( QPEApplication::documentDir() );
-        ZFileDialog dialog( tr( "Import..." ), dir.path(), ZFileDialog::ExistingFile, this );
+        ZFileDialog dialog( tr( "Import..." ), dir.path(), ZFileDialog::ExistingFile, false, this );
         dialog.setFilters( QStringList::split( QString( "," ), QString( ".zip" ) ) );
 
         int result = dialog.exec();
@@ -391,7 +391,7 @@ void VocabularyManagerFrame::exportVocabulary( Vocabulary* vocab ) {
     }
 
     QDir dir( QPEApplication::documentDir() );
-    ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, this );
+    ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, false, this );
     dialog.setSelection( vocab->getTitle() + QString( ".zip" ) ); 
     int result = dialog.exec();
     if( result ) {
@@ -421,7 +421,7 @@ void VocabularyManagerFrame::exportFolder( Folder* folder ) {
     }
 
     QDir dir( QPEApplication::documentDir() );
-    ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, this );
+    ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, false, this );
     dialog.setSelection( folder->getTitle() + QString( ".zip" ) ); 
     int result = dialog.exec();
     if( result ) {

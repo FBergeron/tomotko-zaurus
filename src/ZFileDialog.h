@@ -44,7 +44,7 @@ class ZFileDialog : public QDialog {
 public:
 
     enum Mode { AnyFile, ExistingFile, Directory, ExistingFiles, DirectoryOnly };
-    ZFileDialog( const QString title, const QString &path, Mode mode, QWidget *parent );
+    ZFileDialog( const QString title, const QString &path, Mode mode, bool useImagePreview, QWidget *parent );
   
     const QDir* dir() const {
       return &currentDir;
@@ -85,6 +85,7 @@ protected:
     QLineEdit *selection;
 
     Mode mode;
+    bool previewImage;
 
     ZFileCustomFilter *customFilter;
 

@@ -40,9 +40,9 @@ public:
                 if( fsize < 1000 )
                     return QString::number(finfo.size());
                 else if( fsize < 1000000 ) {
-                    return QString::number(finfo.size()/1000) + " Kb";
+                    return QString::number(finfo.size()/1000) + " " + QObject::tr( "Kb" );
                 } else
-                    return QString::number(finfo.size()/1000000) + " Mb";        
+                    return QString::number(finfo.size()/1000000) + " " + QObject::tr( "Mb" );        
             }
         }
         if( column == 2 ) {
@@ -84,8 +84,8 @@ protected:
 
 };
 
-ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, QWidget *parent ) :
-    QDialog( parent, "zfiledialog", true ), mode( mode ), customFilter( NULL ),
+ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, bool useImagePreview, QWidget *parent ) :
+    QDialog( parent, "zfiledialog", true ), mode( mode ), previewImage( useImagePreview ), customFilter( NULL ),
         imagePreviewEnabled( false ), imagePreviewDirty( false ) {
     setCaption( title );
 
@@ -135,6 +135,8 @@ ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, Q
 
     showImagePreview = new QCheckBox( tr( "ShowImagePreview" ), fileLVBox );
     showImagePreview->setChecked( false );
+    if( !previewImage )
+        showImagePreview->hide();
     connect( showImagePreview, SIGNAL( toggled( bool ) ), this, SLOT( setImagePreviewEnabled( bool ) ) );
 
     imagePreviewBox = new QHGroupBox( tr( "ImagePreview" ), mainPanel );
