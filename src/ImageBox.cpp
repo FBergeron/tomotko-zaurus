@@ -13,7 +13,6 @@ ImageBox::ImageBox( const QString& title, const QString& hiddenLabel, const QStr
     image->setScaledContents( true );
 
     imageButton = new QPushButton( hiddenLabel, imageStack, "ImageButton" );
-    imageButton->installEventFilter( this );
     QToolTip::add( imageButton, hiddenTooltip );
     connect( imageButton, SIGNAL( clicked() ), this, SLOT( revealImage() ) );  
     imageStack->addWidget( imageWrapper, 0 );

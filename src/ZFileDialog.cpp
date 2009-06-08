@@ -34,7 +34,7 @@ public:
     QString text( int column ) const {
         if( column == 1 ) {
             if( finfo.isDir() )
-                return "<dir>";
+                return QObject::tr( "<dir>" );
             else {
                 uint fsize = finfo.size();
                 if( fsize < 1000 )
@@ -247,10 +247,10 @@ void ZFileDialog::refreshFileList() {
     QPixmap cfPixmap = Resource::loadPixmap( "CFDeviceS" );
 
     bool selected = false;
-    selected |= insertDirTree( "Home", "/home/zaurus", path, !selected, &homePixmap );
-    selected |= insertDirTree( "SD Card", "/mnt/card", path, !selected, &sdPixmap );
-    selected |= insertDirTree( "CF Card", "/mnt/cf", path, !selected, &cfPixmap );
-    selected |= insertDirTree( "Root", "/", path, !selected );
+    selected |= insertDirTree( tr( "Home" ), "/home/zaurus", path, !selected, &homePixmap );
+    selected |= insertDirTree( tr( "SD Card" ), "/mnt/card", path, !selected, &sdPixmap );
+    selected |= insertDirTree( tr( "CF Card" ), "/mnt/cf", path, !selected, &cfPixmap );
+    selected |= insertDirTree( tr( "Root" ), "/", path, !selected );
 
 
     for( QStringList::Iterator itf = flist.begin(); itf != flist.end(); itf++ ) {
@@ -448,6 +448,6 @@ void ZFileDialog::updateGeometry() {
     layout()->activate();
 }
 
-void ZFileDialog::resizeEvent( QResizeEvent* evt ) {
+void ZFileDialog::resizeEvent( QResizeEvent* ) {
     updateGeometry();
 }

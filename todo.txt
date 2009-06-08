@@ -1,27 +1,28 @@
 ToDo
 ----
-Fix ZFileDialog bug, why do we need to use the mouse with the FileDialog?  When using the arrow keys, we should see the image previews change.  Maybe the code introduced in fileClicked should be moved to itemSelected() instead.  Also, when setImagePreviewEnabled(), call itemSelected().
-Make sure that the commented line in ZFileDialog is correct.
-I think that we should remove the installEventFilter statement in ImageBox.
+Implement SM-2
 Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Refactor the code in editResultTerm() and editTerm().  The code is similar.  Maybe using signal/slot approach could work. There is a good example of that in page 18 of my Qt book for the FindDialog.
-Try to use pictureflow (http://code.google.com/p/pictureflow/).
-Add an image preview in ZFileDialog.
-Would it be possible to make the fields larger (see more than 1 row) (especially or only in portrait mode).
+Replace Unicode by UnicodeUTF8 when reading/writing xml files.
+Would it be possible to make the fields larger (see more than 1 row) (especially or only in portrait mode). --> A first try reveals that it's not that easy.
 Release 0.12.0
-
 
 Remove prefsXmlFilename declaration and everything that's related to it.
 Remove markedXmlFilename declaration and everything that's related to it.
 Remove code that remove prefs.xml file.  Now obsolete.
 Remove code that remove marked.xml file.  Now obsolete.
 
+Implement Unicode character plugin.
+Try to use pictureflow (http://code.google.com/p/pictureflow/).
+
+Release 0.13.0
+
 Refactor save and load methods.  They look alike, I think it's possible do unify the process in a common method using parameters.
 
 Use ASSERT(), CHECK_PTR() and qDebug(), qWarning() and qFatal() --> See Debugging Techniques page in documentation.
 When we quit toMOTko, we should delete all files [0-9]+.tar.gz and tree.dat.gz.  These files are not used anymore.
 Verify licence for KanjiDrill4Top's images.
-Port to Windows? Linux? NCurses? Or big refactoring (reduce memory footprint + separate GUI from backend)?
+Port to NCurses? And/or big refactoring (reduce memory footprint + separate GUI from backend)?
 In the same way that Controller::getResolvedImagePath(), I should have the opposite function that takes an absolute path and reduce it to a relative path.  Maybe rename the functions with better names.
 In Controller.makeCopy(), verify if we should create the termCopy at all if we don't add translation.  A term with no translations should not exist.  If the term has no translations, delete it and don't add it to vocabCopy.
 Same thing for VocabularyManagerFrame.copyTerms().
@@ -38,8 +39,8 @@ Bug : Sometimes (actually it's so rare that I cannot reproduce it), the arrow up
 Bug : We start a quiz, when we have a word with a long comment, we scroll down.  We go back to Glossary Manager and restart the quiz, the comment field's scrollbar is still down.  It needs to be reset.  What happens if we have two questions with long comments in a row?  Curiously, sometimes the scrollbar is down, sometimes, it's up.  Anyway, we need to see the scrollbar up.
 Bug : If I have a term with a long comment, that I use up/down arrow.  Sometimes, if I maximize the comment field, the up/down arrow don't work in maximize mode.
 After importing a glossary, we should open the parent folder automatically, select the new glossary and ensure it's visible.
+Fix ZFileDialog bug, why do we need to use the mouse with the FileDialog?  When using the arrow keys, we should see the image previews change.  Maybe the code introduced in fileClicked should be moved to itemSelected() instead.  Also, when setImagePreviewEnabled(), call itemSelected().
 Add a button allowing to show/hide hidden files/directories in ZFileDialog.
-Add a history section in website where we can see the evolution of the application with screenshots.
 Try to remove warnings caused by minizip (look here maybe : http://www.agavemountain.com/2007/09/dealing-with-c-unused-parameter.html)
 When we clear an image, we should delete it if it's a relative path, once ok has been clicked.
 Make the new imported vocabulary dirty and save it immediately?  Probably not needed as the data are saved immediately on disk.  If we set it to dirty, it will be written twice needlessly.
@@ -47,9 +48,6 @@ If an import fails, clean the mess! (previously imported images and data).
 What to do if we remove a term with an image referred by another term? If the image is an external file, we leave the image untouched.  If the image is an internal file, we should check if it's referred by any other terms in the glossary before removing it.
 Controller::initRevealingSequence() should probably be moved to TermScheduler.
 Add a checkbox to specify if the image is animated or not? Probably not needed.
-Verify if mng images are supported.
-Check if it's possible to detect if an image is animated or not, and be smart about it.
-Replace Unicode by UnicodeUTF8 when reading/writing xml files.
 In QuizFrame::maximizeCommentField() and restoreCommentField(), I added setUpdatesEnabled() statements in hope of reducing flickering.  Doesn't seem to work.
 Refactor doRemoveTerms(): There are some duplicated code there. Should be moved to Controller too.
 What happens if file extensions are GIF, PNG, XML, ZIP (uppercase) instead of lowercase in zip file or elsewhere?

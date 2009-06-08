@@ -120,7 +120,7 @@ protected slots:
     void itemSelected();
     void setImagePreviewEnabled( bool isOn );
     bool isImagePreviewEnabled() const;
-    void resizeEvent( QResizeEvent* evt );
+    void resizeEvent( QResizeEvent* );
 
 };
 
