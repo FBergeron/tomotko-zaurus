@@ -13,7 +13,6 @@
 #include <qvaluestack.h>
 #include <qvbox.h>
 #include <qvgroupbox.h>
-#include "Preferences.h"
 #include "Sequence.h"
 
 class SequenceDialog : public QDialog {

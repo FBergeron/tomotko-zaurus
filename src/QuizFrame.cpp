@@ -672,6 +672,7 @@ void QuizFrame::showProgressDetails() {
     progressData.currTerm = currTermData;
 
     ProgressDialog dialog( parentWidget(), progressData );
+    dialog.setFont( controller->getPreferences().getLabelsFont() );
     dialog.resize( 440, 330 ); 
     dialog.show();
     dialog.exec();

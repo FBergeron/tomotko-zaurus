@@ -623,6 +623,7 @@ void PreferencesDialog::keyPressEvent( QKeyEvent *evt ) {
 
 void PreferencesDialog::addSequence() {
     SequenceDialog dialog( this );
+    dialog.setFont( prefs->getLabelsFont() ); 
     dialog.showMaximized();
     int result = dialog.exec();
     if( result ) {

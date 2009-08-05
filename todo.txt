@@ -1,6 +1,5 @@
 ToDo
 ----
-Consider prefs' fonts in the schedule.
 Disable gradeAnswer accelerators when performing a non-SM-2 quiz.
 The AllDone message should be different for sm2 quiz.  These messages should be defined by quiz.
 It doesn't really make sense to have reinit() for sm2 quiz.  Maybe introduce isRestartable() property and adjust the buttons accordingly.
