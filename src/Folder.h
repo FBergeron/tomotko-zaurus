@@ -1,6 +1,7 @@
 #ifndef FOLDER_H
 #define FOLDER_H
 
+#include <qpe/quuid.h>
 #include <iostream.h>
 #include <qdatetime.h>
 #include <qlist.h>
@@ -15,15 +16,14 @@ public:
 
     static const Q_UINT32 magicNumber( Q_UINT32( 0x77446688 ) );
 
-    Folder( int id = -1, const QString& title = QString::null );
+    Folder( int id = -1, const QString& title = QString::null, const QUuid& uid = QUuid() );
     Folder( const Folder& folder );
     virtual ~Folder();
 
     const char* className() const { return "Folder"; }
 
+    QUuid getUid() const;
     int getId() const;
-    int getMaxId();
-    int getMaxVocabId();
     const QString getTitle() const;
     void setTitle( const QString& title );
     const QString getDescription() const;
@@ -54,10 +54,13 @@ public:
     void remove( Folder* child );
     bool isEmpty() const;
     int getChildrenCount() const;
+    Folder* getFolder( const QUuid& uid );
     Folder* getFolder( int id );
+    Vocabulary* getVocabulary( const QUuid& uid );
     Vocabulary* getVocabulary( int id );
     Folder* getRoot() const;
     Folder* getParent() const;
+    QString getOldPath() const;
     QString getPath() const;
     QString getHumanReadablePath() const;
     void setParent( Folder* parent );
@@ -73,19 +76,20 @@ public:
     Base* first();
     Base* next();
 
-    bool load( const QString& filename );
     bool loadMetadata( const QString& filename );
     bool saveMetadata( const QString& filename ) const;
 
-    void buildVocabCopiesMap( QMap<int,Vocabulary>& vocabularies ) const;
+    void buildVocabCopiesMap( QMap<QString,Vocabulary>& vocabularies ) const;
 
     friend QDataStream& operator<<( QDataStream& out, const Folder& folder );
     friend QDataStream& operator>>( QDataStream& in, Folder& folder );
 
 private:
 
+    Vocabulary* getVocabularyRec( const QUuid& uid );
     Vocabulary* getVocabularyRec( int id );
 
+    QUuid       uid;
     int         id;
     QString     title;
     QString     description;

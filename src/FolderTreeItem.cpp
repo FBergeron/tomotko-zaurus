@@ -31,7 +31,7 @@ void FolderTreeItem::setOpen( bool isOpened ) {
     if( parent() || isOpened ) {
         QCheckListItem::setOpen( isOpened );
         setPixmap( 0, ( isOpened ? ZPIXMAP( openedFolder_xpm ) : ZPIXMAP( closedFolder_xpm ) ) );
-        prefs.setFolderOpen( folder->getId(), isOpened );
+        prefs.setFolderOpen( folder->getUid(), isOpened );
     }
 }
 

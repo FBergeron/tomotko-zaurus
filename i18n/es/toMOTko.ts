@@ -124,6 +124,30 @@ continuar este quiz?</translation>
         <source>Search...</source>
         <translation>Buscar...</translation>
     </message>
+    <message>
+        <source>gradeAnswer1</source>
+        <translation>Evaluar Respuesta 1</translation>
+    </message>
+    <message>
+        <source>gradeAnswer2</source>
+        <translation>Evaluar Respuesta 2</translation>
+    </message>
+    <message>
+        <source>gradeAnswer3</source>
+        <translation>Evaluar Respuesta 3</translation>
+    </message>
+    <message>
+        <source>gradeAnswer4</source>
+        <translation>Evaluar Respuesta 4</translation>
+    </message>
+    <message>
+        <source>gradeAnswer5</source>
+        <translation>Evaluar Respuesta 5</translation>
+    </message>
+    <message>
+        <source>gradeAnswer6</source>
+        <translation>Evaluar Respuesta 6</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -308,6 +332,33 @@ No obstante, asignar la teclea?</translation>
     <message>
         <source>ShowAltInTermList</source>
         <translation>Mostrar la pronunciación</translation>
+    </message>
+    <message>
+        <source>Algorithm</source>
+        <translation>Algorithmo</translation>
+    </message>
+    <message>
+        <source>OriginalQuizAlgorithm</source>
+        <translation>Original</translation>
+    </message>
+    <message>
+        <source>SuperMemo2Algorithm</source>
+        <translation>SuperMemo-2</translation>
+    </message>
+</context>
+<context>
+    <name>ProgressDialog</name>
+    <message>
+        <source>ScheduleInfo</source>
+        <translation>Planificación</translation>
+    </message>
+    <message>
+        <source>CurrentTermInfo</source>
+        <translation>Actual palabra</translation>
+    </message>
+    <message>
+        <source>ProgressDialogCaption</source>
+        <translation>Detalles sobre la progresión</translation>
     </message>
 </context>
 <context>
@@ -495,6 +546,50 @@ del disco.</translation>
         <source>NewGlossary</source>
         <translation>Nuevo glosario</translation>
     </message>
+    <message>
+        <source>&lt;dir&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kb</source>
+        <translation>kB</translation>
+    </message>
+    <message>
+        <source>Mb</source>
+        <translation>MB</translation>
+    </message>
+    <message>
+        <source>CannotResumeQuiz</source>
+        <translation>No es posible de continuar este quiz.</translation>
+    </message>
+    <message>
+        <source>Monday</source>
+        <translation>Lunes</translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation>Martes</translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation>Miercoles</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation>Jueves</translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation>Viernes</translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation>Sábado</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation>Domingo</translation>
+    </message>
 </context>
 <context>
     <name>QuizFrame</name>
@@ -559,6 +654,26 @@ para seleccionar palabras a estudiar.</translation>
     <message>
         <source>Image</source>
         <translation>Imagen</translation>
+    </message>
+    <message>
+        <source>NoTermsScheduledForStudy</source>
+        <translation>No hay palabras hoy para memorizar 
+por los idiomas selectionados.</translation>
+    </message>
+</context>
+<context>
+    <name>Schedule</name>
+    <message>
+        <source>Today</source>
+        <translation>Hoy</translation>
+    </message>
+    <message>
+        <source>Tomorrow</source>
+        <translation>Mañana</translation>
+    </message>
+    <message>
+        <source>NumberOfTermsScheduled</source>
+        <translation>Número de palabras a estudiar esta semana</translation>
     </message>
 </context>
 <context>
@@ -954,15 +1069,27 @@ en el menú Acciones.</translation>
     </message>
     <message>
         <source>ImagePreview</source>
-        <translation type="unfinished"></translation>
+        <translation>Previsualización</translation>
     </message>
     <message>
         <source>ShowImagePreview</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar Previsualización</translation>
     </message>
     <message>
-        <source>test</source>
-        <translation type="unfinished"></translation>
+        <source>Home</source>
+        <translation>Casa</translation>
+    </message>
+    <message>
+        <source>SD Card</source>
+        <translation>Carta SD</translation>
+    </message>
+    <message>
+        <source>CF Card</source>
+        <translation>Carta CF</translation>
+    </message>
+    <message>
+        <source>Root</source>
+        <translation>/</translation>
     </message>
 </context>
 </TS>

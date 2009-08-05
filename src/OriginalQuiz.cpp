@@ -1,32 +1,33 @@
-#include "TermScheduler.h"
+#include "OriginalQuiz.h"
 
-TermScheduler::TermScheduler( const Preferences& prefs ) : prefs( prefs ) {
+OriginalQuiz::OriginalQuiz( const QString& applDir, const uint quizLength /* = 3 */ ) : Quiz( applDir ), initQuizLength( quizLength ) {
     srand( time( NULL ) );
 }
 
-TermScheduler::TermScheduler( const TermScheduler& scheduler ) 
-    : quizFirstLang( scheduler.quizFirstLang ), quizTestLang( scheduler.quizTestLang ), 
-        standbyPool( scheduler.standbyPool ), allTerms( scheduler.allTerms ), 
-            initQuizLength( scheduler.initQuizLength ), initTermCount( scheduler.initTermCount ),
-                currTermPool( scheduler.currTermPool ), currTerm( scheduler.currTerm ), prefs( scheduler.prefs ) {
+OriginalQuiz::OriginalQuiz( const OriginalQuiz& quiz ) 
+    : Quiz( quiz ), /*firstLang( quiz.firstLang ), testLang( quiz.testLang ), */
+        standbyPool( quiz.standbyPool ), allTerms( quiz.allTerms ), 
+            initQuizLength( quiz.initQuizLength ), 
+                currTermPool( quiz.currTermPool ), currTerm( quiz.currTerm ) {
     for( uint i = 0; i < poolCount; i++ )
-        termPool[ i ] = scheduler.termPool[ i ];
+        termPool[ i ] = quiz.termPool[ i ];
 }
 
-TermScheduler::~TermScheduler() {
+OriginalQuiz::~OriginalQuiz() {
 }
 
-bool TermScheduler::isResumableQuizAvailable( const BilingualKey& key ) const {
-    QFile dataFile( getFilename( key ) );
+bool OriginalQuiz::isResumable() const {
+    QFile dataFile( getFilename() );
     return( dataFile.exists() );
 }
 
-bool TermScheduler::load( const BilingualKey& key ) {
-    QFile dataFile( getFilename( key ) );
+bool OriginalQuiz::load() {
+    QFile dataFile( getFilename() );
     if( !dataFile.open( IO_ReadOnly ) )
         return( false );
     
     QByteArray compressedData( dataFile.readAll() );
+    dataFile.close();
     QByteArray data( Util::qUncompress( compressedData ) );
 
     QDataStream in( data, IO_ReadOnly );
@@ -35,47 +36,51 @@ bool TermScheduler::load( const BilingualKey& key ) {
     Q_UINT16 tempVersion;
 
     in >> tempMagicNumber >> tempVersion;
-
+cerr << "quiz ver=" << tempVersion << endl;
     if( tempMagicNumber != magicNumber ) {
         cerr << "Wrong magic number: Incompatible data file." << endl;
         return( false );
     }
-    if( tempVersion > 0x0009 ) {
+    if( tempVersion > 0x000a ) {
         cerr << "Data file is from a more recent version.  Upgrade toMOTko." << endl;
+        return( false );
+    }
+    if( tempVersion < 0x000a ) {
+        cerr << "Data format too old.  You must use an anterior version of toMOTko." << endl;
         return( false );
     }
 
     in.setVersion( 3 );
 
-    TermScheduler tempScheduler( prefs );
-    in >> tempScheduler;
+    OriginalQuiz tempQuiz( applDir );
+    in >> tempQuiz;
 
-    quizFirstLang = tempScheduler.quizFirstLang;
-    quizTestLang = tempScheduler.quizTestLang;
+    firstLang = tempQuiz.firstLang;
+    testLang = tempQuiz.testLang;
     for( uint i = 0; i < poolCount; i++ )
-        termPool[ i ] = tempScheduler.termPool[ i ];
-    standbyPool = tempScheduler.standbyPool;
-    allTerms = tempScheduler.allTerms;
-    initQuizLength = tempScheduler.initQuizLength;
-    initTermCount = tempScheduler.initTermCount;
-    currTermPool = tempScheduler.currTermPool;
-    currTerm = tempScheduler.currTerm;
+        termPool[ i ] = tempQuiz.termPool[ i ];
+    standbyPool = tempQuiz.standbyPool;
+    allTerms = tempQuiz.allTerms;
+    initQuizLength = tempQuiz.initQuizLength;
+    initTermCount = tempQuiz.initTermCount;
+    currTermPool = tempQuiz.currTermPool;
+    currTerm = tempQuiz.currTerm;
 
     return( true );
 }
 
-bool TermScheduler::save() {
+bool OriginalQuiz::save() {
     QByteArray data;
 
     QDataStream out( data, IO_WriteOnly );
     out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
 
     // 0x0009 means 0.9.x version.  
-    out << Q_UINT32( TermScheduler::magicNumber ) << Q_UINT16( 0x0009 ) << *this;
+    out << Q_UINT32( OriginalQuiz::magicNumber ) << Q_UINT16( 0x000a ) << *this;
     
     QByteArray compressedData( Util::qCompress( data ) ); 
 
-    QFile dataFile( getFilename( BilingualKey( quizFirstLang, quizTestLang ) ) );
+    QFile dataFile( getFilename() );
     QFileInfo dataFileInfo( dataFile );
 
     if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
@@ -95,11 +100,11 @@ bool TermScheduler::save() {
     return( true );
 }
 
-void TermScheduler::concludeQuiz() {
-    if( isQuizInProgress() )
+void OriginalQuiz::conclude() {
+    if( isInProgress() )
         save();
     else {
-        QString filename( getFilename( BilingualKey( quizFirstLang, quizTestLang ) ) );
+        QString filename( getFilename() );
         QFile dataFile( filename );
         if( dataFile.exists() ) {
             if( !dataFile.remove() )
@@ -108,19 +113,7 @@ void TermScheduler::concludeQuiz() {
     }
 }
 
-void TermScheduler::setApplicationDirName( const QString& applDir ) {
-    this->applDir = applDir;
-}
-
-QString TermScheduler::getQuizFirstLanguage() const {
-    return( quizFirstLang );
-}
-
-QString TermScheduler::getQuizTestLanguage() const {
-    return( quizTestLang );
-}
-
-bool TermScheduler::isQuizInProgress() const {
+bool OriginalQuiz::isInProgress() const {
     for( uint i = 0; i < poolCount; i++ ) {
         if( termPool[ i ].count() > 0 )
             return( true );
@@ -128,20 +121,18 @@ bool TermScheduler::isQuizInProgress() const {
     return( standbyPool.count() > 0 );
 }
 
-void TermScheduler::init( const QString& quizFirstLang, const QString& quizTestLang, Folder* rootFolder ) {
-    this->quizFirstLang = quizFirstLang;
-    this->quizTestLang = quizTestLang;
-    initTermCount = 0;
-    initQuizLength = prefs.getQuizLength();
+void OriginalQuiz::init( const QString& firstLang, const QString& testLang, Folder* rootFolder ) {
+    Quiz::init( firstLang, testLang, rootFolder );
+
     for( uint i = 0; i < poolCount; i++ )
         termPool[ i ].clear();
     allTerms.clear();
-    initRec( quizFirstLang, quizTestLang, rootFolder );
+    initRec( firstLang, testLang, rootFolder );
     standbyPool.clear();
     currTermPool = 0;
 }
 
-void TermScheduler::reinit() {
+void OriginalQuiz::reinit() {
     for( uint i = 0; i < poolCount; i++ )
         termPool[ i ].clear();
     standbyPool.clear();
@@ -152,24 +143,27 @@ void TermScheduler::reinit() {
     currTermPool = 0;
 }
 
-void TermScheduler::initRec( const QString& quizFirstLang, const QString& quizTestLang, Folder* folder ) {
+void OriginalQuiz::initRec( const QString& firstLang, const QString& testLang, Folder* folder ) {
     if( folder->isMarkedForStudy() ) {
         for( Base* child = folder->first(); child; child = folder->next() ) {
             if( strcmp( child->className(), "Folder" ) == 0 )
-                initRec( quizFirstLang, quizTestLang, (Folder*)child );
+                initRec( firstLang, testLang, (Folder*)child );
             else if( strcmp( child->className(), "Vocabulary" ) == 0 )
-                initRec( quizFirstLang, quizTestLang, (Vocabulary*)child );
+                initRec( firstLang, testLang, (Vocabulary*)child );
         }
     }
 }
 
-void TermScheduler::initRec( const QString& quizFirstLang, const QString& quizTestLang, Vocabulary* vocab ) {
+void OriginalQuiz::initRec( const QString& firstLang, const QString& testLang, Vocabulary* vocab ) {
     if( vocab->isMarkedForStudy() ) {
         for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
             const Term& term = it.data();
-            if( term.isMarkedForStudy() &&
-                term.isTranslationExists( quizFirstLang ) && term.isTranslationExists( quizTestLang ) ) {
-                TermKey termKey( term.getId(), term.getVocabId() );
+            if( !term.isMarkedForDeletion() && term.isMarkedForStudy() && 
+                term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
+                Translation firstLangTrans = term.getTranslation( firstLang );
+                Translation testLangTrans = term.getTranslation( testLang );
+                //cerr << "NEW TERMKEY=" << term.getUid().toString() << " vocab=" << term.getVocabUid().toString() << endl;
+                TermKey termKey( term.getUid(), term.getVocabUid() );
                 addTerm( termKey, ( poolCount - 1 ) - initQuizLength );
                 allTerms.append( termKey );
                 initTermCount++;
@@ -178,19 +172,15 @@ void TermScheduler::initRec( const QString& quizFirstLang, const QString& quizTe
     }
 }
 
-void TermScheduler::addTerm( const TermKey& termKey, const int priority = 0 ) {
+void OriginalQuiz::addTerm( const TermKey& termKey, const int priority = 0 ) {
     termPool[ priority ].append( termKey );
 }
 
-void TermScheduler::discardCurrentTerm() {
+void OriginalQuiz::discardCurrentTerm() {
     termPool[ currTermPool ].remove( currTerm );
 }
 
-const TermKey TermScheduler::getCurrentTerm() const {
-    return( currTerm );
-}
-
-bool TermScheduler::hasNextTerm() const {
+bool OriginalQuiz::hasNextTerm() const {
     if( !standbyPool.isEmpty() )
         return( true );
    
@@ -202,22 +192,28 @@ bool TermScheduler::hasNextTerm() const {
     return( false );
 }
 
-const TermKey TermScheduler::getNextTerm() {
-    if( standbyPool.count() == TermScheduler::standbyPoolSize )
+const TermKey OriginalQuiz::getCurrentTerm() const {
+    return( currTerm );
+}
+
+const TermKey OriginalQuiz::getNextTerm() {
+    if( standbyPool.count() == OriginalQuiz::standbyPoolSize )
         reintroduceStandbyTerm();
     
 search:
-    int startPool = ( currTermPool + 1 ) % TermScheduler::poolCount;
+    int startPool = ( currTermPool + 1 ) % OriginalQuiz::poolCount;
     int nextPool = startPool; 
     do {
         const int poolSize = termPool[ nextPool ].count();
+        cerr << "poolSize="<< poolSize << endl;
         if( poolSize > 0 ) {
             const int index = rand() % poolSize;
             currTermPool = nextPool;
             currTerm = termPool[ nextPool ][ index ];
+cerr << "currTerm = " << currTerm.getTermUid().toString() << endl;
             return( currTerm );
         }
-        nextPool = ( nextPool + 1 ) % TermScheduler::poolCount; 
+        nextPool = ( nextPool + 1 ) % OriginalQuiz::poolCount; 
     } while( nextPool != startPool );
     if( standbyPool.count() > 0 ) {
         reintroduceStandbyTerm();
@@ -230,7 +226,7 @@ search:
     }
 }
 
-void TermScheduler::increaseTermPriority() {
+void OriginalQuiz::increaseTermPriority() {
     if( currTermPool > 0 ) {
         termPool[ currTermPool ].remove( currTerm );
         currTermPool--;
@@ -238,16 +234,23 @@ void TermScheduler::increaseTermPriority() {
     }
 }
 
-void TermScheduler::decreaseTermPriority() {
-    if( currTermPool < (int)( TermScheduler::poolCount - 1 ) ) {
+void OriginalQuiz::decreaseTermPriority() {
+    if( currTermPool < (int)( OriginalQuiz::poolCount - 1 ) ) {
         termPool[ currTermPool ].remove( currTerm );
         currTermPool++;
         termPool[ currTermPool ].append( currTerm );
     }
 }
 
-void TermScheduler::rightAnswer() {
-    if( currTermPool == TermScheduler::poolCount - 1 )
+void OriginalQuiz::gradeAnswer( int grade ) {
+    if( grade == 0 )
+        wrongAnswer();
+    else
+        rightAnswer();
+}
+
+void OriginalQuiz::rightAnswer() {
+    if( currTermPool == OriginalQuiz::poolCount - 1 )
         discardCurrentTerm();
     else {
         decreaseTermPriority();
@@ -255,12 +258,12 @@ void TermScheduler::rightAnswer() {
     }
 }
 
-void TermScheduler::wrongAnswer() {
+void OriginalQuiz::wrongAnswer() {
     increaseTermPriority();
     putCurrentTermOnStandby();
 }
 
-int TermScheduler::getProgress() const {
+int OriginalQuiz::getProgress() const {
     if( initTermCount == 0 )
         return( 0 );
     int currTermCount = 0;
@@ -285,49 +288,50 @@ int TermScheduler::getProgress() const {
     return( result ); 
 }
 
-int TermScheduler::getInitialTermCount() const {
-    return( initTermCount );
+int OriginalQuiz::getAnswerCount() const {
+    return( 2 );
 }
 
-void TermScheduler::putCurrentTermOnStandby() {
+void OriginalQuiz::putCurrentTermOnStandby() {
     StandbyTerm term( currTerm, currTermPool );
     standbyPool.prepend( term ); 
     termPool[ currTermPool ].remove( currTerm );
 }
 
-void TermScheduler::reintroduceStandbyTerm() {
+void OriginalQuiz::reintroduceStandbyTerm() {
     const StandbyTerm& reintroducedTerm = standbyPool.last();
     termPool[ reintroducedTerm.getPool() ].append( reintroducedTerm.getKey() ); 
     standbyPool.remove( reintroducedTerm );
 }
 
-QString TermScheduler::getFilename( const BilingualKey& key ) const {
-    return( applDir + QString( "/quiz_" ) + key.toString() + QString( ".dat.z" ) );
+QString OriginalQuiz::getFilename() const {
+    BilingualKey key( firstLang, testLang );
+    return( applDir + "/quiz_orig_" + key.toString() + ".dat.z" );
 }
 
-QDataStream& operator<<( QDataStream& out, const TermScheduler& scheduler ) {
-    out << scheduler.quizFirstLang << scheduler.quizTestLang;
+QDataStream& operator<<( QDataStream& out, const OriginalQuiz& quiz ) {
+    out << quiz.firstLang << quiz.testLang;
 
-    for( uint i = 0; i < TermScheduler::poolCount; i++ ) {
-        for( QValueList<TermKey>::ConstIterator it = scheduler.termPool[ i ].begin(); it != scheduler.termPool[ i ].end(); it++ )
+    for( uint i = 0; i < OriginalQuiz::poolCount; i++ ) {
+        for( QValueList<TermKey>::ConstIterator it = quiz.termPool[ i ].begin(); it != quiz.termPool[ i ].end(); it++ )
             out << *it;
-        out << TermKey( 0, 0 ); // To mark the end of the pool.
+        out << TermKey(); // To mark the end of the pool.
     }
 
-    for( QValueList<StandbyTerm>::ConstIterator it = scheduler.standbyPool.begin(); it != scheduler.standbyPool.end(); it++ )
+    for( QValueList<StandbyTerm>::ConstIterator it = quiz.standbyPool.begin(); it != quiz.standbyPool.end(); it++ )
         out << *it;
-    out << StandbyTerm( TermKey( 0, 0 ), 0 ); // To mark the end of the standbyPool.
+    out << StandbyTerm( TermKey(), 0 ); // To mark the end of the standbyPool.
     
-    out << scheduler.allTerms; 
-    out << scheduler.initQuizLength << scheduler.initTermCount << scheduler.currTermPool << scheduler.currTerm;
+    out << quiz.allTerms; 
+    out << quiz.initQuizLength << quiz.initTermCount << quiz.currTermPool << quiz.currTerm;
 
     return( out );
 }
 
-QDataStream& operator>>( QDataStream& in, TermScheduler& scheduler ) {
+QDataStream& operator>>( QDataStream& in, OriginalQuiz& quiz ) {
     QString tempFirstLanguage;
     QString tempTestLanguage;
-    QValueList<TermKey> tempTermPool[ TermScheduler::poolCount ];
+    QValueList<TermKey> tempTermPool[ OriginalQuiz::poolCount ];
     QValueList<StandbyTerm> tempStandbyPool;
     QValueList<TermKey> tempAllTerms;
     uint tempInitQuizLength;
@@ -336,11 +340,11 @@ QDataStream& operator>>( QDataStream& in, TermScheduler& scheduler ) {
     TermKey tempCurrTerm;
 
     in >> tempFirstLanguage >> tempTestLanguage;
-    for( uint i = 0; i < TermScheduler::poolCount; i++ ) {
+    for( uint i = 0; i < OriginalQuiz::poolCount; i++ ) {
         for( ;; ) {
             TermKey tempTermKey;
             in >> tempTermKey;
-            if( tempTermKey.getTermId() == 0 && tempTermKey.getVocabId() == 0 )
+            if( tempTermKey.getTermUid().isNull() && tempTermKey.getVocabUid().isNull() )
                 break;
             tempTermPool[ i ].append( tempTermKey );
         }
@@ -349,7 +353,7 @@ QDataStream& operator>>( QDataStream& in, TermScheduler& scheduler ) {
     for( ;; ) {
         StandbyTerm tempStandbyTerm;
         in >> tempStandbyTerm;
-        if( tempStandbyTerm.getPool() == 0 && tempStandbyTerm.getKey().getTermId() == 0 && tempStandbyTerm.getKey().getVocabId() == 0 )
+        if( tempStandbyTerm.getPool() == 0 && tempStandbyTerm.getKey().getTermUid().isNull() && tempStandbyTerm.getKey().getVocabUid().isNull() )
             break;
         tempStandbyPool.append( tempStandbyTerm );
     }
@@ -357,15 +361,15 @@ QDataStream& operator>>( QDataStream& in, TermScheduler& scheduler ) {
     in >> tempAllTerms;
     in >> tempInitQuizLength >> tempInitTermCount >> tempCurrTermPool >> tempCurrTerm;
 
-    scheduler.quizFirstLang = tempFirstLanguage;
-    scheduler.quizTestLang = tempTestLanguage;
-    scheduler.termPool = tempTermPool;
-    scheduler.standbyPool = tempStandbyPool;
-    scheduler.allTerms = tempAllTerms;
-    scheduler.initQuizLength = tempInitQuizLength;
-    scheduler.initTermCount = tempInitTermCount;
-    scheduler.currTermPool = tempCurrTermPool;
-    scheduler.currTerm = tempCurrTerm;
+    quiz.firstLang = tempFirstLanguage;
+    quiz.testLang = tempTestLanguage;
+    quiz.termPool = tempTermPool;
+    quiz.standbyPool = tempStandbyPool;
+    quiz.allTerms = tempAllTerms;
+    quiz.initQuizLength = tempInitQuizLength;
+    quiz.initTermCount = tempInitTermCount;
+    quiz.currTermPool = tempCurrTermPool;
+    quiz.currTerm = tempCurrTerm;
 
     return( in );
 }

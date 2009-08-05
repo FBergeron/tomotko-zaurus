@@ -3,6 +3,7 @@
 
 #include <iostream.h>
 #include <qdatastream.h>
+#include <qdatetime.h>
 #include <qdir.h>
 #include <qpe/applnk.h>
 #include <qfile.h>
@@ -16,11 +17,13 @@
 #include <qxml.h>
 #include <stdlib.h>
 #include "FolderParser.h"
+#include "OriginalQuiz.h"
 #include "Preferences.h"
+#include "Progress.h"
 #include "Sequence.h"
+#include "SuperMemo2Quiz.h"
 #include "Term.h"
 #include "TermKey.h"
-#include "TermScheduler.h"
 #include "VocabParser.h"
 #include "Util.h"
 #include "Vocabulary.h"
@@ -49,14 +52,17 @@ public:
     bool isResumableQuizAvailable();
     bool resumeQuiz();
     void prepareQuiz();
+    int getQuizAnswerCount() const;
+    void getQuizSchedule( int* schedule );
 
     Term* getCurrentTerm();
     bool hasNextTerm() const;
-    Term* getTerm( const TermKey& termKey );
+    Term* getTerm( const TermKey& termKey, const QString& firstLang = QString::null, const QString& testLang = QString::null );
     Term* getNextTerm();
  
     QString getQuizFirstLanguage() const;
     QString getQuizTestLanguage() const;
+    Preferences::QuizAlgorithm getQuizAlgorithm() const;
 
     bool isQuizInProgress() const;
     int getProgress() const;
@@ -66,6 +72,7 @@ public:
         
     void rightAnswer();
     void wrongAnswer();
+    void gradeAnswer( int grade );
     void reveal();
    
     bool saveData();
@@ -109,7 +116,7 @@ public:
     QString getResolvedImagePath( const QString& path, const Vocabulary& vocab ) const;
 
     void clearSearch();
-    QValueList<TermKey> search( const QString& query, const QString& firstLang = QString::null, const QString& testLang = QString::null );
+    QValueList<TermKey> search( const QString& query );
     QValueList<TermKey> getSearchResults() const;
     int getSearchResultsCount() const;
 
@@ -125,11 +132,13 @@ private:
 
     int writeFileIntoZipFile( zipFile outputFile, const char* filename, const char* data, int length ) const; 
 
+    void initMarkedForStudyRec( Folder* folder, UidList& folderUids, UidList& vocabUids, UidListMap& termUids );
+    void initMarkedForStudyRec( Vocabulary* vocab, UidList& vocabUids, UidListMap& termUids );
     void initMarkedForStudyRec( Folder* folder, IdList& folderIds, IdList& vocabIds, IdListMap& termIds );
     void initMarkedForStudyRec( Vocabulary* vocab, IdList& vocabIds, IdListMap& termIds );
     
-    void saveMarkedItemsRec( Folder* folder, IdList& folderIds, IdList& vocabIds, IdListMap& termIds );
-    void saveMarkedItemsRec( Vocabulary* vocab, IdList& vocabIds, IdListMap& termIds );
+    void saveMarkedItemsRec( Folder* folder, UidList& folderUids, UidList& vocabUids, UidListMap& termUids );
+    void saveMarkedItemsRec( Vocabulary* vocab, UidList& vocabUids, UidListMap& termUids );
 
     QStringList getVocabularyTranslationLanguagesFromZip( zipFile inputFile ) const;
 
@@ -139,20 +148,22 @@ private:
     bool exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList* languages = NULL ) const;
     bool exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList* languages = NULL ) const;
 
-    bool loadVocabulariesRec( Folder* folder );
-
     Vocabulary* makeCopy( Vocabulary* vocab, const QString& firstLang, const QString& testLang ) const;
     Folder* makeCopy( Folder* folder, const QString& firstLang, const QString& testLang ) const;
 
     bool deleteItemsMarkedForDeletion( Folder* folder );
 
     int findFolderId( const QString& filename ) const;
+    QString findFolderUid( const QString& dirPath ) const;
     int findParentFolderId( const QString& dirPath ) const;
+    QString findParentFolderUid( const QString& dirPath ) const;
     int findVocabId( const QString& filename ) const;
+    QString findVocabUid( const QString& filename ) const;
     QString convertPath( const QString& path, QMap<int,Folder*>& newFolders ) const;
+    QString convertPath( const QString& path, QMap<QString,Folder*>& newFolders ) const;
 
-    void searchRec( const QString& query, const QString& firstLang, const QString& testLang, Folder* folder, QValueList<TermKey>& results );
-    void searchRec( const QString& query, const QString& firstLang, const QString& testLang, Vocabulary* folder, QValueList<TermKey>& results );
+    void searchRec( const QString& query, Folder* folder, QValueList<TermKey>& results );
+    void searchRec( const QString& query, Vocabulary* folder, QValueList<TermKey>& results );
 
     Preferences         prefs;
 
@@ -160,7 +171,8 @@ private:
 
     Sequence            currRevealingSeq;
     int                 currRevealingSeqStep;
-    TermScheduler       scheduler;
+    Quiz*               quiz;
+    //OriginalQuiz        quiz;
 
     QString             markedXmlFilename;
     QString             markedFilename;

@@ -1,6 +1,7 @@
 #ifndef PREFERENCES_H
 #define PREFERENCES_H 
 
+#include <qpe/quuid.h>
 #include <stdio.h>
 #include <qfile.h>
 #include <qfont.h>
@@ -21,7 +22,8 @@ public:
 
     static const Q_UINT32 magicNumber( Q_UINT32( 0x77556644 ) );
 
-    enum { SHORTEST, SHORT, MEDIUM, LONG, LONGEST };
+    enum QuizLength { SHORTEST, SHORT, MEDIUM, LONG, LONGEST };
+    enum QuizAlgorithm { ORIGINAL, SUPERMEMO2 };
 
     typedef QValueList<Sequence> SequenceList;
 
@@ -35,6 +37,9 @@ public:
 
     uint getQuizLength() const;
     void setQuizLength( uint quizLength );
+
+    QuizAlgorithm getQuizAlgorithm() const;
+    void setQuizAlgorithm( QuizAlgorithm quizAlgorithm );
 
     void clearRevealingSequences();
     void addRevealingSequence( Sequence sequence );
@@ -101,8 +106,10 @@ public:
     bool isLanguageFilterEnabled() const;
     void setLanguageFilterEnabled( bool isEnabled );
 
-    bool isFolderOpen( int folderId ) const;
-    void setFolderOpen( int folderId, bool isOpen );
+    bool isFolderOpen( const QUuid& folderUid ) const;
+    //bool isFolderOpen( int folderId ) const;
+    void setFolderOpen( const QUuid& folderUid, bool isOpen );
+    //void setFolderOpen( int folderId, bool isOpen );
 
     void setApplicationDirName( const QString& applDir );
 
@@ -120,6 +127,7 @@ private:
     void initDefaultKeyboardAccelerators();
     QFont getFont( const QString& fontFamily, uint size ) const;
 
+    uint                    quizAlgorithm;
     uint                    quizLength;
     SequenceList            sequences;
 
@@ -143,7 +151,7 @@ private:
 
     bool                    languageFilterEnabled;
 
-    QValueList<int>         closedFolders;
+    QValueList<QString>     closedFolders;
 
     QString                 prefsXmlFilename;
     QString                 prefsFilename;

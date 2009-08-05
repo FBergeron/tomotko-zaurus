@@ -1,43 +1,49 @@
 #include "TermKey.h"
 
-TermKey::TermKey( int termId, int vocabId ) : termId( termId ), vocabId( vocabId ) {
+TermKey::TermKey( const QUuid& termUid /* = QUuid() */, const QUuid& vocabUid /* = QUuid() */ ) : termUid( termUid ), vocabUid( vocabUid ) {
 }
 
-TermKey::TermKey( const TermKey& key ) : termId( key.termId ), vocabId( key.vocabId ) {
+TermKey::TermKey( const TermKey& key ) : termUid( key.termUid ), vocabUid( key.vocabUid ) {
 }
 
 TermKey::~TermKey() {
 }
 
-int TermKey::getTermId() const {
-    return( termId );
+QUuid TermKey::getTermUid() const {
+    return( termUid );
 }
 
-int TermKey::getVocabId() const {
-    return( vocabId );
+QUuid TermKey::getVocabUid() const {
+    return( vocabUid );
 }
 
 bool TermKey::isNull() const {
-    return( termId == -1 && vocabId == -1 );
+    return( termUid.isNull() && vocabUid.isNull() );
 }
 
 int TermKey::operator==( const TermKey& key ) const {
-    return( termId == key.getTermId() && vocabId == key.getVocabId() );
+    return( termUid == key.getTermUid() && vocabUid == key.getVocabUid() );
 }
 
 QDataStream& operator<<( QDataStream& out, const TermKey& key ) {
-    out << key.termId << key.vocabId;
+    out << key.termUid.toString() << key.vocabUid.toString();
 
     return( out );
 }
 
 QDataStream& operator>>( QDataStream& in, TermKey& key ) {
-    int tempTermId;
-    int tempVocabId;
+    QString tempTermUidStr;
+    QUuid tempTermUid;
+    QString tempVocabUidStr;
+    QUuid tempVocabUid;
 
-    in >> tempTermId >> tempVocabId;
+    in >> tempTermUidStr;
+    tempTermUid = QUuid( tempTermUidStr );
 
-    key = TermKey( tempTermId, tempVocabId );
+    in >> tempVocabUidStr;
+    tempVocabUid = QUuid( tempVocabUidStr );
+
+    key = TermKey( tempTermUid, tempVocabUid );
 
     return( in );
 }

@@ -4,6 +4,12 @@
 #include "icons/badAns.xpm"
 #include "icons/editTerm.xpm"
 #include "icons/maximize.xpm"
+#include "icons/gradeAnswer1.xpm"
+#include "icons/gradeAnswer2.xpm"
+#include "icons/gradeAnswer3.xpm"
+#include "icons/gradeAnswer4.xpm"
+#include "icons/gradeAnswer5.xpm"
+#include "icons/gradeAnswer6.xpm"
 
 QuizFrame::QuizFrame( Controller* controller, QWidget *parent = 0, const char* name = 0 )
     : QWidget( parent, name ), controller( controller ) {
@@ -28,29 +34,16 @@ void QuizFrame::init() {
     controlPanelLayout = new QHBoxLayout( controlPanel );
     controlPanelLayout->setSpacing( 2 );
 
+    revealButton = new QPushButton( tr( "Reveal" ), controlPanel, "RevealAllData" );
+    revealButton->setPixmap( ZPIXMAP( eye_xpm ) );
+    revealButton->setMinimumWidth( 100 );
+    revealButton->setEnabled( false );
+    revealButton->installEventFilter( this );
+    QToolTip::add( revealButton, tr( "Reveal" ) );
+    connect( revealButton, SIGNAL( clicked() ), this, SLOT( reveal() ) );
+
     answerControlPanel = new QHBox( controlPanel, "AnswerControlPanel" );
-     
-    revealAllDataButton = new QPushButton( tr( "Reveal" ), answerControlPanel, "RevealAllData" );
-    revealAllDataButton->setPixmap( ZPIXMAP( eye_xpm ) );
-    revealAllDataButton->setEnabled( false );
-    revealAllDataButton->installEventFilter( this );
-    QToolTip::add( revealAllDataButton, tr( "Reveal" ) );
-    connect( revealAllDataButton, SIGNAL( clicked() ), this, SLOT( reveal() ) );
-
-    rightAnswerButton = new QPushButton( tr( "RightAnswer" ), answerControlPanel, "RightAnswer" );
-    rightAnswerButton->setPixmap( ZPIXMAP( goodAns_xpm ) ); 
-    rightAnswerButton->setEnabled( false );
-    rightAnswerButton->installEventFilter( this );
-    QToolTip::add( rightAnswerButton, tr( "RightAnswer" ) );
-    connect( rightAnswerButton, SIGNAL( clicked() ), this, SLOT( rightAnswer() ) );
-
-    wrongAnswerButton = new QPushButton( tr( "WrongAnswer" ), answerControlPanel, "WrongAnswer" );
-    wrongAnswerButton->setPixmap( ZPIXMAP( badAns_xpm ) );
-    wrongAnswerButton->setEnabled( false );
-    wrongAnswerButton->installEventFilter( this );
-    QToolTip::add( wrongAnswerButton, tr( "WrongAnswer" ) );
-    connect( wrongAnswerButton, SIGNAL( clicked() ), this, SLOT( wrongAnswer() ) );
-
+   
     editionButton = new QPushButton( tr( "EditWord" ), controlPanel, "EditData" );
     editionButton->setPixmap( ZPIXMAP( editTerm_xpm ) ); 
     editionButton->setMinimumWidth( 100 );
@@ -59,6 +52,7 @@ void QuizFrame::init() {
     QToolTip::add( editionButton, tr( "EditWord" ) );
     connect( editionButton, SIGNAL( clicked() ), this, SLOT( editCurrentTerm() ) );
 
+    controlPanelLayout->addWidget( revealButton, 0 );
     controlPanelLayout->addWidget( answerControlPanel, 1 );
     controlPanelLayout->addWidget( editionButton, 0 );
     
@@ -172,18 +166,91 @@ void QuizFrame::init() {
     setButtonsHidden( prefs.areQuizButtonsHidden() );
 }
 
+void QuizFrame::clearAnswerButtons() {
+    for( QPushButton* answerButton = answerButtons.first(); answerButton != NULL; answerButton = answerButtons.next() ) {
+        answerButton->removeEventFilter( this );
+        if( strcmp( answerButton->name(), "RightAnswer" ) == 0 )
+            disconnect( answerButton, SIGNAL( clicked() ), this, SLOT( rightAnswer() ) );
+        else if( strcmp( answerButton->name(), "WrongAnswer" ) == 0 )
+            disconnect( answerButton, SIGNAL( clicked() ), this, SLOT( wrongAnswer() ) );
+        else {
+            GradeButton* gradeButton = (GradeButton*)answerButton;
+            disconnect( gradeButton, SIGNAL( clicked() ), gradeButton, SLOT( gradeAnswer() ) );
+            disconnect( gradeButton, SIGNAL( gradeSubmitted( int ) ), this, SLOT( gradeAnswer( int ) ) );
+        }
+
+        delete( answerButton );
+    }
+    answerButtons.clear();
+}
+
+void QuizFrame::initAnswerButtons() {
+    clearAnswerButtons();
+    buildAnswerButtons();
+}
+
+void QuizFrame::buildAnswerButtons() {
+    if( controller->getQuizAnswerCount() == 2 ) {
+        QPushButton* rightAnswerButton = new QPushButton( tr( "RightAnswer" ), answerControlPanel, "RightAnswer" );
+        rightAnswerButton->setPixmap( ZPIXMAP( goodAns_xpm ) ); 
+        rightAnswerButton->setEnabled( false );
+        rightAnswerButton->show();
+        rightAnswerButton->installEventFilter( this );
+        QToolTip::add( rightAnswerButton, tr( "RightAnswer" ) );
+        connect( rightAnswerButton, SIGNAL( clicked() ), this, SLOT( rightAnswer() ) );
+
+        QPushButton* wrongAnswerButton = new QPushButton( tr( "WrongAnswer" ), answerControlPanel, "WrongAnswer" );
+        wrongAnswerButton->setPixmap( ZPIXMAP( badAns_xpm ) );
+        wrongAnswerButton->setEnabled( false );
+        wrongAnswerButton->show();
+        wrongAnswerButton->installEventFilter( this );
+        QToolTip::add( wrongAnswerButton, tr( "WrongAnswer" ) );
+        connect( wrongAnswerButton, SIGNAL( clicked() ), this, SLOT( wrongAnswer() ) );
+
+        answerButtons.append( rightAnswerButton );
+        answerButtons.append( wrongAnswerButton );
+    }
+    else {
+        const char** ansXpm[] = { gradeAnswer1_xpm, gradeAnswer2_xpm, gradeAnswer3_xpm, gradeAnswer4_xpm, gradeAnswer5_xpm, gradeAnswer6_xpm };
+        for( int i = 0; i < controller->getQuizAnswerCount(); i++ ) {
+            GradeButton* gradeAnswerButton = new GradeButton( i, answerControlPanel );
+            gradeAnswerButton->setPixmap( ZPIXMAP( ansXpm[ i ] ) );
+            gradeAnswerButton->setMinimumHeight( revealButton->sizeHint().height() );
+            gradeAnswerButton->setEnabled( false );
+            gradeAnswerButton->show();
+            gradeAnswerButton->installEventFilter( this );
+            QToolTip::add( gradeAnswerButton, QString::number( i ) );
+            connect( gradeAnswerButton, SIGNAL( clicked() ), gradeAnswerButton, SLOT( gradeAnswer() ) );
+            connect( gradeAnswerButton, SIGNAL( gradeSubmitted( int ) ), this, SLOT( gradeAnswer( int ) ) );
+
+            answerButtons.append( gradeAnswerButton );
+        }
+    }
+}
+
 QuizFrame::~QuizFrame() {
 }
 
 void QuizFrame::startQuiz() {
-    setButtonsEnabled( false );
     controller->startQuiz();
     controller->prepareQuiz();
+    initAnswerButtons();
+    setButtonsEnabled( false );
     updateLanguageLabels();
     updateFonts();
 
     if( !controller->isQuizInProgress() ) {
-        QMessageBox::warning( this, QObject::tr( "Information" ), tr( "NoTermsMarkedForStudy" ) );
+        switch( controller->getQuizAlgorithm() ) {
+
+            case Preferences::ORIGINAL :
+                QMessageBox::warning( this, QObject::tr( "Information" ), tr( "NoTermsMarkedForStudy" ) );
+                break;
+
+            case Preferences::SUPERMEMO2 :
+                QMessageBox::warning( this, QObject::tr( "Information" ), tr( "NoTermsScheduledForStudy" ) );
+                break;
+
+        }
         return;
     }
 
@@ -205,12 +272,14 @@ void QuizFrame::restartQuiz() {
     askNextTerm();
 }
 
-void QuizFrame::resumeQuiz() {
-    controller->resumeQuiz();
+bool QuizFrame::resumeQuiz() {
+    if( !controller->resumeQuiz() )
+        return( false );
     controller->prepareQuiz();
     updateLanguageLabels();
     updateFonts();
     askCurrentTerm();
+    return( true );
 }
 
 void QuizFrame::setTerm( const Term& term ) {
@@ -239,7 +308,7 @@ void QuizFrame::setTerm( const Term& term ) {
     commentMultiLineEdit->setCursorPosition( 0, 0 );
 
     Folder* vocabTree = controller->getVocabTree();
-    Vocabulary* vocab = vocabTree->getVocabulary( term.getVocabId() );
+    Vocabulary* vocab = vocabTree->getVocabulary( term.getVocabUid() );
     if( vocab ) {
         QString absPath = controller->getResolvedImagePath( term.getImagePath(), *vocab );
         imageBox->setImage( absPath );
@@ -265,7 +334,7 @@ Term* QuizFrame::askNextTerm() {
     Term* nextTerm = NULL;
     if( controller->hasNextTerm() )
         nextTerm = controller->getNextTerm(); // Can return NULL if the term has been deleted meanwhile.
-       
+cerr << "askNextTerm nextTerm=" << nextTerm << endl;      
     if( nextTerm ) {
         restoreCommentField();
         askTerm( *nextTerm );
@@ -346,6 +415,37 @@ void QuizFrame::wrongAnswer() {
         controller->wrongAnswer();
         askNextTerm();
     }
+}
+
+void QuizFrame::gradeAnswer( int grade ) {
+    if( controller->isQuizInProgress() ) {
+        controller->gradeAnswer( grade );
+        askNextTerm();
+    }
+}
+
+void QuizFrame::gradeAnswer1() {
+    gradeAnswer( 1 );
+}
+
+void QuizFrame::gradeAnswer2() {
+    gradeAnswer( 2 );
+}
+
+void QuizFrame::gradeAnswer3() {
+    gradeAnswer( 3 );
+}
+
+void QuizFrame::gradeAnswer4() {
+    gradeAnswer( 4 );
+}
+
+void QuizFrame::gradeAnswer5() {
+    gradeAnswer( 5 );
+}
+
+void QuizFrame::gradeAnswer6() {
+    gradeAnswer( 6 );
 }
 
 void QuizFrame::reveal() {
@@ -527,9 +627,9 @@ void QuizFrame::hideAnswers() {
 }
 
 void QuizFrame::setButtonsEnabled( bool isEnabled ) {
-    revealAllDataButton->setEnabled( isEnabled );
-    rightAnswerButton->setEnabled( isEnabled );
-    wrongAnswerButton->setEnabled( isEnabled );
+    revealButton->setEnabled( isEnabled );
+    for( QPushButton* answerButton = answerButtons.first(); answerButton != NULL; answerButton = answerButtons.next() )
+        answerButton->setEnabled( isEnabled );
     editionButton->setEnabled( isEnabled );
 }
 
@@ -558,6 +658,24 @@ void QuizFrame::toggleMaximizeComment( bool isOn ) {
         maximizeCommentField();
     else
         restoreCommentField();
+}
+
+void QuizFrame::showProgressDetails() {
+    // Temporary: dummy data for test.
+    CurrTermProgressData currTermData;
+    currTermData.repetition = 3;
+    currTermData.easinessFactor = 2.3f;
+    currTermData.daysToNextRepetition = 6;
+
+    ProgressData progressData;
+    controller->getQuizSchedule( progressData.scheduleForDay );
+    progressData.currTerm = currTermData;
+
+    ProgressDialog dialog( parentWidget(), progressData );
+    dialog.resize( 440, 330 ); 
+    dialog.show();
+    dialog.exec();
+
 }
 
 bool QuizFrame::isFirstLangTermRevealed() const {
@@ -616,7 +734,7 @@ void QuizFrame::editCurrentTerm() {
             return;
         }
 
-        Vocabulary* vocab = vocabTree->getVocabulary( term->getVocabId() );
+        Vocabulary* vocab = vocabTree->getVocabulary( term->getVocabUid() );
         if( vocab == NULL || !vocab->isTermExists( term->getId() ) ) {
             QMessageBox::warning( this, QObject::tr( "Information" ), tr( "DissociatedWord" ) );
             return;

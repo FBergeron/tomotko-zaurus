@@ -1,9 +1,11 @@
 #include "Term.h"
 
-Term::Term( int id = 0, int vocabId = 0 ) : id( id ), vocabId( vocabId ), markedForStudy( FALSE ), imagePath( QString::null ) {
+bool Term::isOldFormat = false; // Temporary flag for data conversion from 0.11.x to 0.12.x.
+
+Term::Term( int id /* = 0 */, const QUuid& vocabUid /* = QUuid() */, const QUuid& uid /*= QUuid()*/ ) : uid( uid ), id( id ), vocabUid( vocabUid ), markedForStudy( false ), markedForDeletion( false ), imagePath( QString::null ) {
 }
 
-Term::Term( const Term& term ) : id( term.id ), vocabId( term.vocabId ), markedForStudy( term.markedForStudy ), imagePath( term.imagePath ) {
+Term::Term( const Term& term ) : uid( term.uid ), id( term.id ), vocabUid( term.vocabUid ), markedForStudy( term.markedForStudy ), markedForDeletion( term.markedForDeletion ), imagePath( term.imagePath ) {
     for( TranslationMap::ConstIterator it = term.translations.begin(); it != term.translations.end(); it++ ) {
         const Translation& trans = it.data();
         addTranslation( trans );
@@ -18,13 +20,29 @@ Term::Term( const Term& term ) : id( term.id ), vocabId( term.vocabId ), markedF
 Term::~Term() {
 }
 
+const QUuid Term::getUid() const {
+    return( uid );
+}
+
+void Term::setUid( const QUuid& uid ) {
+    this->uid = uid;
+}
+
 const int Term::getId() const {
     return( id );
 }
 
-const int Term::getVocabId() const {
-    return( vocabId );
+const QUuid Term::getVocabUid() const {
+    return( vocabUid );
 }
+
+void Term::setVocabUid( const QUuid& vocabUid ) {
+    this->vocabUid = vocabUid;
+}
+
+//const int Term::getVocabId() const {
+//    return( vocabId );
+//}
 
 bool Term::isMarkedForStudy() const {
     return( markedForStudy );
@@ -32,6 +50,14 @@ bool Term::isMarkedForStudy() const {
 
 void Term::setMarkedForStudy( bool isMarkedForStudy ) {
     markedForStudy = isMarkedForStudy;
+}
+
+bool Term::isMarkedForDeletion() const {
+    return( markedForDeletion );
+}
+
+void Term::setMarkedForDeletion( bool isMarkedForDeletion ) {
+    markedForDeletion = isMarkedForDeletion;
 }
 
 void Term::addTranslation( const Translation& translation ) {
@@ -111,21 +137,38 @@ void Term::setImagePath( const QString& imagePath ) {
 }
 
 QDataStream& operator<<( QDataStream& out, const Term& term ) {
-    out << term.id << term.vocabId << term.translations << term.comments << term.imagePath;
+    out << term.uid.toString();
+    out << /*term.vocabUid.toString() <<*/ term.translations << term.comments << term.imagePath;
+    
     return( out );
 }
 
 QDataStream& operator>>( QDataStream& in, Term& term ) {
-    int tempId;
-    int tempVocabId;
+    QString tempUidStr;
+    QUuid tempUid;
+    int tempId = -1;
+    QString tempVocabUidStr;
+    QUuid tempVocabUid;
     Term::TranslationMap tempTranslations;
     Term::CommentMap tempComments;
     QString tempImagePath;
-
-    in >> tempId >> tempVocabId >> tempTranslations >> tempComments;
-    in >> tempImagePath;
-
-    term = Term( tempId, tempVocabId );
+    if( Term::isOldFormat ) {
+        int tempVocabId; // This value is dismissed.  The parent vocabulary will affect the vocabUid and the uid after reading all the terms. 
+        in >> tempId;
+        in >> tempVocabId;
+        in >> tempTranslations;
+        in >> tempComments;
+        in >> tempImagePath;
+    }
+    else {
+        in >> tempUidStr;
+        tempUid = QUuid( tempUidStr );
+        //in >> tempVocabUidStr;
+        //tempVocabUid = QUuid( tempVocabUidStr );
+        in >> tempTranslations >> tempComments;
+        in >> tempImagePath;
+    }
+    term = Term( tempId, tempVocabUid, tempUid );
     for( Term::TranslationMap::ConstIterator it = tempTranslations.begin(); it != tempTranslations.end(); it++ ) {
         const Translation& trans = it.data();
         term.addTranslation( trans );

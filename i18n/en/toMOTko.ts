@@ -123,6 +123,30 @@ Do you want to resume this quiz?</translation>
         <source>Search...</source>
         <translation>Search...</translation>
     </message>
+    <message>
+        <source>gradeAnswer1</source>
+        <translation>Grade Answer 1</translation>
+    </message>
+    <message>
+        <source>gradeAnswer2</source>
+        <translation>Grade Answer 2</translation>
+    </message>
+    <message>
+        <source>gradeAnswer3</source>
+        <translation>Grade Answer 3</translation>
+    </message>
+    <message>
+        <source>gradeAnswer4</source>
+        <translation>Grade Answer 4</translation>
+    </message>
+    <message>
+        <source>gradeAnswer5</source>
+        <translation>Grade Answer 5</translation>
+    </message>
+    <message>
+        <source>gradeAnswer6</source>
+        <translation>Grade Answer 6</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -305,6 +329,33 @@ Overwrite the current assignment?</translation>
     <message>
         <source>ShowAltInTermList</source>
         <translation>Show Alt./Phon. value</translation>
+    </message>
+    <message>
+        <source>Algorithm</source>
+        <translation>Algorithm</translation>
+    </message>
+    <message>
+        <source>OriginalQuizAlgorithm</source>
+        <translation>Original</translation>
+    </message>
+    <message>
+        <source>SuperMemo2Algorithm</source>
+        <translation>SuperMemo-2</translation>
+    </message>
+</context>
+<context>
+    <name>ProgressDialog</name>
+    <message>
+        <source>ScheduleInfo</source>
+        <translation>Schedule</translation>
+    </message>
+    <message>
+        <source>CurrentTermInfo</source>
+        <translation>Current Term</translation>
+    </message>
+    <message>
+        <source>ProgressDialogCaption</source>
+        <translation>Progress Details...</translation>
     </message>
 </context>
 <context>
@@ -491,6 +542,50 @@ and disk space.</translation>
         <source>NewGlossary</source>
         <translation>New glossary</translation>
     </message>
+    <message>
+        <source>&lt;dir&gt;</source>
+        <translation>&lt;dir&gt;</translation>
+    </message>
+    <message>
+        <source>Kb</source>
+        <translation>Kb</translation>
+    </message>
+    <message>
+        <source>Mb</source>
+        <translation>Mb</translation>
+    </message>
+    <message>
+        <source>CannotResumeQuiz</source>
+        <translation>Impossible to resume this quiz.</translation>
+    </message>
+    <message>
+        <source>Monday</source>
+        <translation>Monday</translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation>Tuesday</translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation>Wednesday</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation>Thursday</translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation>Friday</translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation>Saturday</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation>Sunday</translation>
+    </message>
 </context>
 <context>
     <name>QuizFrame</name>
@@ -556,6 +651,27 @@ cannot be performed from the Quiz.</translation>
     <message>
         <source>Image</source>
         <translation>Image</translation>
+    </message>
+    <message>
+        <source>NoTermsScheduledForStudy</source>
+        <translation>No terms are scheduled today
+for study for the selected
+languages.</translation>
+    </message>
+</context>
+<context>
+    <name>Schedule</name>
+    <message>
+        <source>Today</source>
+        <translation>Today</translation>
+    </message>
+    <message>
+        <source>Tomorrow</source>
+        <translation>Tomorrow</translation>
+    </message>
+    <message>
+        <source>NumberOfTermsScheduled</source>
+        <translation>Number of terms scheduled for the week</translation>
     </message>
 </context>
 <context>
@@ -951,15 +1067,27 @@ in the Actions menu.</translation>
     </message>
     <message>
         <source>ImagePreview</source>
-        <translation type="unfinished"></translation>
+        <translation>Preview</translation>
     </message>
     <message>
         <source>ShowImagePreview</source>
-        <translation type="unfinished"></translation>
+        <translation>Show Image Preview</translation>
     </message>
     <message>
-        <source>test</source>
-        <translation type="unfinished"></translation>
+        <source>Home</source>
+        <translation>Home</translation>
+    </message>
+    <message>
+        <source>SD Card</source>
+        <translation>SD Card</translation>
+    </message>
+    <message>
+        <source>CF Card</source>
+        <translation>CF Card</translation>
+    </message>
+    <message>
+        <source>Root</source>
+        <translation>Root</translation>
     </message>
 </context>
 </TS>

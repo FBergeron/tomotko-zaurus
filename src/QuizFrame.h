@@ -1,5 +1,5 @@
-#ifndef QUIZ_H
-#define QUIZ_H
+#ifndef QUIZ_FRAME_H
+#define QUIZ_FRAME_H
 
 #include <qapplication.h>
 #include <qevent.h>
@@ -23,7 +23,9 @@
 #include <qwidgetstack.h>
 #include <qpe/resource.h>
 #include "Controller.h"
+#include "GradeButton.h"
 #include "ImageBox.h"
+#include "ProgressDialog.h"
 #include "ScrollableLineEdit.h"
 #include "ScrollableMultiLineEdit.h"
 #include "Term.h"
@@ -44,7 +46,7 @@ public:
 
     void startQuiz();
     void restartQuiz();
-    void resumeQuiz();
+    bool resumeQuiz();
     void setTerm( const Term& term );
     void concludeQuiz();
     Term* askCurrentTerm();
@@ -72,6 +74,8 @@ public slots:
 
     void toggleMaximizeComment( bool isOn );
 
+    void showProgressDetails();
+
 signals:
 
     void quizShown();
@@ -81,6 +85,13 @@ private slots:
 
     void rightAnswer();
     void wrongAnswer();
+    void gradeAnswer( int grade );
+    void gradeAnswer1();
+    void gradeAnswer2();
+    void gradeAnswer3();
+    void gradeAnswer4();
+    void gradeAnswer5();
+    void gradeAnswer6();
     void reveal();
     void revealAll();
     void revealAltTerm();
@@ -94,6 +105,9 @@ private slots:
 private:
 
     void init();
+    void initAnswerButtons();
+    void clearAnswerButtons();
+    void buildAnswerButtons();
 
     void hideAnswers();
     void setButtonsEnabled( bool isEnabled );
@@ -120,9 +134,10 @@ private:
     QWidget*                    controlPanel;
     QHBoxLayout*                controlPanelLayout;
     QHBox*                      answerControlPanel;
-    QPushButton*                revealAllDataButton;
-    QPushButton*                rightAnswerButton;
-    QPushButton*                wrongAnswerButton;
+    QPushButton*                revealButton;
+
+    QList<QPushButton>          answerButtons;
+
     QPushButton*                editionButton;
 
     QWidget*                    firstLangTermPanel;

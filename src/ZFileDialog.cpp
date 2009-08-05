@@ -134,9 +134,12 @@ ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, b
         fileLV->setMultiSelection( true );
 
     showImagePreview = new QCheckBox( tr( "ShowImagePreview" ), fileLVBox );
-    showImagePreview->setChecked( false );
-    if( !previewImage )
+    if( previewImage )
+        showImagePreview->setChecked( true );
+    else {
+        showImagePreview->setChecked( false );
         showImagePreview->hide();
+    }
     connect( showImagePreview, SIGNAL( toggled( bool ) ), this, SLOT( setImagePreviewEnabled( bool ) ) );
 
     imagePreviewBox = new QHGroupBox( tr( "ImagePreview" ), mainPanel );
@@ -168,6 +171,8 @@ ZFileDialog::ZFileDialog( const QString title, const QString &path, Mode mode, b
     }  
 
     imagePreview->installEventFilter( this );
+
+    setImagePreviewEnabled( previewImage );
 }
 
 void ZFileDialog::insertDirEntry( const QString &label, const QString &path, QPixmap *pixmap ) {

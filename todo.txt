@@ -1,16 +1,45 @@
 ToDo
 ----
-Implement SM-2
+Consider prefs' fonts in the schedule.
+Disable gradeAnswer accelerators when performing a non-SM-2 quiz.
+The AllDone message should be different for sm2 quiz.  These messages should be defined by quiz.
+It doesn't really make sense to have reinit() for sm2 quiz.  Maybe introduce isRestartable() property and adjust the buttons accordingly.
+Add a new set of checked items for the sm2 algo.  There should be such set for each algo.  The tree should update itself whenever we change the current algo in the prefs.  Because of that, instead of using "sm2" string in the data filenames, maybe use the integer of the enum instead.  For now, an item (term, folder or vocab) has a boolean state for markedForStudy or not.  Either we pass a algo param to isMarkedForStudy() and setMarkedForStudy() or we keep a dissociate data structure that will keep the info for each algo.  I think the second approach is cleaner (design point of view) because it keeps the items uncoupled with algo. But the first approach seems easier.  The data structure should probably be located in the Prefs.  No need to save marked.dat.z if so.  By default, the set of checked items should be the same than the original one?  Or maybe not because what will we do if we add another algo... Maybe an empty selection is better.  Not sure that it's really needed.
+Add a dialog when clicking the progress bar giving additional details (number of words / total, for example).  Something similar to Mnemosyne? Maybe use subclass for each quiz type (e.g.: ProgressDialog SuperMemo2ProgressDialog, etc.)
+Should we hide the Quiz Length section in the Prefs when SM-2 quiz is selected?  We should but is it a big deal?  Probably not.
+Do I still need a TermKey?  Why not use the term uid directly instead?  Hmmm...  I don't think I need it anymore but double-check before removing it.
+Why do we have the message "delete the folder item... several times when we launch the application?
+Verify if resumable quiz (ordinary ones) are still working (especially those that comes from the previous version).
+Test copy/cut/paste with images (local or not)
+Make sure that when we remove a term that references to it are also removed (markedForStudy and test, etc.)
+Don't forget: we can also remove terms from SearchDialog...  So we have to do the same handling here.  Could it be possible to put that in one place?
+Test delete term, vocab, folder and rec folder.
+Update the conversion scripts for uid if needed.
+Reread all folder, vocab and term files carefully regarding uid management.
+Fix this bug: When comparing version number when loading data, the number is an hexadecimal value.  So 10 should be 0a probably.
+Is there a way to handle imagePath in one place (within term class?)?
+
 Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Refactor the code in editResultTerm() and editTerm().  The code is similar.  Maybe using signal/slot approach could work. There is a good example of that in page 18 of my Qt book for the FindDialog.
 Replace Unicode by UnicodeUTF8 when reading/writing xml files.
+Mention a note in the documentation about rightAnswer and wrongAnѕwer accelerators that, respectively do, gradeAnswer( 5 ) and gradeAnswer( 0 ).
 Would it be possible to make the fields larger (see more than 1 row) (especially or only in portrait mode). --> A first try reveals that it's not that easy.
+
+Mention in the release notes that in order to convert the data, it's required to start and quit the application right away after intalling the appliction.
+Mention in the release notes that the state of the folders (opened/closed) will be lost after upgrade.  No big deal.
+Mention in the release notes that the resumable quiz will actually not been resumable. No big deal.
+When we export on an existing file, a warning dialog need to be shown.
 Release 0.12.0
 
+Remove Vocabulary::OldTermMap
+Remove Controller::findVocabId(), Controller::findFolderId(), Controller::findParentFolderId()
+Remove numerical id for Term, Vocabulary and Folder as GUID are now used.
 Remove prefsXmlFilename declaration and everything that's related to it.
 Remove markedXmlFilename declaration and everything that's related to it.
 Remove code that remove prefs.xml file.  Now obsolete.
 Remove code that remove marked.xml file.  Now obsolete.
+
+Try again to render a dash-umlaut.  Try it on the zaurus as the rendering bug may be related to the emulator.  Try also on latest version of Qt.
 
 Implement Unicode character plugin.
 Try to use pictureflow (http://code.google.com/p/pictureflow/).
@@ -53,6 +82,7 @@ Refactor doRemoveTerms(): There are some duplicated code there. Should be moved 
 What happens if file extensions are GIF, PNG, XML, ZIP (uppercase) instead of lowercase in zip file or elsewhere?
 On the Linux version (emulated qtopia), the quiz doesn't show the gif image.  Bug from Linux emulation?  Most probably.
 Remove/reduce flickering when max/minimizing in QuizFrame.
+Save ASAP instead of waiting until the user quit the application.  When we quit the application, we should probably only remove the items marked for deletion.
 Instead of using buttons to set/clear image, use a popup menu if possible.
 Improve the preferences' order controller.  Should look like in bios when setting the boot device order.  Maybe add a checkbox to show comments with last choice.  Or/and maybe use 2 panels from -> to with +/- (or up/down arrows) buttons to change the sequence.
 Not sure but could saveData methods be refactored.  They all look the same except a few details...
@@ -112,7 +142,7 @@ Remove checkbox for root item or remove root item or remove header.
 Implement clean undo (Command and Memento patterns?)
 Could add a small icon in the term list to indicate if a picture is associated to a word.  Could count images too in stats.  Low priority.
 In order to strech gif that are not movies, maybe we could load the image first, check somehow if it's a movie (isNull() or something else).  If not, scale the image.
-Implement the concept of referenced/shared term (shortcut/alias).  For this, I think I will need to affect GUID (the file /opt/Qtopia/include/qpe/quuid.h may be interesting) for termId because they are separated in different files.  Also, I may need to have a special file just for referenced terms.  In this case, the regular data file will just link to an id to a shared term.  This way, we don't need to duplicate the data.  We must think about the import about that in the eventuality we want to share a data file with someone...  All this so we can have a same term in several glossaries.
+Implement the concept of referenced/shared term (shortcut/alias).  for termId because they are separated in different files.  Also, I may need to have a special file just for referenced terms.  In this case, the regular data file will just link to an id to a shared term.  This way, we don't need to duplicate the data.  We must think about the import about that in the eventuality we want to share a data file with someone...  All this so we can have a same term in several glossaries.
 Remove unneeded comments everywhere.  Now that I use filesystem to store data, maybe I could use Linux's symbolic links to implement that.  Of course, this would probably not work on Windows though.  And when I think of it, it's probably not very safe and takes too double memory.  No...  Not a good idea.
 Put licence in header of source files.  Low priority.
 Add a menuitem to go to previously shown term.  Very low priority.

@@ -124,7 +124,8 @@ private slots:
 
 private:
 
-    FolderTreeItem* addFolder( Folder* folder, QMap<int,Vocabulary>* vocabularies = NULL );
+    //FolderTreeItem* addFolder( Folder* folder, QMap<int,Vocabulary>* vocabularies = NULL );
+    FolderTreeItem* addFolder( Folder* folder, QMap<QString,Vocabulary>* vocabularies = NULL );
     VocabTreeItem* addVocab( Vocabulary* vocab );
 
     FolderTreeItem* buildTreeRec( VocabTreeView* vocabTreeView, FolderTreeItem* parentItem, Folder* folder, bool closeFolder = false );

@@ -8,6 +8,7 @@
 
 #ifndef HISTORY_FIELD_H
 #define HISTORY_FIELD_H
+
 #include <iostream.h>
 #include <qcombobox.h>
 #include <qlineedit.h>

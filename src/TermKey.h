@@ -1,6 +1,7 @@
 #ifndef TERM_KEY_H
 #define TERM_KEY_H
 
+#include <qpe/quuid.h>
 #include <iostream.h>
 #include <qdatastream.h>
 
@@ -8,12 +9,12 @@ class TermKey {
 
 public:
 
-    TermKey( int termId = -1, int vocabId = -1 );
+    TermKey( const QUuid& termUid = QUuid(), const QUuid& vocabUid = QUuid() );
     TermKey( const TermKey& key );
     ~TermKey();
 
-    int getTermId() const;
-    int getVocabId() const;
+    QUuid getTermUid() const;
+    QUuid getVocabUid() const;
     bool isNull() const;
 
     int operator==( const TermKey& key ) const;
@@ -23,8 +24,8 @@ public:
 
 private:
 
-    int termId;
-    int vocabId;
+    QUuid termUid;
+    QUuid vocabUid;
 
 };
 

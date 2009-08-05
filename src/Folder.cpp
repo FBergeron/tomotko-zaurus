@@ -1,13 +1,13 @@
 #include "Folder.h"
 
-Folder::Folder( int id, const QString& title ) : Base(), id( id ), title( title ), markedForStudy( false ), markedForDeletion( false ), 
-    dirty( false ), parent( NULL ) {
+Folder::Folder( int id /* = -1 */, const QString& title /* = QString::null */ , const QUuid& uid /* = QUuid() */ ) 
+    : Base(), uid( uid ), id( id ), title( title ), markedForStudy( false ), markedForDeletion( false ), dirty( false ), parent( NULL ) {
     QDateTime now( QDateTime::currentDateTime() );
     creationDate = modificationDate = now;
 }
 
 Folder::Folder( const Folder& folder ) 
-    : Base(), id( folder.id ), title( folder.title ), description( folder.description ), author( folder.author ),
+    : Base(), uid( folder.uid ), id( folder.id ), title( folder.title ), description( folder.description ), author( folder.author ),
         creationDate( folder.creationDate ), modificationDate( folder.modificationDate ), 
             markedForStudy( folder.isMarkedForStudy() ), markedForDeletion( folder.markedForDeletion ), dirty( folder.dirty ), parent( folder.parent ) {
     for( QListIterator<Base> it( folder.children ); it.current(); ++it ) {
@@ -26,42 +26,17 @@ Folder::Folder( const Folder& folder )
 Folder::~Folder() {
 }
 
+QUuid Folder::getUid() const {
+    return( uid );
+}
+
 int Folder::getId() const {
     return( id );
 }
 
-int Folder::getMaxId() {
-    int maxId = getId();
-    for( Base* child = children.first(); child; child = children.next() ) {
-        if( strcmp( child->className(), "Folder" ) == 0 ) {
-            int childMaxId = ((Folder*)child)->getMaxId();
-            if( childMaxId > maxId )
-                maxId = childMaxId;
-        }
-    }
-    return( maxId );
-}
-
-int Folder::getMaxVocabId() {
-    int maxId = 0;
-    for( Base* child = children.first(); child; child = children.next() ) { 
-        if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
-            Vocabulary* vocab = (Vocabulary*)child;
-            if( vocab->getId() > maxId )
-                maxId = vocab->getId();
-        }
-        else if( strcmp( child->className(), "Folder" ) == 0 ) {
-            int childMaxId = ((Folder*)child)->getMaxVocabId();
-            if( childMaxId > maxId )
-                maxId = childMaxId;
-        }
-    }
-    return( maxId );
-}
-
-
 const QString Folder::getTitle() const {
     return( title );
+    //return( title + QString( "(" ) + getUid().toString() + QString( ")" ) ); // For debugging.
     //return( title + QString( "(" ) + QString::number( getId() ) + QString( ")" ) ); // For debugging.
 }
 
@@ -158,6 +133,22 @@ bool Folder::isReachableFromRoot() const {
     } 
 }
 
+Folder* Folder::getFolder( const QUuid& uid ) {
+    if( getUid() == uid )
+        return( this );
+
+    for( Base* child = children.first(); child; child = children.next() ) { 
+        if( strcmp( child->className(), "Folder" ) == 0 ) {
+            Folder* childFolder = (Folder*)child;
+            Folder* folder = childFolder->getFolder( uid );
+            if( folder )
+                return( folder );
+        }
+    }
+
+    return( NULL );
+}
+
 Folder* Folder::getFolder( int id ) {
     if( getId() == id )
         return( this );
@@ -236,6 +227,10 @@ int Folder::getChildrenCount() const {
     return( children.count() );
 }
 
+Vocabulary* Folder::getVocabulary( const QUuid& uid ) {
+    return( getVocabularyRec( uid ) );
+}
+
 Vocabulary* Folder::getVocabulary( int id ) {
     return( getVocabularyRec( id ) );
 }
@@ -248,59 +243,6 @@ Base* Folder::next() {
     return( children.next() );
 }
 
-bool Folder::load( const QString& filename ) {
-    QFile dataFile( filename );
-    if( !dataFile.open( IO_ReadOnly ) )
-        return( false );
-    
-    QByteArray compressedData( dataFile.readAll() );
-    QByteArray data( Util::qUncompress( compressedData ) );
-
-    QDataStream in( data, IO_ReadOnly );
-
-    Q_UINT32 tempMagicNumber;
-    Q_UINT16 tempVersion;
-    Folder tempFolder;
-
-    in >> tempMagicNumber >> tempVersion;
-
-    if( tempMagicNumber != Folder::magicNumber ) {
-        cerr << "Wrong magic number: Incompatible folder data file." << endl;
-        return( false );
-    }
-    if( tempVersion > 0x0009 ) {
-        cerr << "Folder data file is from a more recent version.  Upgrade toMOTko." << endl;
-        return( false );
-    }
-
-    in.setVersion( 3 );
-    in >> tempFolder;
-
-    dataFile.close();
-
-    id = tempFolder.getId();
-    title = tempFolder.getTitle();
-    description = tempFolder.getDescription();
-    author = tempFolder.getAuthor();
-    creationDate = tempFolder.getCreationDate();
-    modificationDate = tempFolder.getModificationDate();
-    markedForStudy = tempFolder.isMarkedForStudy();
-
-    for( QListIterator<Base> it( tempFolder.children ); it.current(); ++it ) {
-        const Base* childItem = it.current();
-        if( strcmp( childItem->className(), "Folder" ) == 0 ) {
-            Folder* folder = (Folder*)childItem;
-            add( folder );
-        }
-        else if( strcmp( childItem->className(), "Vocabulary" ) == 0 ) {
-            Vocabulary* vocab = (Vocabulary*)childItem;
-            add( vocab );
-        }
-    }
-
-    return( true );
-}
-
 bool Folder::loadMetadata( const QString& filename ) {
     QFile dataFile( filename );
     if( !dataFile.open( IO_ReadOnly ) ) {
@@ -309,12 +251,16 @@ bool Folder::loadMetadata( const QString& filename ) {
     }
     
     QByteArray compressedData( dataFile.readAll() );
+    dataFile.close();
+
     QByteArray data( Util::qUncompress( compressedData ) );
 
     QDataStream in( data, IO_ReadOnly );
 
     Q_UINT32 tempMagicNumber;
     Q_UINT16 tempVersion;
+    QString tempUidStr;
+    QUuid tempUid;
     int tempId;
     QString tempTitle;
     QString tempDescription;
@@ -323,41 +269,52 @@ bool Folder::loadMetadata( const QString& filename ) {
     QDateTime tempModificationDate;
 
     in >> tempMagicNumber >> tempVersion;
-
     if( tempMagicNumber != Folder::magicNumber ) {
         cerr << "Wrong magic number: Incompatible folder data file." << endl;
         return( false );
     }
-    if( tempVersion > 0x0010 ) {
+    if( tempVersion > 0x0011 ) {
         cerr << "Folder data file is from a more recent version.  Upgrade toMOTko." << endl;
+        return( false );
+    }
+    if( tempVersion < 0x0010 ) {
+        cerr << "Folder format too old.  You must use an anterior version of toMOTko." << endl;
         return( false );
     }
 
     in.setVersion( 3 );
-    in >> tempId >> tempTitle >> tempDescription >> tempAuthor >> tempCreationDate >> tempModificationDate;
+    if( tempVersion == 0x0011 ) {
+        in >> tempUidStr;
+        tempUid = QUuid( tempUidStr );
+    }
+    else if( tempVersion == 0x0010 ) {
+        Vocabulary::parentPath = filename; // This hack will be used by Term to retrieve the image.
+        tempUid = Util::createUuid();
+        in >> tempId;
+        dirty = true; // To save the folder in the new format.
+    }
+    in >> tempTitle >> tempDescription >> tempAuthor >> tempCreationDate >> tempModificationDate;
 
-    dataFile.close();
-
+    uid = tempUid;
     id = tempId;
     title = tempTitle;
     description = tempDescription;
     author = tempAuthor;
     creationDate = tempCreationDate;
     modificationDate = tempModificationDate;
+//cerr << "tempUid=" << uid.toString() << " id=" << id << " title=" << title << " desc=" << description << " author=" << author << " crD=" << creationDate.toString() << " modD=" << modificationDate.toString() << endl;
 
     return( true );
 }
 
 bool Folder::saveMetadata( const QString& filename ) const {
-    //cerr << "saveMetadata " << filename << endl;
     QByteArray data;
 
     QDataStream out( data, IO_WriteOnly );
     out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
 
-    // 0x0010 means 0.10.x version.
-    out << Q_UINT32( Folder::magicNumber ) << Q_UINT16( 0x0010 );
-    out << getId() << getTitle() << getDescription() << getAuthor() << getCreationDate() << getModificationDate();  
+    out << Q_UINT32( Folder::magicNumber ) << Q_UINT16( 0x0011 );
+    out << getUid().toString() << getTitle() << getDescription() << getAuthor() << getCreationDate() << getModificationDate();  
 
     QByteArray compressedData( Util::qCompress( data ) ); 
 
@@ -373,6 +330,9 @@ bool Folder::saveMetadata( const QString& filename ) const {
     int ret = dataFile.writeBlock( compressedData );
     dataFile.close();
 
+    // Temporary code for data conversion between 0.11.x and 0.12.x. 
+    Vocabulary::parentPath = filename; // This hack will be used by Term to copy images from temporary directory to vocab's directory.
+
     if( ret == -1 || dataFile.status() != IO_Ok ) {
         dataFile.resetStatus();
         return( false );
@@ -381,7 +341,7 @@ bool Folder::saveMetadata( const QString& filename ) const {
     return( true );
 }
 
-void Folder::buildVocabCopiesMap( QMap<int,Vocabulary>& vocabularies ) const {
+void Folder::buildVocabCopiesMap( QMap<QString,Vocabulary>& vocabularies ) const {
     for( QListIterator<Base> it( children ); it.current(); ++it ) {
         const Base* folderChild = it.current();
         if( strcmp( folderChild->className(), "Folder" ) == 0 ) {
@@ -390,7 +350,7 @@ void Folder::buildVocabCopiesMap( QMap<int,Vocabulary>& vocabularies ) const {
         }
         else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 ) {
             Vocabulary* childVocab = (Vocabulary*)folderChild;
-            vocabularies.insert( childVocab->getId(), *childVocab );
+            vocabularies.insert( childVocab->getUid().toString(), *childVocab );
         }
     }
 }
@@ -425,12 +385,20 @@ Folder* Folder::getParent() const {
     return( parent );
 }
 
-QString Folder::getPath() const {
+QString Folder::getOldPath() const {
     Folder* parentFolder = getParent();
     if( parentFolder )
         return( QString( parentFolder->getPath() + QString( "/" ) + QString::number( getId() ) ) );
     else
         return( QString::number( getId() ) );
+}
+
+QString Folder::getPath() const {
+    Folder* parentFolder = getParent();
+    if( parentFolder )
+        return( QString( parentFolder->getPath() + QString( "/" ) + getUid().toString() ) );
+    else
+        return( getUid().toString() );
 }
 
 QString Folder::getHumanReadablePath() const {
@@ -560,6 +528,22 @@ void Folder::getItemsCount( uint* termCount, uint* vocabCount, uint* folderCount
     }
 }
 
+Vocabulary* Folder::getVocabularyRec( const QUuid& uid ) {
+    for( Base* child = children.first(); child; child = children.next() ) { 
+        if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
+            Vocabulary* vocab = (Vocabulary*)child;
+            if( vocab->getUid() == uid )
+                return( vocab );
+        }
+        else if( strcmp( child->className(), "Folder" ) == 0 ) {
+            Vocabulary* vocab = ((Folder*)child)->getVocabularyRec( uid );
+            if( vocab )
+                return( vocab );
+        }
+    }
+    return( NULL );
+}
+
 Vocabulary* Folder::getVocabularyRec( int id ) {
     for( Base* child = children.first(); child; child = children.next() ) { 
         if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
@@ -577,7 +561,7 @@ Vocabulary* Folder::getVocabularyRec( int id ) {
 }
 
 QDataStream& operator<<( QDataStream& out, const Folder& folder ) {
-    out << folder.getId() << folder.getTitle() << folder.getDescription() << folder.getAuthor();
+    out << folder.getUid().toString() << folder.getTitle() << folder.getDescription() << folder.getAuthor();
     out << folder.getCreationDate() << folder.getModificationDate();
     if( !folder.isEmpty() ) {
         for( QListIterator<Base> it( folder.children ); it.current(); ++it ) {
@@ -593,9 +577,9 @@ QDataStream& operator<<( QDataStream& out, const Folder& folder ) {
                 // This is required as the structure is recursive and heterogeous (contains folder and vocabularies).
                 out << QString( "V" );
 
-                // We just write the vocabulary's idas a reference.
+                // We just write the vocabulary's uid as a reference.
                 // Vocabularies are stored separately in their own files to reduce i/o operations.
-                out << ((Vocabulary*)folderChild)->getId();
+                out << ((Vocabulary*)folderChild)->getUid().toString();
             }
         }
     }
@@ -606,7 +590,8 @@ QDataStream& operator<<( QDataStream& out, const Folder& folder ) {
 }
 
 QDataStream& operator>>( QDataStream& in, Folder& folder ) {
-    int tempId;
+    QString tempUidStr;
+    QUuid tempUid;
     QString tempTitle;
     QString tempDescription;
     QString tempAuthor;
@@ -614,12 +599,16 @@ QDataStream& operator>>( QDataStream& in, Folder& folder ) {
     QDateTime tempModificationDate;
     QString tempChildType;
     Folder tempChildFolder;
-    int tempVocabId;
+    QString tempVocabUidStr;
+    QUuid tempVocabUid;
 
-    in >> tempId >> tempTitle >> tempDescription >> tempAuthor;
+    in >> tempUidStr;
+    tempUid = QUuid( tempUidStr );
+
+    in >> tempTitle >> tempDescription >> tempAuthor;
     in >> tempCreationDate >> tempModificationDate;
 
-    folder = Folder( tempId, tempTitle );
+    folder = Folder( -1, tempTitle, tempUid );
     folder.setDescription( tempDescription );
     folder.setAuthor( tempAuthor );
     folder.setCreationDate( tempCreationDate );
@@ -633,8 +622,9 @@ QDataStream& operator>>( QDataStream& in, Folder& folder ) {
             folder.add( childFolder );
         }
         else if( tempChildType == "V" ) {
-            in >> tempVocabId;
-            Vocabulary* childVocab = new Vocabulary( tempVocabId );
+            in >> tempVocabUidStr;
+            tempVocabUid = QUuid( tempVocabUidStr );
+            Vocabulary* childVocab = new Vocabulary( -1, QString::null, tempVocabUid );
             folder.add( childVocab );
         }
         in >> tempChildType;

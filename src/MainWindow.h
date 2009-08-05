@@ -13,7 +13,6 @@
 #include <qlistview.h>
 #include <qpixmap.h>
 #include <qpopupmenu.h>
-#include <qprogressbar.h>
 #include <qmainwindow.h>
 //#include <qmenubar.h>
 #include <qmessagebox.h>
@@ -31,6 +30,7 @@
 #include "Controller.h"
 #include "PixMap.h"
 #include "PreferencesDialog.h"
+#include "ProgressBar.h"
 #include "QuizFrame.h"
 #include "VocabularyManagerFrame.h"
 #include "Term.h"
@@ -64,6 +64,7 @@ public slots:
     void switchLanguage( QAction* langAction );
     void toggleMaximize( bool isOn ); 
     void search();
+    void showProgressDetails();
 
 protected:
 

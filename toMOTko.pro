@@ -23,6 +23,10 @@ HEADERS += src/Base.h \
            src/TranslationSelectionDialog.h \
            src/ResultListItem.h \
            src/HistoryField.h \
+           src/Schedule.h \
+           src/Progress.h \
+           src/ProgressBar.h \
+           src/ProgressDialog.h \
            src/SearchDialog.h \
            src/ZFileDialog.h \
            src/KeyActionListViewItem.h \
@@ -39,7 +43,10 @@ HEADERS += src/Base.h \
            src/Folder.h \
            src/TermListItem.h \
            src/StandbyTerm.h \
-           src/TermScheduler.h \
+           src/GradeButton.h \
+           src/Quiz.h \
+           src/OriginalQuiz.h \
+           src/SuperMemo2Quiz.h \
            src/Translation.h \
            src/SmartListView.h \
            src/ContentListView.h \
@@ -70,6 +77,9 @@ SOURCES += src/Util.cpp \
            src/TranslationSelectionDialog.cpp \
            src/ResultListItem.cpp \
            src/HistoryField.cpp \
+           src/Schedule.cpp \
+           src/ProgressBar.cpp \
+           src/ProgressDialog.cpp \
            src/SearchDialog.cpp \
            src/ZFileDialog.cpp \
            src/SequenceDialog.cpp \
@@ -86,7 +96,10 @@ SOURCES += src/Util.cpp \
            src/Folder.cpp \
            src/TermListItem.cpp \
            src/StandbyTerm.cpp \
-           src/TermScheduler.cpp \
+           src/GradeButton.cpp \
+           src/Quiz.cpp \
+           src/OriginalQuiz.cpp \
+           src/SuperMemo2Quiz.cpp \
            src/Translation.cpp \
            src/SmartListView.cpp \
            src/ContentListView.cpp \

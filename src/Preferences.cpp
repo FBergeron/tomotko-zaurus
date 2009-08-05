@@ -38,6 +38,8 @@ bool Preferences::load() {
         }
 
         QByteArray compressedData( prefsFile.readAll() );
+        prefsFile.close();
+    
         QByteArray data( Util::qUncompress( compressedData ) );
 
         QDataStream in( data, IO_ReadOnly );
@@ -45,6 +47,7 @@ bool Preferences::load() {
         Q_UINT32                tempMagicNumber;
         Q_UINT16                tempVersion;
 
+        uint                    tempQuizAlgorithm;
         uint                    tempQuizLength;
         SequenceList            tempSequences;
         int                     tempLanguageFilterEnabledAsInt;
@@ -55,7 +58,8 @@ bool Preferences::load() {
         QString                 tempFirstLanguage;
         QString                 tempTestLanguage;
         QValueList<QString>     tempStudyLanguages;
-        QValueList<int>         tempClosedFolders;
+        QValueList<QString>     tempClosedFolders;
+        QValueList<int>         tempOldFormatClosedFolders;
         QString                 tempLabelsFontFamily;
         int                     tempLabelsFontSizeModifier;
         QString                 tempFontFamily;
@@ -65,23 +69,35 @@ bool Preferences::load() {
         QMap<int,int>           tempAccel;
 
         in >> tempMagicNumber >> tempVersion;
-
         if( tempMagicNumber != Preferences::magicNumber )
             cerr << "Wrong magic number: Incompatible data file for prefs file." << endl;
-        if( tempVersion > 0x0011 )
+        if( tempVersion > 0x0012 ) {
             cerr << "Prefs data file is from a more recent version.  Upgrade toMOTko." << endl;
+            return( false );
+        }
+        else if( tempVersion < 0x0011 ) {
+            cerr << "Preferences format too old.  You must use an anterior version of toMOTko." << endl;
+            return( false );
+        }
 
         in.setVersion( 3 );
+        if( tempVersion >= 0x0012 )
+            in >> tempQuizAlgorithm;
+        else
+            tempQuizAlgorithm = Preferences::ORIGINAL;
         in >> tempQuizLength >> tempSequences;
         in >> tempLanguageFilterEnabledAsInt >> tempInterfaceLanguage >> tempDigraphEnabledAsInt >> tempQuizButtonsHiddenAsInt >> tempAltInTermListShownAsInt;
         in >> tempFirstLanguage >> tempTestLanguage;
         in >> tempStudyLanguages;
-        in >> tempClosedFolders; 
+        if( tempVersion == 0x0012 ) 
+            in >> tempClosedFolders; 
+        else if( tempVersion == 0x0011 )
+            in >> tempOldFormatClosedFolders; // Just discard the information away.  It's no big deal.
+            
         in >> tempLabelsFontFamily >> tempLabelsFontSizeModifier >> tempFontFamily >> tempFontSizeModifier >> tempFontOverrideFamilies >> tempFontOverrideSizes;
         in >> tempAccel;
 
-        prefsFile.close();
-    
+        quizAlgorithm = tempQuizAlgorithm;
         quizLength = tempQuizLength;
         sequences = tempSequences;
         languageFilterEnabled = ( tempLanguageFilterEnabledAsInt == 1 );
@@ -108,12 +124,11 @@ bool Preferences::save() {
     QByteArray data;
 
     QDataStream out( data, IO_WriteOnly );
-    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
+    out.setVersion( 3 );
 
-    // 0x0011 means 0.11.x version.
-    out << Q_UINT32( Preferences::magicNumber ) << Q_UINT16( 0x0011 );
+    out << Q_UINT32( Preferences::magicNumber ) << Q_UINT16( 0x0012 );
 
-    out << quizLength << sequences;
+    out << quizAlgorithm << quizLength << sequences;
     int languageFilterEnabledAsInt = ( languageFilterEnabled ? 1 : 0 );
     int digraphEnabledAsInt = ( digraphEnabled ? 1 : 0 ); 
     int quizButtonsHiddenAsInt = ( quizButtonsHidden ? 1 : 0 );
@@ -153,6 +168,14 @@ uint Preferences::getQuizLength() const {
 
 void Preferences::setQuizLength( uint quizLength ) {
     this->quizLength = quizLength;
+}
+
+Preferences::QuizAlgorithm Preferences::getQuizAlgorithm() const {
+    return( (QuizAlgorithm)quizAlgorithm );
+}
+
+void Preferences::setQuizAlgorithm( QuizAlgorithm quizAlgorithm ) {
+    this->quizAlgorithm = (uint)quizAlgorithm;
 }
 
 void Preferences::clearRevealingSequences() {
@@ -398,18 +421,31 @@ bool Preferences::isLanguageFilterEnabled() const {
     return( languageFilterEnabled );
 }
 
-bool Preferences::isFolderOpen( int folderId ) const {
-    return( !closedFolders.contains( folderId ) );
+bool Preferences::isFolderOpen( const QUuid& folderUid ) const {
+    return( !closedFolders.contains( folderUid.toString() ) );
 }
 
-void Preferences::setFolderOpen( int folderId, bool isOpen ) {
+//bool Preferences::isFolderOpen( int folderId ) const {
+//    return( !closedFolders.contains( folderId ) );
+//}
+
+void Preferences::setFolderOpen( const QUuid& folderUid, bool isOpen ) {
     if( isOpen )
-        closedFolders.remove( folderId );
+        closedFolders.remove( folderUid.toString() );
     else {
-        if( !closedFolders.contains( folderId ) ) 
-            closedFolders.append( folderId );
+        if( !closedFolders.contains( folderUid.toString() ) ) 
+            closedFolders.append( folderUid.toString() );
     }
 }
+
+//void Preferences::setFolderOpen( int folderId, bool isOpen ) {
+//    if( isOpen )
+//        closedFolders.remove( folderId );
+//    else {
+//        if( !closedFolders.contains( folderId ) ) 
+//            closedFolders.append( folderId );
+//    }
+//}
 
 void Preferences::setApplicationDirName( const QString& applDir ) {
     prefsXmlFilename = applDir + QString( "/prefs.xml" );
@@ -458,6 +494,12 @@ void Preferences::initDefaultKeyboardAccelerators() {
     defaultAccel[ ACTION_INVERSE_CHECKED_TERMS ] = CTRL + Key_I;
     defaultAccel[ ACTION_MAXIMIZE ] = CTRL + Key_Space;
     defaultAccel[ ACTION_SEARCH ] = CTRL + Key_Comma;
+    defaultAccel[ ACTION_GRADE_ANSWER_1 ] = Key_1;
+    defaultAccel[ ACTION_GRADE_ANSWER_2 ] = Key_2;
+    defaultAccel[ ACTION_GRADE_ANSWER_3 ] = Key_3;
+    defaultAccel[ ACTION_GRADE_ANSWER_4 ] = Key_4;
+    defaultAccel[ ACTION_GRADE_ANSWER_5 ] = Key_5;
+    defaultAccel[ ACTION_GRADE_ANSWER_6 ] = Key_6;
 }
 
 QFont Preferences::getFont( const QString& fontFamily, uint size ) const {

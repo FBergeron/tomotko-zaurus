@@ -1,8 +1,11 @@
 #ifndef UTIL_H
 #define UTIL_H
 
+#include <qpe/quuid.h>
 #include <stdio.h>
+#include <stdlib.h> // For srand/rand
 #include <qaction.h>
+#include <qdatetime.h>
 #include <qdir.h>
 #include <qfont.h>
 #include <qfontdatabase.h>
@@ -17,7 +20,9 @@
 #include "PixMap.h"
 #include "Term.h"
 
+typedef QValueList<QString> UidList;
 typedef QValueList<int> IdList;
+typedef QMap<QString,UidList> UidListMap;
 typedef QMap<int,IdList> IdListMap;
 
 enum Action {
@@ -42,6 +47,12 @@ enum Action {
     ACTION_INVERSE_CHECKED_TERMS,
     ACTION_MAXIMIZE,
     ACTION_SEARCH,
+    ACTION_GRADE_ANSWER_1,
+    ACTION_GRADE_ANSWER_2,
+    ACTION_GRADE_ANSWER_3,
+    ACTION_GRADE_ANSWER_4,
+    ACTION_GRADE_ANSWER_5,
+    ACTION_GRADE_ANSWER_6,
     ACTION_COUNT
 };
 
@@ -66,7 +77,13 @@ const QString actionId[] = {
     "checkAllTerms",
     "inverseCheckedTerms",
     "maximize",
-    "search"
+    "search",
+    "grade1",
+    "grade2",
+    "grade3",
+    "grade4",
+    "grade5",
+    "grade6"
 };
 
 class Util {
@@ -76,6 +93,9 @@ public:
     static const QString languageCodeList[];
     static const QString& getLanguageCode( const QString& language );
 
+    static QString getWeekday( int weekday );
+
+    static QUuid createUuid(); // Taken from Qt-4.4.3's QUuid class.
     static QString escapeXml( QString xml );
     static bool makeDirectory( const QString& dir );
     static bool copy( const QString& fromFile, const QString& toFile );

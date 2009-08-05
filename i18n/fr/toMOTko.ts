@@ -123,6 +123,30 @@ Voulez-vous continuer ce quiz?</translation>
         <source>Search...</source>
         <translation>Rechercher...</translation>
     </message>
+    <message>
+        <source>gradeAnswer1</source>
+        <translation>Évaluer réponse 1</translation>
+    </message>
+    <message>
+        <source>gradeAnswer2</source>
+        <translation>Évaluer réponse 2</translation>
+    </message>
+    <message>
+        <source>gradeAnswer3</source>
+        <translation>Évaluer réponse 3</translation>
+    </message>
+    <message>
+        <source>gradeAnswer4</source>
+        <translation>Évaluer réponse 4</translation>
+    </message>
+    <message>
+        <source>gradeAnswer5</source>
+        <translation>Évaluer réponse 5</translation>
+    </message>
+    <message>
+        <source>gradeAnswer6</source>
+        <translation>Évaluer réponse 6</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -305,6 +329,33 @@ Affecter le raccourci quand même?</translation>
     <message>
         <source>ShowAltInTermList</source>
         <translation>Afficher la valeur du champs Alt./Phon.</translation>
+    </message>
+    <message>
+        <source>Algorithm</source>
+        <translation>Algorithme</translation>
+    </message>
+    <message>
+        <source>OriginalQuizAlgorithm</source>
+        <translation>Original</translation>
+    </message>
+    <message>
+        <source>SuperMemo2Algorithm</source>
+        <translation>SuperMemo-2</translation>
+    </message>
+</context>
+<context>
+    <name>ProgressDialog</name>
+    <message>
+        <source>ScheduleInfo</source>
+        <translation>Planification</translation>
+    </message>
+    <message>
+        <source>CurrentTermInfo</source>
+        <translation>Mot courant</translation>
+    </message>
+    <message>
+        <source>ProgressDialogCaption</source>
+        <translation>Détails de progression...</translation>
     </message>
 </context>
 <context>
@@ -495,6 +546,50 @@ ligne %1, colonne %2.
         <source>NewGlossary</source>
         <translation>Nouveau glossaire</translation>
     </message>
+    <message>
+        <source>&lt;dir&gt;</source>
+        <translation>&lt;dossier&gt;</translation>
+    </message>
+    <message>
+        <source>Kb</source>
+        <translation>ko</translation>
+    </message>
+    <message>
+        <source>Mb</source>
+        <translation>Mo</translation>
+    </message>
+    <message>
+        <source>CannotResumeQuiz</source>
+        <translation>Impossible de continuer ce quiz.</translation>
+    </message>
+    <message>
+        <source>Monday</source>
+        <translation>Lundi</translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation>Mardi</translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation>Mercredi</translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation>Jeudi</translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation>Vendredi</translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation>Samedi</translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation>Dimanche</translation>
+    </message>
 </context>
 <context>
     <name>QuizFrame</name>
@@ -559,6 +654,27 @@ est impossible via le Quiz.</translation>
     <message>
         <source>Image</source>
         <translation>Image</translation>
+    </message>
+    <message>
+        <source>NoTermsScheduledForStudy</source>
+        <translation>L&apos;horaire ne prévoit aucun mot à
+étudier aujourd&apos;hui pour les
+langues sélectionnées.</translation>
+    </message>
+</context>
+<context>
+    <name>Schedule</name>
+    <message>
+        <source>Today</source>
+        <translation>Aujourd'hui</translation>
+    </message>
+    <message>
+        <source>Tomorrow</source>
+        <translation>Demain</translation>
+    </message>
+    <message>
+        <source>NumberOfTermsScheduled</source>
+        <translation>Nombre de mots prévus pour la semaine</translation>
     </message>
 </context>
 <context>
@@ -956,15 +1072,27 @@ les glossaires/mots&quot; du menu Actions.</translation>
     </message>
     <message>
         <source>ImagePreview</source>
-        <translation type="unfinished"></translation>
+        <translation>Aperçu</translation>
     </message>
     <message>
         <source>ShowImagePreview</source>
-        <translation type="unfinished"></translation>
+        <translation>Montrer un aperçu</translation>
     </message>
     <message>
-        <source>test</source>
-        <translation type="unfinished"></translation>
+        <source>Home</source>
+        <translation>Maison</translation>
+    </message>
+    <message>
+        <source>SD Card</source>
+        <translation>Carte SD</translation>
+    </message>
+    <message>
+        <source>CF Card</source>
+        <translation>Carte CF</translation>
+    </message>
+    <message>
+        <source>Root</source>
+        <translation>/</translation>
     </message>
 </context>
 </TS>

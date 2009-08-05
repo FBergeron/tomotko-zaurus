@@ -2,12 +2,11 @@
 
 const QString Controller::vocabTreeFilename = QString( "tree" ); 
 
-Controller::Controller() : vocabTree( NULL ), scheduler( prefs ) {
+Controller::Controller() : vocabTree( NULL ), quiz( NULL ) {
     applicationDirName = QDir::homeDirPath() + QString( "/.toMOTko" );
     markedXmlFilename = applicationDirName + QString( "/marked.xml" );
     markedFilename = applicationDirName + QString( "/marked.dat.z" );
     prefs.setApplicationDirName( applicationDirName );
-    scheduler.setApplicationDirName( applicationDirName );
 }
 
 bool Controller::init() {
@@ -33,90 +32,132 @@ Folder* Controller::getVocabTree() {
 }
 
 void Controller::startQuiz() {
-    scheduler.init( getPreferences().getFirstLanguage(), getPreferences().getTestLanguage(), vocabTree );
+    switch( getPreferences().getQuizAlgorithm() ) {
+        case Preferences::ORIGINAL   : quiz = new OriginalQuiz( applicationDirName, getPreferences().getQuizLength() ); break;
+        case Preferences::SUPERMEMO2 : quiz = new SuperMemo2Quiz( applicationDirName ); break;
+    }
+    if( quiz )
+        quiz->init( getPreferences().getFirstLanguage(), getPreferences().getTestLanguage(), vocabTree );
 }
 
 void Controller::restartQuiz() {
-    scheduler.reinit();
+    if( quiz )
+        quiz->reinit();
 }
 
 bool Controller::isResumableQuizAvailable() {
-    return( scheduler.isResumableQuizAvailable( BilingualKey( getPreferences().getFirstLanguage(), getPreferences().getTestLanguage() ) ) );
+    return( quiz ? quiz->isResumable() : false );
 }
 
 bool Controller::resumeQuiz() {
-    BilingualKey key( getPreferences().getFirstLanguage(), getPreferences().getTestLanguage() );
-    return( scheduler.load( key ) );
+    return( quiz ? quiz->load() : false );
 }
 
 void Controller::prepareQuiz() {
     emit( progressChanged( getProgress() ) );
 }
 
+int Controller::getQuizAnswerCount() const {
+    return( quiz ? quiz->getAnswerCount() : 0 );
+}
+
+void Controller::getQuizSchedule( int* schedule ) {
+    for( int i = 0; i < scheduleLength; i++ )
+        schedule[ i ] = 0;
+    if( quiz )
+        ((SuperMemo2Quiz*)quiz)->getSchedule( vocabTree, schedule );
+}
+
 void Controller::concludeQuiz() {
-    scheduler.concludeQuiz();
+    if( quiz )
+        quiz->conclude();
 }
 
 Term* Controller::getCurrentTerm() {
-    TermKey key = scheduler.getCurrentTerm();
-    Vocabulary* vocab = vocabTree->getVocabulary( key.getVocabId() );
-    if( vocab && !vocab->isMarkedForDeletion() && vocab->isTermExists( key.getTermId() ) ) {
-        Term& term = vocab->getTerm( key.getTermId() );
-        return( &term );
+    if( !quiz )
+        return( NULL );
+
+    TermKey key = quiz->getCurrentTerm();
+    Vocabulary* vocab = vocabTree->getVocabulary( key.getVocabUid() );
+    if( vocab && !vocab->isMarkedForDeletion() && vocab->isTermExists( key.getTermUid() ) ) {
+        Term& term = vocab->getTerm( key.getTermUid() );
+        if( !term.isMarkedForDeletion() )
+            return( &term );
     }
     // The term is invalid.  Either the container vocabulary or the term itself have been deleted.
     // Let's try to fetch the next term.
-    scheduler.discardCurrentTerm();
+    quiz->discardCurrentTerm();
     return( getNextTerm() );
 }
 
-Term* Controller::getTerm( const TermKey& termKey ) {
-    Vocabulary* vocab = vocabTree->getVocabulary( termKey.getVocabId() );
-    if( vocab && !vocab->isMarkedForDeletion() && vocab->isTermExists( termKey.getTermId() ) ) {
-        Term& term = vocab->getTerm( termKey.getTermId() );
-        return( &term );
+Term* Controller::getTerm( const TermKey& termKey, const QString& firstLang /* = QString::null */, const QString& testLang /* = QString::null */ ) {
+    Vocabulary* vocab = vocabTree->getVocabulary( termKey.getVocabUid() );
+    if( vocab && !vocab->isMarkedForDeletion() && vocab->isTermExists( termKey.getTermUid() ) ) {
+        Term& term = vocab->getTerm( termKey.getTermUid() );
+        if( !term.isMarkedForDeletion() ) {
+            // If we don't care about specific languages, return the term right away.
+            if( firstLang.isNull() && testLang.isNull() )
+                return( &term );
+
+            // For specific languages, make sure that translations are valid.
+            if( !firstLang.isNull() && !testLang.isNull() && term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) )
+                return( &term );
+        }
     }
     return( NULL );
 }
 
 Term* Controller::getNextTerm() {
-    TermKey nextTerm = scheduler.getNextTerm();
+    if( !quiz )
+        return( NULL );
+
+    TermKey nextTerm = quiz->getNextTerm();
     if( nextTerm.isNull() )
         return( NULL );
 
-    TermKey currTerm = scheduler.getCurrentTerm();
-    Term* term = getTerm( currTerm );
+    TermKey currTerm = quiz->getCurrentTerm();
+    Term* term = getTerm( currTerm, getQuizFirstLanguage(), getQuizTestLanguage() );
     if( term )
         return( term );
 
     // The term is invalid.  Either the container vocabulary or the term itself have been deleted.
     // Let's try to fetch the next term.
-    scheduler.discardCurrentTerm();
-    return( scheduler.hasNextTerm() ? getNextTerm() : NULL );
+    quiz->discardCurrentTerm();
+    return( quiz->hasNextTerm() ? getNextTerm() : NULL );
 }
 
 bool Controller::hasNextTerm() const {
-    return( scheduler.hasNextTerm() );
+    return( quiz ? quiz->hasNextTerm() : false );
 }
 
 QString Controller::getQuizFirstLanguage() const {
-    return( scheduler.getQuizFirstLanguage() );
+    return( quiz ? quiz->getFirstLanguage() : QString::null );
 }
 
 QString Controller::getQuizTestLanguage() const {
-    return( scheduler.getQuizTestLanguage() );
+    return( quiz ? quiz->getTestLanguage() : QString::null );
+}
+
+Preferences::QuizAlgorithm Controller::getQuizAlgorithm() const {
+    if( quiz ) {
+        if( strcmp( quiz->className(), "OriginalQuiz" ) == 0 )
+            return( Preferences::ORIGINAL );
+        else if( strcmp( quiz->className(), "SuperMemo2Quiz" ) == 0 )
+            return( Preferences::SUPERMEMO2 );
+    }
+    return( Preferences::ORIGINAL ); // Should never happen but just in case.
 }
 
 bool Controller::isQuizInProgress() const {
-    return( scheduler.isQuizInProgress() );
+    return( quiz ? quiz->isInProgress() : false );
 }
 
 int Controller::getProgress() const {
-    return( scheduler.getProgress() );
+    return( quiz ? quiz->getProgress() : 0 );
 }
 
 int Controller::getInitialTermCount() const {
-    return( scheduler.getInitialTermCount() );
+    return( quiz ? quiz->getInitialTermCount() : 0 );
 }
 
 Sequence& Controller::getRevealingSequence() {
@@ -132,9 +173,9 @@ void Controller::incrementRevealingSequenceStep() {
 }
 
 Folder* Controller::addFolder( Folder* parentFolder, Folder* folder = NULL ) {
-    int newId = parentFolder->getRoot()->getMaxId() + 1;
+    QUuid newUid = Util::createUuid();
 
-    QString folderLocation = applicationDirName + "/" + parentFolder->getPath() /*+ "/" + QString::number( newId )*/;
+    QString folderLocation = applicationDirName + "/" + parentFolder->getPath();
     QDir folderDir( folderLocation );
     if( !folderDir.exists() ) {
         if( !Util::makeDirectory( folderDir.path() ) ) {
@@ -144,7 +185,7 @@ Folder* Controller::addFolder( Folder* parentFolder, Folder* folder = NULL ) {
     }
 
     QString newTitle = ( folder ? folder->getTitle() : QObject::tr( "NewFolder" ) );
-    Folder* newFolder = new Folder( newId, newTitle );
+    Folder* newFolder = new Folder( -1, newTitle, newUid );
     newFolder->setAuthor( folder ? folder->getAuthor() : parentFolder->getAuthor() );
     if( folder ) {
         newFolder->setDescription( folder->getDescription() );
@@ -161,9 +202,9 @@ Folder* Controller::addFolder( Folder* parentFolder, Folder* folder = NULL ) {
 }
 
 Vocabulary* Controller::addVocabulary( Folder* parentFolder, Vocabulary* vocab = NULL ) {
-    int newId = parentFolder->getRoot()->getMaxVocabId() + 1;
+    QUuid newUid = Util::createUuid();
 
-    QString vocabLocation = applicationDirName + "/" + parentFolder->getPath() + "/v-" + QString::number( newId );
+    QString vocabLocation = applicationDirName + "/" + parentFolder->getPath() + "/v-" + newUid.toString();
     QDir vocabDir( vocabLocation );
     if( !vocabDir.exists() ) {
         if( !Util::makeDirectory( vocabDir.path() ) ) {
@@ -173,7 +214,7 @@ Vocabulary* Controller::addVocabulary( Folder* parentFolder, Vocabulary* vocab =
     }
 
     QString newTitle = ( vocab ? vocab->getTitle() : QObject::tr( "NewGlossary" ) );
-    Vocabulary* newVocab = new Vocabulary( newId, newTitle );
+    Vocabulary* newVocab = new Vocabulary( -1, newTitle, newUid );
     newVocab->setAuthor( vocab ? vocab->getAuthor() : parentFolder->getAuthor() );
     if( vocab ) {
         newVocab->setDescription( vocab->getDescription() );
@@ -181,7 +222,7 @@ Vocabulary* Controller::addVocabulary( Folder* parentFolder, Vocabulary* vocab =
         newVocab->setModificationDate( vocab->getModificationDate() );
         for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
             const Term& term = *it;
-            Term newTerm( newVocab->getMaxTermId() + 1, newVocab->getId() );
+            Term newTerm( 0, newVocab->getUid(), Util::createUuid() );
             for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
                 const Translation& trans = it2.data();
                 newTerm.addTranslation( trans );
@@ -240,7 +281,7 @@ void Controller::copy( Folder* folder ) {
     // The Folder::operator<< will only write references for vocabularies.
     // We build a map containing copies of the vocabularies.
     
-    QMap<int,Vocabulary> vocabularies;
+    QMap<QString,Vocabulary> vocabularies;
     folderCopy->buildVocabCopiesMap( vocabularies );
     out << vocabularies;
 
@@ -251,14 +292,14 @@ Vocabulary* Controller::makeCopy( Vocabulary* vocab, const QString& firstLang, c
     QStringList languages;
     languages << firstLang << testLang;
 
-    Vocabulary* vocabCopy = new Vocabulary( vocab->getId(), vocab->getTitle() );
+    Vocabulary* vocabCopy = new Vocabulary( -1, vocab->getTitle(), Util::createUuid() );
     vocabCopy->setDescription( vocab->getDescription() );
     vocabCopy->setAuthor( vocab->getAuthor() );
     vocabCopy->setCreationDate( vocab->getCreationDate() );
     vocabCopy->setModificationDate( vocab->getModificationDate() );
     for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
         const Term& term = it.data();
-        Term* termCopy = new Term( vocabCopy->getMaxTermId() + 1, vocabCopy->getId() );
+        Term* termCopy = new Term( 0, vocabCopy->getUid(), Util::createUuid() );
 
         for( QStringList::ConstIterator it = languages.begin(); it != languages.end(); it++ ) {
             const QString& lang = *it;
@@ -282,7 +323,7 @@ Folder* Controller::makeCopy( Folder* folder, const QString& firstLang, const QS
     QStringList languages;
     languages << firstLang << testLang;
 
-    Folder* folderCopy = new Folder( folder->getId(), folder->getTitle() );
+    Folder* folderCopy = new Folder( -1, folder->getTitle(), Util::createUuid() );
     folderCopy->setDescription( folder->getDescription() );
     folderCopy->setAuthor( folder->getAuthor() );
     folderCopy->setCreationDate( folder->getCreationDate() );
@@ -307,15 +348,26 @@ Folder* Controller::makeCopy( Folder* folder, const QString& firstLang, const QS
 }
 
 Vocabulary* Controller::loadVocabulary( const QString& parentDir ) {
+    QString filename; 
     Vocabulary* vocab = NULL;
     QDir dir( parentDir );
     QString vocabDirName = dir.dirName();
-    int indexOfDash = vocabDirName.find( "-" );
-    if( indexOfDash > 0 ) {
-        bool isOk;
-        QString strVocabId = vocabDirName.right( vocabDirName.length() - indexOfDash - 1 );
-        int vocabId = strVocabId.toInt( &isOk );
-        QString filename( parentDir + QString( "/vocab-" ) + QString::number( vocabId ) + QString( ".gz" ) );
+    if( vocabDirName.left( 3 ) != "v-{" ) {
+        int indexOfDash = vocabDirName.find( "-" );
+        if( indexOfDash > 0 ) {
+            bool isOk;
+            QString strVocabId = vocabDirName.right( vocabDirName.length() - indexOfDash - 1 );
+            int vocabId = strVocabId.toInt( &isOk );
+
+            if( isOk ) // isOk means that the old format (without uid) is used.
+                filename = QString( parentDir + QString( "/vocab-" ) + QString::number( vocabId ) + QString( ".gz" ) );
+
+        }
+    }
+    else
+        filename = parentDir + "/data.gz";
+
+    if( !filename.isNull() ) {
         QFile compressedBinFile( filename );
         if( compressedBinFile.exists() ) {
             vocab = new Vocabulary();
@@ -330,28 +382,7 @@ Vocabulary* Controller::loadVocabulary( const QString& parentDir ) {
     return( vocab );
 }
 
-bool Controller::loadVocabulariesRec( Folder* folder ) {
-    for( Base* child = folder->first(); child; child = folder->next() ) { 
-        if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
-            Vocabulary* vocab = (Vocabulary*)child;
-            QString filename( applicationDirName + QString( "/" ) + QString::number( vocab->getId() ) + QString( ".dat.z" ) );
-            QFile compressedBinFile( filename );
-            if( compressedBinFile.exists() ) {
-                if( !vocab->load( filename ) )
-                    return( false );
-            }
-        }
-        else if( strcmp( child->className(), "Folder" ) == 0 ) {
-            if( !loadVocabulariesRec( (Folder*)child ) )
-                return( false );
-        }
-    }
-    return( true );
-}
-
 Base* Controller::importData( Folder* folder, const QString& filename, const QStringList& languages ) {
-    Folder* rootFolder = folder->getRoot();
-
     int status;
     Base* newItem = NULL;
 
@@ -363,12 +394,12 @@ Base* Controller::importData( Folder* folder, const QString& filename, const QSt
     status = unzGetGlobalInfo( inputFile, &gi );
 
     if( status == UNZ_OK ) {
-        QMap<int,Vocabulary*> newVocabs;
-        QMap<int,Folder*> newFolders;
+        QMap<QString,Vocabulary*> newVocabs;
+        QMap<QString,Folder*> newFolders;
         Folder* newFolder = NULL;
         Vocabulary* newVocab = NULL;
-        int newVocabId = -1;
-        int newFolderId = -1;
+        QUuid newVocabUid;
+        QUuid newFolderUid;
             
         // Handle all entries.
         for( uLong i = 0; i < gi.number_entry; i++ ) {
@@ -380,71 +411,76 @@ Base* Controller::importData( Folder* folder, const QString& filename, const QSt
 
             QString filenameInZip( filename_inzip );
             QFileInfo fileInfo( filenameInZip );
-            //cout << "f=" << filename_inzip << " dp=" << fileInfo.dirPath() << " dpa=" << fileInfo.dirPath( true ) << " fn=" << fileInfo.fileName() << endl;
+            cout << "f=" << filename_inzip << " dp=" << fileInfo.dirPath() << " dpa=" << fileInfo.dirPath( true ) << " fn=" << fileInfo.fileName() << endl;
 
             if( fileInfo.extension() == "gif" || fileInfo.extension() == "png" ) {
-                int importedVocabId = findVocabId( fileInfo.dirPath() );
-                if( newVocabs.contains( importedVocabId ) )
-                    newVocab = newVocabs[ importedVocabId ];
+                QString importedVocabUid = findVocabUid( fileInfo.dirPath() );
+                if( newVocabs.contains( importedVocabUid ) )
+                    newVocab = newVocabs[ importedVocabUid ];
                 else{
-                    newVocabId = ( newVocabId == -1 ? rootFolder->getMaxVocabId() + 1 : newVocabId + 1 );
-                    newVocab = new Vocabulary( newVocabId );
-                    newVocabs.insert( importedVocabId, newVocab );
+                    newVocabUid = Util::createUuid();
+                    newVocab = new Vocabulary( -1, QString::null, newVocabUid );
+                    newVocabs.insert( importedVocabUid, newVocab );
                     if( !newItem )
                         newItem = newVocab;
                     else {
-                        int parentFolderId = findParentFolderId( fileInfo.dirPath() );
-                        if( parentFolderId != -1 && newFolders.contains( parentFolderId ) )
-                            newFolders[ parentFolderId ]->add( newVocab ); 
+                        QString parentFolderUid = findParentFolderUid( fileInfo.dirPath() );
+                        if( !parentFolderUid.isNull() && newFolders.contains( parentFolderUid ) )
+                            newFolders[ parentFolderUid ]->add( newVocab ); 
                     }
                 }
 
                 QString imageLocation = applicationDirName + "/" + folder->getPath() + convertPath( fileInfo.dirPath(), newFolders ) +
-                    "/v-" + QString::number( newVocab->getId() ) + "/" + fileInfo.fileName();
+                    "/v-" + newVocab->getUid().toString() + "/" + fileInfo.fileName();
                 importImageFromZip( imageLocation, inputFile );
             }
             else if( fileInfo.extension() == "xml" ) {
-                if( fileInfo.fileName().left( 7 ) == "folder-" ) {
-                    int importedFolderId = findFolderId( fileInfo.fileName() );
+                if( fileInfo.fileName() == "metadata.xml" ) {
+                    QString importedFolderUid = findFolderUid( fileInfo.dirPath() );
                    
-                    if( newFolders.contains( importedFolderId ) ) 
-                        newFolder = newFolders[ importedFolderId ];
+                    if( newFolders.contains( importedFolderUid ) ) 
+                        newFolder = newFolders[ importedFolderUid ];
                     else {
-                        newFolderId = ( newFolderId == -1 ? rootFolder->getMaxId() + 1 : newFolderId + 1 );
-                        newFolder = new Folder( newFolderId );
-                        newFolders.insert( importedFolderId, newFolder );
+                        newFolderUid = Util::createUuid();
+                        newFolder = new Folder( -1, QString::null, newFolderUid );
+                        newFolders.insert( importedFolderUid, newFolder );
                         if( !newItem )
                             newItem = newFolder;
                         else {
-                            int parentFolderId = findParentFolderId( fileInfo.dirPath() );
-                            if( parentFolderId != -1 && newFolders.contains( parentFolderId ) )
-                                newFolders[ parentFolderId ]->add( newFolder ); 
+                            QString parentFolderUid = findParentFolderUid( fileInfo.dirPath() );
+                            if( parentFolderUid != -1 && newFolders.contains( parentFolderUid ) )
+                                newFolders[ parentFolderUid ]->add( newFolder ); 
                         }
                     }
                 
                     QString folderLocation = applicationDirName + "/" + folder->getPath() + convertPath( fileInfo.dirPath(), newFolders );
                     importFolderFromZip( newFolder, folderLocation, inputFile ); // Should we handle error here?
                 }
-                else if( fileInfo.fileName().left( 6 ) == "vocab-" ) {
-                    int importedVocabId = findVocabId( fileInfo.dirPath() );
-                    if( newVocabs.contains( importedVocabId ) ) 
-                        newVocab = newVocabs[ importedVocabId ];
+                else if( fileInfo.fileName() == "data.xml" ) {
+                    QString importedVocabUid = findVocabUid( fileInfo.dirPath() );
+                    if( newVocabs.contains( importedVocabUid ) ) 
+                        newVocab = newVocabs[ importedVocabUid ];
                     else {
-                        newVocabId = ( newVocabId == -1 ? rootFolder->getMaxVocabId() + 1 : newVocabId + 1 );
-                        newVocab = new Vocabulary( newVocabId );
-                        newVocabs.insert( importedVocabId, newVocab );
+                        newVocabUid = Util::createUuid();
+                        newVocab = new Vocabulary( -1, QString::null, newVocabUid );
+                        newVocabs.insert( importedVocabUid, newVocab );
                         if( !newItem )
                             newItem = newVocab;
                         else {
-                            int parentFolderId = findParentFolderId( fileInfo.dirPath() );
-                            if( parentFolderId != -1 && newFolders.contains( parentFolderId ) )
-                                newFolders[ parentFolderId ]->add( newVocab ); 
+                            QString parentFolderUid = findParentFolderUid( fileInfo.dirPath() );
+                            //cerr << "parentFolderUid=" << parentFolderUid << endl;
+                            //for( QMap<QString,Folder*>::Iterator it = newFolders.begin(); it != newFolders.end(); it++ ) {
+                            //    cerr << "map key=" << it.key() << endl;
+                            //}
+                            if( !parentFolderUid.isNull() && newFolders.contains( parentFolderUid ) )
+                                newFolders[ parentFolderUid ]->add( newVocab ); 
                         }
                     }
 
                     QString vocabLocation = applicationDirName + "/" + folder->getPath() + convertPath( fileInfo.dirPath(), newFolders ) +
-                        "/v-" + QString::number( newVocab->getId() );
+                        "/v-" + newVocab->getUid().toString();
                     importVocabularyFromZip( newVocab, vocabLocation, languages, inputFile ); // Should we handle error here?
+                    cerr << "handling data.xml ok" << endl;
                 }
             }
 
@@ -625,7 +661,7 @@ bool Controller::importFolderFromZip( Folder* folder, const QString& folderLocat
                 // Create the containing folder if needed.
                 isOk = Util::makeDirectory( folderLocation );
                 if( isOk ) {
-                    const QString& folderDataFilename( folderLocation + "/folder-" + QString::number( folder->getId() ) + ".gz" );
+                    const QString& folderDataFilename( folderLocation + "/metadata.gz" );
                     isOk = folder->saveMetadata( folderDataFilename );
                     if( isOk )
                         folder->setDirty( false );
@@ -762,7 +798,7 @@ void Controller::loadData() {
     vocabTree = loadFolder( applicationDirName );
 
     if( !vocabTree ) {
-        Folder* folder = new Folder( 1, QObject::tr( "MyGlossaries" ) );
+        Folder* folder = new Folder( -1, QObject::tr( "MyGlossaries" ), Util::createUuid() );
         folder->setMarkedForStudy( true );
         folder->setDirty( true );
         vocabTree = folder;
@@ -771,28 +807,48 @@ void Controller::loadData() {
 }
 
 void Controller::rightAnswer() {
-    scheduler.rightAnswer();
-    emit( progressChanged( getProgress() ) );
+    if( quiz ) {
+        quiz->gradeAnswer( 5 );
+        emit( progressChanged( getProgress() ) );
+    }
 }
 
 void Controller::wrongAnswer() {
-    scheduler.wrongAnswer();
-    emit( progressChanged( getProgress() ) );
+    if( quiz ) {
+        quiz->gradeAnswer( 0 );
+        emit( progressChanged( getProgress() ) );
+    }
+}
+
+void Controller::gradeAnswer( int grade ) {
+    if( quiz ) {
+        quiz->gradeAnswer( grade );
+        emit( progressChanged( getProgress() ) );
+    }
 }
 
 void Controller::reveal() {
 }
 
 Folder* Controller::loadFolder( const QString& parentDir ) {
+    QString obsoleteDataFolderToDelete;
     Folder* newFolder = NULL;
 
+    bool isTopLevelFolder = ( parentDir == applicationDirName );
     QDir dir( parentDir );
-    bool isOk;
-    dir.dirName().toInt( &isOk );
+    if( !isTopLevelFolder ) {
+        bool isOk;
+        dir.dirName().toInt( &isOk );
 
-    if( isOk ) {
+        QString folderMetadataFile;
+        if( isOk ) { // isOk means that the old format (without uid) is used.
+            folderMetadataFile = QString( parentDir + "/folder-" + dir.dirName() + ".gz" );
+            obsoleteDataFolderToDelete = parentDir;
+        }
+        else 
+            folderMetadataFile = QString( parentDir + "/metadata.gz" );
+
         newFolder = new Folder();
-        QString folderMetadataFile = QString( parentDir + "/folder-" + dir.dirName() + ".gz" );
         if( !newFolder->loadMetadata( folderMetadataFile ) ) {
             cerr << "Could not load metadata file " << folderMetadataFile << endl;
             delete( newFolder );
@@ -806,7 +862,8 @@ Folder* Controller::loadFolder( const QString& parentDir ) {
         QString entryPath = parentDir + "/" + entry;
         QFileInfo info( entryPath );
         if( info.isDir() && entry != "." && entry != ".." ) {
-            if( !isOk ) 
+            cerr << "entry=" << entry << " isTop=" << isTopLevelFolder << endl;
+            if( isTopLevelFolder ) 
                 newFolder = loadFolder( entryPath );
             else { 
                 if( entry.left( 2 ) == QString( "v-" ) ) {
@@ -823,13 +880,19 @@ Folder* Controller::loadFolder( const QString& parentDir ) {
         }
     }
 
+    // Temporary code for data conversion between 0.11.x and 0.12.x. 
+    if( !obsoleteDataFolderToDelete.isNull() ) {
+        if( !Util::deleteDirectory( obsoleteDataFolderToDelete ) )
+            cerr << "Cannot delete directory " << obsoleteDataFolderToDelete << endl;
+    }
+
     return( newFolder );
 }
 
 bool Controller::saveFolder( Folder* folder, const QString& parentDir ) const {
-    //cerr << "saveFolder folder=" << folder << " location=" << parentDir << " dirty? " << folder->isDirty() << endl;
+    cerr << "saveFolder folder=" << folder << " location=" << parentDir << " dirty? " << folder->isDirty() << endl;
     // Create the folder.
-    QString folderPath( parentDir + QString( "/" ) + QString::number( folder->getId() ) );
+    QString folderPath( parentDir + QString( "/" ) + folder->getUid().toString() );
     QDir folderDir( folderPath );
     if( folder->isDirty() && !folderDir.exists() ) {
         if( !folderDir.mkdir( folderDir.path() ) ) {
@@ -840,7 +903,7 @@ bool Controller::saveFolder( Folder* folder, const QString& parentDir ) const {
 
     // Write the folder data.
     if( folder->isDirty() ) {
-        QString folderDataFilename( QString( folderDir.path() + QString( "/folder-" ) + QString::number( folder->getId() ) + QString( ".gz" ) ) );
+        QString folderDataFilename( QString( folderDir.path() + QString( "/metadata.gz" ) ) );
         if( !folder->saveMetadata( folderDataFilename ) ) {
             cerr << "Could not write folder metadata " << folderDataFilename << endl;
             return( false );
@@ -881,18 +944,44 @@ void Controller::writeVocabulariesInXml( Folder* folder, int depth, QTextStream&
 }
 
 bool Controller::deleteItemsMarkedForDeletion( Folder* folder ) {
+    cerr << "deleteItemsMarkedForDeletion folder uid=" << folder->getUid().toString() << endl;
     for( Base* childItem = folder->first(); childItem; childItem = folder->next() ) {
         if( strcmp( childItem->className(), "Folder" ) == 0 ) {
-            Folder* childFolder = new Folder( *((Folder*)childItem) );
+            Folder* childFolder = (Folder*)childItem;
             deleteItemsMarkedForDeletion( childFolder );
         }
         else if( strcmp( childItem->className(), "Vocabulary" ) == 0 ) {
-            Vocabulary* childVocab = new Vocabulary( *((Vocabulary*)childItem) ); 
+            Vocabulary* childVocab = (Vocabulary*)childItem; 
             if( childVocab->isMarkedForDeletion() ) {
-                QString vocabDir( applicationDirName + "/" + folder->getPath() + "/v-" + QString::number( childVocab->getId() ) );
+                QString vocabDir( applicationDirName + "/" + folder->getPath() + "/v-" + childVocab->getUid().toString() );
                 if( !Util::deleteDirectory( vocabDir ) ) {
                     cerr << "Cannot delete glossary directory " << vocabDir << endl;
                     return( false );
+                }
+            }
+            else {
+                QValueList<QString> termsToRemove;
+                for( Vocabulary::TermMap::Iterator it = childVocab->begin(); it != childVocab->end(); it++ ) {
+                    Term& term = it.data();
+                    cerr << "term id=" << term.getUid().toString() << term.getTranslation( "en" ).getWord() << " isMarked=" << term.isMarkedForDeletion() << endl;
+
+                    if( term.isMarkedForDeletion() ) {
+                        if( !term.getImagePath().isNull() && term.getImagePath().left( 1 ) != "/" ) {
+                            const QString& imagePath = getApplicationDirName() + "/" + childVocab->getParent()->getPath() +
+                                "/v-" + childVocab->getUid().toString() + "/" + term.getImagePath();
+                            QFile imageFile( imagePath );
+                            if( imageFile.exists() ) {
+                                if( !imageFile.remove() )
+                                    cerr << "Could not remove image " << imagePath << endl;
+                            }
+                        }
+                        // We cannot remove the term directly because we have a reference on it.
+                        termsToRemove.append( term.getUid().toString() );
+                    }
+                }
+                for( uint i = 0; i < termsToRemove.count(); i++ ) {
+                    cerr << "removing term=" << termsToRemove[ i ] << endl;
+                    childVocab->removeTerm( termsToRemove[ i ] );
                 }
             }
         }
@@ -900,7 +989,7 @@ bool Controller::deleteItemsMarkedForDeletion( Folder* folder ) {
 
     if( folder->isMarkedForDeletion() ) {
         // To remove the reference to the deleted folder in preferences, we set it as opened.
-        getPreferences().setFolderOpen( folder->getId(), true );
+        getPreferences().setFolderOpen( folder->getUid(), true );
         QString folderDir( applicationDirName + "/" + folder->getPath() );
         if( !Util::deleteDirectory( folderDir ) ) {
             cerr << "Cannot delete folder directory " << folderDir << endl;
@@ -918,6 +1007,11 @@ int Controller::findFolderId( const QString& filename ) const {
     bool isOk;
     int folderId = strFolderId.toInt( &isOk );
     return( isOk ? folderId : -1 );
+}
+
+QString Controller::findFolderUid( const QString& dirPath ) const {
+    int lastSlashPos = dirPath.findRev( "/" );
+    return( dirPath.right( dirPath.length() - ( lastSlashPos + 1 ) ) );
 }
 
 int Controller::findParentFolderId( const QString& dirPath ) const {
@@ -940,14 +1034,17 @@ int Controller::findParentFolderId( const QString& dirPath ) const {
     return( -1 );
 }
 
-//int Controller::findVocabId( const QString& filename ) const {
-//    int posOfDash = filename.find( "-" );
-//    int posOfDot = filename.find( "." );
-//    QString strImportedVocabId = filename.mid( posOfDash + 1, posOfDot - posOfDash - 1 );
-//    bool isOk;
-//    int importedVocabId = strImportedVocabId.toInt( &isOk );
-//    return( isOk ? importedVocabId : -1 );
-//}
+QString Controller::findParentFolderUid( const QString& dirPath ) const {
+    int lastSlashPos = dirPath.findRev( "/" );
+    if( lastSlashPos > 0 ) {
+        int beforeLastSlashPos = dirPath.findRev( "/", lastSlashPos - 1 );
+        if( beforeLastSlashPos > 0 )
+            return( dirPath.mid( beforeLastSlashPos + 1, lastSlashPos - beforeLastSlashPos - 1 ) );
+        else
+            return( dirPath.left( lastSlashPos ) );
+    }
+    return( QString::null );
+}
 
 int Controller::findVocabId( const QString& dirPath ) const {
     int posOfLeftDelim = dirPath.find( "v-" );
@@ -956,6 +1053,12 @@ int Controller::findVocabId( const QString& dirPath ) const {
     bool isOk;
     int importedVocabId = strImportedVocabId.toInt( &isOk );
     return( isOk ? importedVocabId : -1 );
+}
+
+QString Controller::findVocabUid( const QString& dirPath ) const {
+    int posOfLeftDelim = dirPath.find( "v-" );
+    int posOfRightDelim = dirPath.findRev( "/" );
+    return( dirPath.mid( posOfLeftDelim + 1, posOfRightDelim - posOfLeftDelim - 1 ) );
 }
 
 QString Controller::convertPath( const QString& path, QMap<int,Folder*>& newFolders ) const {
@@ -973,14 +1076,40 @@ QString Controller::convertPath( const QString& path, QMap<int,Folder*>& newFold
     return( realPath );
 }
 
+QString Controller::convertPath( const QString& path, QMap<QString,Folder*>& newFolders ) const {
+    QString realPath;
+    QStringList subDirs = QStringList::split( "/", path );
+    for( QStringList::Iterator it = subDirs.begin(); it != subDirs.end(); it++ ) {
+        const QString& strFolderUid = (*it);
+        if( newFolders.contains( strFolderUid ) ) {
+            Folder* assocFolder = newFolders[ strFolderUid ];
+            realPath += "/" + assocFolder->getUid().toString();
+        }
+    }
+    return( realPath );
+}
+
 bool Controller::saveData() {
+    cerr << "saveData begin" << endl;
     if( !deleteItemsMarkedForDeletion( vocabTree ) ) {
         // Just write a warning message.  We don't return( false ) here
         // because we want to try to save the new data, at least.
         cerr << "Could not delete all items marked for deletion." << endl;
     }
+    cerr << "marked items has been deleted." << endl;
+
     if( !saveFolder( vocabTree, applicationDirName ) )
         return( false );
+    cerr << "term data has been saved ok." << endl;
+    
+    // Temporary code for data conversion between 0.11.x and 0.12.x. 
+    QString tempImageCopyDir( applicationDirName + "/tmp" );
+    QFileInfo tempImageCopyDirInfo( tempImageCopyDir );
+    if( tempImageCopyDirInfo.exists() ) {
+        if( !Util::deleteDirectory( tempImageCopyDir ) )
+            cerr << "Cannot remove directory " << tempImageCopyDir << endl;
+    }
+
     if( !saveMarkedItems( vocabTree ) )
         return( false );
     return( prefs.save() );
@@ -990,18 +1119,17 @@ bool Controller::saveMarkedItems( Folder* folder ) {
     QByteArray data;
 
     QDataStream out( data, IO_WriteOnly );
-    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
+    out.setVersion( 3 );
 
-    // 0x0011 means 0.11.x version.
-    out << Q_UINT32( Preferences::magicNumber ) << Q_UINT16( 0x0011 );
+    out << Q_UINT32( Preferences::magicNumber ) << Q_UINT16( 0x0012 );
 
-    IdList folderIds;
-    IdList vocabIds;
-    IdListMap termIds;
+    UidList folderUids;
+    UidList vocabUids;
+    UidListMap termUids;
 
-    saveMarkedItemsRec( folder, folderIds, vocabIds, termIds );
+    saveMarkedItemsRec( folder, folderUids, vocabUids, termUids );
 
-    out << folderIds << vocabIds << termIds;
+    out << folderUids << vocabUids << termUids;
 
     QByteArray compressedData( Util::qCompress( data ) ); 
 
@@ -1025,29 +1153,29 @@ bool Controller::saveMarkedItems( Folder* folder ) {
     return( true );
 }
 
-void Controller::saveMarkedItemsRec( Folder* folder, IdList& folderIds, IdList& vocabIds, IdListMap& termIds ) {
+void Controller::saveMarkedItemsRec( Folder* folder, UidList& folderUids, UidList& vocabUids, UidListMap& termUids ) {
     if( folder->isMarkedForStudy() )
-        folderIds.append( folder->getId() );
+        folderUids.append( folder->getUid().toString() );
     if( !folder->isEmpty() ) {
         for( Base* folderChild = folder->first(); folderChild; folderChild = folder->next() ) {
             if( strcmp( folderChild->className(), "Folder" ) == 0 )
-                saveMarkedItemsRec( (Folder*)folderChild, folderIds, vocabIds, termIds );
+                saveMarkedItemsRec( (Folder*)folderChild, folderUids, vocabUids, termUids );
             else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 )
-                saveMarkedItemsRec( (Vocabulary*)folderChild, vocabIds, termIds );
+                saveMarkedItemsRec( (Vocabulary*)folderChild, vocabUids, termUids );
         }
     }
 }
 
-void Controller::saveMarkedItemsRec( Vocabulary* vocab, IdList& vocabIds, IdListMap& termIds ) {
+void Controller::saveMarkedItemsRec( Vocabulary* vocab, UidList& vocabUids, UidListMap& termUids ) {
     if( vocab->isMarkedForStudy() )
-        vocabIds.append( vocab->getId() );
-    IdList termIdList;
+        vocabUids.append( vocab->getUid().toString() );
+    UidList termUidList;
     for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
         const Term& term = it.data();
         if( term.isMarkedForStudy() )
-            termIdList.append( term.getId() );
+            termUidList.append( term.getUid().toString() );
     }
-    termIds.insert( vocab->getId(), termIdList );
+    termUids.insert( vocab->getUid().toString(), termUidList );
 }
 
 void Controller::loadMarkedItems( Folder* folder ) {
@@ -1063,6 +1191,8 @@ void Controller::loadMarkedItems( Folder* folder ) {
             return;
 
         QByteArray compressedData( markedFile.readAll() );
+        markedFile.close();
+        
         QByteArray data( Util::qUncompress( compressedData ) );
 
         QDataStream in( data, IO_ReadOnly );
@@ -1070,23 +1200,66 @@ void Controller::loadMarkedItems( Folder* folder ) {
         Q_UINT32 tempMagicNumber;
         Q_UINT16 tempVersion;
 
-        IdList tempFolderIds;
-        IdList tempVocabIds;
-        IdListMap tempTermIds;
+        UidList tempFolderUids;
+        UidList tempVocabUids;
+        UidListMap tempTermUids;
 
         in >> tempMagicNumber >> tempVersion;
 
-        if( tempMagicNumber != Preferences::magicNumber )
+        if( tempMagicNumber != Preferences::magicNumber ) {
             cerr << "Wrong magic number: Incompatible data file for marked file." << endl;
-        if( tempVersion > 0x0011 )
+            return;
+        }
+        if( tempVersion > 0x0012 ) {
             cerr << "Marked data file is from a more recent version.  Upgrade toMOTko." << endl;
+            return;
+        }
+        if( tempVersion < 0x0011 ) {
+            cerr << "Marked data file format too old.  You must use an anterior version of toMOTko." << endl;
+            return;
+        }
 
         in.setVersion( 3 );
-        in >> tempFolderIds >> tempVocabIds >> tempTermIds; 
+        if( tempVersion == 0x0012 ) {
+            in >> tempFolderUids >> tempVocabUids >> tempTermUids; 
+            initMarkedForStudyRec( folder, tempFolderUids, tempVocabUids, tempTermUids );
+        }
+        else if( tempVersion == 0x0011 ) {
+            IdList tempFolderIds;
+            IdList tempVocabIds;
+            IdListMap tempTermIds;
 
-        markedFile.close();
+            in >> tempFolderIds >> tempVocabIds >> tempTermIds; 
         
-        initMarkedForStudyRec( folder, tempFolderIds, tempVocabIds, tempTermIds );
+            initMarkedForStudyRec( folder, tempFolderIds, tempVocabIds, tempTermIds );
+        }
+    }
+}
+
+void Controller::initMarkedForStudyRec( Folder* folder, UidList& folderUids, UidList& vocabUids, UidListMap& termUids ) {
+    if( folderUids.contains( folder->getUid().toString() ) )
+        folder->setMarkedForStudy( true );
+    if( !folder->isEmpty() ) {
+        for( Base* folderChild = folder->first(); folderChild; folderChild = folder->next() ) {
+            if( strcmp( folderChild->className(), "Folder" ) == 0 )
+                initMarkedForStudyRec( (Folder*)folderChild, folderUids, vocabUids, termUids );
+            else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 )
+                initMarkedForStudyRec( (Vocabulary*)folderChild, vocabUids, termUids );
+        }
+    }
+}
+
+void Controller::initMarkedForStudyRec( Vocabulary* vocab, UidList& vocabUids, UidListMap& termUids ) {
+    if( vocabUids.contains( vocab->getUid().toString() ) )
+        vocab->setMarkedForStudy( true );
+    UidList termUidList = termUids[ vocab->getUid().toString() ];
+    for( UidList::ConstIterator it = termUidList.begin(); it != termUidList.end(); it++ ) {
+        QString termUidStr = *it;
+        QUuid termUid = QUuid( termUidStr );
+        if( vocab->isTermExists( termUid ) ) {
+            Term& term = vocab->getTerm( termUid );
+            term.setMarkedForStudy( true );
+        }
     }
 }
 
@@ -1130,15 +1303,14 @@ bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList
 }
 
 bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList* languages ) const {
-    QString vocabPath = ( path == QString::null ? QString( "v-" + QString::number( vocab->getId() ) ) : 
-        path + "/v-" + QString::number( vocab->getId() ) );
+    QString vocabPath = ( path == QString::null ? QString( "v-" + vocab->getUid().toString() ) : path + "/v-" + vocab->getUid().toString() );
 
     // Copy the referred images first.
     for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
         const Term& term = it.data();
         if( term.getImagePath() != QString::null ) {
             QString fileExtension = term.getImagePath().right( 4 );
-            QCString imageDataFilename = QString( vocabPath + "/" + QString::number( term.getId() ) + fileExtension ).latin1();
+            QCString imageDataFilename = QString( vocabPath + "/" + term.getUid().toString() + fileExtension ).latin1();
             const char* filenameInZip = (const char*)imageDataFilename.data();
             QString absPath = getResolvedImagePath( term.getImagePath(), *vocab );
             QFile imageFile( absPath );
@@ -1160,7 +1332,7 @@ bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile,
     }
 
     // Copy the vocabulary itself in XML.
-    QCString dataFilename = QString( vocabPath + "/vocab-" + QString::number( vocab->getId() ) + ".xml" ).latin1();
+    QCString dataFilename = QString( vocabPath + "/data.xml" ).latin1();
     const char* filenameInZip = (const char*)dataFilename.data();
 
     QByteArray buffer;
@@ -1186,10 +1358,9 @@ bool Controller::exportData( Folder* folder, const QString& file, QStringList* l
 }
 
 bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList* languages ) const {
-    QString folderPath = ( path == QString::null ? QString::number( folder->getId() ) : 
-        path + QString( "/" ) + QString::number( folder->getId() ) );
+    QString folderPath = ( path == QString::null ? folder->getUid().toString() : path + QString( "/" ) + folder->getUid().toString() );
     if( !folder->isEmpty() ) {
-        QCString folderDataFilename = QString( folderPath + "/folder-" + QString::number( folder->getId() ) + ".xml" ).latin1();
+        QCString folderDataFilename = QString( folderPath + "/metadata.xml" ).latin1();
         const char* filenameInZip = (const char*) ( folderDataFilename.data() );
 
         QByteArray buffer;
@@ -1250,7 +1421,7 @@ int Controller::writeFileIntoZipFile( zipFile outputFile, const char* filename, 
 
 void Controller::writeFolderDataInXml( QTextStream& ts, const Folder& folder ) const {
     ts << QString( "<?xml version=\"1.0\"?>" ) << endl;
-    ts << QString( "<folder id=\"" ) << folder.getId() << QString( "\" name=\"" ) << Util::escapeXml( folder.getTitle() ) << QString( "\"" );
+    ts << QString( "<folder uid=\"" ) << folder.getUid().toString() << QString( "\" name=\"" ) << Util::escapeXml( folder.getTitle() ) << QString( "\"" );
 
     if( !folder.getAuthor().isNull() )
         ts << QString( " author=\"" ) << Util::escapeXml( folder.getAuthor() ) << QString( "\"" );
@@ -1270,7 +1441,7 @@ void Controller::writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab,
 
     for( int i = 0; i < depth; i++ )
         ts << "\t";
-    ts << QString( "<glossary id=\"" ) << vocab.getId() << "\" name=\"" << Util::escapeXml( vocab.getTitle() ) << "\" ";
+    ts << QString( "<glossary uid=\"" ) << vocab.getUid().toString() << "\" name=\"" << Util::escapeXml( vocab.getTitle() ) << "\" ";
     ts << QString( "author=\"" ) << Util::escapeXml( vocab.getAuthor() ) << "\">" << endl;
 
     for( int i = 0; i < depth; i++ )
@@ -1288,9 +1459,9 @@ void Controller::writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab,
 }
 
 bool Controller::saveVocabulary( Vocabulary* vocab, const QString& location ) const {
-    //cerr << "saveVocabulary vocab=" << vocab << " location=" << location << " isDirty? " << vocab->isDirty() << endl;
+    cerr << "saveVocabulary vocab=" << vocab << " title=" << vocab->getTitle() << " location=" << location << " isDirty? " << vocab->isDirty() << endl;
     // Create the containing folder if needed.
-    QString folderPath( location.find( "v-" ) == -1 ? location + QString( "/v-" ) + QString::number( vocab->getId() ) : location );
+    QString folderPath( location.find( "v-" ) == -1 ? location + QString( "/v-" ) + vocab->getUid().toString() : location );
     QDir folderDir( folderPath );
     if( vocab->isDirty() && !folderDir.exists() ) {
         if( !folderDir.mkdir( folderDir.path() ) ) {
@@ -1301,7 +1472,7 @@ bool Controller::saveVocabulary( Vocabulary* vocab, const QString& location ) co
 
     // Write the vocab data.
     if( vocab->isDirty() ) {
-        QString dataFilename( QString( folderDir.path() + QString( "/" ) + QString( "vocab-" ) + QString::number( vocab->getId() ) + QString( ".gz" ) ) );
+        QString dataFilename( QString( folderDir.path() + QString( "/" ) + QString( "data.gz" ) ) );
         if( !vocab->save( dataFilename ) ) {
             cerr << "Could not write vocab data " << dataFilename << endl;
             return( false );
@@ -1361,7 +1532,7 @@ QString Controller::getResolvedImagePath( const QString& path, const Vocabulary&
     else if( path.left( 1 ) == "/" )
         return( path );
     else {
-        QString absPath = getApplicationDirName() + "/" + vocab.getParent()->getPath() + "/v-" + QString::number( vocab.getId() ) + "/" + path;
+        QString absPath = getApplicationDirName() + "/" + vocab.getParent()->getPath() + "/v-" + vocab.getUid().toString() + "/" + path;
         return( absPath );
     }
 }
@@ -1371,41 +1542,47 @@ void Controller::clearSearch() {
     searchResults.clear();
 }
 
-QValueList<TermKey> Controller::search( const QString& query, const QString& firstLang = QString::null, const QString& testLang = QString::null ) {
+QValueList<TermKey> Controller::search( const QString& query ) {
     searchQuery = query;
     searchResults.clear();
     QString strippedQuery = query.stripWhiteSpace();
     if( !strippedQuery.isEmpty() )
-        searchRec( strippedQuery, firstLang, testLang, vocabTree, searchResults );  
+        searchRec( strippedQuery, vocabTree, searchResults );  
     return( searchResults );
 }
 
-void Controller::searchRec( const QString& query, const QString& firstLang, const QString& testLang, Folder* folder, QValueList<TermKey>& results ) {
+void Controller::searchRec( const QString& query, Folder* folder, QValueList<TermKey>& results ) {
     if( !folder || folder->isMarkedForDeletion() )
         return;
 
     for( Base* child = folder->first(); child; child = folder->next() ) { 
         if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
             Vocabulary* childVocab = (Vocabulary*)child;
-            searchRec( query, firstLang, testLang, childVocab, results );
+            searchRec( query, childVocab, results );
         }
         else if( strcmp( child->className(), "Folder" ) == 0 ) {
             Folder* childFolder = (Folder*)child;
-            searchRec( query, firstLang, testLang, childFolder, results );
+            searchRec( query, childFolder, results );
         }
     }
 
 }
 
-void Controller::searchRec( const QString& query, const QString& firstLang, const QString& testLang, Vocabulary* vocab, QValueList<TermKey>& results ) {
+void Controller::searchRec( const QString& query, Vocabulary* vocab, QValueList<TermKey>& results ) {
     if( !vocab || vocab->isMarkedForDeletion() )
         return;
 
     for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
         const Term& term = *it;
+
+        if( term.isMarkedForDeletion() )
+            continue;
+
         bool isStringFound = false;
 
         if( prefs.isLanguageFilterEnabled() ) {
+            const QString& firstLang = prefs.getFirstLanguage();
+            const QString& testLang = prefs.getTestLanguage();
             if( term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
                 const Translation& firstLangTrans = term.getTranslation( firstLang );
                 const Translation& testLangTrans = term.getTranslation( testLang );
@@ -1427,6 +1604,8 @@ void Controller::searchRec( const QString& query, const QString& firstLang, cons
 
         if( !isStringFound ) {
             if( prefs.isLanguageFilterEnabled() ) {
+                const QString& firstLang = prefs.getFirstLanguage();
+                const QString& testLang = prefs.getTestLanguage();
                 BilingualKey key( firstLang, testLang );
                 if( term.isCommentExists( key ) && term.getComment( key ).find( query ) != -1 )
                     isStringFound = true;
@@ -1443,7 +1622,7 @@ void Controller::searchRec( const QString& query, const QString& firstLang, cons
         }
 
         if( isStringFound ) {
-            TermKey termKey( term.getId(), vocab->getId() );
+            TermKey termKey( term.getUid(), vocab->getUid() );
             results.append( termKey );
         }
     }

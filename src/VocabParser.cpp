@@ -28,9 +28,9 @@ bool VocabParser::startElement( const QString&, const QString&, const QString& q
         lang = attribs.value( QString( "lang" ) );
     }
     else if( qname == QString( "term" ) ) {
-        int id = atoi( attribs.value( QString( "id" ) ).latin1() );
+        QString uid = attribs.value( QString( "uid" ) );
         QString imagePath = attribs.value( QString( "imagePath" ) );
-        term = Term( id, vocabulary.getId() );
+        term = Term( -1, vocabulary.getUid(), Util::createUuid() );
         if( !imagePath.isNull() )
             term.setImagePath( /*location + "/" +*/ imagePath );
     }

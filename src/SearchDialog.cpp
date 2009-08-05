@@ -142,12 +142,13 @@ void SearchDialog::retranslateUi() {
 
 void SearchDialog::search() {
     const Preferences& prefs = controller->getPreferences();
-    QValueList<TermKey> results = controller->search( queryField->currentText(), prefs.getFirstLanguage(), prefs.getTestLanguage() );
+    QValueList<TermKey> results = controller->search( queryField->currentText() );
     resultsListView->clear();
     for( QValueList<TermKey>::ConstIterator it = results.begin(); it != results.end(); it++ ) {
         const TermKey& termKey = *it;
-        Term* term = controller->getTerm( termKey );
-        Vocabulary* vocab = controller->getVocabTree()->getVocabulary( termKey.getVocabId() );
+        Term* term = ( prefs.isLanguageFilterEnabled() ? 
+            controller->getTerm( termKey, prefs.getFirstLanguage(), prefs.getTestLanguage() ) : controller->getTerm( termKey ) );
+        Vocabulary* vocab = controller->getVocabTree()->getVocabulary( termKey.getVocabUid() );
         if( vocab ) {
             ResultListItem* resultItem = new ResultListItem( resultsListView, term, 
                 prefs.getFirstLanguage(), prefs.getTestLanguage(), vocab->getTitle(), vocab->getParent()->getHumanReadablePath(),
@@ -175,7 +176,7 @@ void SearchDialog::goResultVocab() {
     if( currItem ) {
         Term* term = currItem->getTerm();
         if( term ) {
-            emit showTermRequested( TermKey( term->getId(), term->getVocabId() ) );
+            emit showTermRequested( TermKey( term->getUid(), term->getVocabUid() ) );
             close();
         }
     }
@@ -186,7 +187,7 @@ void SearchDialog::editResultTerm() {
     if( currItem ) {
         Term* term = currItem->getTerm();
         if( term ) {
-            Vocabulary* vocab = controller->getVocabTree()->getVocabulary( term->getVocabId() );
+            Vocabulary* vocab = controller->getVocabTree()->getVocabulary( term->getVocabUid() );
             TermDialog dialog( *vocab, controller, this, *term );
             dialog.showMaximized();
             int result = dialog.exec();
@@ -263,17 +264,8 @@ void SearchDialog::doRemoveTerms( bool allowSelectTrans = true, bool confirmBefo
                 ResultListItem* nextTermItem = (ResultListItem*)termItem->nextSibling();
                 if( resultsListView->isSelected( termItem ) ) {
                     Term* term = termItem->getTerm();
-                    Vocabulary* vocab = controller->getVocabTree()->getVocabulary( term->getVocabId() );
-                    if( !term->getImagePath().isNull() && term->getImagePath().left( 1 ) != "/" ) {
-                        const QString& imagePath = controller->getApplicationDirName() + "/" + vocab->getParent()->getPath() +
-                            "/v-" + QString::number( vocab->getId() ) + "/" + term->getImagePath();
-                        QFile imageFile( imagePath );
-                        if( imageFile.exists() ) {
-                            if( !imageFile.remove() )
-                                cerr << "Could not remove image " << imagePath << endl;
-                        }
-                    }
-                    vocab->removeTerm( term->getId() );
+                    Vocabulary* vocab = controller->getVocabTree()->getVocabulary( term->getVocabUid() );
+                    term->setMarkedForDeletion( true );
                     delete( termItem );
                     vocab->setModificationDate( QDateTime::currentDateTime() );
                     vocab->setDirty( true );
@@ -311,24 +303,16 @@ void SearchDialog::doRemoveTerms( bool allowSelectTrans = true, bool confirmBefo
 
             if( resultsListView->isSelected( termItem ) ) {
                 Term* term = termItem->getTerm();
-                Vocabulary* vocab = controller->getVocabTree()->getVocabulary( term->getVocabId() );
+                Vocabulary* vocab = controller->getVocabTree()->getVocabulary( term->getVocabUid() );
 
                 for( QStringList::ConstIterator it = selectedLanguages.begin(); it != selectedLanguages.end(); it++ ) {
                     QString lang = *it;
                     term->removeTranslation( lang );
+                    term->removeComments( lang );
                 }
                 
                 if( term->getTranslationCount() == 0 ) {
-                    if( !term->getImagePath().isNull() && term->getImagePath().left( 1 ) != "/" ) {
-                        const QString& imagePath = controller->getApplicationDirName() + "/" + vocab->getParent()->getPath() +
-                            "/v-" + QString::number( vocab->getId() ) + "/" + term->getImagePath();
-                        QFile imageFile( imagePath );
-                        if( imageFile.exists() ) {
-                            if( !imageFile.remove() )
-                                cerr << "Could not remove image " << imagePath << endl;
-                        }
-                    }
-                    vocab->removeTerm( term->getId() );
+                    term->setMarkedForDeletion( true );
                     delete( termItem );
                     vocab->setModificationDate( QDateTime::currentDateTime() );
                     vocab->setDirty( true );

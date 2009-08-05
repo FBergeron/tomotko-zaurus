@@ -1,5 +1,5 @@
-#ifndef TERM_SCHEDULER_H
-#define TERM_SCHEDULER_H
+#ifndef ORIGINAL_QUIZ_H
+#define ORIGINAL_QUIZ_H
 
 #include <qvaluelist.h>
 #include <iostream.h>
@@ -7,12 +7,12 @@
 #include <time.h>
 #include "BilingualKey.h"
 #include "Folder.h"
-#include "Preferences.h"
+#include "Quiz.h"
 #include "StandbyTerm.h"
 #include "TermKey.h"
 #include "Vocabulary.h"
 
-class TermScheduler {
+class OriginalQuiz : public Quiz {
 
     static const Q_UINT32 magicNumber( Q_UINT32( 0x22446677 ) );
     static const uint standbyPoolSize = 5;
@@ -21,33 +21,28 @@ public:
 
     static const uint poolCount  = 5;
 
-    TermScheduler( const Preferences& prefs );
-    TermScheduler( const TermScheduler& scheduler );
-    ~TermScheduler();
+    OriginalQuiz( const QString& applDir, const uint quizLength = 3 );
+    OriginalQuiz( const OriginalQuiz& quiz );
+    ~OriginalQuiz();
  
-    bool isResumableQuizAvailable( const BilingualKey& key ) const;
-    bool load( const BilingualKey& key );
+    const char* className() const { return( "OriginalQuiz" ); }
+
+    bool isResumable() const;
+    bool load();
     bool save();
 
-    void concludeQuiz();
-    void setApplicationDirName( const QString& applDir );
+    void conclude();
 
-    QString getQuizFirstLanguage() const;
-    QString getQuizTestLanguage() const;
-    bool isQuizInProgress() const;
+    bool isInProgress() const;
     void init( const QString& firstLanguage, const QString& testLanguage, Folder* rootFolder );
     void reinit();
-    void addTerm( const TermKey& termKey, const int priority = 0 );
     void discardCurrentTerm();
-    const TermKey getCurrentTerm() const;
     bool hasNextTerm() const;
+    const TermKey getCurrentTerm() const;
     const TermKey getNextTerm();
-    void increaseTermPriority();
-    void decreaseTermPriority();
-    void rightAnswer();
-    void wrongAnswer();
+    void gradeAnswer( int grade );
     int getProgress() const;
-    int getInitialTermCount() const;    
+    int getAnswerCount() const;
 
 private:
 
@@ -55,10 +50,12 @@ private:
     void initRec( const QString& firstLanguage, const QString& testLanguage, Vocabulary* vocab );
     void putCurrentTermOnStandby();
     void reintroduceStandbyTerm();
-    QString getFilename( const BilingualKey& key ) const;
-
-    QString                 quizFirstLang;
-    QString                 quizTestLang;
+    QString getFilename() const;
+    void addTerm( const TermKey& termKey, const int priority = 0 );
+    void increaseTermPriority();
+    void decreaseTermPriority();
+    void rightAnswer();
+    void wrongAnswer();
 
     QValueList<TermKey>     termPool[ poolCount ];
     QValueList<StandbyTerm> standbyPool; 
@@ -66,16 +63,13 @@ private:
     QValueList<TermKey>     allTerms;
 
     uint                    initQuizLength;
-    int                     initTermCount;
     int                     currTermPool;
     TermKey                 currTerm;
 
-    const Preferences&      prefs;
-
     QString                 applDir;
 
-    friend QDataStream& operator<<( QDataStream& out, const TermScheduler& scheduler );
-    friend QDataStream& operator>>( QDataStream& in, TermScheduler& scheduler );
+    friend QDataStream& operator<<( QDataStream& out, const OriginalQuiz& quiz );
+    friend QDataStream& operator>>( QDataStream& in, OriginalQuiz& quiz );
 
 };
 

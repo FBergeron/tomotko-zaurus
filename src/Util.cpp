@@ -17,6 +17,19 @@ const QString& Util::getLanguageCode( const QString& language ) {
     return( QString::null ); // Should never happen.
 }
 
+QString Util::getWeekday( int weekday ) {
+    switch( weekday ) {
+        case 1 : return( QObject::tr( "Monday" ) );
+        case 2 : return( QObject::tr( "Tuesday" ) );
+        case 3 : return( QObject::tr( "Wednesday" ) );
+        case 4 : return( QObject::tr( "Thursday" ) );
+        case 5 : return( QObject::tr( "Friday" ) );
+        case 6 : return( QObject::tr( "Saturday" ) );
+        case 7 : return( QObject::tr( "Sunday" ) );
+    }
+    return( QString::null ); // Should never happen but just in case.
+}
+
 QString Util::getDefaultLabelsFontFamily() {
     return( getDefaultFontFamily() );
 }
@@ -46,6 +59,38 @@ int Util::getDefaultQuizLength() {
     return( 1 );
 }
 
+// Taken from Qt-4.4.3's QUuid class and modified a bit.
+QUuid Util::createUuid() {
+    static const int intbits = sizeof(int)*8;
+    static int randbits = 0;
+    if (!randbits) {
+        int max = RAND_MAX;
+        do { ++randbits; } while ((max=max>>1));
+        //qsrand((uint)QDateTime::currentDateTime().toTime_t());
+        //qrand(); // Skip first
+        srand( QDateTime::currentDateTime().time().msec() ); // Not as good as the original but probably good enough. 
+        rand(); // Skip first
+    }
+
+    QUuid result;
+    //uint *data = &(result.data1);
+    ulong *data = &(result.data1);
+    int chunks = 16 / sizeof(uint);
+    while (chunks--) {
+        uint randNumber = 0;
+        for (int filled = 0; filled < intbits; filled += randbits) {
+            // randNumber |= qrand()<<filled;
+            randNumber |= rand()<<filled;
+        }
+        *(data+chunks) = randNumber;
+    }
+
+    result.data4[0] = (result.data4[0] & 0x3F) | 0x80;        // UV_DCE
+    result.data3 = (result.data3 & 0x0FFF) | 0x4000;        // UV_Random
+
+    return result;
+}
+
 QString Util::escapeXml( QString xml ) {
     QString escapedStr;
     for( uint i = 0; i < xml.length(); i++ ) {
@@ -68,10 +113,10 @@ QString Util::term2Xml( const Term& term, QStringList* languages, uint indentLev
 
     QString xml;
     QTextStream ts( &xml, IO_WriteOnly );
-    ts << indent << QString( "<term id=\"" ) << QString::number( term.getId() ) << QString( "\"" );
+    ts << indent << QString( "<term uid=\"" ) << term.getUid().toString() << QString( "\"" );
     if( term.getImagePath() != QString::null ) {
         QString fileExtension = term.getImagePath().right( 4 );
-        QString imageFilename = QString::number( term.getId() ) + fileExtension;
+        QString imageFilename = term.getUid().toString() + fileExtension;
         ts << QString( " imagePath=\"" ) << imageFilename << QString( "\"" );
     }
     ts << QString( ">" ) << endl;
@@ -192,6 +237,7 @@ QString Util::getDigraph( const QString& buffer ) {
 }
 
 void Util::initDigraphs() {
+    cerr << "initDigraphs" << endl;
     digraphMap = new QMap<QString, QString>();
 
     QString digraphFilename( "/opt/Qtopia/lib/toMOTko/digraphs.conf" );
@@ -207,8 +253,9 @@ void Util::initDigraphs() {
         QString line = ts.readLine();
         if( line.startsWith( "#" ) || line.length() == 0 )
             continue;
+        int indexOfFirstWhitespace = line.find( " " );
         QString digraph = line.left( 2 );
-        QString strValue = line.mid( 5, 2 );
+        QString strValue = line.mid( 5, indexOfFirstWhitespace == 9 ? 4 : 2 );
         if( !digraph.isNull() && !strValue.isNull() ) {
             bool isOk;
             uint value = strValue.toUInt( &isOk, 16 );

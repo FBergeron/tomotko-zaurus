@@ -5,7 +5,7 @@
 #include "icons/void.xpm"
 
 TermDialog::TermDialog( Vocabulary& vocab, Controller* controller, QWidget* parent ) 
-    : QDialog( parent, 0, true ), vocab( vocab ), controller( controller ), editedTerm( new Term( vocab.getMaxTermId() + 1, vocab.getId() ) ) {
+    : QDialog( parent, 0, true ), vocab( vocab ), controller( controller ), editedTerm( new Term( 0, vocab.getUid(), Util::createUuid() ) ) {
     init();
 }
 

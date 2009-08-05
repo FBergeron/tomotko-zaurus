@@ -121,6 +121,30 @@
         <source>Search...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>gradeAnswer1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gradeAnswer2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gradeAnswer3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gradeAnswer4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gradeAnswer5</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>gradeAnswer6</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
@@ -293,6 +317,33 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>GlossaryManagerOptions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Algorithm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OriginalQuizAlgorithm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SuperMemo2Algorithm</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProgressDialog</name>
+    <message>
+        <source>ScheduleInfo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CurrentTermInfo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ProgressDialogCaption</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -477,6 +528,50 @@ Overwrite the current assignment?</source>
         <source>NewGlossary</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;dir&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Kb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CannotResumeQuiz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Monday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tuesday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wednesday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Thursday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Friday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Saturday</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sunday</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuizFrame</name>
@@ -530,6 +625,25 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NoTermsScheduledForStudy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Schedule</name>
+    <message>
+        <source>Today</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tomorrow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NumberOfTermsScheduled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -890,7 +1004,19 @@ Overwrite the current assignment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>test</source>
+        <source>Home</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SD Card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CF Card</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Root</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

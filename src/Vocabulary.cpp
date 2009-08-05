@@ -1,14 +1,17 @@
 #include "Vocabulary.h"
 
-Vocabulary::Vocabulary( int id, const QString& title = QString::null ) 
-    : Base(), id( id ), markedForStudy( false ), markedForDeletion( false ), title( title ), description( QString::null ), author( QString::null ), 
-        dirty( false ) {
+QString Vocabulary::parentPath = QString::null; // Temporary variable for data conversion from 0.11.x to 0.12.x.
+
+Vocabulary::Vocabulary( int id, const QString& title /* = QString::null */, const QUuid& uid ) 
+    : Base(), uid( uid ), id( id ), markedForStudy( false ), markedForDeletion( false ), 
+        title( title ), description( QString::null ), author( QString::null ), 
+            dirty( false ) {
     QDateTime now( QDateTime::currentDateTime() );
     creationDate = modificationDate = now;
 }
 
 Vocabulary::Vocabulary( const Vocabulary& voc ) 
-    : Base(), id( voc.id ), markedForStudy( voc.markedForStudy ), markedForDeletion( voc.markedForDeletion ), 
+    : Base(), uid( voc.uid ), id( voc.id ), markedForStudy( voc.markedForStudy ), markedForDeletion( voc.markedForDeletion ), 
         title( voc.title ), description( voc.description ), author( voc.author ), 
             creationDate( voc.creationDate ), modificationDate( voc.modificationDate ), dirty( voc.dirty ), parent( voc.parent ) {
     for( TermMap::ConstIterator it = voc.terms.begin(); it != voc.terms.end(); it++ ) {
@@ -18,6 +21,10 @@ Vocabulary::Vocabulary( const Vocabulary& voc )
 }
 
 Vocabulary::~Vocabulary() {
+}
+
+QUuid Vocabulary::getUid() const {
+    return( uid );
 }
 
 int Vocabulary::getId() const {
@@ -42,7 +49,7 @@ void Vocabulary::setMarkedForDeletion( bool isMarkedForDeletion ) {
 
 const QString Vocabulary::getTitle() const {
     return( title );
-    //return( title + QString( "(" ) + QString::number( getId() ) + QString( ")" ) ); // For debugging.
+    //return( title + QString( "(" ) + getUid().toString() + QString( ")" ) ); // For debugging.
 }
 
 void Vocabulary::setTitle( const QString& title ) {
@@ -82,19 +89,40 @@ void Vocabulary::setModificationDate( const QDateTime& modificationDate ) {
 }
 
 void Vocabulary::addTerm( const Term& term ) {
-    terms.insert( term.getId(), term );
+    terms.insert( term.getUid().toString(), term );
 }
 
-void Vocabulary::removeTerm( const int& id ) {
-    terms.remove( id );
+void Vocabulary::removeTerm( const QUuid& uid ) {
+    terms.remove( uid.toString() );
+}
+
+//void Vocabulary::removeTerm( const int& id ) {
+//    terms.remove( id );
+//}
+
+bool Vocabulary::isTermExists( const QUuid& uid ) const {
+    return( terms.contains( uid.toString() ) );
 }
 
 bool Vocabulary::isTermExists( const int& id ) const {
-    return( terms.contains( id ) );
+    for( TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
+        const Term& term = it.data();
+        if( term.getId() == id )
+            return( true );
+    }
+    return( false );
+}
+
+Term& Vocabulary::getTerm( const QUuid& uid ) {
+    return( terms[ uid.toString() ] );
 }
 
 Term& Vocabulary::getTerm( const int& id ) {
-    return( terms[ id ] );
+    for( TermMap::Iterator it = terms.begin(); it != terms.end(); it++ ) {
+        Term& term = it.data();
+        if( term.getId() == id )
+            return( term );
+    }
 }
 
 bool Vocabulary::isEmpty() const {
@@ -109,8 +137,20 @@ void Vocabulary::getItemsCount( uint* termCount, uint* checkedTermCount, uint* s
     if( !isMarkedForDeletion() ) {
         for( TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
             const Term& term = it.data();
-            if( !firstLang.isNull() && !testLang.isNull() ) {
-                if( term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
+            if( !term.isMarkedForDeletion() ) {
+                if( !firstLang.isNull() && !testLang.isNull() ) {
+                    if( term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
+                        //const Translation& firstLangTrans = term.getTranslation( firstLang );
+                        //const Translation& testLangTrans = term.getTranslation( testLang );
+                        *termCount += 1;
+                        if( term.isMarkedForStudy() ) {
+                            *checkedTermCount += 1;
+                            if( isReachableFromRoot )
+                                *selectedTermCount += 1;
+                        }
+                    }
+                }
+                else {
                     *termCount += 1;
                     if( term.isMarkedForStudy() ) {
                         *checkedTermCount += 1;
@@ -119,26 +159,8 @@ void Vocabulary::getItemsCount( uint* termCount, uint* checkedTermCount, uint* s
                     }
                 }
             }
-            else {
-                *termCount += 1;
-                if( term.isMarkedForStudy() ) {
-                    *checkedTermCount += 1;
-                    if( isReachableFromRoot )
-                        *selectedTermCount += 1;
-                }
-            }
         }
     }
-}
-
-int Vocabulary::getMaxTermId() const {
-    int maxId = 0;
-    for( TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
-        const Term& term = it.data();
-        if( term.getId() > maxId )
-            maxId = term.getId();
-    }
-    return( maxId );
 }
 
 bool Vocabulary::containsTermWithTranslations( const QString& lang1, const QString& lang2 ) const {
@@ -211,30 +233,35 @@ bool Vocabulary::load( const QString& filename ) {
         return( false );
     
     QByteArray compressedData( dataFile.readAll() );
+    dataFile.close();
     QByteArray data( Util::qUncompress( compressedData ) );
 
     QDataStream in( data, IO_ReadOnly );
-
     Q_UINT32 tempMagicNumber;
     Q_UINT16 tempVersion;
     Vocabulary tempVocab;
 
     in >> tempMagicNumber >> tempVersion;
-
     if( tempMagicNumber != Vocabulary::magicNumber ) {
         cerr << "Wrong magic number: Incompatible vocabulary data file." << endl;
         return( false );
     }
-    if( tempVersion > 0x0010 ) {
+    if( tempVersion > 0x0011 ) {
         cerr << "Vocabulary data file is from a more recent version.  Upgrade toMOTko." << endl;
+        return( false );
+    }
+    if( tempVersion < 0x0010 ) {
+        cerr << "Vocabulary format too old.  You must use an anterior version of toMOTko." << endl;
         return( false );
     }
 
     in.setVersion( 3 );
-    in >> tempVocab;
+    if( tempVersion == 0x0011 ) // With UID.
+        in >> tempVocab;
+    else if( tempVersion < 0x0011 )
+        readOldFormat( in, tempVocab, tempVersion ); 
 
-    dataFile.close();
-
+    uid = tempVocab.getUid();
     id = tempVocab.getId();
     markedForStudy = tempVocab.isMarkedForStudy();
     title = tempVocab.getTitle();
@@ -243,8 +270,9 @@ bool Vocabulary::load( const QString& filename ) {
     creationDate = tempVocab.getCreationDate();
     modificationDate = tempVocab.getModificationDate();
     dirty = tempVocab.isDirty();
-    for( TermMap::ConstIterator it = tempVocab.begin(); it != tempVocab.end(); it++ ) {
-        const Term& term = it.data();
+    for( TermMap::Iterator it = tempVocab.begin(); it != tempVocab.end(); it++ ) {
+        Term& term = it.data();
+        term.setVocabUid( uid );
         addTerm( term );
     }
     return( true );
@@ -255,9 +283,12 @@ bool Vocabulary::save( const QString& filename ) const {
 
     QDataStream out( data, IO_WriteOnly );
     out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
-
-    // 0x0010 means 0.10.x version.  
-    out << Q_UINT32( Vocabulary::magicNumber ) << Q_UINT16( 0x0010 ) << *this;
+//cerr << "Size of saved Vocab=" << getSize() << " this=" << this << endl;
+//for( TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
+//    const Term& term = it.data();
+//    cerr << "term uid=" << term.getUid().toString() << endl;
+//}
+    out << Q_UINT32( Vocabulary::magicNumber ) << Q_UINT16( 0x0011 ) << *this;
 
     QByteArray compressedData( Util::qCompress( data ) ); 
 
@@ -273,6 +304,29 @@ bool Vocabulary::save( const QString& filename ) const {
     int ret = dataFile.writeBlock( compressedData );
     dataFile.close();
 
+    // Temporary code for data conversion between 0.11.x and 0.12.x. 
+    for( Vocabulary::TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
+        const Term& term = it.data();
+        if( !term.getImagePath().isNull() ) {
+            QFileInfo imageFileInfo( term.getImagePath() );
+            if( term.getImagePath() == term.getUid().toString() + "." + imageFileInfo.extension( false ) ) {
+                QFileInfo parentPathInfo( Vocabulary::parentPath );
+                QString absImagePath( parentPathInfo.dirPath() + "/v-" + getUid().toString() + "/" + term.getImagePath() );
+                QFileInfo absImagePathInfo( absImagePath );
+                if( !absImagePathInfo.exists() ) {
+                    QString applDir( parentPathInfo.dirPath().left( parentPathInfo.dirPath().find( ".toMOTko" ) + 8 ) );
+                    QString tempDirPath( applDir + "/tmp" );
+                    QString tempImageCopyPath( tempDirPath + "/" + term.getUid().toString() + "." + imageFileInfo.extension( false ) );
+                    QFileInfo tempImageCopyPathInfo( tempImageCopyPath );
+                    if( tempImageCopyPathInfo.exists() ) {
+                        if( !Util::copy( tempImageCopyPath, absImagePath ) )
+                            cerr << "Cannot copy image " << tempImageCopyPath << " to " << absImagePath << endl;
+                    }
+                }
+            }
+        }
+    }
+
     if( ret == -1 || dataFile.status() != IO_Ok ) {
         dataFile.resetStatus();
         return( false );
@@ -282,14 +336,15 @@ bool Vocabulary::save( const QString& filename ) const {
 }
 
 QDataStream& operator<<( QDataStream& out, const Vocabulary& vocab ) {
-    out << vocab.id << vocab.title << vocab.terms;
+    out << vocab.uid.toString() << vocab.title << vocab.terms;
     out << vocab.description << vocab.author << vocab.creationDate << vocab.modificationDate;
 
     return( out );
 }
 
 QDataStream& operator>>( QDataStream& in, Vocabulary& vocab ) {
-    int tempId;
+    QString tempUidStr;
+    QUuid tempUid;
     QString tempTitle;
     Vocabulary::TermMap tempTerms;
     QString tempDescription;
@@ -297,11 +352,13 @@ QDataStream& operator>>( QDataStream& in, Vocabulary& vocab ) {
     QDateTime tempCreationDate;
     QDateTime tempModificationDate;
 
-    in >> tempId >> tempTitle >> tempTerms;
+    in >> tempUidStr;
+    tempUid = QUuid( tempUidStr );
+    in >> tempTitle >> tempTerms;
 
     in >> tempDescription >> tempAuthor >> tempCreationDate >> tempModificationDate;
 
-    vocab = Vocabulary( tempId, tempTitle );
+    vocab = Vocabulary( -1, tempTitle, tempUid );
     for( Vocabulary::TermMap::ConstIterator it = tempTerms.begin(); it != tempTerms.end(); it++ ) {
         const Term& term = it.data();
         vocab.addTerm( term );
@@ -311,6 +368,64 @@ QDataStream& operator>>( QDataStream& in, Vocabulary& vocab ) {
     vocab.setAuthor( tempAuthor );
     vocab.setCreationDate( tempCreationDate );
     vocab.setModificationDate( tempModificationDate );
+
+    return( in );
+}
+
+QDataStream& readOldFormat( QDataStream& in, Vocabulary& vocab, Q_UINT16 version ) {
+    QUuid tempUid;
+    int tempId;
+    QString tempTitle;
+    Vocabulary::TermMap tempTerms;
+    Vocabulary::OldTermMap tempOldTerms;
+    QString tempDescription;
+    QString tempAuthor;
+    QDateTime tempCreationDate;
+    QDateTime tempModificationDate;
+    if( version == 0x0010 )
+        tempUid = Util::createUuid();
+
+    Term::isOldFormat = true; // Set the conversion flag to make Term's operator>> behave correctly. 
+    in >> tempId >> tempTitle >> tempOldTerms;
+
+    Term::isOldFormat = false; // Reset the conversion flag.
+
+    in >> tempDescription >> tempAuthor >> tempCreationDate >> tempModificationDate;
+
+    vocab = Vocabulary( tempId, tempTitle, tempUid );
+    for( Vocabulary::OldTermMap::Iterator it = tempOldTerms.begin(); it != tempOldTerms.end(); it++ ) {
+        Term& term = it.data();
+        term.setUid( Util::createUuid() );
+        term.setVocabUid( tempUid );
+        if( !term.getImagePath().isNull() ) {
+            QFileInfo imageFileInfo( term.getImagePath() );
+            if( term.getImagePath() == QString::number( term.getId() ) + "." + imageFileInfo.extension( false ) ) {
+                // Temporary code for data conversion between 0.11.x and 0.12.x. 
+                // Copy the image into a temporary directory with its uid filename.
+                // When saving data, the image will be copied in its vocabulary directory and the temporary directory will be removed.
+                QFileInfo parentPathInfo( Vocabulary::parentPath );
+                QString applDir( parentPathInfo.dirPath().left( parentPathInfo.dirPath().find( ".toMOTko" ) + 8 ) );
+                QString tempDirPath( applDir + "/tmp" );
+                QString absImagePath( parentPathInfo.dirPath() + "/v-" + QString::number( tempId ) + "/" + term.getImagePath() );
+                QString tempImageCopyPath( tempDirPath + "/" + term.getUid().toString() + "." + imageFileInfo.extension( false ) );
+                if( !Util::makeDirectory( tempDirPath ) )
+                    cerr << "Cannot create directory " << tempDirPath << endl;
+                else {
+                    if( !Util::copy( absImagePath, tempImageCopyPath ) )
+                        cerr << "Cannot copy image " << absImagePath << " to directory " << tempImageCopyPath << endl;
+                }
+                term.setImagePath( term.getUid().toString() + "." + imageFileInfo.extension( false ) );
+            }
+        }
+
+        vocab.addTerm( term );
+    }
+   
+    vocab.setDescription( tempDescription );
+    vocab.setAuthor( tempAuthor );
+    vocab.setCreationDate( tempCreationDate );
+    vocab.setModificationDate( tempModificationDate );
+    vocab.setDirty( true ); // Force saving data.
 
     return( in );
 }

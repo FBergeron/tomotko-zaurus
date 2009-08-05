@@ -23,6 +23,12 @@
 #include "icons/removeItem.xpm"
 #include "icons/checkAllTerms.xpm"
 #include "icons/inverseCheckedTerms.xpm"
+#include "icons/gradeAnswer1.xpm"
+#include "icons/gradeAnswer2.xpm"
+#include "icons/gradeAnswer3.xpm"
+#include "icons/gradeAnswer4.xpm"
+#include "icons/gradeAnswer5.xpm"
+#include "icons/gradeAnswer6.xpm"
 #include "icons/flag_en.xpm"
 #include "icons/flag_es.xpm"
 #include "icons/flag_fr.xpm"
@@ -62,8 +68,9 @@ MainWindow::MainWindow( Controller* controller )
     cutAction = Util::createAction( QObject::tr( "Cut" ), editcut_xpm, this, SLOT( cut() ), CTRL + Key_X );
     pasteAction = Util::createAction( QObject::tr( "Paste" ), editpaste_xpm, this, SLOT( paste() ), CTRL + Key_V );
 
-    progressBar = new QProgressBar( toolBar, "ProgressBar" );
+    progressBar = new ProgressBar( toolBar, "ProgressBar" );
     connect( controller, SIGNAL( progressChanged( int ) ), progressBar, SLOT( setProgress( int ) ) );
+    connect( progressBar, SIGNAL( progressBarClicked() ), this, SLOT( showProgressDetails() ) );
     progressBar->hide();
     progressBar->setCenterIndicator( true );
 
@@ -118,6 +125,18 @@ MainWindow::MainWindow( Controller* controller )
         this, SLOT( toggleMaximize( bool ) ), prefs.getAccelerator( ACTION_MAXIMIZE ), true );
     action[ ACTION_SEARCH ] = Util::createAction( tr( "Search..." ), search_xpm, 
         this, SLOT( search() ), prefs.getAccelerator( ACTION_SEARCH ) );
+    action[ ACTION_GRADE_ANSWER_1 ] = Util::createAction( tr( "gradeAnswer1" ), gradeAnswer1_xpm,
+        quizFrame, SLOT( gradeAnswer1() ), prefs.getAccelerator( ACTION_GRADE_ANSWER_1 ) );
+    action[ ACTION_GRADE_ANSWER_2 ] = Util::createAction( tr( "gradeAnswer2" ), gradeAnswer2_xpm,
+        quizFrame, SLOT( gradeAnswer2() ), prefs.getAccelerator( ACTION_GRADE_ANSWER_2 ) );
+    action[ ACTION_GRADE_ANSWER_3 ] = Util::createAction( tr( "gradeAnswer3" ), gradeAnswer3_xpm,
+        quizFrame, SLOT( gradeAnswer3() ), prefs.getAccelerator( ACTION_GRADE_ANSWER_3 ) );
+    action[ ACTION_GRADE_ANSWER_4 ] = Util::createAction( tr( "gradeAnswer4" ), gradeAnswer4_xpm,
+        quizFrame, SLOT( gradeAnswer4() ), prefs.getAccelerator( ACTION_GRADE_ANSWER_4 ) );
+    action[ ACTION_GRADE_ANSWER_5 ] = Util::createAction( tr( "gradeAnswer5" ), gradeAnswer5_xpm,
+        quizFrame, SLOT( gradeAnswer5() ), prefs.getAccelerator( ACTION_GRADE_ANSWER_5 ) );
+    action[ ACTION_GRADE_ANSWER_6 ] = Util::createAction( tr( "gradeAnswer6" ), gradeAnswer6_xpm,
+        quizFrame, SLOT( gradeAnswer6() ), prefs.getAccelerator( ACTION_GRADE_ANSWER_6 ) );
 
     actionsMenu = new QPopupMenu( this );
     actionsMenu->setCheckable( true );
@@ -358,6 +377,11 @@ void MainWindow::search() {
         vocabManagerFrame->search();
 }
 
+void MainWindow::showProgressDetails() {
+    if( mainPanel->visibleWidget() == quizFrame )
+        quizFrame->showProgressDetails();
+}
+
 void MainWindow::switchLanguage( QAction* langAction ) {
     QString language = availableLanguages[ langAction->text() ];
     switchLanguage( language );
@@ -394,8 +418,10 @@ void MainWindow::startQuiz() {
             resumeQuiz = ( response == QMessageBox::Yes );
         }
         showQuiz();
-        if( resumeQuiz )
-            quizFrame->resumeQuiz();
+        if( resumeQuiz ) {
+            if( !quizFrame->resumeQuiz() )
+                QMessageBox::warning( this, QObject::tr( "Error" ), QObject::tr( "CannotResumeQuiz" ) );
+        }
         else
             quizFrame->startQuiz();
     }

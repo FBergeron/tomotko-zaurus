@@ -28,7 +28,14 @@ void PreferencesDialog::init() {
 
     quizPage = new QWidget( tab, "QuizPage" );
 
-    quizLengthOptionsPanel = new QVGroupBox( tr( "Length" ), quizPage, "QuizLengthOptionsPanel" );
+    quizAlgorithmsPanel = new QWidget( quizPage, "QuizAlgorithmsPanel" );
+    quizAlgorithmsPanelLayout = new QHBoxLayout( quizAlgorithmsPanel );
+
+    quizAlgorithmOptionsPanel = new QVButtonGroup( tr( "Algorithm" ), quizAlgorithmsPanel, "QuizAlgorithmOptionsPanel" );
+    quizLengthOptionsPanel = new QVGroupBox( tr( "Length" ), quizAlgorithmsPanel, "QuizLengthOptionsPanel" );
+    quizAlgorithmsPanelLayout->addWidget( quizAlgorithmOptionsPanel );
+    quizAlgorithmsPanelLayout->addWidget( quizLengthOptionsPanel, 1 );
+
     revealingOptionsPanel = new QHGroupBox( tr( "RevealingOrders" ), quizPage, "RevealingOptionsPanel" );
   
     sequencesViewPanel = new QVBox( revealingOptionsPanel ); 
@@ -58,7 +65,14 @@ void PreferencesDialog::init() {
 
     sequencesViewPanel->setMaximumHeight( sequencesLabelBox->sizeHint().height() );
 
-    quizLengthSlider = new QSlider( 0, TermScheduler::poolCount - 1, 1, 1, QSlider::Horizontal, quizLengthOptionsPanel, "QuizLengthSlider" );
+    quizAlgoOriginalRadioButton = new QRadioButton( tr( "OriginalQuizAlgorithm" ), quizAlgorithmOptionsPanel );
+    quizAlgoSuperMemo2RadioButton = new QRadioButton( tr( "SuperMemo2Algorithm" ), quizAlgorithmOptionsPanel );
+    if( prefs->getQuizAlgorithm() == Preferences::ORIGINAL )
+        quizAlgoOriginalRadioButton->setChecked( true );
+    else if( prefs->getQuizAlgorithm() == Preferences::SUPERMEMO2 )
+        quizAlgoSuperMemo2RadioButton->setChecked( true );
+
+    quizLengthSlider = new QSlider( 0, OriginalQuiz::poolCount - 1, 1, 1, QSlider::Horizontal, quizLengthOptionsPanel, "QuizLengthSlider" );
     quizLengthLabelsPanel = new QHBox( quizLengthOptionsPanel, "QuizLengthLabelsPanel" );
     quizLengthShortestLabel = new QLabel( tr( "QuizLengthShortest" ), quizLengthLabelsPanel, "QuizLengthShortestLabel" );
     quizLengthMediumLabel = new QLabel( tr( "QuizLengthMedium" ), quizLengthLabelsPanel, "QuizLengthMediumLabel" );
@@ -71,7 +85,7 @@ void PreferencesDialog::init() {
     quizPageFiller = new QWidget( quizPage, "QuizPageFiller" );
 
     quizLayout = new QVBoxLayout( quizPage );
-    quizLayout->addWidget( quizLengthOptionsPanel );
+    quizLayout->addWidget( quizAlgorithmsPanel );
     quizLayout->addWidget( revealingOptionsPanel );
     quizLayout->addWidget( quizPageFiller, 1 );
 
@@ -329,6 +343,11 @@ void PreferencesDialog::accept() {
         QMessageBox::warning( this, QObject::tr( "Warning" ), tr( "StudyLanguagesMandatory" ) );
         return;
     }
+
+    if( quizAlgoOriginalRadioButton->isChecked() )
+        prefs->setQuizAlgorithm( Preferences::ORIGINAL );
+    else if( quizAlgoSuperMemo2RadioButton->isChecked() )
+        prefs->setQuizAlgorithm( Preferences::SUPERMEMO2 );
 
     prefs->setQuizLength( quizLengthSlider->value() );
 

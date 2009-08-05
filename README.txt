@@ -165,6 +165,7 @@ To find the UTF-8 character number for a specific kanji, use this :
 http://www.fileformat.info/info/unicode/char/search.htm
 Enter the kanji and look for UTF-8 (hex)
 
+To round up a positive float number in C++: uint roundedValue = (uint)( val + 0.5 );
 
 About zlib
 ----------

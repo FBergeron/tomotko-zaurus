@@ -23,6 +23,7 @@
 #include <qmessagebox.h>
 #include <qobjectlist.h>
 #include <qpushbutton.h>
+#include <qradiobutton.h>
 #include <qscrollview.h>
 #include <qslider.h>
 #include <qstring.h>
@@ -30,14 +31,15 @@
 #include <qtabwidget.h>
 #include <qtooltip.h>
 #include <qvbox.h>
+#include <qvbuttongroup.h>
 #include <qvgroupbox.h>
 #include "KeyActionListViewItem.h"
+#include "OriginalQuiz.h"
 #include "Preferences.h"
 #include "SequenceDialog.h"
 #include "SequenceListItem.h"
 #include "SmartListView.h"
 #include "StudyLanguageItem.h"
-#include "TermScheduler.h"
 
 extern QAction* action[ ACTION_COUNT ];
 
@@ -120,6 +122,9 @@ private:
 
     QVBoxLayout*        quizLayout;
 
+    QWidget*            quizAlgorithmsPanel;
+    QHBoxLayout*        quizAlgorithmsPanelLayout;
+    QVButtonGroup*      quizAlgorithmOptionsPanel;
     QVGroupBox*         quizLengthOptionsPanel;
     QHGroupBox*         revealingOptionsPanel;
 
@@ -132,6 +137,9 @@ private:
 
     QVGroupBox*         sequencesLabelBox;
     QLabel*             sequencesLabel;
+
+    QRadioButton*       quizAlgoOriginalRadioButton;
+    QRadioButton*       quizAlgoSuperMemo2RadioButton;
 
     QSlider*            quizLengthSlider;
     QHBox*              quizLengthLabelsPanel;

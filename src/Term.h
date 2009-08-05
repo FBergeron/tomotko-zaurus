@@ -1,6 +1,8 @@
 #ifndef TERM_H
 #define TERM_H
 
+#include <qpe/quuid.h>
+#include <qfileinfo.h>
 #include <iterator.h>
 #include <string.h>
 #include <qdatastream.h>
@@ -13,17 +15,25 @@ class Term {
 
 public:
 
-    Term( int id = 0, int vocabId = 0 );
+    static bool isOldFormat; // Temporary flag for data conversion from 0.11.x to 0.12.x.
+
+    Term( int id = 0, const QUuid& vocabUid = QUuid(), const QUuid& uid = QUuid() );
     Term( const Term& term );
     ~Term();
    
     typedef QMap<QString, Translation> TranslationMap;
     typedef QMap<BilingualKey, QString> CommentMap;
 
+    const QUuid getUid() const;
+    void setUid( const QUuid& uid );
     const int getId() const;
+    const QUuid getVocabUid() const;
+    void setVocabUid( const QUuid& vocabUid );
     const int getVocabId() const;
     bool isMarkedForStudy() const;
     void setMarkedForStudy( bool isMarkedForStudy );
+    bool isMarkedForDeletion() const;
+    void setMarkedForDeletion( bool isMarkedForDeletion );
 
     void addTranslation( const Translation& translation );
     void removeTranslation( const QString& language );
@@ -51,14 +61,16 @@ public:
 
 private:
     
-    int id;
-    int vocabId;
-    bool markedForStudy;
+    QUuid   uid;
+    int     id;
+    QUuid   vocabUid;
+    bool    markedForStudy;
+    bool    markedForDeletion;
 
-    TranslationMap translations;
-    CommentMap comments;
+    TranslationMap  translations;
+    CommentMap      comments;
 
-    QString imagePath;
+    QString         imagePath;
 
 };
 
