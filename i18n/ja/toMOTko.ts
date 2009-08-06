@@ -346,6 +346,26 @@ Overwrite the current assignment?</source>
         <source>ProgressDialogCaption</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Property</source>
+        <translation>プロパティ</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repetition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EasinessFactor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DaysToNextRepetition</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PropertiesPanel</name>

@@ -360,6 +360,26 @@ No obstante, asignar la teclea?</translation>
         <source>ProgressDialogCaption</source>
         <translation>Detalles sobre la progresión</translation>
     </message>
+    <message>
+        <source>Property</source>
+        <translation>Propiedad</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Valor</translation>
+    </message>
+    <message>
+        <source>Repetition</source>
+        <translation>Repetición</translation>
+    </message>
+    <message>
+        <source>EasinessFactor</source>
+        <translation>Factor de facilidad</translation>
+    </message>
+    <message>
+        <source>DaysToNextRepetition</source>
+        <translation>Dia(s) antes la proxima repetición</translation>
+    </message>
 </context>
 <context>
     <name>PropertiesPanel</name>

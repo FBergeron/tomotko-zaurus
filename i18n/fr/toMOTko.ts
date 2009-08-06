@@ -357,6 +357,26 @@ Affecter le raccourci quand même?</translation>
         <source>ProgressDialogCaption</source>
         <translation>Détails de progression...</translation>
     </message>
+    <message>
+        <source>Property</source>
+        <translation>Propriété</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Valeur</translation>
+    </message>
+    <message>
+        <source>Repetition</source>
+        <translation>Répétition</translation>
+    </message>
+    <message>
+        <source>EasinessFactor</source>
+        <translation>Facteur de facilité</translation>
+    </message>
+    <message>
+        <source>DaysToNextRepetition</source>
+        <translation>Jour(s) avant la prochaine répétition</translation>
+    </message>
 </context>
 <context>
     <name>PropertiesPanel</name>
@@ -666,7 +686,7 @@ langues sélectionnées.</translation>
     <name>Schedule</name>
     <message>
         <source>Today</source>
-        <translation>Aujourd'hui</translation>
+        <translation>Aujourd&apos;hui</translation>
     </message>
     <message>
         <source>Tomorrow</source>

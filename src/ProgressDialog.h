@@ -8,6 +8,7 @@
 #include <qtabwidget.h>
 #include "Progress.h"
 #include "Schedule.h"
+#include "SmartListView.h"
 
 class ProgressDialog : public QDialog {
 
@@ -33,6 +34,9 @@ private:
 
     Schedule*               scheduleTab;
     QWidget*                currTermTab;
+    QVBoxLayout*            currTermTabLayout;
+
+    SmartListView*          currTermInfo;
 
 };
 

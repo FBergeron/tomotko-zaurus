@@ -53,7 +53,7 @@ public:
     bool resumeQuiz();
     void prepareQuiz();
     int getQuizAnswerCount() const;
-    void getQuizSchedule( int* schedule );
+    void showQuizProgressData( QWidget* parent ) const;
 
     Term* getCurrentTerm();
     bool hasNextTerm() const;

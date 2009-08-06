@@ -61,11 +61,9 @@ int Controller::getQuizAnswerCount() const {
     return( quiz ? quiz->getAnswerCount() : 0 );
 }
 
-void Controller::getQuizSchedule( int* schedule ) {
-    for( int i = 0; i < scheduleLength; i++ )
-        schedule[ i ] = 0;
+void Controller::showQuizProgressData( QWidget* parent ) const {
     if( quiz )
-        ((SuperMemo2Quiz*)quiz)->getSchedule( vocabTree, schedule );
+        quiz->showProgressData( parent );
 }
 
 void Controller::concludeQuiz() {

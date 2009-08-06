@@ -12,6 +12,7 @@
 #include "TermKey.h"
 #include "Vocabulary.h"
 #include "Progress.h"
+#include "ProgressDialog.h"
 
 class SuperMemo2Quiz : public Quiz {
 
@@ -40,7 +41,7 @@ public:
 
     bool isInProgress() const;
     void init( const QString& firstLanguage, const QString& testLanguage, Folder* rootFolder );
-    void getSchedule( Folder* rootFolder, int* schedule );
+    void getSchedule( int* schedule );
     void reinit();
     void discardCurrentTerm();
     bool hasNextTerm() const;
@@ -50,6 +51,8 @@ public:
     void wrongAnswer();
     int getProgress() const;
     int getAnswerCount() const;
+
+    void showProgressData( QWidget* parent );
 
 private:
 

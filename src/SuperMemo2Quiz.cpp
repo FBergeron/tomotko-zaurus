@@ -47,7 +47,7 @@ void SuperMemo2Quiz::init( const QString& firstLang, const QString& testLang, Fo
     cerr << "initTermCount=" << initTermCount << endl;
 }
 
-void SuperMemo2Quiz::getSchedule( Folder* rootFolder, int* schedule ) {
+void SuperMemo2Quiz::getSchedule( int* schedule ) {
     for( int i = 0; i < scheduleLength; i++ )
         schedule[ i ] = 0;
     getScheduleRec( rootFolder, schedule );
@@ -215,6 +215,26 @@ int SuperMemo2Quiz::getProgress() const {
 
 int SuperMemo2Quiz::getAnswerCount() const {
     return( 6 );
+}
+
+void SuperMemo2Quiz::showProgressData( QWidget* parent ) {
+    ProgressData progressData;
+
+    TermKey currTermKey = getCurrentTerm();
+    if( !currTermKey.isNull() ) {
+        TermData termData = getTermData( currTermKey.getTermUid().toString() );
+
+        progressData.currTerm.repetition = termData.repetition;
+        progressData.currTerm.easinessFactor = termData.easinessFactor;
+        progressData.currTerm.daysToNextRepetition = ( termData.nextRepetitionDate.isNull() ? 0 : QDate::currentDate().daysTo( termData.nextRepetitionDate ) );
+    }
+
+    getSchedule( progressData.scheduleForDay );
+
+    ProgressDialog dialog( parent, progressData );
+    dialog.resize( 440, 330 ); 
+    dialog.show();
+    dialog.exec();
 }
 
 QString SuperMemo2Quiz::getTermDataFilename() const {

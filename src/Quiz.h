@@ -1,6 +1,7 @@
 #ifndef QUIZ_H
 #define QUIZ_H
 
+#include <qwidget.h>
 #include "Base.h"
 #include "Folder.h"
 #include "TermKey.h"
@@ -33,6 +34,8 @@ public:
     virtual int getProgress() const = 0;
     virtual int getInitialTermCount() const { return( initTermCount ); };    
     virtual int getAnswerCount() const = 0;
+
+    virtual void showProgressData( QWidget* parent );
 
 protected:
 

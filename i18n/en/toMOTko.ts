@@ -357,6 +357,26 @@ Overwrite the current assignment?</translation>
         <source>ProgressDialogCaption</source>
         <translation>Progress Details...</translation>
     </message>
+    <message>
+        <source>Property</source>
+        <translation>Property</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation>Value</translation>
+    </message>
+    <message>
+        <source>Repetition</source>
+        <translation>Repetition</translation>
+    </message>
+    <message>
+        <source>EasinessFactor</source>
+        <translation>Easiness Factor (EF)</translation>
+    </message>
+    <message>
+        <source>DaysToNextRepetition</source>
+        <translation>Day(s) until next repetition</translation>
+    </message>
 </context>
 <context>
     <name>PropertiesPanel</name>

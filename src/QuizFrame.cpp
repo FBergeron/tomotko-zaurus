@@ -661,21 +661,22 @@ void QuizFrame::toggleMaximizeComment( bool isOn ) {
 }
 
 void QuizFrame::showProgressDetails() {
-    // Temporary: dummy data for test.
-    CurrTermProgressData currTermData;
-    currTermData.repetition = 3;
-    currTermData.easinessFactor = 2.3f;
-    currTermData.daysToNextRepetition = 6;
+    controller->showQuizProgressData( parentWidget() );
+    //CurrTermProgressData currTermData;
+    //controller->getQuizCurrentTermProgressData();
+    ////currTermData.repetition = 3;
+    ////currTermData.easinessFactor = 2.3f;
+    ////currTermData.daysToNextRepetition = 6;
 
-    ProgressData progressData;
-    controller->getQuizSchedule( progressData.scheduleForDay );
-    progressData.currTerm = currTermData;
+    //ProgressData progressData;
+    //controller->getQuizSchedule( progressData.scheduleForDay );
+    //progressData.currTerm = currTermData;
 
-    ProgressDialog dialog( parentWidget(), progressData );
-    dialog.setFont( controller->getPreferences().getLabelsFont() );
-    dialog.resize( 440, 330 ); 
-    dialog.show();
-    dialog.exec();
+    //ProgressDialog dialog( parentWidget(), progressData );
+    //dialog.setFont( controller->getPreferences().getLabelsFont() );
+    //dialog.resize( 440, 330 ); 
+    //dialog.show();
+    //dialog.exec();
 
 }
 

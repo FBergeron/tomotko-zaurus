@@ -12,3 +12,7 @@ void Quiz::init( const QString& firstLanguage, const QString& testLanguage, Fold
     this->rootFolder = rootFolder;
     this->initTermCount = 0;
 }
+
+void Quiz::showProgressData( QWidget* ) {
+    // Do nothing by default.  Subclasses should override this if needed.
+}
