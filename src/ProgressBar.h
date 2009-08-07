@@ -12,7 +12,7 @@ class ProgressBar : public QProgressBar {
 public:
 
     ProgressBar( QWidget* parent, const char* name = 0 );
-
+    QSize sizeHint() const;
 
 signals:
 
@@ -21,6 +21,7 @@ signals:
 protected:
 
     void mouseReleaseEvent( QMouseEvent* evt );
+    bool setIndicator( QString & indicator, int progress, int totalSteps );
 
 };
 

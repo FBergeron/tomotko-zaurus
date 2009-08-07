@@ -266,26 +266,13 @@ void OriginalQuiz::wrongAnswer() {
 int OriginalQuiz::getProgress() const {
     if( initTermCount == 0 )
         return( 0 );
+
     int currTermCount = 0;
-    int progress = 0;
-    int parts = ( initQuizLength + 1 ) * initTermCount;
-    for( uint i = 0; i < poolCount; i++ ) {
+    for( uint i = 0; i < poolCount; i++ )
         currTermCount += termPool[ i ].count();
-        if( i >= ( poolCount - initQuizLength ) ) {
-            int incr = ( termPool[ i ].count() * ( initQuizLength + 1 - poolCount + i ) ); 
-            progress += incr;
-        }
-    }
-    for( uint i = 0; i < standbyPool.count(); i++ ) {
+    for( uint i = 0; i < standbyPool.count(); i++ )
         currTermCount += 1;
-        if( standbyPool[ i ].getPool() >= ( poolCount - initQuizLength ) ) {
-            int incr = ( initQuizLength + 1 - poolCount + standbyPool[ i ].getPool() );
-            progress += incr;
-        }
-    }
-    progress += ( initTermCount - currTermCount ) * ( parts / initTermCount );
-    int result = (int)( progress * 100 / parts );
-    return( result ); 
+    return( initTermCount - currTermCount );
 }
 
 int OriginalQuiz::getAnswerCount() const {

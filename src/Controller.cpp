@@ -54,6 +54,7 @@ bool Controller::resumeQuiz() {
 }
 
 void Controller::prepareQuiz() {
+    emit( progressReset( getInitialTermCount() ) );
     emit( progressChanged( getProgress() ) );
 }
 

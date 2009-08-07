@@ -126,6 +126,7 @@ public slots:
 
 signals:
 
+    void progressReset( int termCount );
     void progressChanged( int progress );
 
 private:

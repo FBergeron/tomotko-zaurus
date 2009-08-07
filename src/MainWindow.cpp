@@ -69,6 +69,7 @@ MainWindow::MainWindow( Controller* controller )
     pasteAction = Util::createAction( QObject::tr( "Paste" ), editpaste_xpm, this, SLOT( paste() ), CTRL + Key_V );
 
     progressBar = new ProgressBar( toolBar, "ProgressBar" );
+    connect( controller, SIGNAL( progressReset( int ) ), progressBar, SLOT( setTotalSteps( int ) ) );
     connect( controller, SIGNAL( progressChanged( int ) ), progressBar, SLOT( setProgress( int ) ) );
     connect( progressBar, SIGNAL( progressBarClicked() ), this, SLOT( showProgressDetails() ) );
     progressBar->hide();

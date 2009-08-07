@@ -209,8 +209,7 @@ void SuperMemo2Quiz::gradeAnswer( int grade ) {
 }
 
 int SuperMemo2Quiz::getProgress() const {
-    int result = ( initTermCount == 0 ? 0 : ( initTermCount - terms.count() + termsToRemove.count() ) * 100 / initTermCount );
-    return( result );
+    return( initTermCount == 0 ? 0 : initTermCount - terms.count() + termsToRemove.count() );
 }
 
 int SuperMemo2Quiz::getAnswerCount() const {
