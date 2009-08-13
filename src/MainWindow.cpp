@@ -346,6 +346,21 @@ void MainWindow::retranslateUi() {
     action[ ACTION_MAXIMIZE ]->setMenuText( tr( "Maximize" ) );
     action[ ACTION_SEARCH ]->setText( tr( "Search..." ) );
     action[ ACTION_SEARCH ]->setMenuText( tr( "Search..." ) );
+    action[ ACTION_GRADE_ANSWER_1 ]->setText( tr( "gradeAnswer1" ) );
+    action[ ACTION_GRADE_ANSWER_1 ]->setMenuText( tr( "gradeAnswer1" ) );
+    action[ ACTION_GRADE_ANSWER_2 ]->setText( tr( "gradeAnswer2" ) );
+    action[ ACTION_GRADE_ANSWER_2 ]->setMenuText( tr( "gradeAnswer2" ) );
+    action[ ACTION_GRADE_ANSWER_3 ]->setText( tr( "gradeAnswer3" ) );
+    action[ ACTION_GRADE_ANSWER_3 ]->setMenuText( tr( "gradeAnswer3" ) );
+    action[ ACTION_GRADE_ANSWER_4 ]->setText( tr( "gradeAnswer4" ) );
+    action[ ACTION_GRADE_ANSWER_4 ]->setMenuText( tr( "gradeAnswer4" ) );
+    action[ ACTION_GRADE_ANSWER_5 ]->setText( tr( "gradeAnswer5" ) );
+    action[ ACTION_GRADE_ANSWER_5 ]->setMenuText( tr( "gradeAnswer5" ) );
+    action[ ACTION_GRADE_ANSWER_6 ]->setText( tr( "gradeAnswer6" ) );
+    action[ ACTION_GRADE_ANSWER_6 ]->setMenuText( tr( "gradeAnswer6" ) );
+    action[ ACTION_SHOW_PROGRESS ]->setText( tr( "progressDetails..." ) );
+    action[ ACTION_SHOW_PROGRESS ]->setMenuText( tr( "progressDetails..." ) );
+
 
     cutAction->setText( QObject::tr( "Cut" ) );
     cutAction->setMenuText( QObject::tr( "Cut" ) );

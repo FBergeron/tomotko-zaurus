@@ -362,7 +362,7 @@ No obstante, asignar la teclea?</translation>
     </message>
     <message>
         <source>ProgressDialogCaption</source>
-        <translation>Detalles sobre la progresión</translation>
+        <translation>Detalles sobre la progresión...</translation>
     </message>
     <message>
         <source>Property</source>

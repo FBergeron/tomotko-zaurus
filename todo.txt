@@ -1,6 +1,5 @@
 ToDo
 ----
-There are some strings in Spanish that are not correct.  Don't know why.  Everything seems ok.  Look for grade answer and progress details buttons.
 The AllDone message should be different for sm2 quiz.  These messages should be defined by quiz.
 When we start a quiz, reset the form.  We should not see previous quiz's values.
 Validate marked study items separately from scheduled terms?
@@ -24,13 +23,14 @@ Most probably that dependency to Controller in VocabTreeView could be removed.  
 Refactor the code in editResultTerm() and editTerm().  The code is similar.  Maybe using signal/slot approach could work. There is a good example of that in page 18 of my Qt book for the FindDialog.
 Replace Unicode by UnicodeUTF8 when reading/writing xml files.
 Mention a note in the documentation about rightAnswer and wrongAnѕwer accelerators that, respectively do, gradeAnswer( 5 ) and gradeAnswer( 0 ).
-Would it be possible to make the fields larger (see more than 1 row) (especially or only in portrait mode). --> A first try reveals that it's not that easy.
 
 Mention in the release notes that in order to convert the data, it's required to start and quit the application right away after intalling the appliction.
 Mention in the release notes that the state of the folders (opened/closed) will be lost after upgrade.  No big deal.
 Mention in the release notes that the resumable quiz will actually not been resumable. No big deal.
 When we export on an existing file, a warning dialog need to be shown.
 Release 0.12.0
+
+
 
 Remove Vocabulary::OldTermMap
 Remove Controller::findVocabId(), Controller::findFolderId(), Controller::findParentFolderId()
@@ -75,6 +75,7 @@ Try to remove warnings caused by minizip (look here maybe : http://www.agavemoun
 When we clear an image, we should delete it if it's a relative path, once ok has been clicked.
 Make the new imported vocabulary dirty and save it immediately?  Probably not needed as the data are saved immediately on disk.  If we set it to dirty, it will be written twice needlessly.
 If an import fails, clean the mess! (previously imported images and data).
+Would it be possible to make the fields larger (see more than 1 row) (especially or only in portrait mode). --> A first try reveals that it's not that easy.
 What to do if we remove a term with an image referred by another term? If the image is an external file, we leave the image untouched.  If the image is an internal file, we should check if it's referred by any other terms in the glossary before removing it.
 Controller::initRevealingSequence() should probably be moved to TermScheduler.
 Add a checkbox to specify if the image is animated or not? Probably not needed.
