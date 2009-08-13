@@ -23,6 +23,7 @@
 #include "icons/removeItem.xpm"
 #include "icons/checkAllTerms.xpm"
 #include "icons/inverseCheckedTerms.xpm"
+#include "icons/progressDetails.xpm"
 #include "icons/gradeAnswer1.xpm"
 #include "icons/gradeAnswer2.xpm"
 #include "icons/gradeAnswer3.xpm"
@@ -138,6 +139,8 @@ MainWindow::MainWindow( Controller* controller )
         quizFrame, SLOT( gradeAnswer5() ), prefs.getAccelerator( ACTION_GRADE_ANSWER_5 ) );
     action[ ACTION_GRADE_ANSWER_6 ] = Util::createAction( tr( "gradeAnswer6" ), gradeAnswer6_xpm,
         quizFrame, SLOT( gradeAnswer6() ), prefs.getAccelerator( ACTION_GRADE_ANSWER_6 ) );
+    action[ ACTION_SHOW_PROGRESS ] = Util::createAction( tr( "progressDetails..." ), progressDetails_xpm,
+        quizFrame, SLOT( showProgressDetails() ), prefs.getAccelerator( ACTION_SHOW_PROGRESS ) );
 
     actionsMenu = new QPopupMenu( this );
     actionsMenu->setCheckable( true );
@@ -149,6 +152,7 @@ MainWindow::MainWindow( Controller* controller )
 
     showAllVocabSeparatorId = actionsMenu->insertSeparator();
     action[ ACTION_SHOW_ALL_GLOSSARIES_AND_TERMS ]->addTo( actionsMenu );
+    action[ ACTION_SHOW_PROGRESS ]->addTo( actionsMenu );
 
     actionsMenu->insertSeparator();
     action[ ACTION_IMPORT ]->addTo( actionsMenu );

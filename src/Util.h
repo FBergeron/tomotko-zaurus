@@ -53,6 +53,7 @@ enum Action {
     ACTION_GRADE_ANSWER_4,
     ACTION_GRADE_ANSWER_5,
     ACTION_GRADE_ANSWER_6,
+    ACTION_SHOW_PROGRESS,
     ACTION_COUNT
 };
 
@@ -83,7 +84,8 @@ const QString actionId[] = {
     "grade3",
     "grade4",
     "grade5",
-    "grade6"
+    "grade6",
+    "progressDetails"
 };
 
 class Util {

@@ -500,6 +500,7 @@ void Preferences::initDefaultKeyboardAccelerators() {
     defaultAccel[ ACTION_GRADE_ANSWER_4 ] = Key_4;
     defaultAccel[ ACTION_GRADE_ANSWER_5 ] = Key_5;
     defaultAccel[ ACTION_GRADE_ANSWER_6 ] = Key_6;
+    defaultAccel[ ACTION_SHOW_PROGRESS ] = CTRL + Key_Question;
 }
 
 QFont Preferences::getFont( const QString& fontFamily, uint size ) const {

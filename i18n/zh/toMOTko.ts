@@ -145,6 +145,10 @@
         <source>gradeAnswer6</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>progressDetails...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

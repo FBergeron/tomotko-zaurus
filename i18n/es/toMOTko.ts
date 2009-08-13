@@ -126,27 +126,31 @@ continuar este quiz?</translation>
     </message>
     <message>
         <source>gradeAnswer1</source>
-        <translation>Evaluar Respuesta 1</translation>
+        <translation>Evaluar respuesta 1</translation>
     </message>
     <message>
         <source>gradeAnswer2</source>
-        <translation>Evaluar Respuesta 2</translation>
+        <translation>Evaluar respuesta 2</translation>
     </message>
     <message>
         <source>gradeAnswer3</source>
-        <translation>Evaluar Respuesta 3</translation>
+        <translation>Evaluar respuesta 3</translation>
     </message>
     <message>
         <source>gradeAnswer4</source>
-        <translation>Evaluar Respuesta 4</translation>
+        <translation>Evaluar respuesta 4</translation>
     </message>
     <message>
         <source>gradeAnswer5</source>
-        <translation>Evaluar Respuesta 5</translation>
+        <translation>Evaluar respuesta 5</translation>
     </message>
     <message>
         <source>gradeAnswer6</source>
-        <translation>Evaluar Respuesta 6</translation>
+        <translation>Evaluar respuesta 6</translation>
+    </message>
+    <message>
+        <source>progressDetails...</source>
+        <translation>Detalles de progresión...</translation>
     </message>
 </context>
 <context>

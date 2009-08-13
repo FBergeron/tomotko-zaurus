@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>ShowAllGlossariesAndTerms</source>
-        <translation>Show all glossaries and terms</translation>
+        <translation>Show All Glossaries and Terms</translation>
     </message>
     <message>
         <source>AboutToMOTko...</source>
@@ -59,47 +59,47 @@
     </message>
     <message>
         <source>RightAnswer</source>
-        <translation>Right answer</translation>
+        <translation>Right Answer</translation>
     </message>
     <message>
         <source>WrongAnswer</source>
-        <translation>Wrong answer</translation>
+        <translation>Wrong Answer</translation>
     </message>
     <message>
         <source>EditQuizTerm</source>
-        <translation>Edit quiz term</translation>
+        <translation>Edit Quiz Term</translation>
     </message>
     <message>
         <source>AddFolder</source>
-        <translation>Add folder</translation>
+        <translation>Add Folder</translation>
     </message>
     <message>
         <source>AddGlossary</source>
-        <translation>Add glossary</translation>
+        <translation>Add Glossary</translation>
     </message>
     <message>
         <source>RemoveItem</source>
-        <translation>Remove item</translation>
+        <translation>Remove Item</translation>
     </message>
     <message>
         <source>AddTerm</source>
-        <translation>Add word</translation>
+        <translation>Add Word</translation>
     </message>
     <message>
         <source>EditTerm</source>
-        <translation>Edit word</translation>
+        <translation>Edit Word</translation>
     </message>
     <message>
         <source>RemoveTerm</source>
-        <translation>Remove word(s)</translation>
+        <translation>Remove Word(s)</translation>
     </message>
     <message>
         <source>CheckAllTerms</source>
-        <translation>Check all words</translation>
+        <translation>Check All Words</translation>
     </message>
     <message>
         <source>InverseCheckedTerms</source>
-        <translation>Inverse checked words</translation>
+        <translation>Inverse Checked Words</translation>
     </message>
     <message>
         <source>Maximize</source>
@@ -146,6 +146,10 @@ Do you want to resume this quiz?</translation>
     <message>
         <source>gradeAnswer6</source>
         <translation>Grade Answer 6</translation>
+    </message>
+    <message>
+        <source>progressDetails...</source>
+        <translation>Progress Details...</translation>
     </message>
 </context>
 <context>

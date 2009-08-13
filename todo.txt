@@ -1,9 +1,9 @@
 ToDo
 ----
+There are some strings in Spanish that are not correct.  Don't know why.  Everything seems ok.  Look for grade answer and progress details buttons.
 The AllDone message should be different for sm2 quiz.  These messages should be defined by quiz.
 When we start a quiz, reset the form.  We should not see previous quiz's values.
 Validate marked study items separately from scheduled terms?
-Add a menu item to invoke the progress dialog and a shortcut too.
 Disable gradeAnswer accelerators when performing a non-SM-2 quiz.
 It doesn't really make sense to have reinit() for sm2 quiz.  Maybe introduce isRestartable() property and adjust the buttons accordingly.
 Add a new set of checked items for the sm2 algo.  There should be such set for each algo.  The tree should update itself whenever we change the current algo in the prefs.  Because of that, instead of using "sm2" string in the data filenames, maybe use the integer of the enum instead.  For now, an item (term, folder or vocab) has a boolean state for markedForStudy or not.  Either we pass a algo param to isMarkedForStudy() and setMarkedForStudy() or we keep a dissociate data structure that will keep the info for each algo.  I think the second approach is cleaner (design point of view) because it keeps the items uncoupled with algo. But the first approach seems easier.  The data structure should probably be located in the Prefs.  No need to save marked.dat.z if so.  By default, the set of checked items should be the same than the original one?  Or maybe not because what will we do if we add another algo... Maybe an empty selection is better.  Not sure that it's really needed.

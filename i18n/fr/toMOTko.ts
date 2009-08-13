@@ -147,6 +147,10 @@ Voulez-vous continuer ce quiz?</translation>
         <source>gradeAnswer6</source>
         <translation>Évaluer réponse 6</translation>
     </message>
+    <message>
+        <source>progressDetails...</source>
+        <translation>Détails de progression...</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
