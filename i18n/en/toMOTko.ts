@@ -151,6 +151,14 @@ Do you want to resume this quiz?</translation>
         <source>progressDetails...</source>
         <translation>Progress Details...</translation>
     </message>
+    <message>
+        <source>EF: %1</source>
+        <translation>EF: %1</translation>
+    </message>
+    <message>
+        <source>NR: %1 day(s)</source>
+        <translation>NR: %1 day(s)</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

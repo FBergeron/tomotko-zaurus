@@ -1,5 +1,10 @@
 ToDo
 ----
+Bug: The question: do you want to resume quiz is not asked anymore for original quiz.
+Bug: Fix the location column in Search Dialog.  Sometimes (or always), it's empty.
+Bug: Fix the last column width in the properties panel.
+Init the quizframe to blank when starting a new quiz.
+The termData should dissociated from quiz somehow.  For example, move Quiz::getCurrentTermEasinessFactor() to something like getEasinessFactor( term ) or term.getEasinessFactor().  Probably the first one is better, I think.
 The AllDone message should be different for sm2 quiz.  These messages should be defined by quiz.
 When we start a quiz, reset the form.  We should not see previous quiz's values.
 Validate marked study items separately from scheduled terms?
@@ -31,7 +36,7 @@ When we export on an existing file, a warning dialog need to be shown.
 Release 0.12.0
 
 
-
+Implement a download glossary from website feature in the Glossary Manager. Same thing for upload(?)
 Remove Vocabulary::OldTermMap
 Remove Controller::findVocabId(), Controller::findFolderId(), Controller::findParentFolderId()
 Remove numerical id for Term, Vocabulary and Folder as GUID are now used.
@@ -44,6 +49,7 @@ Try again to render a dash-umlaut.  Try it on the zaurus as the rendering bug ma
 
 Implement Unicode character plugin.
 Try to use pictureflow (http://code.google.com/p/pictureflow/).
+Use signal/slot for language selection.  I think it would be cleaner to have a localeChanged( const QString& ) signal. Same thing for driving quiz maybe.
 
 Release 0.13.0
 

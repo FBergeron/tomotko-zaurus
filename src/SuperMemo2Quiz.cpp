@@ -179,17 +179,21 @@ const TermKey SuperMemo2Quiz::getNextTerm() {
     return( terms[ currTermIndex ] );
 }
 
+int SuperMemo2Quiz::getNextInterval( int interval, float easinessFactor, int repetition ) const {
+    if( repetition == 0 )
+        return( 1 );
+    else if( repetition == 1 )
+        return( 6 );
+    else 
+        return( (int)( ( interval * easinessFactor ) + 0.5 ) ); // (int) ( val + 0.5) to round up the value.
+}
+
 void SuperMemo2Quiz::gradeAnswer( int grade ) {
     TermKey currTerm = terms[ currTermIndex ];
     TermData termData = getTermData( currTerm.getTermUid().toString() );
     cerr << "TermData before: repetition=" << termData.repetition << " interval=" << termData.interval << " EF=" << termData.easinessFactor << " nextRepDate=" << ( termData.nextRepetitionDate.isNull() ? QString( "null" ) : termData.nextRepetitionDate.toString() ) << endl;
     if( grade >= 3 ) {
-        if( termData.repetition == 0 )
-            termData.interval = 1;
-        else if( termData.repetition == 1 )
-            termData.interval = 6;
-        else 
-            termData.interval = (int)( ( termData.interval * termData.easinessFactor ) + 0.5 ); // (int) ( val + 0.5) to round up the value.
+        termData.interval = getNextInterval( termData.interval, termData.easinessFactor, termData.repetition );
         termData.repetition++;
         termData.nextRepetitionDate = QDate::currentDate().addDays( termData.interval );
 
@@ -234,6 +238,27 @@ void SuperMemo2Quiz::showProgressData( QWidget* parent ) {
     dialog.resize( 440, 330 ); 
     dialog.show();
     dialog.exec();
+}
+
+float SuperMemo2Quiz::getCurrentTermEasinessFactor() {
+    TermKey currTermKey = getCurrentTerm();
+    if( !currTermKey.isNull() ) {
+        TermData termData = getTermData( currTermKey.getTermUid().toString() );
+        return( termData.easinessFactor );
+    }
+
+    return( Quiz::getCurrentTermEasinessFactor() );
+}
+
+int SuperMemo2Quiz::getCurrentTermNextRepetition() {
+    TermKey currTermKey = getCurrentTerm();
+    if( !currTermKey.isNull() ) {
+        TermData termData = getTermData( currTermKey.getTermUid().toString() );
+        int nextInterval = getNextInterval( termData.interval, termData.easinessFactor, termData.repetition );
+        return( nextInterval );
+    }
+
+    return( Quiz::getCurrentTermNextRepetition() );
 }
 
 QString SuperMemo2Quiz::getTermDataFilename() const {

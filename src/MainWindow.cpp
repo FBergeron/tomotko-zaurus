@@ -69,12 +69,29 @@ MainWindow::MainWindow( Controller* controller )
     cutAction = Util::createAction( QObject::tr( "Cut" ), editcut_xpm, this, SLOT( cut() ), CTRL + Key_X );
     pasteAction = Util::createAction( QObject::tr( "Paste" ), editpaste_xpm, this, SLOT( paste() ), CTRL + Key_V );
 
-    progressBar = new ProgressBar( toolBar, "ProgressBar" );
+    quizStatusPanel = new QWidget( toolBar, "QuizStatusPanel" );
+    quizStatusPanelLayout = new QHBoxLayout( quizStatusPanel );
+    quizStatusPanelLayout->setSpacing( 2 );
+    quizStatusPanel->hide();
+
+    easinessFactorLabel = new QLabel( quizStatusPanel, "EasinessFactorLabel" );
+    easinessFactorLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+
+    nextRepetitionLabel = new QLabel( quizStatusPanel, "NextRepetitionLabel" );
+    nextRepetitionLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+
+    progressBar = new ProgressBar( quizStatusPanel, "ProgressBar" );
+    progressBar->setFrameStyle( QFrame::Panel | QFrame::Sunken );
     connect( controller, SIGNAL( progressReset( int ) ), progressBar, SLOT( setTotalSteps( int ) ) );
     connect( controller, SIGNAL( progressChanged( int ) ), progressBar, SLOT( setProgress( int ) ) );
-    connect( progressBar, SIGNAL( progressBarClicked() ), this, SLOT( showProgressDetails() ) );
-    progressBar->hide();
     progressBar->setCenterIndicator( true );
+
+    easinessFactorLabel->setMaximumHeight( progressBar->sizeHint().height() );
+    nextRepetitionLabel->setMaximumHeight( progressBar->sizeHint().height() );
+
+    quizStatusPanelLayout->addWidget( easinessFactorLabel );
+    quizStatusPanelLayout->addWidget( nextRepetitionLabel );
+    quizStatusPanelLayout->addWidget( progressBar );
 
     setIcon( Resource::loadPixmap( QString( "toMOTko" ) ) ); 
 
@@ -226,11 +243,13 @@ MainWindow::MainWindow( Controller* controller )
             langAction->setOn( true );
     }
     
-    connect( quizFrame, SIGNAL( quizShown() ), progressBar, SLOT( show() ) );
+    connect( quizFrame, SIGNAL( quizShown() ), quizStatusPanel, SLOT( show() ) );
     connect( quizFrame, SIGNAL( quizShown() ), languageSelectorPanel, SLOT( hide() ) );
-    connect( quizFrame, SIGNAL( quizHidden() ), progressBar, SLOT( hide() ) );
+    connect( quizFrame, SIGNAL( quizHidden() ), quizStatusPanel, SLOT( hide() ) );
     connect( quizFrame, SIGNAL( quizHidden() ), languageSelectorPanel, SLOT( show() ) );
     connect( quizFrame, SIGNAL( quizHidden() ), control, SLOT( concludeQuiz() ) );
+    connect( quizFrame, SIGNAL( easinessFactorChanged( const float& ) ), this, SLOT( updateEasinessFactor( const float& ) ) );
+    connect( quizFrame, SIGNAL( nextRepetitionChanged( const int& ) ), this, SLOT( updateNextRepetition( const int& ) ) );
 
     mainPanel->addWidget( quizFrame, frameQuizIndex );
     mainPanel->addWidget( vocabManagerFrame, frameVocabManagerIndex );
@@ -284,6 +303,8 @@ void MainWindow::updateFonts() {
     qApp->setFont( labelsFont );
     firstLanguageComboBox->setFont( labelsFont );
     testLanguageComboBox->setFont( labelsFont );
+    easinessFactorLabel->setFont( labelsFont );
+    nextRepetitionLabel->setFont( labelsFont );
     progressBar->setFont( labelsFont );
 
     quizFrame->updateFonts();
@@ -361,7 +382,6 @@ void MainWindow::retranslateUi() {
     action[ ACTION_SHOW_PROGRESS ]->setText( tr( "progressDetails..." ) );
     action[ ACTION_SHOW_PROGRESS ]->setMenuText( tr( "progressDetails..." ) );
 
-
     cutAction->setText( QObject::tr( "Cut" ) );
     cutAction->setMenuText( QObject::tr( "Cut" ) );
     copyAction->setText( QObject::tr( "Copy" ) );
@@ -370,7 +390,10 @@ void MainWindow::retranslateUi() {
     pasteAction->setMenuText( QObject::tr( "Paste" ) );
 
     helpMenu->changeItem( helpMenu->idAt( 0 ), tr( "About..." ) );
-    
+
+    updateEasinessFactor( control->getQuizCurrentTermEasinessFactor() );
+    updateNextRepetition( control->getQuizCurrentTermNextRepetition() );
+
     updateFirstLanguageValues();
     updateTestLanguageValues();
 
@@ -400,6 +423,22 @@ void MainWindow::search() {
 void MainWindow::showProgressDetails() {
     if( mainPanel->visibleWidget() == quizFrame )
         quizFrame->showProgressDetails();
+}
+
+void MainWindow::updateEasinessFactor( const float& easinessFactor ) {
+    easinessFactorLabel->setText( tr( "EF: %1" ).arg( easinessFactor ) );
+    if( easinessFactor == 0.0f )
+        easinessFactorLabel->hide();
+    else
+        easinessFactorLabel->show();
+}
+
+void MainWindow::updateNextRepetition( const int& nextRepetition ) {
+    nextRepetitionLabel->setText( tr( "NR: %1 day(s)" ).arg( nextRepetition ) );
+    if( nextRepetition == 0 )
+        nextRepetitionLabel->hide();
+    else
+        nextRepetitionLabel->show();
 }
 
 void MainWindow::switchLanguage( QAction* langAction ) {

@@ -350,6 +350,12 @@ void QuizFrame::askTerm( const Term& term ) {
     hideAnswers();
     controller->initRevealingSequence();
     setTerm( term );
+
+    float easinessFactor = controller->getQuizCurrentTermEasinessFactor();
+    int nextRepetition = controller->getQuizCurrentTermNextRepetition();
+
+    emit( easinessFactorChanged( easinessFactor ) );
+    emit( nextRepetitionChanged ( nextRepetition ) );
     reveal();
     setButtonsEnabled( true );
 }

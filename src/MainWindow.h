@@ -65,6 +65,8 @@ public slots:
     void toggleMaximize( bool isOn ); 
     void search();
     void showProgressDetails();
+    void updateEasinessFactor( const float& easinessFactor );
+    void updateNextRepetition( const int& nextRepetition );
 
 protected:
 
@@ -125,6 +127,10 @@ private:
     QLabel*                 languageSelectorLabel;
     QComboBox*              testLanguageComboBox;
 
+    QWidget*                quizStatusPanel;
+    QHBoxLayout*            quizStatusPanelLayout;
+    QLabel*                 easinessFactorLabel;
+    QLabel*                 nextRepetitionLabel;
     QProgressBar*           progressBar;
 
     QPopupMenu*             editionMenu;

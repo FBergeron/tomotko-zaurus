@@ -36,6 +36,8 @@ public:
     virtual int getAnswerCount() const = 0;
 
     virtual void showProgressData( QWidget* parent );
+    virtual float getCurrentTermEasinessFactor();
+    virtual int getCurrentTermNextRepetition();
 
 protected:
 

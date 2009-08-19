@@ -149,6 +149,14 @@
         <source>progressDetails...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>EF: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NR: %1 day(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

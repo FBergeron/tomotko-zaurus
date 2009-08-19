@@ -80,6 +80,8 @@ signals:
 
     void quizShown();
     void quizHidden();
+    void easinessFactorChanged( const float& );
+    void nextRepetitionChanged( const int& );
 
 private slots:
 

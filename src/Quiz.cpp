@@ -16,3 +16,13 @@ void Quiz::init( const QString& firstLanguage, const QString& testLanguage, Fold
 void Quiz::showProgressData( QWidget* ) {
     // Do nothing by default.  Subclasses should override this if needed.
 }
+
+float Quiz::getCurrentTermEasinessFactor() {
+    // Returns zero EF by default.  Subclasses should override this if needed.
+    return( 0.0f );
+}
+
+int Quiz::getCurrentTermNextRepetition() {
+    // Returns zero value by default.  Subclasses should override this if needed.
+    return( 0 );
+}

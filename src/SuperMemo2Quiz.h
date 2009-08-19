@@ -53,6 +53,8 @@ public:
     int getAnswerCount() const;
 
     void showProgressData( QWidget* parent );
+    float getCurrentTermEasinessFactor();
+    int getCurrentTermNextRepetition();
 
 private:
 
@@ -66,6 +68,8 @@ private:
 
     TermData getTermData( const QString& termUid );
     void setTermData( const QString& termUid, const TermData& termData );
+
+    int getNextInterval( int interval, float easinessFactor, int repetition ) const;
 
     bool loadTermData();
     bool saveTermData() const;

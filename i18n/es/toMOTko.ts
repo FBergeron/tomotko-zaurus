@@ -152,6 +152,14 @@ continuar este quiz?</translation>
         <source>progressDetails...</source>
         <translation>Detalles de progresión...</translation>
     </message>
+    <message>
+        <source>EF: %1</source>
+        <translation>FF: %1</translation>
+    </message>
+    <message>
+        <source>NR: %1 day(s)</source>
+        <translation>PR: %1 dia(s)</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>
