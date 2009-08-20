@@ -462,6 +462,7 @@ void MainWindow::startQuiz() {
     if( mainPanel->visibleWidget() == quizFrame ) 
         quizFrame->restartQuiz();
     else {
+        control->initQuiz();
         bool resumeQuiz = false;
         if( control->isResumableQuizAvailable() ) {
             QMessageBox msgBox( QObject::tr( "Information" ), tr( "ConfirmResumeQuiz" ),

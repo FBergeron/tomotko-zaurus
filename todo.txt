@@ -1,6 +1,5 @@
 ToDo
 ----
-Bug: The question: do you want to resume quiz is not asked anymore for original quiz.
 Bug: Fix the location column in Search Dialog.  Sometimes (or always), it's empty.
 Bug: Fix the last column width in the properties panel.
 Init the quizframe to blank when starting a new quiz.

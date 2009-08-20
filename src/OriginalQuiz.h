@@ -66,8 +66,6 @@ private:
     int                     currTermPool;
     TermKey                 currTerm;
 
-    QString                 applDir;
-
     friend QDataStream& operator<<( QDataStream& out, const OriginalQuiz& quiz );
     friend QDataStream& operator>>( QDataStream& in, OriginalQuiz& quiz );
 

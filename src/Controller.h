@@ -47,6 +47,7 @@ public:
 
     Folder* getVocabTree();
 
+    void initQuiz();
     void startQuiz();
     void restartQuiz();
     bool isResumableQuizAvailable();

@@ -31,13 +31,16 @@ Folder* Controller::getVocabTree() {
     return( vocabTree );
 }
 
-void Controller::startQuiz() {
+void Controller::initQuiz() {
     switch( getPreferences().getQuizAlgorithm() ) {
         case Preferences::ORIGINAL   : quiz = new OriginalQuiz( applicationDirName, getPreferences().getQuizLength() ); break;
         case Preferences::SUPERMEMO2 : quiz = new SuperMemo2Quiz( applicationDirName ); break;
     }
     if( quiz )
         quiz->init( getPreferences().getFirstLanguage(), getPreferences().getTestLanguage(), vocabTree );
+}
+
+void Controller::startQuiz() {
 }
 
 void Controller::restartQuiz() {
