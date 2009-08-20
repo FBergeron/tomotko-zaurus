@@ -52,7 +52,7 @@ bool Controller::isResumableQuizAvailable() {
     return( quiz ? quiz->isResumable() : false );
 }
 
-bool Controller::resumeQuiz() {
+bool Controller::loadQuiz() {
     return( quiz ? quiz->load() : false );
 }
 

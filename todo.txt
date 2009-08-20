@@ -1,9 +1,12 @@
 ToDo
 ----
+When no terms are selected in a Quiz, instead of showing the quiz and then display an error message, just display a error message.
 Bug: Fix the location column in Search Dialog.  Sometimes (or always), it's empty.
 Bug: Fix the last column width in the properties panel.
 Init the quizframe to blank when starting a new quiz.
 The termData should dissociated from quiz somehow.  For example, move Quiz::getCurrentTermEasinessFactor() to something like getEasinessFactor( term ) or term.getEasinessFactor().  Probably the first one is better, I think.
+Maybe show the repetition count too in the top of the QuizFrame for sm-2.
+Maybe add a preference option to show/hide the sm-2 quiz info at the top.
 The AllDone message should be different for sm2 quiz.  These messages should be defined by quiz.
 When we start a quiz, reset the form.  We should not see previous quiz's values.
 Validate marked study items separately from scheduled terms?

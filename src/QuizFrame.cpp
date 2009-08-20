@@ -231,13 +231,26 @@ void QuizFrame::buildAnswerButtons() {
 QuizFrame::~QuizFrame() {
 }
 
-void QuizFrame::startQuiz() {
-    controller->startQuiz();
-    controller->prepareQuiz();
-    initAnswerButtons();
+void QuizFrame::reset() {
     setButtonsEnabled( false );
+    hideAnswers();
+    firstLangTermLineEdit->clear();
+    testLangTermAltLineEdit->clear();
+    testLangTermLineEdit->clear();
+    commentMultiLineEdit->clear();
+}
+
+void QuizFrame::setup() {
+    initAnswerButtons();
     updateLanguageLabels();
     updateFonts();
+}
+
+void QuizFrame::startQuiz() {
+    setup();
+    reset();
+    controller->startQuiz();
+    controller->prepareQuiz();
 
     if( !controller->isQuizInProgress() ) {
         switch( controller->getQuizAlgorithm() ) {
@@ -272,14 +285,11 @@ void QuizFrame::restartQuiz() {
     askNextTerm();
 }
 
-bool QuizFrame::resumeQuiz() {
-    if( !controller->resumeQuiz() )
-        return( false );
+void QuizFrame::resumeQuiz() {
     controller->prepareQuiz();
     updateLanguageLabels();
     updateFonts();
     askCurrentTerm();
-    return( true );
 }
 
 void QuizFrame::setTerm( const Term& term ) {

@@ -51,7 +51,7 @@ public:
     void startQuiz();
     void restartQuiz();
     bool isResumableQuizAvailable();
-    bool resumeQuiz();
+    bool loadQuiz();
     void prepareQuiz();
     int getQuizAnswerCount() const;
     void showQuizProgressData( QWidget* parent ) const;

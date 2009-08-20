@@ -44,9 +44,11 @@ public:
     QuizFrame( Controller* controller, QWidget* parent = 0, const char* name = 0 );
     ~QuizFrame();
 
+    void setup();
+    void reset();
     void startQuiz();
     void restartQuiz();
-    bool resumeQuiz();
+    void resumeQuiz();
     void setTerm( const Term& term );
     void concludeQuiz();
     Term* askCurrentTerm();

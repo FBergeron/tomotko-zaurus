@@ -476,12 +476,16 @@ void MainWindow::startQuiz() {
         
             int response = msgBox.exec();
             resumeQuiz = ( response == QMessageBox::Yes );
+            if( resumeQuiz ) {
+                if( !control->loadQuiz() ) {
+                    QMessageBox::warning( this, QObject::tr( "Error" ), QObject::tr( "CannotResumeQuiz" ) );
+                    return;
+                }
+            }
         }
         showQuiz();
-        if( resumeQuiz ) {
-            if( !quizFrame->resumeQuiz() )
-                QMessageBox::warning( this, QObject::tr( "Error" ), QObject::tr( "CannotResumeQuiz" ) );
-        }
+        if( resumeQuiz )
+            quizFrame->resumeQuiz();
         else
             quizFrame->startQuiz();
     }
