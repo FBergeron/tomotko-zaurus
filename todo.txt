@@ -1,6 +1,7 @@
 ToDo
 ----
-When no terms are selected in a Quiz, instead of showing the quiz and then display an error message, just display a error message.
+Handle NoTermsMarkedForStudy and NoTermsScheduledForStudy separately.  Improve the message too.  Should mention that we need to select parents folders and glossaries too.
+Add a Help menu item as in qt4.  It's redundant but helpful.
 Bug: Fix the location column in Search Dialog.  Sometimes (or always), it's empty.
 Bug: Fix the last column width in the properties panel.
 Init the quizframe to blank when starting a new quiz.

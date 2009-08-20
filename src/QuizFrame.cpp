@@ -249,7 +249,6 @@ void QuizFrame::setup() {
 void QuizFrame::startQuiz() {
     setup();
     reset();
-    controller->startQuiz();
     controller->prepareQuiz();
 
     if( !controller->isQuizInProgress() ) {

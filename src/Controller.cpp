@@ -40,9 +40,6 @@ void Controller::initQuiz() {
         quiz->init( getPreferences().getFirstLanguage(), getPreferences().getTestLanguage(), vocabTree );
 }
 
-void Controller::startQuiz() {
-}
-
 void Controller::restartQuiz() {
     if( quiz )
         quiz->reinit();

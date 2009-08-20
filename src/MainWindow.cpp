@@ -483,6 +483,23 @@ void MainWindow::startQuiz() {
                 }
             }
         }
+        cout << "inprogress=" << control->isQuizInProgress() << endl;
+
+        if( !control->isQuizInProgress() ) {
+            switch( control->getQuizAlgorithm() ) {
+
+                case Preferences::ORIGINAL :
+                    QMessageBox::warning( this, QObject::tr( "Information" ), tr( "NoTermsMarkedForStudy" ) );
+                    break;
+
+                case Preferences::SUPERMEMO2 :
+                    QMessageBox::warning( this, QObject::tr( "Information" ), tr( "NoTermsScheduledForStudy" ) );
+                    break;
+
+            }
+            return;
+        }
+
         showQuiz();
         if( resumeQuiz )
             quizFrame->resumeQuiz();
