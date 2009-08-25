@@ -22,6 +22,7 @@
 #include <qvgroupbox.h>
 #include <qwidgetstack.h>
 #include <qpe/resource.h>
+#include "CharacterDialog.h"
 #include "Controller.h"
 #include "GradeButton.h"
 #include "ImageBox.h"
@@ -77,6 +78,7 @@ public slots:
     void toggleMaximizeComment( bool isOn );
 
     void showProgressDetails();
+    void showCharacter( const QChar& character, const QPoint& position );
 
 signals:
 

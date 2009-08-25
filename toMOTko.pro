@@ -19,6 +19,7 @@ HEADERS += src/Base.h \
            src/Sequence.h \
            src/Preferences.h \
            src/PropertiesPanel.h \
+           src/CharacterDialog.h \
            src/TermDialog.h \
            src/TranslationSelectionDialog.h \
            src/ResultListItem.h \
@@ -73,6 +74,7 @@ SOURCES += src/Util.cpp \
            src/Sequence.cpp \
            src/Preferences.cpp \
            src/PropertiesPanel.cpp \
+           src/CharacterDialog.cpp \
            src/TermDialog.cpp \
            src/TranslationSelectionDialog.cpp \
            src/ResultListItem.cpp \

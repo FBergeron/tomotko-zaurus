@@ -483,7 +483,6 @@ void MainWindow::startQuiz() {
                 }
             }
         }
-        cout << "inprogress=" << control->isQuizInProgress() << endl;
 
         if( !control->isQuizInProgress() ) {
             switch( control->getQuizAlgorithm() ) {

@@ -65,6 +65,7 @@ void QuizFrame::init() {
     firstLangTermLineEdit = new ScrollableLineEdit( firstLangTermStack, "FirstLangTermLineEdit" );
     firstLangTermLineEdit->setReadOnly( true );
     firstLangTermLineEdit->installEventFilter( this );
+    connect( firstLangTermLineEdit, SIGNAL( characterClicked( const QChar&, const QPoint& ) ), this, SLOT( showCharacter( const QChar&, const QPoint& ) ) );  
     firstLangTermButton = new QPushButton( tr( "???" ), firstLangTermStack, "FirstLangTermButton" );
     firstLangTermButton->installEventFilter( this );
     QToolTip::add( firstLangTermStack, tr( "Reveal" ) );
@@ -91,6 +92,7 @@ void QuizFrame::init() {
     testLangTermAltLineEdit = new ScrollableLineEdit( testLangTermAltStack, "TestLangTermAltLineEdit" );
     testLangTermAltLineEdit->setReadOnly( true );
     testLangTermAltLineEdit->installEventFilter( this );
+    connect( testLangTermAltLineEdit, SIGNAL( characterClicked( const QChar&, const QPoint& ) ), this, SLOT( showCharacter( const QChar&, const QPoint& ) ) );  
     testLangTermAltButton = new QPushButton( tr( "???" ), testLangTermAltStack, "TestLangTermAltButton" );
     testLangTermAltStack->installEventFilter( this );
     QToolTip::add( testLangTermAltButton, tr( "Reveal" ) );
@@ -103,6 +105,7 @@ void QuizFrame::init() {
     testLangTermLineEdit = new ScrollableLineEdit( testLangTermStack, "TestLangTermLineEdit" );
     testLangTermLineEdit->setReadOnly( true );
     testLangTermLineEdit->installEventFilter( this );
+    connect( testLangTermLineEdit, SIGNAL( characterClicked( const QChar&, const QPoint& ) ), this, SLOT( showCharacter( const QChar&, const QPoint& ) ) );  
     testLangTermButton = new QPushButton( tr( "???" ), testLangTermStack, "TestLangTermButton" );
     testLangTermStack->installEventFilter( this );
     QToolTip::add( testLangTermButton, tr( "Reveal" ) );
@@ -693,6 +696,20 @@ void QuizFrame::showProgressDetails() {
     //dialog.show();
     //dialog.exec();
 
+}
+
+void QuizFrame::showCharacter( const QChar& character, const QPoint& position ) {
+    // We need to compute the imageFile.
+    QString imageFile = "/home/fred/Documents/Image_Files/Kanjis/" + Util::fromUnicodeToUtf8( character.unicode() ) + ".gif";
+    //QString imageFile = "/home/zaurus/Documents/Kanji_Files/" + Util::fromUnicodeToUtf8( character.unicode() ) + ".gif";
+    QFileInfo info( imageFile );
+    if( !info.exists() )
+        return;
+
+    CharacterDialog dialog( this, imageFile );
+    dialog.resize( 140, 220 );
+    dialog.show();
+    dialog.exec();
 }
 
 bool QuizFrame::isFirstLangTermRevealed() const {

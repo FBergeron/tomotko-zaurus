@@ -476,3 +476,19 @@ QByteArray Util::qUncompress( const QByteArray& byteArray ) {
 
     return baunzip;
 }
+
+QString Util::fromUnicodeToUtf8( ushort unicode ) {
+    if( unicode <= 0x7f )
+        return( QString::number( unicode, 16 ) );
+    else if( unicode <= 0x07ff ) {
+        ushort secondByte = 0x80 | ( unicode & 0x3f );
+        ushort firstByte = 0xc0 | ( unicode >> 6 );
+        return( QString::number( firstByte, 16 ) + QString::number( secondByte, 16 ) );
+    }
+    else {
+        ushort thirdByte = ( unicode & 0x3f ) | 0x80;
+        ushort secondByte = ( ( unicode >> 6 ) & 0x3f ) | 0x80;
+        ushort firstByte = ( ( unicode >> 12 ) & 0x0f ) | 0xe0;
+        return( QString::number( firstByte, 16 ) + QString::number( secondByte, 16 ) + QString::number( thirdByte, 16 ) );
+    }
+}

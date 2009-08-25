@@ -1057,7 +1057,12 @@ void ScrollableLineEdit::mouseReleaseEvent( QMouseEvent * e )
     int m1 = markDrag;
     newMark( mousePos, FALSE );
     repaintArea( m1, mousePos );
+    int ncp = xPosToCursorPos( e->pos().x() );
+    const QChar& c = text().at( ncp );
+    emit( characterClicked( c, e->pos() ) );
 }
+
+
 
 
 /*!\reimp

@@ -117,6 +117,8 @@ public:
     static QByteArray qCompress( const QByteArray& byteArray, int compressionLevel = -1 ); 
     static QByteArray qUncompress( const QByteArray& byteArray );
 
+    static QString fromUnicodeToUtf8( ushort unicode );
+
 private:
 
     static QMap<QString, QString>* digraphMap; 

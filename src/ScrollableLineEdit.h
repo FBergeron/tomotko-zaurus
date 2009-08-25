@@ -164,6 +164,7 @@ public slots:
 signals:
     void    textChanged( const QString &);
     void    returnPressed();
+    void    characterClicked( const QChar&, const QPoint& );
 
 protected:
     bool    event( QEvent * );
