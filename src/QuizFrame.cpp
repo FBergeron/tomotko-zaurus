@@ -145,6 +145,7 @@ void QuizFrame::init() {
     commentMultiLineEdit->setWordWrap( QMultiLineEdit::WidgetWidth );
     commentMultiLineEdit->setReadOnly( true );
     commentMultiLineEdit->installEventFilter( this );
+    connect( commentMultiLineEdit, SIGNAL( characterClicked( const QChar&, const QPoint& ) ), this, SLOT( showCharacter( const QChar&, const QPoint& ) ) );  
     commentButton = new QPushButton( tr( "???" ), commentStack, "TestLangCommentButton" );
     commentButton->installEventFilter( this );
     QToolTip::add( commentButton, tr( "Reveal" ) );

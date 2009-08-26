@@ -22,3 +22,11 @@ void ScrollableMultiLineEdit::scrollPageUp() {
 void ScrollableMultiLineEdit::scrollPageDown() {
     pageDown();
 }
+
+void ScrollableMultiLineEdit::mouseReleaseEvent( QMouseEvent* e ) {
+    int line;
+    int column;
+    getCursorPosition( &line, &column );
+    const QChar& c = textLine( line ).at( column );
+    emit( characterClicked( c, e->pos() ) );
+}

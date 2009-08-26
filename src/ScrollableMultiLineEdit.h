@@ -15,11 +15,18 @@ public:
 
 public slots:
 
-
     void scrollUp();
     void scrollDown();
     void scrollPageUp();
     void scrollPageDown();
+
+signals:
+
+    void characterClicked( const QChar&, const QPoint& );
+
+protected:
+
+    void mouseReleaseEvent( QMouseEvent * );
 
 };
 
