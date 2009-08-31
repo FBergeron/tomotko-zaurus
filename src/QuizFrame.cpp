@@ -699,16 +699,15 @@ void QuizFrame::showProgressDetails() {
 
 }
 
-void QuizFrame::showCharacter( const QChar& character, const QPoint& position ) {
+void QuizFrame::showCharacter( const QChar& character, const QPoint& /*position*/ ) {
     // We need to compute the imageFile.
-    QString imageFile = "/home/fred/Documents/Image_Files/Kanjis/" + Util::fromUnicodeToUtf8( character.unicode() ) + ".gif";
-    //QString imageFile = "/home/zaurus/Documents/Kanji_Files/" + Util::fromUnicodeToUtf8( character.unicode() ) + ".gif";
+    //QString imageFile = "/home/fred/Documents/Image_Files/Kanjis/" + Util::fromUnicodeToUtf8( character.unicode() ) + ".gif";
+    QString imageFile = "/home/zaurus/Documents/Kanji_Files/" + Util::fromUnicodeToUtf8( character.unicode() ) + ".gif";
     QFileInfo info( imageFile );
     if( !info.exists() )
         return;
 
-    CharacterDialog dialog( this, imageFile );
-    dialog.resize( 140, 220 );
+    CharacterDialog dialog( this, imageFile, true );
     dialog.show();
     dialog.exec();
 }

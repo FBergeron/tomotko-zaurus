@@ -1,7 +1,11 @@
 ToDo
 ----
+If I want to have resizable animated movie for CharacterDialog, check this link: http://doc.trolltech.com/3.3/movies-example.html#x498
+Implement backward button if possible.
+Solidify movieResized().    
+Instead, the approach I will try is to use scaleToFit to false and scale it myself.
 Handle NoTermsMarkedForStudy and NoTermsScheduledForStudy separately.  Improve the message too.  Should mention that we need to select parents folders and glossaries too.
-Add a Help menu item as in qt4.  It's redundant but helpful.
+Add a Help menu item as in qt4.  It's redundant but helpful.  (To be confirmed)
 Bug: Fix the location column in Search Dialog.  Sometimes (or always), it's empty.
 Bug: Fix the last column width in the properties panel.
 Init the quizframe to blank when starting a new quiz.
