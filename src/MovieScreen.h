@@ -46,6 +46,8 @@ private:
 
     QSize           preferredSize;
 
+    int             previousFrameNumber;
+
 };
 
 #endif

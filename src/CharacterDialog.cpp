@@ -8,11 +8,8 @@ CharacterDialog::CharacterDialog( QWidget* parent, const QString& imageFile, boo
     mainLayout = new QVBoxLayout( this );
 
     if( isAnimated ) {
-        cerr << 1 << endl;
         moviePlayer = new MoviePlayer( this, imageFile );
-        cerr << 2 << endl;
         mainLayout->addWidget( moviePlayer );
-        cerr << 3 << endl;
     }
     else {
         QPixmap image( imageFile );
@@ -22,7 +19,6 @@ CharacterDialog::CharacterDialog( QWidget* parent, const QString& imageFile, boo
     }
 
     mainLayout->activate();
-    cerr << 4 << endl;
 }
 
 CharacterDialog::~CharacterDialog() {
