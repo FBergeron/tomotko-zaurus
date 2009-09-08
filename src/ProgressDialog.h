@@ -5,6 +5,7 @@
 #include <qdialog.h>
 #include <qlayout.h>
 #include <qpainter.h>
+#include <qslider.h>
 #include <qtabwidget.h>
 #include "Progress.h"
 #include "Schedule.h"
@@ -22,7 +23,7 @@ public:
 public slots:
 
 private slots:
-    
+
 private:
 
     void init();
@@ -32,9 +33,13 @@ private:
     QVBoxLayout*            mainLayout;
     QTabWidget*             tab;
 
-    Schedule*               scheduleTab;
+    QWidget*                scheduleTab;
+    QVBoxLayout*            scheduleTabLayout;
     QWidget*                currTermTab;
     QVBoxLayout*            currTermTabLayout;
+
+    Schedule*               schedule;
+    QSlider*                scheduleSlider;
 
     SmartListView*          currTermInfo;
 

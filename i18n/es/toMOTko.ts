@@ -705,7 +705,7 @@ por los idiomas selectionados.</translation>
     </message>
     <message>
         <source>NumberOfTermsScheduled</source>
-        <translation>Número de palabras a estudiar esta semana</translation>
+        <translation>Número de palabras a estudiar por los proximas dias.</translation>
     </message>
 </context>
 <context>

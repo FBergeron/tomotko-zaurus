@@ -14,7 +14,7 @@ struct CurrTermProgressData {
     int     daysToNextRepetition;
 };
 
-const int scheduleLength = 7; // In days.
+const int scheduleLength = 28; // In days.
 
 struct ProgressData {
     

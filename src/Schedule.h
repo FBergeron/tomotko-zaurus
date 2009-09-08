@@ -19,6 +19,8 @@ public:
 
 public slots:
 
+    void setInterval( int weeks );
+
 private slots:
 
 protected:
@@ -28,6 +30,7 @@ protected:
 private:
 
     const int* termsForDay;
+    int interval; // In weeks.
 
 };
 

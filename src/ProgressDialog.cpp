@@ -16,7 +16,14 @@ void ProgressDialog::init() {
     if( isDataForCurrTermAvailable )
         tab = new QTabWidget( this );
 
-    scheduleTab = new Schedule( this, progressData.scheduleForDay );
+    scheduleTab = new QWidget( this );
+    scheduleTabLayout = new QVBoxLayout( scheduleTab );
+    scheduleTabLayout->setSpacing( 2 );
+    schedule = new Schedule( scheduleTab, progressData.scheduleForDay );
+    scheduleSlider = new QSlider( 1, 4, 1, 1, QSlider::Horizontal, scheduleTab );
+    connect( scheduleSlider, SIGNAL( valueChanged( int ) ), schedule, SLOT( setInterval( int ) ) );
+    scheduleTabLayout->addWidget( schedule, 1 );
+    scheduleTabLayout->addWidget( scheduleSlider );
 
     if( isDataForCurrTermAvailable ) {
         currTermTab = new QWidget( this );

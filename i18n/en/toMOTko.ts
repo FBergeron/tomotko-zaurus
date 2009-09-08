@@ -703,7 +703,7 @@ languages.</translation>
     </message>
     <message>
         <source>NumberOfTermsScheduled</source>
-        <translation>Number of terms scheduled for the week</translation>
+        <translation>Number of terms scheduled for the coming days.</translation>
     </message>
 </context>
 <context>

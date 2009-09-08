@@ -1,13 +1,19 @@
 #include "Schedule.h"
 
 Schedule::Schedule( QWidget* parent, const int* termsForDay )
-    : QWidget( parent ), termsForDay( termsForDay ) {
+    : QWidget( parent ), termsForDay( termsForDay ), interval( 1 ) {
 }
 
 Schedule::~Schedule() {
 }
 
+void Schedule::setInterval( int weeks ) {
+    interval = weeks;
+    repaint();
+}
+
 void Schedule::paintEvent( QPaintEvent* ) {
+    int scheduleLength = interval * 7;
     int maxTermCount = 0;
     for( int i = 0; i < scheduleLength; i++ ) {
         if( termsForDay[ i ] > maxTermCount )
@@ -24,7 +30,7 @@ void Schedule::paintEvent( QPaintEvent* ) {
     p.lineTo( 20, size().height() - 60 );
     p.lineTo( size().width() - 20, size().height() - 60 );
 
-    int interBarGap = 10;
+    int interBarGap = (int)( 10 / interval );
     int barWidth = ( ( size().width() - 20 - 20 - 20 - 20 ) / scheduleLength ) - interBarGap;
     for( int i = 0; i < scheduleLength; i++ ) {
 
@@ -46,12 +52,20 @@ void Schedule::paintEvent( QPaintEvent* ) {
 
         // Paint weekday.
         QString day;
-        if( i == 0 )
+
+        if( i == 0 && interval < 3 )
             day = tr( "Today" );
-        else if( i == 1 ) 
+        else if( i == 1 && interval < 3 ) 
             day = tr( "Tomorrow" );
-        else 
+        else {
             day = Util::getWeekday( QDate::currentDate().addDays( i ).dayOfWeek() );
+
+            if( interval > 2 )
+                day = day.left( 1 ); 
+            else if( interval > 1 )
+                day = day.left( 3 );
+        }
+
         p.drawText( barX - interBarGap / 2, size().height() - 60 + i % 2 * 20, barWidth + interBarGap, 20, AlignTop | AlignHCenter | DontClip, day );
     }
 }

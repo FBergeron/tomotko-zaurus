@@ -706,7 +706,7 @@ langues sélectionnées.</translation>
     </message>
     <message>
         <source>NumberOfTermsScheduled</source>
-        <translation>Nombre de mots prévus pour la semaine</translation>
+        <translation>Nombre de mots prévus pour les prochains jours.</translation>
     </message>
 </context>
 <context>
