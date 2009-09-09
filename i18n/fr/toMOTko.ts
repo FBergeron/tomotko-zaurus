@@ -159,6 +159,24 @@ Voulez-vous continuer ce quiz?</translation>
         <source>NR: %1 day(s)</source>
         <translation>PR: %1 jour(s)</translation>
     </message>
+    <message>
+        <source>Help...</source>
+        <translation>Aide...</translation>
+    </message>
+    <message>
+        <source>NoTermsMarkedForStudy</source>
+        <translation type="unfinished">Le Quiz ne peut débuter car
+vous n&apos;avez spécifié aucun
+mot à étudier.  Utilisez
+le Gestionnaire de glossaires
+et cochez les mots désirés.</translation>
+    </message>
+    <message>
+        <source>NoTermsScheduledForStudy</source>
+        <translation type="unfinished">L&apos;horaire ne prévoit aucun mot à
+étudier aujourd&apos;hui pour les
+langues sélectionnées.</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

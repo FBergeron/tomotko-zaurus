@@ -157,6 +157,18 @@
         <source>NR: %1 day(s)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Help...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NoTermsMarkedForStudy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NoTermsScheduledForStudy</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

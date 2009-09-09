@@ -157,6 +157,18 @@
         <source>NR: %1 day(s)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Help...</source>
+        <translation>Hilfe...</translation>
+    </message>
+    <message>
+        <source>NoTermsMarkedForStudy</source>
+        <translation type="unfinished">Keine Wörter in den gewählten Sprachen zum Lernen gewählt. Das Quiz kann nicht beginnen. Benutzen Sie die Glossarverwaltung um Wörter zu wählen.</translation>
+    </message>
+    <message>
+        <source>NoTermsScheduledForStudy</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

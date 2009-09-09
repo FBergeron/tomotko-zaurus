@@ -1,5 +1,6 @@
 #include "MainWindow.h"
 #include "icons/about.xpm"
+#include "icons/help.xpm"
 #include "icons/startQuiz.xpm"
 #include "icons/glossaryManager.xpm"
 #include "icons/import.xpm"
@@ -194,8 +195,8 @@ MainWindow::MainWindow( Controller* controller )
 
     helpMenu = new QPopupMenu( this );
     menuBar->insertItem( tr( "?" ), helpMenu );
-    helpMenu->insertItem( ZPIXMAP( about_xpm ), tr( "About..." ), this, SLOT( about() ) );
-    helpMenu->insertSeparator( 1 );
+    helpMenuItemId = helpMenu->insertItem( ZPIXMAP( help_xpm ), tr( "Help..." ), this, SLOT( help() ) );
+    helpMenu->insertSeparator();
     
     languageActionGroup = new QActionGroup( this ); 
 
@@ -243,6 +244,9 @@ MainWindow::MainWindow( Controller* controller )
             langAction->setOn( true );
     }
     
+    helpMenu->insertSeparator();
+    aboutMenuItemId = helpMenu->insertItem( ZPIXMAP( about_xpm ), tr( "About..." ), this, SLOT( about() ) );
+
     connect( quizFrame, SIGNAL( quizShown() ), quizStatusPanel, SLOT( show() ) );
     connect( quizFrame, SIGNAL( quizShown() ), languageSelectorPanel, SLOT( hide() ) );
     connect( quizFrame, SIGNAL( quizHidden() ), quizStatusPanel, SLOT( hide() ) );
@@ -389,7 +393,8 @@ void MainWindow::retranslateUi() {
     pasteAction->setText( QObject::tr( "Paste" ) );
     pasteAction->setMenuText( QObject::tr( "Paste" ) );
 
-    helpMenu->changeItem( helpMenu->idAt( 0 ), tr( "About..." ) );
+    helpMenu->changeItem( helpMenuItemId, tr( "Help..." ) );
+    helpMenu->changeItem( aboutMenuItemId, tr( "About..." ) );
 
     updateEasinessFactor( control->getQuizCurrentTermEasinessFactor() );
     updateNextRepetition( control->getQuizCurrentTermNextRepetition() );
@@ -456,6 +461,12 @@ void MainWindow::closeEvent( QCloseEvent* ce ) {
 
 void MainWindow::about() {
     QMessageBox::about( this, tr( "AboutToMOTko..." ), tr( "AboutMessage" ) );
+}
+
+void MainWindow::help() {
+    QString helpFile = (((QPEApplication*)qApp)->qpeDir()+ "help/en/html/toMOTko.html" );
+    QCopEnvelope helpEnv( "QPE/Application/helpbrowser", "showFile(QString)" );
+    helpEnv << helpFile;
 }
 
 void MainWindow::startQuiz() {

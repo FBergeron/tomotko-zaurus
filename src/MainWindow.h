@@ -18,6 +18,7 @@
 #include <qmessagebox.h>
 #include <qpe/fileselector.h>
 #include <qpe/resource.h>
+#include <qpe/qpeapplication.h>
 #include <qpe/qpemenubar.h>
 #include <qpe/qpetoolbar.h>
 #include <qpixmap.h>
@@ -75,6 +76,7 @@ protected:
 private slots:
 
     void about();
+    void help();
     void startQuiz();
     void showQuiz();
     void invokeVocabularyManager();
@@ -100,6 +102,8 @@ private:
 
     QMap<QString,QString>   availableLanguages;
 
+    int                     helpMenuItemId;
+    int                     aboutMenuItemId;
     int                     editionMenuId;
     int                     viewMenuId;
     int                     showAllVocabSeparatorId;

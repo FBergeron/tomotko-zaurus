@@ -159,6 +159,24 @@ Do you want to resume this quiz?</translation>
         <source>NR: %1 day(s)</source>
         <translation>NR: %1 day(s)</translation>
     </message>
+    <message>
+        <source>Help...</source>
+        <translation>Help...</translation>
+    </message>
+    <message>
+        <source>NoTermsMarkedForStudy</source>
+        <translation type="unfinished">No terms have been marked for study
+for the specified languages.
+The quiz cannot start.
+Use the Glossary Manager to select
+the terms you want to study.</translation>
+    </message>
+    <message>
+        <source>NoTermsScheduledForStudy</source>
+        <translation type="unfinished">No terms are scheduled today
+for study for the selected
+languages.</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

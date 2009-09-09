@@ -160,6 +160,22 @@ continuar este quiz?</translation>
         <source>NR: %1 day(s)</source>
         <translation>PR: %1 dia(s)</translation>
     </message>
+    <message>
+        <source>Help...</source>
+        <translation>Ayuda...</translation>
+    </message>
+    <message>
+        <source>NoTermsMarkedForStudy</source>
+        <translation type="unfinished">No hay palabras selectionadas.
+El testo no puede empezar.
+Usa el Administrador de glosarios
+para seleccionar palabras a estudiar.</translation>
+    </message>
+    <message>
+        <source>NoTermsScheduledForStudy</source>
+        <translation type="unfinished">No hay palabras hoy para memorizar 
+por los idiomas selectionados.</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

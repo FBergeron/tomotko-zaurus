@@ -3,7 +3,6 @@ ToDo
 If I want to have resizable animated movie for CharacterDialog, check this link: http://doc.trolltech.com/3.3/movies-example.html#x498
 Solidify movieResized().    
 Handle NoTermsMarkedForStudy and NoTermsScheduledForStudy separately.  Improve the message too.  Should mention that we need to select parents folders and glossaries too.
-Add a Help menu item as in qt4.  It's redundant but helpful.  (To be confirmed)
 Bug: Fix the last column width in the properties panel.
 Init the quizframe to blank when starting a new quiz.
 The termData should dissociated from quiz somehow.  For example, move Quiz::getCurrentTermEasinessFactor() to something like getEasinessFactor( term ) or term.getEasinessFactor().  Probably the first one is better, I think.
@@ -14,7 +13,6 @@ When we start a quiz, reset the form.  We should not see previous quiz's values.
 Validate marked study items separately from scheduled terms?
 Disable gradeAnswer accelerators when performing a non-SM-2 quiz.
 It doesn't really make sense to have reinit() for sm2 quiz.  Maybe introduce isRestartable() property and adjust the buttons accordingly.
-Add a new set of checked items for the sm2 algo.  There should be such set for each algo.  The tree should update itself whenever we change the current algo in the prefs.  Because of that, instead of using "sm2" string in the data filenames, maybe use the integer of the enum instead.  For now, an item (term, folder or vocab) has a boolean state for markedForStudy or not.  Either we pass a algo param to isMarkedForStudy() and setMarkedForStudy() or we keep a dissociate data structure that will keep the info for each algo.  I think the second approach is cleaner (design point of view) because it keeps the items uncoupled with algo. But the first approach seems easier.  The data structure should probably be located in the Prefs.  No need to save marked.dat.z if so.  By default, the set of checked items should be the same than the original one?  Or maybe not because what will we do if we add another algo... Maybe an empty selection is better.  Not sure that it's really needed.
 Should we hide the Quiz Length section in the Prefs when SM-2 quiz is selected?  We should but is it a big deal?  Probably not.
 Do I still need a TermKey?  Why not use the term uid directly instead?  Hmmm...  I don't think I need it anymore but double-check before removing it.
 Why do we have the message "delete the folder item... several times when we launch the application?
@@ -59,6 +57,7 @@ Release 0.13.0
 
 Refactor save and load methods.  They look alike, I think it's possible do unify the process in a common method using parameters.
 
+There is a class called QDawg in Qtopia (for Zaurus) that could be interesting to create indexes in the case that we stop putting all the data in memory. (?)
 Use ASSERT(), CHECK_PTR() and qDebug(), qWarning() and qFatal() --> See Debugging Techniques page in documentation.
 When we quit toMOTko, we should delete all files [0-9]+.tar.gz and tree.dat.gz.  These files are not used anymore.
 Verify licence for KanjiDrill4Top's images.
@@ -69,6 +68,7 @@ Same thing for VocabularyManagerFrame.copyTerms().
 Concerning SearchDialog, refactor, if possible, ResultListItem and TermListItem.  I think I can have a common base class (edit:really?) so that doRemoveTerms() don't have to be duplicated in SearchDialog and VocabularyManagerFrame.  Other code could be refactored too like getFont(), setFont(), etc.  The doRemoveTerms() of SearchDialog is a little bit more general so start from it.  The vocabDetailsPropsPanel should be probably be a parameter.  If not null, we should updateCounters().  Maybe I will have to use multiple inheritance to do that maybe using a TermItem class?
 
 
+Add a new set of checked items for the sm2 algo.  There should be such set for each algo.  The tree should update itself whenever we change the current algo in the prefs.  Because of that, instead of using "sm2" string in the data filenames, maybe use the integer of the enum instead.  For now, an item (term, folder or vocab) has a boolean state for markedForStudy or not.  Either we pass a algo param to isMarkedForStudy() and setMarkedForStudy() or we keep a dissociate data structure that will keep the info for each algo.  I think the second approach is cleaner (design point of view) because it keeps the items uncoupled with algo. But the first approach seems easier.  The data structure should probably be located in the Prefs.  No need to save marked.dat.z if so.  By default, the set of checked items should be the same than the original one?  Or maybe not because what will we do if we add another algo... Maybe an empty selection is better.  Not sure that it's really needed.
 Should I deallocate sequences in Preferences's destructor?
 copyTerms(), pasteTerms() should be relocated (partially) into Controller.  Most probably that copy*() and paste*() too.
 When addVocab() returns NULL, we should display an error message.
