@@ -407,15 +407,11 @@ QString Folder::getHumanReadablePath() const {
     QStringList folders = QStringList::split( "/", getPath() );
     QString delim = "";
     for( QStringList::Iterator it = folders.begin(); it != folders.end(); it++ ) {
-        QString strFolderId = *it;
-        bool isFolderIdValid;
-        int folderId = strFolderId.toInt( &isFolderIdValid, 10 );
-        if( isFolderIdValid ) {
-            Folder* folder = rootFolder->getFolder( folderId );
-            if( folder ) {
-                str += delim + folder->getTitle();
-                delim = "/";
-            }
+        QString strFolderUid = *it;
+        Folder* folder = rootFolder->getFolder( QUuid( strFolderUid ) );
+        if( folder ) {
+            str += delim + folder->getTitle();
+            delim = "/";
         }
     }
     return( str ); 
