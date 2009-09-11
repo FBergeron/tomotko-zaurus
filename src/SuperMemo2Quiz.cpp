@@ -250,6 +250,16 @@ float SuperMemo2Quiz::getCurrentTermEasinessFactor() {
     return( Quiz::getCurrentTermEasinessFactor() );
 }
 
+int SuperMemo2Quiz::getCurrentTermRepetition() {
+    TermKey currTermKey = getCurrentTerm();
+    if( !currTermKey.isNull() ) {
+        TermData termData = getTermData( currTermKey.getTermUid().toString() );
+        return( termData.repetition );
+    }
+
+    return( Quiz::getCurrentTermRepetition() );
+}
+
 int SuperMemo2Quiz::getCurrentTermNextRepetition() {
     TermKey currTermKey = getCurrentTerm();
     if( !currTermKey.isNull() ) {

@@ -78,6 +78,9 @@ MainWindow::MainWindow( Controller* controller )
     easinessFactorLabel = new QLabel( quizStatusPanel, "EasinessFactorLabel" );
     easinessFactorLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 
+    repetitionLabel = new QLabel( quizStatusPanel, "RepetitionLabel" );
+    repetitionLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
+
     nextRepetitionLabel = new QLabel( quizStatusPanel, "NextRepetitionLabel" );
     nextRepetitionLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
 
@@ -88,9 +91,11 @@ MainWindow::MainWindow( Controller* controller )
     progressBar->setCenterIndicator( true );
 
     easinessFactorLabel->setMaximumHeight( progressBar->sizeHint().height() );
+    repetitionLabel->setMaximumHeight( progressBar->sizeHint().height() );
     nextRepetitionLabel->setMaximumHeight( progressBar->sizeHint().height() );
 
     quizStatusPanelLayout->addWidget( easinessFactorLabel );
+    quizStatusPanelLayout->addWidget( repetitionLabel );
     quizStatusPanelLayout->addWidget( nextRepetitionLabel );
     quizStatusPanelLayout->addWidget( progressBar );
 
@@ -253,6 +258,7 @@ MainWindow::MainWindow( Controller* controller )
     connect( quizFrame, SIGNAL( quizHidden() ), languageSelectorPanel, SLOT( show() ) );
     connect( quizFrame, SIGNAL( quizHidden() ), control, SLOT( concludeQuiz() ) );
     connect( quizFrame, SIGNAL( easinessFactorChanged( const float& ) ), this, SLOT( updateEasinessFactor( const float& ) ) );
+    connect( quizFrame, SIGNAL( repetitionChanged( const int& ) ), this, SLOT( updateRepetition( const int& ) ) );
     connect( quizFrame, SIGNAL( nextRepetitionChanged( const int& ) ), this, SLOT( updateNextRepetition( const int& ) ) );
 
     mainPanel->addWidget( quizFrame, frameQuizIndex );
@@ -308,6 +314,7 @@ void MainWindow::updateFonts() {
     firstLanguageComboBox->setFont( labelsFont );
     testLanguageComboBox->setFont( labelsFont );
     easinessFactorLabel->setFont( labelsFont );
+    repetitionLabel->setFont( labelsFont );
     nextRepetitionLabel->setFont( labelsFont );
     progressBar->setFont( labelsFont );
 
@@ -436,6 +443,14 @@ void MainWindow::updateEasinessFactor( const float& easinessFactor ) {
         easinessFactorLabel->hide();
     else
         easinessFactorLabel->show();
+}
+
+void MainWindow::updateRepetition( const int& repetition ) {
+    repetitionLabel->setText( tr( "Repetition: %1" ).arg( repetition ) );
+    if( repetition == -1 )
+        repetitionLabel->hide();
+    else
+        repetitionLabel->show();
 }
 
 void MainWindow::updateNextRepetition( const int& nextRepetition ) {

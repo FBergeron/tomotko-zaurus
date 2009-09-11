@@ -71,6 +71,10 @@ float Controller::getQuizCurrentTermEasinessFactor() const {
     return( quiz ? quiz->getCurrentTermEasinessFactor() : 0.0f );
 }
 
+int Controller::getQuizCurrentTermRepetition() const {
+    return( quiz ? quiz->getCurrentTermRepetition() : -1 );
+}
+
 int Controller::getQuizCurrentTermNextRepetition() const {
     return( quiz ? quiz->getCurrentTermNextRepetition() : 0 );
 }

@@ -54,6 +54,7 @@ public:
 
     void showProgressData( QWidget* parent );
     float getCurrentTermEasinessFactor();
+    int getCurrentTermRepetition();
     int getCurrentTermNextRepetition();
 
 private:

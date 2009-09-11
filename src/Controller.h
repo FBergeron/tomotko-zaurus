@@ -55,6 +55,7 @@ public:
     int getQuizAnswerCount() const;
     void showQuizProgressData( QWidget* parent ) const;
     float getQuizCurrentTermEasinessFactor() const;
+    int getQuizCurrentTermRepetition() const;
     int getQuizCurrentTermNextRepetition() const;
 
     Term* getCurrentTerm();

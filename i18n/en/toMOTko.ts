@@ -177,6 +177,10 @@ the terms you want to study.</translation>
 for study for the selected
 languages.</translation>
     </message>
+    <message>
+        <source>Repetition: %1</source>
+        <translation>R: %1</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

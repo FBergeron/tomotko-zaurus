@@ -37,6 +37,7 @@ public:
 
     virtual void showProgressData( QWidget* parent );
     virtual float getCurrentTermEasinessFactor();
+    virtual int getCurrentTermRepetition();
     virtual int getCurrentTermNextRepetition();
 
 protected:

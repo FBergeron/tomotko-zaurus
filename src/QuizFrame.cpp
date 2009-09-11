@@ -367,9 +367,11 @@ void QuizFrame::askTerm( const Term& term ) {
     setTerm( term );
 
     float easinessFactor = controller->getQuizCurrentTermEasinessFactor();
+    int repetition = controller->getQuizCurrentTermRepetition();
     int nextRepetition = controller->getQuizCurrentTermNextRepetition();
 
     emit( easinessFactorChanged( easinessFactor ) );
+    emit( repetitionChanged ( repetition ) );
     emit( nextRepetitionChanged ( nextRepetition ) );
     reveal();
     setButtonsEnabled( true );

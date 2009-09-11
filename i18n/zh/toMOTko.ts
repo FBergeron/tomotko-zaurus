@@ -169,6 +169,10 @@
         <source>NoTermsScheduledForStudy</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Repetition: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

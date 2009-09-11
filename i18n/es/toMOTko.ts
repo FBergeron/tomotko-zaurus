@@ -176,6 +176,10 @@ para seleccionar palabras a estudiar.</translation>
         <translation type="unfinished">No hay palabras hoy para memorizar 
 por los idiomas selectionados.</translation>
     </message>
+    <message>
+        <source>Repetition: %1</source>
+        <translation>R: %1</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

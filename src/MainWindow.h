@@ -67,6 +67,7 @@ public slots:
     void search();
     void showProgressDetails();
     void updateEasinessFactor( const float& easinessFactor );
+    void updateRepetition( const int& repetition );
     void updateNextRepetition( const int& nextRepetition );
 
 protected:
@@ -134,6 +135,7 @@ private:
     QWidget*                quizStatusPanel;
     QHBoxLayout*            quizStatusPanelLayout;
     QLabel*                 easinessFactorLabel;
+    QLabel*                 repetitionLabel;
     QLabel*                 nextRepetitionLabel;
     QProgressBar*           progressBar;
 

@@ -8,7 +8,7 @@ void ProgressBar::mouseReleaseEvent( QMouseEvent* ) {
 }
 
 bool ProgressBar::setIndicator( QString& indicator, int progress, int totalSteps ) {
-    bool hasChanged = QProgressBar::setIndicator( indicator, progress, totalSteps ) || ( prevProgress != progress );
+    bool hasChanged = QProgressBar::setIndicator( indicator, progress, totalSteps );
     int np = progress * 100 / totalSteps;
     QString newIndicator;
     newIndicator.sprintf( "(%d/%d) %d%%", progress, totalSteps, np );

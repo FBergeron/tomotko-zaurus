@@ -177,6 +177,10 @@ et cochez les mots désirés.</translation>
 étudier aujourd&apos;hui pour les
 langues sélectionnées.</translation>
     </message>
+    <message>
+        <source>Repetition: %1</source>
+        <translation type=>R: %1</translation>
+    </message>
 </context>
 <context>
     <name>PreferencesDialog</name>

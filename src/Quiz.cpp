@@ -22,6 +22,11 @@ float Quiz::getCurrentTermEasinessFactor() {
     return( 0.0f );
 }
 
+int Quiz::getCurrentTermRepetition() {
+    // Returns -1 value by default.  Subclasses should override this if needed.
+    return( -1 );
+}
+
 int Quiz::getCurrentTermNextRepetition() {
     // Returns zero value by default.  Subclasses should override this if needed.
     return( 0 );
