@@ -289,6 +289,8 @@ void QuizFrame::restartQuiz() {
 }
 
 void QuizFrame::resumeQuiz() {
+    setup();
+    reset();
     controller->prepareQuiz();
     updateLanguageLabels();
     updateFonts();
