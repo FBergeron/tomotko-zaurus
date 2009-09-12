@@ -36,6 +36,17 @@ void PreferencesDialog::init() {
     quizAlgorithmsPanelLayout->addWidget( quizAlgorithmOptionsPanel );
     quizAlgorithmsPanelLayout->addWidget( quizLengthOptionsPanel, 1 );
 
+    quizCharacterImageOptionsPanel = new QHGroupBox( tr( "Images associated to characters" ), quizPage, "QuizCharacterImageOptions" );
+
+    quizCharacterImageLocationLabel = new QLabel( tr( "CharacterImageLocation" ), quizCharacterImageOptionsPanel );
+    quizCharacterImageLocationField = new QLineEdit( quizCharacterImageOptionsPanel );
+    quizCharacterImageLocationSetButton = new QPushButton( tr( "SetCharacterImageLocation" ), quizCharacterImageOptionsPanel );
+    connect( quizCharacterImageLocationSetButton, SIGNAL( clicked() ), this, SLOT( setCharacterImageLocation() ) );
+    quizCharacterImageLocationClearButton = new QPushButton( tr( "ClearCharacterImageLocation" ), quizCharacterImageOptionsPanel );
+    connect( quizCharacterImageLocationClearButton, SIGNAL( clicked() ), this, SLOT( clearCharacterImageLocation() ) );
+    quizCharacterImageOptionsPanel->addSpace( 10 );
+    quizCharacterImageTypeCheckbox = new QCheckBox( tr( "IsCharacterImageAnimated" ), quizCharacterImageOptionsPanel );
+
     revealingOptionsPanel = new QHGroupBox( tr( "RevealingOrders" ), quizPage, "RevealingOptionsPanel" );
   
     sequencesViewPanel = new QVBox( revealingOptionsPanel ); 
@@ -86,6 +97,7 @@ void PreferencesDialog::init() {
 
     quizLayout = new QVBoxLayout( quizPage );
     quizLayout->addWidget( quizAlgorithmsPanel );
+    quizLayout->addWidget( quizCharacterImageOptionsPanel );
     quizLayout->addWidget( revealingOptionsPanel );
     quizLayout->addWidget( quizPageFiller, 1 );
 
@@ -619,6 +631,28 @@ void PreferencesDialog::keyPressEvent( QKeyEvent *evt ) {
     ignoreReturn = false;
 
     QDialog::keyPressEvent( evt );
+}
+
+void PreferencesDialog::setCharacterImageLocation() {
+    QDir dir = QPEApplication::documentDir();
+    if( !quizCharacterImageLocationField->text().isEmpty() ) {
+        QFileInfo fileInfo( quizCharacterImageLocationField->text() );
+        if( fileInfo.isDir() )
+            dir.setPath( fileInfo.filePath() );
+    }
+
+    ZFileDialog dialog( tr( "SetCharacterImageLocation..." ), dir.path(), ZFileDialog::Directory, true, this ); 
+    QStringList allowedExtensions = QStringList::split( QString( "," ), QString( ".gif,.png" ) );
+    dialog.setFilters( allowedExtensions );
+
+    int result = dialog.exec();
+    if( result ) 
+        quizCharacterImageLocationField->setText( dialog.dir()->path() );
+
+}
+
+void PreferencesDialog::clearCharacterImageLocation() {
+    quizCharacterImageLocationField->clear();
 }
 
 void PreferencesDialog::addSequence() {

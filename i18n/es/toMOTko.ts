@@ -377,6 +377,30 @@ No obstante, asignar la teclea?</translation>
         <source>SuperMemo2Algorithm</source>
         <translation>SuperMemo-2</translation>
     </message>
+    <message>
+        <source>Images associated to characters</source>
+        <translation>Imagenes asociadas a los caracteres</translation>
+    </message>
+    <message>
+        <source>SetCharacterImageLocation</source>
+        <translation>Eligir</translation>
+    </message>
+    <message>
+        <source>ClearCharacterImageLocation</source>
+        <translation>Borrar</translation>
+    </message>
+    <message>
+        <source>IsCharacterImageAnimated</source>
+        <translation>Animation</translation>
+    </message>
+    <message>
+        <source>CharacterImageLocation</source>
+        <translation>Camino</translation>
+    </message>
+    <message>
+        <source>SetCharacterImageLocation...</source>
+        <translation>Eligir la carpeta de las imagenes...</translation>
+    </message>
 </context>
 <context>
     <name>ProgressDialog</name>

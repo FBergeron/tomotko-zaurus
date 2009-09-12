@@ -8,6 +8,7 @@
 #define PREFERENCES_DIALOG_H 
 
 #include <iostream.h>
+#include <qpe/qpeapplication.h>
 #include <qaction.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
@@ -40,6 +41,7 @@
 #include "SequenceListItem.h"
 #include "SmartListView.h"
 #include "StudyLanguageItem.h"
+#include "ZFileDialog.h"
 
 extern QAction* action[ ACTION_COUNT ];
 
@@ -80,6 +82,8 @@ private slots:
     void resetAccelKey();
     void cancelSetAccelKey();
     void keyActionClicked( QListViewItem* );
+    void setCharacterImageLocation();
+    void clearCharacterImageLocation();
     void addSequence();
     void removeSequence();
     void updateUi();
@@ -126,6 +130,7 @@ private:
     QHBoxLayout*        quizAlgorithmsPanelLayout;
     QVButtonGroup*      quizAlgorithmOptionsPanel;
     QVGroupBox*         quizLengthOptionsPanel;
+    QHGroupBox*         quizCharacterImageOptionsPanel;
     QHGroupBox*         revealingOptionsPanel;
 
     QVBox*              sequencesViewPanel;
@@ -146,7 +151,13 @@ private:
     QLabel*             quizLengthShortestLabel;
     QLabel*             quizLengthMediumLabel;
     QLabel*             quizLengthLongestLabel;
-   
+
+    QLabel*             quizCharacterImageLocationLabel;
+    QLineEdit*          quizCharacterImageLocationField;
+    QPushButton*        quizCharacterImageLocationSetButton;
+    QPushButton*        quizCharacterImageLocationClearButton;
+    QCheckBox*          quizCharacterImageTypeCheckbox;
+
     QVBoxLayout*        fontPageLayout;
     QVBoxLayout*        interfacePageLayout;
     QHBoxLayout*        keyboardAccelButtonPanelLayout;

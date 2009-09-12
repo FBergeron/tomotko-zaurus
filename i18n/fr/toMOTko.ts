@@ -179,7 +179,7 @@ langues sélectionnées.</translation>
     </message>
     <message>
         <source>Repetition: %1</source>
-        <translation type=>R: %1</translation>
+        <translation>R: %1</translation>
     </message>
 </context>
 <context>
@@ -375,6 +375,30 @@ Affecter le raccourci quand même?</translation>
     <message>
         <source>SuperMemo2Algorithm</source>
         <translation>SuperMemo-2</translation>
+    </message>
+    <message>
+        <source>Images associated to characters</source>
+        <translation>Images externes associées aux caractères</translation>
+    </message>
+    <message>
+        <source>SetCharacterImageLocation</source>
+        <translation>Choisir</translation>
+    </message>
+    <message>
+        <source>ClearCharacterImageLocation</source>
+        <translation>Effacer</translation>
+    </message>
+    <message>
+        <source>IsCharacterImageAnimated</source>
+        <translation>Animation</translation>
+    </message>
+    <message>
+        <source>CharacterImageLocation</source>
+        <translation>Location</translation>
+    </message>
+    <message>
+        <source>SetCharacterImageLocation...</source>
+        <translation>Sélectionner le dossier des images...</translation>
     </message>
 </context>
 <context>

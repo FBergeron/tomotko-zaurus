@@ -376,6 +376,30 @@ Overwrite the current assignment?</translation>
         <source>SuperMemo2Algorithm</source>
         <translation>SuperMemo-2</translation>
     </message>
+    <message>
+        <source>Images associated to characters</source>
+        <translation>External images associated to characters</translation>
+    </message>
+    <message>
+        <source>SetCharacterImageLocation</source>
+        <translation>Set</translation>
+    </message>
+    <message>
+        <source>ClearCharacterImageLocation</source>
+        <translation>Clear</translation>
+    </message>
+    <message>
+        <source>IsCharacterImageAnimated</source>
+        <translation>Animation</translation>
+    </message>
+    <message>
+        <source>CharacterImageLocation</source>
+        <translation>Location</translation>
+    </message>
+    <message>
+        <source>SetCharacterImageLocation...</source>
+        <translation>Choose images folder...</translation>
+    </message>
 </context>
 <context>
     <name>ProgressDialog</name>

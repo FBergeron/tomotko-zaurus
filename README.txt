@@ -230,3 +230,9 @@ To generate thumbnails for screenshots, we can use a command like this one :
 > convert $img -resize 50% ${img%%.png}_small.png
 > done
 
+
+Miscellaneous
+-------------
+To connect with ssh on tomotko's website:
+
+ssh -t fbergeron,tomotko@shell.sourceforge.net create
