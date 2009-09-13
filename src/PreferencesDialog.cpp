@@ -26,9 +26,12 @@ PreferencesDialog::~PreferencesDialog() {
 void PreferencesDialog::init() {
     tab = new QTabWidget( this, "Tab" );
 
-    quizPage = new QWidget( tab, "QuizPage" );
+    quizPage = new QScrollView( tab, "QuizPage" );
+    quizPage->setResizePolicy( QScrollView::AutoOneFit );
+    quizPageBox = new QWidget( quizPage->viewport(), "QuizPage" );
+    quizPage->addChild( quizPageBox );
 
-    quizAlgorithmsPanel = new QWidget( quizPage, "QuizAlgorithmsPanel" );
+    quizAlgorithmsPanel = new QWidget( quizPageBox, "QuizAlgorithmsPanel" );
     quizAlgorithmsPanelLayout = new QHBoxLayout( quizAlgorithmsPanel );
 
     quizAlgorithmOptionsPanel = new QVButtonGroup( tr( "Algorithm" ), quizAlgorithmsPanel, "QuizAlgorithmOptionsPanel" );
@@ -36,7 +39,7 @@ void PreferencesDialog::init() {
     quizAlgorithmsPanelLayout->addWidget( quizAlgorithmOptionsPanel );
     quizAlgorithmsPanelLayout->addWidget( quizLengthOptionsPanel, 1 );
 
-    quizCharacterImageOptionsPanel = new QHGroupBox( tr( "Images associated to characters" ), quizPage, "QuizCharacterImageOptions" );
+    quizCharacterImageOptionsPanel = new QHGroupBox( tr( "Images associated to characters" ), quizPageBox, "QuizCharacterImageOptions" );
 
     quizCharacterImageLocationLabel = new QLabel( tr( "CharacterImageLocation" ), quizCharacterImageOptionsPanel );
     quizCharacterImageLocationField = new QLineEdit( quizCharacterImageOptionsPanel );
@@ -49,7 +52,7 @@ void PreferencesDialog::init() {
     quizCharacterImageTypeCheckbox = new QCheckBox( tr( "IsCharacterImageAnimated" ), quizCharacterImageOptionsPanel );
     quizCharacterImageTypeCheckbox->setChecked( prefs->isQuizCharacterImagesAnimated() );
 
-    revealingOptionsPanel = new QHGroupBox( tr( "RevealingOrders" ), quizPage, "RevealingOptionsPanel" );
+    revealingOptionsPanel = new QHGroupBox( tr( "RevealingOrders" ), quizPageBox, "RevealingOptionsPanel" );
   
     sequencesViewPanel = new QVBox( revealingOptionsPanel ); 
     sequencesViewPanel->setSpacing( 2 );
@@ -95,9 +98,9 @@ void PreferencesDialog::init() {
     
     quizLengthSlider->setValue( prefs->getQuizLength() ); 
 
-    quizPageFiller = new QWidget( quizPage, "QuizPageFiller" );
+    quizPageFiller = new QWidget( quizPageBox, "QuizPageFiller" );
 
-    quizLayout = new QVBoxLayout( quizPage );
+    quizLayout = new QVBoxLayout( quizPageBox );
     quizLayout->addWidget( quizAlgorithmsPanel );
     quizLayout->addWidget( quizCharacterImageOptionsPanel );
     quizLayout->addWidget( revealingOptionsPanel );

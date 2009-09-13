@@ -111,7 +111,8 @@ private:
     QTabWidget*         tab;
 
     QWidget*            languagePage;
-    QWidget*            quizPage;
+    QScrollView*        quizPage;
+    QWidget*            quizPageBox;
     QWidget*            fontPage;
     QWidget*            interfacePage;
 
