@@ -704,14 +704,21 @@ void QuizFrame::showProgressDetails() {
 }
 
 void QuizFrame::showCharacter( const QChar& character, const QPoint& /*position*/ ) {
-    // We need to compute the imageFile.
-    //QString imageFile = "/home/fred/Documents/Image_Files/Kanjis/" + Util::fromUnicodeToUtf8( character.unicode() ) + ".gif";
-    QString imageFile = "/home/zaurus/Documents/Kanji_Files/" + Util::fromUnicodeToUtf8( character.unicode() ) + ".gif";
-    QFileInfo info( imageFile );
-    if( !info.exists() )
+    QString imageFolder = controller->getPreferences().getQuizCharacterImageLocation();
+    if( !QFileInfo( imageFolder ).isDir() )
         return;
 
-    CharacterDialog dialog( this, imageFile, true );
+    if( imageFolder.right( 1 ) != QString( "/" ) )
+        imageFolder += QString( "/" );
+
+    QString imageFile = imageFolder + Util::fromUnicodeToUtf8( character.unicode() ) + ".gif";
+    if( !QFileInfo( imageFile ).exists() ) {
+        imageFile = imageFolder + Util::fromUnicodeToUtf8( character.unicode() ) + ".png";
+        if( !QFileInfo( imageFile ).exists() )
+            return;
+    }
+
+    CharacterDialog dialog( this, imageFile, controller->getPreferences().isQuizCharacterImagesAnimated() );
     dialog.show();
     dialog.exec();
 }

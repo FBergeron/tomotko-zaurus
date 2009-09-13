@@ -3,7 +3,7 @@
 const uint Preferences::fontSizeList[] = { 10, 12, 16, 18, 24, 32, 48, 72 };
 
 Preferences::Preferences() 
-    : quizLength( MEDIUM ), interfaceLanguage( QString( "en" ) ), digraphEnabled( false ), quizButtonsHidden( false ), altInTermListShown( false ),
+    : quizCharacterImageLocation( QString::null ), quizCharacterImagesAnimated( false ), quizLength( MEDIUM ), interfaceLanguage( QString( "en" ) ), digraphEnabled( false ), quizButtonsHidden( false ), altInTermListShown( false ),
         firstLanguage( QString( "en" ) ), testLanguage( QString( "ja" ) ),
             labelsFontFamily( Util::getDefaultLabelsFontFamily() ), labelsFontSizeModifier( Util::getDefaultLabelsFontSizeModifier() ),
                 fontFamily( Util::getDefaultFontFamily() ), fontSizeModifier( Util::getDefaultFontSizeModifier() ),
@@ -48,6 +48,8 @@ bool Preferences::load() {
         Q_UINT16                tempVersion;
 
         uint                    tempQuizAlgorithm;
+        QString                 tempQuizCharacterImageLocation;
+        int                     tempQuizCharacterImagesAnimatedAsInt;
         uint                    tempQuizLength;
         SequenceList            tempSequences;
         int                     tempLanguageFilterEnabledAsInt;
@@ -81,8 +83,11 @@ bool Preferences::load() {
         }
 
         in.setVersion( 3 );
-        if( tempVersion >= 0x0012 )
+        if( tempVersion >= 0x0012 ) {
             in >> tempQuizAlgorithm;
+            in >> tempQuizCharacterImageLocation;
+            in >> tempQuizCharacterImagesAnimatedAsInt;
+        }
         else
             tempQuizAlgorithm = Preferences::ORIGINAL;
         in >> tempQuizLength >> tempSequences;
@@ -98,6 +103,8 @@ bool Preferences::load() {
         in >> tempAccel;
 
         quizAlgorithm = tempQuizAlgorithm;
+        quizCharacterImageLocation = tempQuizCharacterImageLocation;
+        quizCharacterImagesAnimated = ( tempQuizCharacterImagesAnimatedAsInt == 1 );
         quizLength = tempQuizLength;
         sequences = tempSequences;
         languageFilterEnabled = ( tempLanguageFilterEnabledAsInt == 1 );
@@ -128,7 +135,8 @@ bool Preferences::save() {
 
     out << Q_UINT32( Preferences::magicNumber ) << Q_UINT16( 0x0012 );
 
-    out << quizAlgorithm << quizLength << sequences;
+    out << quizAlgorithm << quizCharacterImageLocation << ( quizCharacterImagesAnimated ? 1 : 0 );
+    out << quizLength << sequences;
     int languageFilterEnabledAsInt = ( languageFilterEnabled ? 1 : 0 );
     int digraphEnabledAsInt = ( digraphEnabled ? 1 : 0 ); 
     int quizButtonsHiddenAsInt = ( quizButtonsHidden ? 1 : 0 );
@@ -168,6 +176,22 @@ uint Preferences::getQuizLength() const {
 
 void Preferences::setQuizLength( uint quizLength ) {
     this->quizLength = quizLength;
+}
+
+QString Preferences::getQuizCharacterImageLocation() const {
+    return( quizCharacterImageLocation );
+}
+
+void Preferences::setQuizCharacterImageLocation( const QString& location ) {
+    quizCharacterImageLocation = location;
+}
+
+bool Preferences::isQuizCharacterImagesAnimated() const {
+    return( quizCharacterImagesAnimated );
+}
+
+void Preferences::setQuizCharacterImagesAnimated( bool isAnimated ) {
+    quizCharacterImagesAnimated = isAnimated;
 }
 
 Preferences::QuizAlgorithm Preferences::getQuizAlgorithm() const {

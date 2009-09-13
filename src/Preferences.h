@@ -38,6 +38,12 @@ public:
     uint getQuizLength() const;
     void setQuizLength( uint quizLength );
 
+    QString getQuizCharacterImageLocation() const;
+    void setQuizCharacterImageLocation( const QString& location );
+
+    bool isQuizCharacterImagesAnimated() const;
+    void setQuizCharacterImagesAnimated( bool isAnimated );
+
     QuizAlgorithm getQuizAlgorithm() const;
     void setQuizAlgorithm( QuizAlgorithm quizAlgorithm );
 
@@ -128,6 +134,8 @@ private:
     QFont getFont( const QString& fontFamily, uint size ) const;
 
     uint                    quizAlgorithm;
+    QString                 quizCharacterImageLocation;
+    bool                    quizCharacterImagesAnimated;
     uint                    quizLength;
     SequenceList            sequences;
 

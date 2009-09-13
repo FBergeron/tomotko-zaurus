@@ -40,12 +40,14 @@ void PreferencesDialog::init() {
 
     quizCharacterImageLocationLabel = new QLabel( tr( "CharacterImageLocation" ), quizCharacterImageOptionsPanel );
     quizCharacterImageLocationField = new QLineEdit( quizCharacterImageOptionsPanel );
+    quizCharacterImageLocationField->setText( prefs->getQuizCharacterImageLocation() );
     quizCharacterImageLocationSetButton = new QPushButton( tr( "SetCharacterImageLocation" ), quizCharacterImageOptionsPanel );
     connect( quizCharacterImageLocationSetButton, SIGNAL( clicked() ), this, SLOT( setCharacterImageLocation() ) );
     quizCharacterImageLocationClearButton = new QPushButton( tr( "ClearCharacterImageLocation" ), quizCharacterImageOptionsPanel );
     connect( quizCharacterImageLocationClearButton, SIGNAL( clicked() ), this, SLOT( clearCharacterImageLocation() ) );
     quizCharacterImageOptionsPanel->addSpace( 10 );
     quizCharacterImageTypeCheckbox = new QCheckBox( tr( "IsCharacterImageAnimated" ), quizCharacterImageOptionsPanel );
+    quizCharacterImageTypeCheckbox->setChecked( prefs->isQuizCharacterImagesAnimated() );
 
     revealingOptionsPanel = new QHGroupBox( tr( "RevealingOrders" ), quizPage, "RevealingOptionsPanel" );
   
@@ -361,6 +363,8 @@ void PreferencesDialog::accept() {
     else if( quizAlgoSuperMemo2RadioButton->isChecked() )
         prefs->setQuizAlgorithm( Preferences::SUPERMEMO2 );
 
+    prefs->setQuizCharacterImageLocation( quizCharacterImageLocationField->text() );
+    prefs->setQuizCharacterImagesAnimated( quizCharacterImageTypeCheckbox->isOn() );
     prefs->setQuizLength( quizLengthSlider->value() );
 
     prefs->clearRevealingSequences();
