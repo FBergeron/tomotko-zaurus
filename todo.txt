@@ -1,5 +1,13 @@
 ToDo
 ----
+Change shortcut for ScheduleDialog.  It doesn't work.
+I cut and pasted a glossary into a folder and its description didn't follow.
+Stats should be visible for a word all the times (not only during a quiz)
+Ѕtop invoking CharacterDialog when making a selection.
+Add a note on the website indicating that glossaries must be imported as they are, without decompressing them beforehand.
+In the online help, add a section explaining how I use the application: sm-2 every day for 3 languages and from time to time, original quiz in opposite direction.
+Some words were asked twice in a row in sm-2.  Try to reduce that.
+Remember the number of times a word has been asked and answered successfully and display these counter in the stats window.
 If I want to have resizable animated movie for CharacterDialog, check this link: http://doc.trolltech.com/3.3/movies-example.html#x498
 Solidify movieResized().    
 Handle NoTermsMarkedForStudy and NoTermsScheduledForStudy separately.  Improve the message too.  Should mention that we need to select parents folders and glossaries too.
@@ -24,6 +32,7 @@ Update the conversion scripts for uid if needed.
 Reread all folder, vocab and term files carefully regarding uid management.
 Fix this bug: When comparing version number when loading data, the number is an hexadecimal value.  So 10 should be 0a probably.
 Is there a way to handle imagePath in one place (within term class?)?
+Maybe we should add QScrollView to all pages in Preferences just in case like the QuizPage.
 
 Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Refactor the code in editResultTerm() and editTerm().  The code is similar.  Maybe using signal/slot approach could work. There is a good example of that in page 18 of my Qt book for the FindDialog.
@@ -46,6 +55,7 @@ Remove markedXmlFilename declaration and everything that's related to it.
 Remove code that remove prefs.xml file.  Now obsolete.
 Remove code that remove marked.xml file.  Now obsolete.
 
+Bug: I create a folder X.  Inside the folder X, I create a glossary with one term.  Then I quit.  I reopen, I cut the glossary and paste it in the root folder so that the folder X becomes empty.  Then I cut and paste the folder X in the same location (the root folder).  *BOUM* the folder is not empty anymore!!  It contains the glossary with one term.  This happens because when we cut the item, the link with its parent is kept.  The link should be removed.  However, if we have a glossary with many translations and that we cut it, we should only cut the current translations and keep the item intact for the unseen translations.  I think that the solution to that would be to copy the buffer on disk, in a specially dedicated location, and remove the data immediately.
 Try again to render a dash-umlaut.  Try it on the zaurus as the rendering bug may be related to the emulator.  Try also on latest version of Qt.
 
 Implement Unicode character plugin.
@@ -55,6 +65,7 @@ Use signal/slot for language selection.  I think it would be cleaner to have a l
 Release 0.13.0
 
 Refactor save and load methods.  They look alike, I think it's possible do unify the process in a common method using parameters.
+Search Dialog in FreshMemory is interesting for regular expressions.
 
 There is a class called QDawg in Qtopia (for Zaurus) that could be interesting to create indexes in the case that we stop putting all the data in memory. (?)
 Use ASSERT(), CHECK_PTR() and qDebug(), qWarning() and qFatal() --> See Debugging Techniques page in documentation.
@@ -67,6 +78,7 @@ Same thing for VocabularyManagerFrame.copyTerms().
 Concerning SearchDialog, refactor, if possible, ResultListItem and TermListItem.  I think I can have a common base class (edit:really?) so that doRemoveTerms() don't have to be duplicated in SearchDialog and VocabularyManagerFrame.  Other code could be refactored too like getFont(), setFont(), etc.  The doRemoveTerms() of SearchDialog is a little bit more general so start from it.  The vocabDetailsPropsPanel should be probably be a parameter.  If not null, we should updateCounters().  Maybe I will have to use multiple inheritance to do that maybe using a TermItem class?
 
 
+Add a text box in the About dialog for credits?
 Add a new set of checked items for the sm2 algo.  There should be such set for each algo.  The tree should update itself whenever we change the current algo in the prefs.  Because of that, instead of using "sm2" string in the data filenames, maybe use the integer of the enum instead.  For now, an item (term, folder or vocab) has a boolean state for markedForStudy or not.  Either we pass a algo param to isMarkedForStudy() and setMarkedForStudy() or we keep a dissociate data structure that will keep the info for each algo.  I think the second approach is cleaner (design point of view) because it keeps the items uncoupled with algo. But the first approach seems easier.  The data structure should probably be located in the Prefs.  No need to save marked.dat.z if so.  By default, the set of checked items should be the same than the original one?  Or maybe not because what will we do if we add another algo... Maybe an empty selection is better.  Not sure that it's really needed.
 Should I deallocate sequences in Preferences's destructor?
 copyTerms(), pasteTerms() should be relocated (partially) into Controller.  Most probably that copy*() and paste*() too.

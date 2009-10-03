@@ -50,8 +50,8 @@ public:
 
     void add( Vocabulary* child );
     void add( Folder* child );
-    void remove( Vocabulary* child );
-    void remove( Folder* child );
+    void remove( Vocabulary* child, bool deleteChild = true );
+    void remove( Folder* child, bool deleteChild = true );
     bool isEmpty() const;
     int getChildrenCount() const;
     Folder* getFolder( const QUuid& uid );

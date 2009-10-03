@@ -1,5 +1,12 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>EasinessFactorDistribution</name>
+    <message>
+        <source>NumberOfTermsPerEF</source>
+        <translation>Nombre de mots classés par Facteur de Facilité.</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Actions</source>
@@ -434,6 +441,10 @@ Affecter le raccourci quand même?</translation>
     <message>
         <source>DaysToNextRepetition</source>
         <translation>Jour(s) avant la prochaine répétition</translation>
+    </message>
+    <message>
+        <source>EFDistributionInfo</source>
+        <translation>Distribution par FF</translation>
     </message>
 </context>
 <context>

@@ -209,14 +209,16 @@ void Folder::add( Folder* child ) {
     child->setParent( this );
 }
 
-void Folder::remove( Vocabulary* child ) {
+void Folder::remove( Vocabulary* child, bool deleteChild /* = true */ ) {
     children.remove( child );
-    delete( child );
+    if( deleteChild )
+        delete( child );
 }
 
-void Folder::remove( Folder* child ) {
+void Folder::remove( Folder* child, bool deleteChild /* = true */ ) {
     children.remove( child );
-    delete( child );
+    if( deleteChild )
+        delete( child );
 }
 
 bool Folder::isEmpty() const {

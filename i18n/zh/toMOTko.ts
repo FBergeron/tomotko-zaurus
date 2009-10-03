@@ -1,5 +1,12 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>EasinessFactorDistribution</name>
+    <message>
+        <source>NumberOfTermsPerEF</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Reveal</source>
@@ -416,6 +423,10 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>DaysToNextRepetition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EFDistributionInfo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

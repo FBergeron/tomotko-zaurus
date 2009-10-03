@@ -42,6 +42,7 @@ public:
     bool isInProgress() const;
     void init( const QString& firstLanguage, const QString& testLanguage, Folder* rootFolder );
     void getSchedule( int* schedule );
+    void getEFDistribution( QMap<int,int>& efDist );
     void reinit();
     void discardCurrentTerm();
     bool hasNextTerm() const;
@@ -63,6 +64,8 @@ private:
     void initRec( const QString& firstLanguage, const QString& testLanguage, Vocabulary* vocab );
     void getScheduleRec( Folder* folder, int* schedule );
     void getScheduleRec( Vocabulary* vocab, int* schedule );
+    void getEFDistributionRec( Folder* folder, QMap<int,int>& efDist );
+    void getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist );
     void shuffleTerms();
 
     QString getTermDataFilename() const;

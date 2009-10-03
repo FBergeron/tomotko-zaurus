@@ -1,5 +1,12 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>EasinessFactorDistribution</name>
+    <message>
+        <source>NumberOfTermsPerEF</source>
+        <translation>Numero de palabras clasificadas por Factor de Facilidad.</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Actions</source>
@@ -435,6 +442,10 @@ No obstante, asignar la teclea?</translation>
     <message>
         <source>DaysToNextRepetition</source>
         <translation>Dia(s) antes la proxima repetición</translation>
+    </message>
+    <message>
+        <source>EFDistributionInfo</source>
+        <translation>Repartición por FF</translation>
     </message>
 </context>
 <context>

@@ -5,8 +5,10 @@
 #include <qdialog.h>
 #include <qlayout.h>
 #include <qpainter.h>
+#include <qmap.h>
 #include <qslider.h>
 #include <qtabwidget.h>
+#include "EasinessFactorDistribution.h"
 #include "Progress.h"
 #include "Schedule.h"
 #include "SmartListView.h"
@@ -28,20 +30,23 @@ private:
 
     void init();
 
-    const ProgressData&     progressData;
+    const ProgressData&         progressData;
 
-    QVBoxLayout*            mainLayout;
-    QTabWidget*             tab;
+    QVBoxLayout*                mainLayout;
+    QTabWidget*                 tab;
 
-    QWidget*                scheduleTab;
-    QVBoxLayout*            scheduleTabLayout;
-    QWidget*                currTermTab;
-    QVBoxLayout*            currTermTabLayout;
+    QWidget*                    scheduleTab;
+    QVBoxLayout*                scheduleTabLayout;
+    QWidget*                    efDistributionTab;
+    QVBoxLayout*                efDistributionTabLayout;
+    QWidget*                    currTermTab;
+    QVBoxLayout*                currTermTabLayout;
 
-    Schedule*               schedule;
-    QSlider*                scheduleSlider;
+    Schedule*                   schedule;
+    EasinessFactorDistribution* efDistribution;
+    QSlider*                    scheduleSlider;
 
-    SmartListView*          currTermInfo;
+    SmartListView*              currTermInfo;
 
 };
 

@@ -13,8 +13,7 @@ void ProgressDialog::init() {
 
     bool isDataForCurrTermAvailable = ( progressData.currTerm.easinessFactor != 0.0f );
 
-    if( isDataForCurrTermAvailable )
-        tab = new QTabWidget( this );
+    tab = new QTabWidget( this );
 
     scheduleTab = new QWidget( this );
     scheduleTabLayout = new QVBoxLayout( scheduleTab );
@@ -24,6 +23,12 @@ void ProgressDialog::init() {
     connect( scheduleSlider, SIGNAL( valueChanged( int ) ), schedule, SLOT( setInterval( int ) ) );
     scheduleTabLayout->addWidget( schedule, 1 );
     scheduleTabLayout->addWidget( scheduleSlider );
+
+    efDistributionTab = new QWidget( this );
+    efDistributionTabLayout = new QVBoxLayout( efDistributionTab );
+    efDistributionTabLayout->setSpacing( 2 );
+    efDistribution = new EasinessFactorDistribution( efDistributionTab, progressData.efDistribution );
+    efDistributionTabLayout->addWidget( efDistribution, 1 );
 
     if( isDataForCurrTermAvailable ) {
         currTermTab = new QWidget( this );
@@ -47,15 +52,14 @@ void ProgressDialog::init() {
         currTermInfo->insertItem( daysToNextRepetitionListViewItem );
 
         currTermTabLayout->addWidget( currTermInfo );
+    }
 
-        tab->addTab( scheduleTab, tr( "ScheduleInfo" ) );
+    tab->addTab( scheduleTab, tr( "ScheduleInfo" ) );
+    tab->addTab( efDistributionTab, tr( "EFDistributionInfo" ) );
+    if( isDataForCurrTermAvailable )
         tab->addTab( currTermTab, tr( "CurrentTermInfo" ) );
 
-        mainLayout->addWidget( tab, 1 );
-    }
-    else {
-        mainLayout->addWidget( scheduleTab, 1 );
-    }
+    mainLayout->addWidget( tab, 1 );
 
     setCaption( tr( "ProgressDialogCaption" ) );
     setSizeGripEnabled( true );

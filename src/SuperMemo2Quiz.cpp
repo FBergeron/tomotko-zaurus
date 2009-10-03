@@ -53,12 +53,16 @@ void SuperMemo2Quiz::getSchedule( int* schedule ) {
     getScheduleRec( rootFolder, schedule );
 }
 
+void SuperMemo2Quiz::getEFDistribution( QMap<int,int>& efDist ) {
+    getEFDistributionRec( rootFolder, efDist );
+}
+
 void SuperMemo2Quiz::reinit() {
     // Not applicable.
 }
 
 void SuperMemo2Quiz::initRec( const QString& firstLang, const QString& testLang, Folder* folder ) {
-    if( folder->isMarkedForStudy() ) {
+    if( !folder->isMarkedForDeletion() && folder->isMarkedForStudy() ) {
         for( Base* child = folder->first(); child; child = folder->next() ) {
             if( strcmp( child->className(), "Folder" ) == 0 )
                 initRec( firstLang, testLang, (Folder*)child );
@@ -69,7 +73,7 @@ void SuperMemo2Quiz::initRec( const QString& firstLang, const QString& testLang,
 }
 
 void SuperMemo2Quiz::initRec( const QString& firstLang, const QString& testLang, Vocabulary* vocab ) {
-    if( vocab->isMarkedForStudy() ) {
+    if( !vocab->isMarkedForDeletion() && vocab->isMarkedForStudy() ) {
         for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
             const Term& term = it.data();
             if( !term.isMarkedForDeletion() && term.isMarkedForStudy() && 
@@ -88,7 +92,7 @@ void SuperMemo2Quiz::initRec( const QString& firstLang, const QString& testLang,
 }
 
 void SuperMemo2Quiz::getScheduleRec( Folder* folder, int* schedule ) {
-    if( folder->isMarkedForStudy() ) {
+    if( !folder->isMarkedForDeletion() && folder->isMarkedForStudy() ) {
         for( Base* child = folder->first(); child; child = folder->next() ) {
             if( strcmp( child->className(), "Folder" ) == 0 )
                 getScheduleRec( (Folder*)child, schedule );
@@ -121,6 +125,38 @@ void SuperMemo2Quiz::getScheduleRec( Vocabulary* vocab, int* schedule ) {
                             schedule[ i ]++;
                     }
                 }
+            }
+        }
+    }
+}
+
+void SuperMemo2Quiz::getEFDistributionRec( Folder* folder, QMap<int,int>& efDist ) {
+    if( !folder->isMarkedForDeletion() && folder->isMarkedForStudy() ) {
+        for( Base* child = folder->first(); child; child = folder->next() ) {
+            if( strcmp( child->className(), "Folder" ) == 0 )
+                getEFDistributionRec( (Folder*)child, efDist );
+            else if( strcmp( child->className(), "Vocabulary" ) == 0 )
+                getEFDistributionRec( (Vocabulary*)child, efDist );
+        }
+    }
+}
+
+void SuperMemo2Quiz::getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist ) {
+    if( vocab->isMarkedForStudy() ) {
+        for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
+            const Term& term = it.data();
+            if( !term.isMarkedForDeletion() && term.isMarkedForStudy() && 
+                term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
+                Translation firstLangTrans = term.getTranslation( firstLang );
+                Translation testLangTrans = term.getTranslation( testLang );
+                TermKey termKey( term.getUid(), term.getVocabUid() );
+                TermData termData = getTermData( termKey.getTermUid().toString() );
+
+                int ef = (int)( termData.easinessFactor * 10.0 ); // Use integer to prevent floating point numbers' imprecision problems.
+                int index = ( ef >= 30 ? 30 : ef );
+                int count = ( efDist.contains( index ) ? efDist[ index ] : 0 );
+                count++;
+                efDist.insert( index, count );
             }
         }
     }
@@ -233,6 +269,7 @@ void SuperMemo2Quiz::showProgressData( QWidget* parent ) {
     }
 
     getSchedule( progressData.scheduleForDay );
+    getEFDistribution( progressData.efDistribution );
 
     ProgressDialog dialog( parent, progressData );
     dialog.resize( 440, 330 ); 

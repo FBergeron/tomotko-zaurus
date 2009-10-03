@@ -1,5 +1,12 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>EasinessFactorDistribution</name>
+    <message>
+        <source>NumberOfTermsPerEF</source>
+        <translation>Number of words per Easiness Factor values.</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Actions</source>
@@ -434,6 +441,10 @@ Overwrite the current assignment?</translation>
     <message>
         <source>DaysToNextRepetition</source>
         <translation>Day(s) until next repetition</translation>
+    </message>
+    <message>
+        <source>EFDistributionInfo</source>
+        <translation>Distribution by EF</translation>
     </message>
 </context>
 <context>

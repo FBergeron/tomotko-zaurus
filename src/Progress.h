@@ -1,6 +1,8 @@
 #ifndef PROGRESS_H
 #define PROGRESS_H
 
+#include <qmap.h>
+
 struct CurrTermProgressData {
 
     CurrTermProgressData() {
@@ -21,10 +23,13 @@ struct ProgressData {
     ProgressData() {
         for( int i = 0; i < scheduleLength; i++ )
             scheduleForDay[ i ] = 0;
+
+        efDistribution = QMap<int,int>();
     }
 
-    int                  scheduleForDay[ scheduleLength ];
-    CurrTermProgressData currTerm;
+    int                     scheduleForDay[ scheduleLength ];
+    QMap<int,int>           efDistribution;
+    CurrTermProgressData    currTerm;
 };
 
 #endif

@@ -26,6 +26,7 @@ HEADERS += src/Base.h \
            src/TranslationSelectionDialog.h \
            src/ResultListItem.h \
            src/HistoryField.h \
+           src/EasinessFactorDistribution.h \
            src/Schedule.h \
            src/Progress.h \
            src/ProgressBar.h \
@@ -83,6 +84,7 @@ SOURCES += src/Util.cpp \
            src/TranslationSelectionDialog.cpp \
            src/ResultListItem.cpp \
            src/HistoryField.cpp \
+           src/EasinessFactorDistribution.cpp \
            src/Schedule.cpp \
            src/ProgressBar.cpp \
            src/ProgressDialog.cpp \

@@ -189,6 +189,8 @@ bool VocabularyManagerFrame::saveData() {
 
 bool VocabularyManagerFrame::isExportAllowed() const {
     TreeItem* selectedItem = (TreeItem*)vocabTreeView->currentItem();
+    if( !selectedItem )
+        return( false );
     if( selectedItem->isFolder() ) {
         FolderTreeItem* folderItem = (FolderTreeItem*)selectedItem;
         return( !folderItem->getFolder()->isEmpty() );
@@ -771,11 +773,13 @@ void VocabularyManagerFrame::doRemoveItem( bool confirmBeforeRemove = true ) {
             FolderTreeItem* folderItem = (FolderTreeItem*)currentItem;
             Folder* folder = folderItem->getFolder();
             folder->setMarkedForDeletion( true );
+            //folder->getParent()->remove( folder, false );
         }
         else {
             VocabTreeItem* vocabItem = (VocabTreeItem*)currentItem;
             Vocabulary* vocab = vocabItem->getVocabulary();
             vocab->setMarkedForDeletion( true );
+            //vocab->getParent()->remove( vocab, false );
         }
         vocabTreeView->removeItem();
     }
