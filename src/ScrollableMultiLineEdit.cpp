@@ -28,5 +28,6 @@ void ScrollableMultiLineEdit::mouseReleaseEvent( QMouseEvent* e ) {
     int column;
     getCursorPosition( &line, &column );
     const QChar& c = textLine( line ).at( column );
-    emit( characterClicked( c, e->pos() ) );
+    if( !hasMarkedText() )
+        emit( characterClicked( c, e->pos() ) );
 }
