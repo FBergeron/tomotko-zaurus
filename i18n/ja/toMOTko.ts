@@ -516,6 +516,10 @@ Overwrite the current assignment?</source>
         <translation>ギリシャ語</translation>
     </message>
     <message>
+        <source>eo</source>
+        <translation>エスペラント</translation>
+    </message>
+    <message>
         <source>it</source>
         <translation>イタリア語</translation>
     </message>

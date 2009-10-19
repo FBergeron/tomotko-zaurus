@@ -513,6 +513,10 @@ Overwrite the current assignment?</translation>
         <translation>Greek</translation>
     </message>
     <message>
+        <source>eo</source>
+        <translation>Esperanto</translation>
+    </message>
+    <message>
         <source>it</source>
         <translation>Italian</translation>
     </message>

@@ -534,6 +534,10 @@ No obstante, asignar la teclea?</translation>
         <translation>Griego</translation>
     </message>
     <message>
+        <source>eo</source>
+        <translation>Esperanto</translation>
+    </message>
+    <message>
         <source>it</source>
         <translation>Italiano</translation>
     </message>

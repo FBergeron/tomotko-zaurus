@@ -10,7 +10,7 @@ const QString PreferencesDialog::firstLanguageList[] = {
 
 const QString PreferencesDialog::studyLanguageList[] = { 
     QString( "en" ), QString( "fr" ), QString( "es" ), QString( "ja" ), QString( "de" ), QString( "ar" ), QString( "bg" ), QString( "el" ),
-    QString( "it" ), QString( "ko" ), QString( "nl" ), QString( "pt" ), QString( "ru" ), QString( "sw" ), QString( "th" ), QString( "vi" ),
+    QString( "eo" ), QString( "it" ), QString( "ko" ), QString( "nl" ), QString( "pt" ), QString( "ru" ), QString( "sw" ), QString( "th" ), QString( "vi" ),
     QString( "zh" )
 };
 

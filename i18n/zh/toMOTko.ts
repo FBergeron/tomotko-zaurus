@@ -516,6 +516,10 @@ Overwrite the current assignment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>eo</source>
+        <translation>世界語</translation>
+    </message>
+    <message>
         <source>it</source>
         <translation type="unfinished"></translation>
     </message>

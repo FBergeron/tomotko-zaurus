@@ -498,6 +498,10 @@ Overwrite the current assignment?</source>
         <translation>Griechisch</translation>
     </message>
     <message>
+        <source>eo</source>
+        <translation>Esperanto</translation>
+    </message>
+    <message>
         <source>it</source>
         <translation>Italienisch</translation>
     </message>

@@ -513,6 +513,10 @@ Affecter le raccourci quand même?</translation>
         <translation>Grec</translation>
     </message>
     <message>
+        <source>eo</source>
+        <translation>Espéranto</translation>
+    </message>
+    <message>
         <source>it</source>
         <translation>Italien</translation>
     </message>
