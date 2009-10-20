@@ -512,6 +512,14 @@ Overwrite the current assignment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>cs</source>
+        <translation>捷克語</translation>
+    </message>
+    <message>
+        <source>da</source>
+        <translation>丹麦語</translation>
+    </message>
+    <message>
         <source>el</source>
         <translation type="unfinished"></translation>
     </message>
@@ -520,11 +528,27 @@ Overwrite the current assignment?</source>
         <translation>世界語</translation>
     </message>
     <message>
+        <source>fi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>he</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ko</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>la</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -536,8 +560,20 @@ Overwrite the current assignment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>rm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ro</source>
+        <translation>羅馬尼亞語</translation>
+    </message>
+    <message>
         <source>ru</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sv</source>
+        <translation></translation>
     </message>
     <message>
         <source>sw</source>
@@ -546,6 +582,10 @@ Overwrite the current assignment?</source>
     <message>
         <source>th</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tl</source>
+        <translation>他加祿語</translation>
     </message>
     <message>
         <source>vi</source>

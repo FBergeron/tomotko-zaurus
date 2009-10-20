@@ -494,12 +494,32 @@ Overwrite the current assignment?</source>
         <translation>Bulgarisch</translation>
     </message>
     <message>
+        <source>cs</source>
+        <translation>Tschechische</translation>
+    </message>
+    <message>
+        <source>da</source>
+        <translation>Dänische</translation>
+    </message>
+    <message>
         <source>el</source>
         <translation>Griechisch</translation>
     </message>
     <message>
         <source>eo</source>
         <translation>Esperanto</translation>
+    </message>
+    <message>
+        <source>fi</source>
+        <translation>Finnische</translation>
+    </message>
+    <message>
+        <source>he</source>
+        <translation>Hebräische</translation>
+    </message>
+    <message>
+        <source>hi</source>
+        <translation>Hindi</translation>
     </message>
     <message>
         <source>it</source>
@@ -510,6 +530,10 @@ Overwrite the current assignment?</source>
         <translation>Koreanisch</translation>
     </message>
     <message>
+        <source>la</source>
+        <translation>Latein</translation>
+    </message>
+    <message>
         <source>nl</source>
         <translation>Holländisch</translation>
     </message>
@@ -518,8 +542,20 @@ Overwrite the current assignment?</source>
         <translation>Portugiesisch</translation>
     </message>
     <message>
+        <source>rm</source>
+        <translation>Rätoromanisch</translation>
+    </message>
+    <message>
+        <source>ro</source>
+        <translation>Rumänische</translation>
+    </message>
+    <message>
         <source>ru</source>
         <translation>Russisch</translation>
+    </message>
+    <message>
+        <source>sv</source>
+        <translation>Schwedische</translation>
     </message>
     <message>
         <source>sw</source>
@@ -528,6 +564,10 @@ Overwrite the current assignment?</source>
     <message>
         <source>th</source>
         <translation>Thai</translation>
+    </message>
+    <message>
+        <source>tl</source>
+        <translation>Tagalog</translation>
     </message>
     <message>
         <source>vi</source>

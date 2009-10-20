@@ -530,12 +530,32 @@ No obstante, asignar la teclea?</translation>
         <translation>Bulgar</translation>
     </message>
     <message>
+        <source>cs</source>
+        <translation>Checo</translation>
+    </message>
+    <message>
+        <source>da</source>
+        <translation>Danés</translation>
+    </message>
+    <message>
         <source>el</source>
         <translation>Griego</translation>
     </message>
     <message>
         <source>eo</source>
         <translation>Esperanto</translation>
+    </message>
+    <message>
+        <source>fi</source>
+        <translation>Finés</translation>
+    </message>
+    <message>
+        <source>he</source>
+        <translation>Hebreo</translation>
+    </message>
+    <message>
+        <source>hi</source>
+        <translation>Hindi</translation>
     </message>
     <message>
         <source>it</source>
@@ -546,6 +566,10 @@ No obstante, asignar la teclea?</translation>
         <translation>Coreano</translation>
     </message>
     <message>
+        <source>la</source>
+        <translation>Latín</translation>
+    </message>
+    <message>
         <source>nl</source>
         <translation>Deutch</translation>
     </message>
@@ -554,8 +578,20 @@ No obstante, asignar la teclea?</translation>
         <translation>Portugués</translation>
     </message>
     <message>
+        <source>rm</source>
+        <translation>Romanche</translation>
+    </message>
+    <message>
+        <source>ro</source>
+        <translation>Rumano</translation>
+    </message>
+    <message>
         <source>ru</source>
         <translation>Ruso</translation>
+    </message>
+    <message>
+        <source>sv</source>
+        <translation>Sueco</translation>
     </message>
     <message>
         <source>sw</source>
@@ -564,6 +600,10 @@ No obstante, asignar la teclea?</translation>
     <message>
         <source>th</source>
         <translation>Tailandés</translation>
+    </message>
+    <message>
+        <source>tl</source>
+        <translation>Tagalo</translation>
     </message>
     <message>
         <source>vi</source>

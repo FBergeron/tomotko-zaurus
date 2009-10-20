@@ -512,12 +512,32 @@ Overwrite the current assignment?</source>
         <translation>ブルガリア語</translation>
     </message>
     <message>
+        <source>cs</source>
+        <translation>チェコ語</translation>
+    </message>
+    <message>
+        <source>da</source>
+        <translation>デンマーク語</translation>
+    </message>
+    <message>
         <source>el</source>
         <translation>ギリシャ語</translation>
     </message>
     <message>
         <source>eo</source>
         <translation>エスペラント</translation>
+    </message>
+    <message>
+        <source>fi</source>
+        <translation>フィンランド語</translation>
+    </message>
+    <message>
+        <source>he</source>
+        <translation>ヘブライ語</translation>
+    </message>
+    <message>
+        <source>hi</source>
+        <translation>ヒンディー語</translation>
     </message>
     <message>
         <source>it</source>
@@ -528,6 +548,10 @@ Overwrite the current assignment?</source>
         <translation>韓国語</translation>
     </message>
     <message>
+        <source>la</source>
+        <translation>ラテン語</translation>
+    </message>
+    <message>
         <source>nl</source>
         <translation>オランダ語</translation>
     </message>
@@ -536,8 +560,20 @@ Overwrite the current assignment?</source>
         <translation>ポルトガル語</translation>
     </message>
     <message>
+        <source>rm</source>
+        <translation>ロマンシュ語</translation>
+    </message>
+    <message>
+        <source>ro</source>
+        <translation>ルーマニア語</translation>
+    </message>
+    <message>
         <source>ru</source>
         <translation>ロシア語</translation>
+    </message>
+    <message>
+        <source>sv</source>
+        <translation>スウェーデン語</translation>
     </message>
     <message>
         <source>sw</source>
@@ -546,6 +582,10 @@ Overwrite the current assignment?</source>
     <message>
         <source>th</source>
         <translation>タイ語</translation>
+    </message>
+    <message>
+        <source>tl</source>
+        <translation>タガログ語</translation>
     </message>
     <message>
         <source>vi</source>

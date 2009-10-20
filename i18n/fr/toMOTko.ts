@@ -509,12 +509,32 @@ Affecter le raccourci quand même?</translation>
         <translation>Bulgare</translation>
     </message>
     <message>
+        <source>cs</source>
+        <translation>Tchèque</translation>
+    </message>
+    <message>
+        <source>da</source>
+        <translation>Danois</translation>
+    </message>
+    <message>
         <source>el</source>
         <translation>Grec</translation>
     </message>
     <message>
         <source>eo</source>
         <translation>Espéranto</translation>
+    </message>
+    <message>
+        <source>fi</source>
+        <translation>Finnois</translation>
+    </message>
+    <message>
+        <source>he</source>
+        <translation>Hébreu</translation>
+    </message>
+    <message>
+        <source>hi</source>
+        <translation>Hindî</translation>
     </message>
     <message>
         <source>it</source>
@@ -525,6 +545,10 @@ Affecter le raccourci quand même?</translation>
         <translation>Koréen</translation>
     </message>
     <message>
+        <source>la</source>
+        <translation>Latin</translation>
+    </message>
+    <message>
         <source>nl</source>
         <translation>Néerlandais</translation>
     </message>
@@ -533,8 +557,20 @@ Affecter le raccourci quand même?</translation>
         <translation>Portuguais</translation>
     </message>
     <message>
+        <source>rm</source>
+        <translation>Romanche</translation>
+    </message>
+    <message>
+        <source>ro</source>
+        <translation>Roumain</translation>
+    </message>
+    <message>
         <source>ru</source>
         <translation>Russe</translation>
+    </message>
+    <message>
+        <source>sv</source>
+        <translation>Suédois</translation>
     </message>
     <message>
         <source>sw</source>
@@ -543,6 +579,10 @@ Affecter le raccourci quand même?</translation>
     <message>
         <source>th</source>
         <translation>Thaï</translation>
+    </message>
+    <message>
+        <source>tl</source>
+        <translation>Tagalog</translation>
     </message>
     <message>
         <source>vi</source>

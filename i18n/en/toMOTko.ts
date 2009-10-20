@@ -509,12 +509,32 @@ Overwrite the current assignment?</translation>
         <translation>Bulgar</translation>
     </message>
     <message>
+        <source>cs</source>
+        <translation>Czech</translation>
+    </message>
+    <message>
+        <source>da</source>
+        <translation>Danish</translation>
+    </message>
+    <message>
         <source>el</source>
         <translation>Greek</translation>
     </message>
     <message>
         <source>eo</source>
         <translation>Esperanto</translation>
+    </message>
+    <message>
+        <source>fi</source>
+        <translation>Finnish</translation>
+    </message>
+    <message>
+        <source>he</source>
+        <translation>Hebrew</translation>
+    </message>
+    <message>
+        <source>hi</source>
+        <translation>Hindi</translation>
     </message>
     <message>
         <source>it</source>
@@ -525,6 +545,10 @@ Overwrite the current assignment?</translation>
         <translation>Korean</translation>
     </message>
     <message>
+        <source>la</source>
+        <translation>Latin</translation>
+    </message>
+    <message>
         <source>nl</source>
         <translation>Dutch</translation>
     </message>
@@ -533,8 +557,20 @@ Overwrite the current assignment?</translation>
         <translation>Portuguese</translation>
     </message>
     <message>
+        <source>rm</source>
+        <translation>Romansh</translation>
+    </message>
+    <message>
+        <source>ro</source>
+        <translation>Romanian</translation>
+    </message>
+    <message>
         <source>ru</source>
         <translation>Russian</translation>
+    </message>
+    <message>
+        <source>sv</source>
+        <translation>Swedish</translation>
     </message>
     <message>
         <source>sw</source>
@@ -543,6 +579,10 @@ Overwrite the current assignment?</translation>
     <message>
         <source>th</source>
         <translation>Thai</translation>
+    </message>
+    <message>
+        <source>tl</source>
+        <translation>Tagalog</translation>
     </message>
     <message>
         <source>vi</source>
