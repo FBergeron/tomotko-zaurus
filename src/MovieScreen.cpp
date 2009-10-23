@@ -79,7 +79,7 @@ void MovieScreen::movieUpdated( const QRect& /*rect*/ ) {
 }
 
 void MovieScreen::movieResized( const QSize& size ) {
-    QSize currSize( this->size().width(), this->size().height() );
+    //QSize currSize( this->size().width(), this->size().height() );
     preferredSize = QSize( size.width() * 2, size.height() * 2 );
 //cout << "currSize=" << currSize.width() << "x" << currSize.height() << " size=" << size.width() << "x" << size.height() << endl;
     updateGeometry();

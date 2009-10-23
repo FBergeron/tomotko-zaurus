@@ -163,7 +163,7 @@ MainWindow::MainWindow( Controller* controller )
     action[ ACTION_GRADE_ANSWER_6 ] = Util::createAction( tr( "gradeAnswer6" ), gradeAnswer6_xpm,
         quizFrame, SLOT( gradeAnswer6() ), prefs.getAccelerator( ACTION_GRADE_ANSWER_6 ) );
     action[ ACTION_SHOW_PROGRESS ] = Util::createAction( tr( "progressDetails..." ), progressDetails_xpm,
-        quizFrame, SLOT( showProgressDetails() ), prefs.getAccelerator( ACTION_SHOW_PROGRESS ) );
+        this, SLOT( showProgressDetails() ), prefs.getAccelerator( ACTION_SHOW_PROGRESS ) );
 
     actionsMenu = new QPopupMenu( this );
     actionsMenu->setCheckable( true );
@@ -433,8 +433,12 @@ void MainWindow::search() {
 }
 
 void MainWindow::showProgressDetails() {
-    if( mainPanel->visibleWidget() == quizFrame )
-        quizFrame->showProgressDetails();
+    ProgressData progressData = control->getProgressData();
+
+    ProgressDialog dialog( this, progressData );
+    dialog.resize( 440, 330 ); 
+    dialog.show();
+    dialog.exec();
 }
 
 void MainWindow::updateEasinessFactor( const float& easinessFactor ) {

@@ -77,7 +77,6 @@ public slots:
 
     void toggleMaximizeComment( bool isOn );
 
-    void showProgressDetails();
     void showCharacter( const QChar& character, const QPoint& position );
 
 signals:

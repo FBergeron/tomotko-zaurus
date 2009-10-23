@@ -21,6 +21,7 @@
 #include "Preferences.h"
 #include "Progress.h"
 #include "Sequence.h"
+#include "Statistics.h"
 #include "SuperMemo2Quiz.h"
 #include "Term.h"
 #include "TermKey.h"
@@ -33,6 +34,8 @@
 class Controller : public QObject {
 
     Q_OBJECT
+
+    static const Q_UINT32 magicNumber( Q_UINT32( 0x22446680 ) );
 
 public:
 
@@ -53,7 +56,7 @@ public:
     bool loadQuiz();
     void prepareQuiz();
     int getQuizAnswerCount() const;
-    void showQuizProgressData( QWidget* parent ) const;
+    ProgressData getProgressData();
     float getQuizCurrentTermEasinessFactor() const;
     int getQuizCurrentTermRepetition() const;
     int getQuizCurrentTermNextRepetition() const;
@@ -72,12 +75,15 @@ public:
     Sequence& getRevealingSequence();
     int getRevealingSequenceStep() const;
     void incrementRevealingSequenceStep();
-        
+  
     void rightAnswer();
     void wrongAnswer();
     void gradeAnswer( int grade );
     void reveal();
-   
+
+    void getSchedule( int* schedule );
+    void getEFDistribution( QMap<int,int>& efDist );
+
     bool saveData();
     void loadData();
    
@@ -134,6 +140,11 @@ signals:
 
 private:
 
+    void getScheduleRec( Folder* folder, int* schedule );
+    void getScheduleRec( Vocabulary* vocab, int* schedule );
+    void getEFDistributionRec( Folder* folder, QMap<int,int>& efDist );
+    void getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist );
+
     int writeFileIntoZipFile( zipFile outputFile, const char* filename, const char* data, int length ) const; 
 
     void initMarkedForStudyRec( Folder* folder, UidList& folderUids, UidList& vocabUids, UidListMap& termUids );
@@ -176,7 +187,6 @@ private:
     Sequence            currRevealingSeq;
     int                 currRevealingSeqStep;
     Quiz*               quiz;
-    //OriginalQuiz        quiz;
 
     QString             markedXmlFilename;
     QString             markedFilename;

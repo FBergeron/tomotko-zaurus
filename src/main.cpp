@@ -32,6 +32,7 @@ int main( int argc, char **argv ) {
 
     QPEApplication a( argc, argv );
     Controller* controller = new Controller();
+    //controller->loadTermData();
     if( !controller->init() ) {
         cerr << "Cannot initialize controller.  Check disk space and file permissions." << endl;
         exit( 2 );
@@ -45,3 +46,29 @@ int main( int argc, char **argv ) {
     a.showMainWidget( mainWindow );
     return a.exec();
 }
+
+//int main( int /*argc*/, char ** /*argv*/ ) {
+//    Controller* controller = new Controller();
+//    //QString termUid = "{00000000-0000-0000-0000-000000000000}";
+//    //QString termUid = "{zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz}";
+//    //QString termUid = "{007597ea-28af-4ef6-8bea-60a05fe36c6e}";
+//    //QString termUid = "{ffd34b57-dc0b-4cdf-bacf-a7a41d7a4944}";
+//    QString termUid = "{f86fce9a-5490-4cd8-b393-12640ea8ca5d}";
+//    TermData termData = controller->loadTermData( termUid );
+//    cerr << "interval=" << termData.interval << " repetition=" << termData.repetition << " EF=" << termData.easinessFactor << endl;
+//
+//    
+//
+//    //termData.repetition++;
+//    //termData.easinessFactor = 3.0f;
+//    //bool wasWritten = controller->saveTermData( termUid, termData );
+//    //cerr << "wasWritten=" << wasWritten << endl;
+//    //termData = controller->loadTermData( termUid );
+//    //cerr << "interval=" << termData.interval << " repetition=" << termData.repetition << " EF=" << termData.easinessFactor << endl;
+//
+//    //controller->saveTermData( 
+//    //controller->loadTermData();
+//    //controller->saveUncompressedTermData();
+//    //controller->saveTermData();
+//    return( 0 );
+//}

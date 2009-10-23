@@ -670,6 +670,7 @@ void QuizFrame::revealTestLangTerm() {
 
 void QuizFrame::revealComment() {
     commentStack->raiseWidget( 0 );
+    commentMultiLineEdit->setCursorPosition( 0, 0 );
 }
 
 void QuizFrame::revealImage() {
@@ -681,10 +682,6 @@ void QuizFrame::toggleMaximizeComment( bool isOn ) {
         maximizeCommentField();
     else
         restoreCommentField();
-}
-
-void QuizFrame::showProgressDetails() {
-    controller->showQuizProgressData( parentWidget() );
 }
 
 void QuizFrame::showCharacter( const QChar& character, const QPoint& /*position*/ ) {

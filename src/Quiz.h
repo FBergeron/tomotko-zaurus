@@ -35,7 +35,6 @@ public:
     virtual int getInitialTermCount() const { return( initTermCount ); };    
     virtual int getAnswerCount() const = 0;
 
-    virtual void showProgressData( QWidget* parent );
     virtual float getCurrentTermEasinessFactor();
     virtual int getCurrentTermRepetition();
     virtual int getCurrentTermNextRepetition();

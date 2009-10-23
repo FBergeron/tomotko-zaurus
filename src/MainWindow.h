@@ -31,6 +31,7 @@
 #include "Controller.h"
 #include "PixMap.h"
 #include "PreferencesDialog.h"
+#include "Progress.h"
 #include "ProgressBar.h"
 #include "QuizFrame.h"
 #include "VocabularyManagerFrame.h"

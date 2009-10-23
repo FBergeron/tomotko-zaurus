@@ -13,10 +13,9 @@
 #include "Vocabulary.h"
 #include "Progress.h"
 #include "ProgressDialog.h"
+#include "Statistics.h"
 
 class SuperMemo2Quiz : public Quiz {
-
-    static const Q_UINT32 magicNumber( Q_UINT32( 0x22446680 ) );
 
 public:
 
@@ -26,13 +25,6 @@ public:
  
     const char* className() const { return( "SuperMemo2Quiz" ); }
 
-    struct TermData {
-        int interval;
-        uint repetition;
-        float easinessFactor; // EF
-        QDate nextRepetitionDate;
-    };
-
     bool isResumable() const;
     bool load();
     bool save();
@@ -41,8 +33,6 @@ public:
 
     bool isInProgress() const;
     void init( const QString& firstLanguage, const QString& testLanguage, Folder* rootFolder );
-    void getSchedule( int* schedule );
-    void getEFDistribution( QMap<int,int>& efDist );
     void reinit();
     void discardCurrentTerm();
     bool hasNextTerm() const;
@@ -53,7 +43,6 @@ public:
     int getProgress() const;
     int getAnswerCount() const;
 
-    void showProgressData( QWidget* parent );
     float getCurrentTermEasinessFactor();
     int getCurrentTermRepetition();
     int getCurrentTermNextRepetition();
@@ -62,28 +51,15 @@ private:
 
     void initRec( const QString& firstLanguage, const QString& testLanguage, Folder* folder );
     void initRec( const QString& firstLanguage, const QString& testLanguage, Vocabulary* vocab );
-    void getScheduleRec( Folder* folder, int* schedule );
-    void getScheduleRec( Vocabulary* vocab, int* schedule );
-    void getEFDistributionRec( Folder* folder, QMap<int,int>& efDist );
-    void getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist );
     void shuffleTerms();
 
-    QString getTermDataFilename() const;
-
-    TermData getTermData( const QString& termUid );
-    void setTermData( const QString& termUid, const TermData& termData );
 
     int getNextInterval( int interval, float easinessFactor, int repetition ) const;
-
-    bool loadTermData();
-    bool saveTermData() const;
 
     QValueList<TermKey>     terms;
     QValueList<TermKey>     termsToRemove;
 
     uint                    currTermIndex;
-
-    QMap<QString, TermData> allTermData;
 
 };
 

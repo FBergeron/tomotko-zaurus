@@ -449,10 +449,6 @@ bool Preferences::isFolderOpen( const QUuid& folderUid ) const {
     return( !closedFolders.contains( folderUid.toString() ) );
 }
 
-//bool Preferences::isFolderOpen( int folderId ) const {
-//    return( !closedFolders.contains( folderId ) );
-//}
-
 void Preferences::setFolderOpen( const QUuid& folderUid, bool isOpen ) {
     if( isOpen )
         closedFolders.remove( folderUid.toString() );
@@ -461,15 +457,6 @@ void Preferences::setFolderOpen( const QUuid& folderUid, bool isOpen ) {
             closedFolders.append( folderUid.toString() );
     }
 }
-
-//void Preferences::setFolderOpen( int folderId, bool isOpen ) {
-//    if( isOpen )
-//        closedFolders.remove( folderId );
-//    else {
-//        if( !closedFolders.contains( folderId ) ) 
-//            closedFolders.append( folderId );
-//    }
-//}
 
 void Preferences::setApplicationDirName( const QString& applDir ) {
     prefsXmlFilename = applDir + QString( "/prefs.xml" );
@@ -524,7 +511,7 @@ void Preferences::initDefaultKeyboardAccelerators() {
     defaultAccel[ ACTION_GRADE_ANSWER_4 ] = Key_4;
     defaultAccel[ ACTION_GRADE_ANSWER_5 ] = Key_5;
     defaultAccel[ ACTION_GRADE_ANSWER_6 ] = Key_6;
-    defaultAccel[ ACTION_SHOW_PROGRESS ] = CTRL + Key_Question;
+    defaultAccel[ ACTION_SHOW_PROGRESS ] = CTRL + Key_R;
 }
 
 QFont Preferences::getFont( const QString& fontFamily, uint size ) const {

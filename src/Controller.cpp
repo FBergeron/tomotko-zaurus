@@ -15,6 +15,7 @@ bool Controller::init() {
         if( !applDir.mkdir( applicationDirName ) )
             return( false );
     }
+    Statistics::makeInstance( applicationDirName );
     getPreferences().load();
     return( true ); 
 }
@@ -62,9 +63,29 @@ int Controller::getQuizAnswerCount() const {
     return( quiz ? quiz->getAnswerCount() : 0 );
 }
 
-void Controller::showQuizProgressData( QWidget* parent ) const {
-    if( quiz )
-        quiz->showProgressData( parent );
+ProgressData Controller::getProgressData() {
+    QString firstLang = prefs.getFirstLanguage();
+    QString testLang = prefs.getTestLanguage();
+
+    Statistics::instance()->loadTermData( firstLang, testLang );
+
+    ProgressData progressData;
+
+    if( quiz ) {
+        TermKey currTermKey = quiz->getCurrentTerm();
+        if( !currTermKey.isNull() ) {
+            TermData termData = Statistics::instance()->getTermData( currTermKey.getTermUid().toString() );
+
+            progressData.currTerm.repetition = termData.repetition;
+            progressData.currTerm.easinessFactor = termData.easinessFactor;
+            progressData.currTerm.daysToNextRepetition = ( termData.nextRepetitionDate.isNull() ? 0 : QDate::currentDate().daysTo( termData.nextRepetitionDate ) );
+        }
+    }
+
+    getSchedule( progressData.scheduleForDay );
+    getEFDistribution( progressData.efDistribution );
+
+    return( progressData );
 }
 
 float Controller::getQuizCurrentTermEasinessFactor() const {
@@ -1646,3 +1667,89 @@ QValueList<TermKey> Controller::getSearchResults() const {
 int Controller::getSearchResultsCount() const {
     return( searchResults.count() );
 }
+
+void Controller::getSchedule( int* schedule ) {
+    for( int i = 0; i < scheduleLength; i++ )
+        schedule[ i ] = 0;
+    getScheduleRec( vocabTree, schedule );
+}
+
+void Controller::getEFDistribution( QMap<int,int>& efDist ) {
+    getEFDistributionRec( vocabTree, efDist );
+}
+
+void Controller::getScheduleRec( Folder* folder, int* schedule ) {
+    if( !folder->isMarkedForDeletion() && folder->isMarkedForStudy() ) {
+        for( Base* child = folder->first(); child; child = folder->next() ) {
+            if( strcmp( child->className(), "Folder" ) == 0 )
+                getScheduleRec( (Folder*)child, schedule );
+            else if( strcmp( child->className(), "Vocabulary" ) == 0 )
+                getScheduleRec( (Vocabulary*)child, schedule );
+        }
+    }
+}
+
+void Controller::getScheduleRec( Vocabulary* vocab, int* schedule ) {
+    if( vocab->isMarkedForStudy() ) {
+        QString firstLang = prefs.getFirstLanguage();
+        QString testLang = prefs.getTestLanguage();
+        for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
+            const Term& term = it.data();
+            if( !term.isMarkedForDeletion() && term.isMarkedForStudy() && 
+                term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
+                Translation firstLangTrans = term.getTranslation( firstLang );
+                Translation testLangTrans = term.getTranslation( testLang );
+                TermKey termKey( term.getUid(), term.getVocabUid() );
+                TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
+
+                QDate today = QDate::currentDate();
+                for( int i = 0; i < scheduleLength; i++ ) {
+                    QDate date = today.addDays( i );
+                    if( termData.nextRepetitionDate.isNull() ) {
+                        if( i == 0 )
+                            schedule[ i ]++;
+                    }
+                    else {
+                        if( termData.nextRepetitionDate == date || ( i == 0 && termData.nextRepetitionDate < date ) )
+                            schedule[ i ]++;
+                    }
+                }
+            }
+        }
+    }
+}
+
+void Controller::getEFDistributionRec( Folder* folder, QMap<int,int>& efDist ) {
+    if( !folder->isMarkedForDeletion() && folder->isMarkedForStudy() ) {
+        for( Base* child = folder->first(); child; child = folder->next() ) {
+            if( strcmp( child->className(), "Folder" ) == 0 )
+                getEFDistributionRec( (Folder*)child, efDist );
+            else if( strcmp( child->className(), "Vocabulary" ) == 0 )
+                getEFDistributionRec( (Vocabulary*)child, efDist );
+        }
+    }
+}
+
+void Controller::getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist ) {
+    if( vocab->isMarkedForStudy() ) {
+        QString firstLang = prefs.getFirstLanguage();
+        QString testLang = prefs.getTestLanguage();
+        for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
+            const Term& term = it.data();
+            if( !term.isMarkedForDeletion() && term.isMarkedForStudy() && 
+                term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
+                Translation firstLangTrans = term.getTranslation( firstLang );
+                Translation testLangTrans = term.getTranslation( testLang );
+                TermKey termKey( term.getUid(), term.getVocabUid() );
+                TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
+
+                int ef = (int)( termData.easinessFactor * 10.0 ); // Use integer to prevent floating point numbers' imprecision problems.
+                int index = ( ef >= 30 ? 30 : ef );
+                int count = ( efDist.contains( index ) ? efDist[ index ] : 0 );
+                count++;
+                efDist.insert( index, count );
+            }
+        }
+    }
+}
+

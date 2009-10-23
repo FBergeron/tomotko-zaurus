@@ -46,6 +46,7 @@ HEADERS += src/Base.h \
            src/TermKey.h \
            src/Folder.h \
            src/TermListItem.h \
+           src/Statistics.h \
            src/StandbyTerm.h \
            src/GradeButton.h \
            src/Quiz.h \
@@ -103,6 +104,7 @@ SOURCES += src/Util.cpp \
            src/TermKey.cpp \
            src/Folder.cpp \
            src/TermListItem.cpp \
+           src/Statistics.cpp \
            src/StandbyTerm.cpp \
            src/GradeButton.cpp \
            src/Quiz.cpp \
