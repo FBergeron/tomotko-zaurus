@@ -30,9 +30,8 @@ public:
     TermData loadTermData( const QString& termUid, const QString& firstLang, const QString& testLang );
 
     /*
-     * Save term data for an existing record.  This function overwrite the file and should not be used
-     * to insert new record.
-     * Returns true if the record was written, false otherwise.
+     * Save term data.  Existing record will be overwritten.  Otherwise, new record will be inserted.
+     * Returns true if the record was saved, false otherwise.
      */
     bool saveTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData );
     bool saveTermData( const QString& firstLang, const QString& testLang ) const;
@@ -41,6 +40,19 @@ public:
     QString getTermDataFilename( const QString& firstLang, const QString& testLang ) const;
 
 private:
+
+    /*
+     * Save term data for an existing record.  This function overwrite the file and should not be used
+     * to insert new record.
+     * Returns true if the record was written, false otherwise.
+     */
+    bool overwriteTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData );
+
+    /*
+     * Insert new term data record.
+     * Returns true if the record was written, false otherwise.
+     */
+    bool insertTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& newTermData );
 
     static Statistics* singleton;
 

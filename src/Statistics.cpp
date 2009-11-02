@@ -82,7 +82,7 @@ bool Statistics::loadTermData( const QString& firstLang, const QString& testLang
     in.setVersion( 3 );
     while( !in.atEnd() ) {
         in >> tempTermUid >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
-cerr << "uid=" << tempTermUid << endl;
+
         TermData termData;
         termData.interval = tempInterval;
         termData.repetition = tempRepetition;
@@ -91,7 +91,7 @@ cerr << "uid=" << tempTermUid << endl;
 
         allTermData[ tempTermUid ] = termData;
 
-        cerr << tempTermUid << ": interval=" << tempInterval << " repetition=" << tempRepetition << " EF=" << tempEasinessFactor << " nextRepDate=" << tempNextRepetitionDate.toString() << endl;
+        //cerr << tempTermUid << ": interval=" << tempInterval << " repetition=" << tempRepetition << " EF=" << tempEasinessFactor << " nextRepDate=" << tempNextRepetitionDate.toString() << endl;
     }
 
     currentLanguages = key;
@@ -232,6 +232,13 @@ bool Statistics::saveTermData( const QString& firstLang, const QString& testLang
 }
 
 bool Statistics::saveTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData ) {
+    if( overwriteTermData( termUid, firstLang, testLang, termData ) )
+        return( true );
+
+    return( insertTermData( termUid, firstLang, testLang, termData ) );
+}
+
+bool Statistics::overwriteTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData ) {
     QFile dataFile( getTermDataFilename( firstLang, testLang ) );
     if( !dataFile.exists() )
         return( false );
@@ -287,6 +294,104 @@ bool Statistics::saveTermData( const QString& termUid, const QString& firstLang,
     }
     
     dataFile.close();
+
+    return( true );
+}
+
+bool Statistics::insertTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& newTermData ) {
+    QFile dataFile( getTermDataFilename( firstLang, testLang ) );
+    if( !dataFile.exists() )
+        return( false );
+
+    if( !dataFile.open( IO_ReadWrite ) ) {
+        cerr << "Cannot open metadata file: " << dataFile.name() << endl;
+        return( false );
+    }
+
+    QFile newDataFile( getTermDataFilename( firstLang, testLang ) + ".tmp" );
+    if( newDataFile.exists() && !newDataFile.remove() ) {
+        dataFile.close();
+        return( false );
+    }
+
+    if( !newDataFile.open( IO_WriteOnly ) ) {
+        cerr << "Cannot open metadata file: " << newDataFile.name() << endl;
+        dataFile.close();
+        return( false );
+    }
+
+    Q_UINT32 tempMagicNumber;
+    Q_UINT16 tempVersion;
+   
+    QDataStream in( &dataFile );
+    QDataStream out( &newDataFile );
+
+    in >> tempMagicNumber >> tempVersion;
+    if( tempMagicNumber != Statistics::magicNumber ) {
+        cerr << "Wrong magic number: Incompatible SuperMemo2Quiz data file." << endl;
+        dataFile.close();
+        newDataFile.close();
+        return( false );
+    }
+    if( tempVersion > 0x0001 ) {
+        cerr << "SuperMemo2Quiz data file is from a more recent version.  Upgrade toMOTko." << endl;
+        dataFile.close();
+        newDataFile.close();
+        return( false );
+    }
+    if( tempVersion < 0x0001 ) {
+        cerr << "SuperMemo2Quiz data format too old.  You must use an anterior version of toMOTko." << endl;
+        dataFile.close();
+        newDataFile.close();
+        return( false );
+    }
+
+    bool isNewRecordWritten = false;
+    in.setVersion( 3 );
+
+    out.setVersion( 3 );
+    out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
+
+    while( !in.atEnd() ) {
+        QString tempTermUid;
+        int tempInterval;
+        uint tempRepetition;
+        float tempEasinessFactor;
+        QDate tempNextRepetitionDate;
+
+        in >> tempTermUid >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
+
+        TermData termData;
+        termData.interval = tempInterval;
+        termData.repetition = tempRepetition;
+        termData.easinessFactor = tempEasinessFactor;
+        termData.nextRepetitionDate = tempNextRepetitionDate;
+
+        if( isNewRecordWritten || tempTermUid.compare( termUid ) < 0 ) {
+            out << tempTermUid << termData.interval << termData.repetition << termData.easinessFactor << termData.nextRepetitionDate;
+        }
+        else {
+            out << termUid << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
+
+            isNewRecordWritten = true;
+        }
+    }
+    
+    dataFile.close();
+    newDataFile.close();
+
+    if( !dataFile.remove() ) {
+        cerr << "Cannot remove file: " << dataFile.name() << endl;
+        return( false );
+    }
+
+    if( !Util::copy( newDataFile.name(), dataFile.name() ) ) {
+        cerr << "Cannot copy file: " << newDataFile.name() << " to " << dataFile.name() << endl;
+        return( false );
+    }
+
+    if( !newDataFile.remove() )
+        cerr << "Cannot remove file: " << dataFile.name() << endl;
 
     return( true );
 }
