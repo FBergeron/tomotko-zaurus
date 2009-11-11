@@ -25,7 +25,7 @@ public:
     static Statistics* instance();
 
     TermData getTermData( const QString& termUid );
-    void setTermData( const QString& termUid, const TermData& termData );
+    void setTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData );
     bool loadTermData( const QString& firstLang, const QString& testLang );
     TermData loadTermData( const QString& termUid, const QString& firstLang, const QString& testLang );
 

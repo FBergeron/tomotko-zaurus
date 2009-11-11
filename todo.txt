@@ -1,12 +1,13 @@
 ToDo
 ----
+Improve classification for EF graphs.  I start a quiz with a 5 terms, on the first, term, I choose grade 4.  The EF becomes 2.36.  It is counted in the <2.3 column.  That's a bug. Rounding?
+
+The methods insertTermData() and overwriteTermData()... Should they have an output param isTermDataWritten instead of using return value?  It's a little bit inconsistent with previous existing methods which use return value to indicate an error?  Or is it?
 Check if I still need SuperMemo2::getCurrentTermEasinessFactor() and implement it if it's the case.  Same thing for Repetition and NextRepetition.
 Test if the Progress Dialog data are synchronized.  
-The term data insertion is not implemented yet.
 
 The problem is this:  The Progress Dialog, in order to be independant (and now is), must read the termData from file and display them.  However, when we're in the middle of a quiz, we have running termData that are not saved on disk until the quiz is over.  So...  If we open the Progress Dialog, the termData will not be synchronized.  To fix that, 2 approaches:  Either we write on disk immediate changes or we pass the quiz's data to Progress Dialog.  I prefer the first approach.  Because of that, I need to implement a function that will saveTermData( termUid ) and insert new record.  See line below.
 
-Ok, I have implemented loadTermData( termUid ) and saveTermData( termUid ) and they work.  Now, when I have a new record to insert, apparently that I have to rewrite the whole file...  Do I need that?  Actually, what do I need?
 Remove Controller::vocabTreeFilename.
 Change filename for getTermDataFilename().  I need to convert my actual data files (must be uncompressed).
 Stats should be available no matter which quiz algo is selected (i.e.: remove Quiz::showProgressData())

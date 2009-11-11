@@ -442,6 +442,7 @@ void MainWindow::showProgressDetails() {
 }
 
 void MainWindow::updateEasinessFactor( const float& easinessFactor ) {
+    cerr << "updateEasinessFactor = " << easinessFactor << endl;
     easinessFactorLabel->setText( tr( "EF: %1" ).arg( easinessFactor ) );
     if( easinessFactor == 0.0f )
         easinessFactorLabel->hide();

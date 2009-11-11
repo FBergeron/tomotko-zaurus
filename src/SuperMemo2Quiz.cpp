@@ -26,7 +26,7 @@ bool SuperMemo2Quiz::save() {
 }
 
 void SuperMemo2Quiz::conclude() {
-    //saveTermData();
+    // Notthing to do here.  Data has already been saved.
 }
 
 bool SuperMemo2Quiz::isInProgress() const {
@@ -35,8 +35,6 @@ bool SuperMemo2Quiz::isInProgress() const {
 
 void SuperMemo2Quiz::init( const QString& firstLang, const QString& testLang, Folder* rootFolder ) {
     Quiz::init( firstLang, testLang, rootFolder );
-
-    //loadTermData();
 
     terms.clear();
     termsToRemove.clear();
@@ -71,8 +69,13 @@ void SuperMemo2Quiz::initRec( const QString& firstLang, const QString& testLang,
                 Translation firstLangTrans = term.getTranslation( firstLang );
                 Translation testLangTrans = term.getTranslation( testLang );
                 TermKey termKey( term.getUid(), term.getVocabUid() );
-                //TermData termData = getTermData( termKey.getTermUid().toString() );
                 TermData termData = Statistics::instance()->loadTermData( termKey.getTermUid().toString(), firstLang, testLang );
+                cerr << "uid=" << term.getUid().toString();
+                if( termData.nextRepetitionDate.isNull() )
+                    cerr << "nr date is null" << endl;
+                else {
+                    cerr << "currDate=" << QDate::currentDate().toString() << " nr date=" << termData.nextRepetitionDate.toString() << endl;
+                }
                 if( termData.nextRepetitionDate.isNull() || QDate::currentDate().daysTo( termData.nextRepetitionDate ) <= 0 ) {
                     terms.append( termKey );
                     initTermCount++;
@@ -158,14 +161,15 @@ void SuperMemo2Quiz::gradeAnswer( int grade ) {
     else {
         termData.repetition = 0;
         termData.interval = 1;
-        termData.nextRepetitionDate = QDate();
+        //termData.nextRepetitionDate = QDate();
+        termData.nextRepetitionDate = QDate::currentDate();
     }
     termData.easinessFactor = termData.easinessFactor + ( 0.1 - ( 5 - grade ) * ( 0.08 + ( 5 - grade ) * 0.02 ) );
     if( termData.easinessFactor < 1.3 )
         termData.easinessFactor = 1.3;
 
     cerr << "TermData after : repetition=" << termData.repetition << " interval=" << termData.interval << " EF=" << termData.easinessFactor << " nextRepDate=" << termData.nextRepetitionDate.toString() << endl;
-    Statistics::instance()->setTermData( currTerm.getTermUid().toString(), termData ); 
+    Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
 }
 
 int SuperMemo2Quiz::getProgress() const {
@@ -198,32 +202,32 @@ int SuperMemo2Quiz::getAnswerCount() const {
 //}
 
 float SuperMemo2Quiz::getCurrentTermEasinessFactor() {
-    //TermKey currTermKey = getCurrentTerm();
-    //if( !currTermKey.isNull() ) {
-    //    TermData termData = getTermData( currTermKey.getTermUid().toString() );
-    //    return( termData.easinessFactor );
-    //}
+    TermKey currTermKey = getCurrentTerm();
+    if( !currTermKey.isNull() ) {
+        TermData termData = Statistics::instance()->getTermData( currTermKey.getTermUid().toString() );
+        return( termData.easinessFactor );
+    }
 
     return( Quiz::getCurrentTermEasinessFactor() );
 }
 
 int SuperMemo2Quiz::getCurrentTermRepetition() {
-    //TermKey currTermKey = getCurrentTerm();
-    //if( !currTermKey.isNull() ) {
-    //    TermData termData = getTermData( currTermKey.getTermUid().toString() );
-    //    return( termData.repetition );
-    //}
+    TermKey currTermKey = getCurrentTerm();
+    if( !currTermKey.isNull() ) {
+        TermData termData = Statistics::instance()->getTermData( currTermKey.getTermUid().toString() );
+        return( termData.repetition );
+    }
 
     return( Quiz::getCurrentTermRepetition() );
 }
 
 int SuperMemo2Quiz::getCurrentTermNextRepetition() {
-    //TermKey currTermKey = getCurrentTerm();
-    //if( !currTermKey.isNull() ) {
-    //    TermData termData = getTermData( currTermKey.getTermUid().toString() );
-    //    int nextInterval = getNextInterval( termData.interval, termData.easinessFactor, termData.repetition );
-    //    return( nextInterval );
-    //}
+    TermKey currTermKey = getCurrentTerm();
+    if( !currTermKey.isNull() ) {
+        TermData termData = Statistics::instance()->getTermData( currTermKey.getTermUid().toString() );
+        int nextInterval = getNextInterval( termData.interval, termData.easinessFactor, termData.repetition );
+        return( nextInterval );
+    }
 
     return( Quiz::getCurrentTermNextRepetition() );
 }

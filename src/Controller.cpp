@@ -1743,8 +1743,9 @@ void Controller::getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist 
                 TermKey termKey( term.getUid(), term.getVocabUid() );
                 TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
 
-                int ef = (int)( termData.easinessFactor * 10.0 ); // Use integer to prevent floating point numbers' imprecision problems.
+                int ef = (int)( ( termData.easinessFactor + 0.05 ) * 10.0 );
                 int index = ( ef >= 30 ? 30 : ef );
+                cerr << "EF=" << termData.easinessFactor << " x10=" << (int)( termData.easinessFactor * 10.0 ) << " ef=" << ef << " index=" << index << endl;
                 int count = ( efDist.contains( index ) ? efDist[ index ] : 0 );
                 count++;
                 efDist.insert( index, count );
