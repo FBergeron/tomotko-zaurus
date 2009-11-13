@@ -1,6 +1,6 @@
 ToDo
 ----
-Improve classification for EF graphs.  I start a quiz with a 5 terms, on the first, term, I choose grade 4.  The EF becomes 2.36.  It is counted in the <2.3 column.  That's a bug. Rounding?
+Display average, total and "ecart-type" (in English: Standard Deviation)
 
 The methods insertTermData() and overwriteTermData()... Should they have an output param isTermDataWritten instead of using return value?  It's a little bit inconsistent with previous existing methods which use return value to indicate an error?  Or is it?
 Check if I still need SuperMemo2::getCurrentTermEasinessFactor() and implement it if it's the case.  Same thing for Repetition and NextRepetition.

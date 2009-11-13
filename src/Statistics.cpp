@@ -31,8 +31,7 @@ TermData Statistics::getTermData( const QString& termUid ) {
 
 void Statistics::setTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& data ) {
     allTermData[ termUid ] = data;
-    bool isSaved = saveTermData( termUid, firstLang, testLang, data ); 
-    cerr << "isSaved=" << isSaved << endl;
+    saveTermData( termUid, firstLang, testLang, data ); 
 }
 
 bool Statistics::loadTermData( const QString& firstLang, const QString& testLang ) {
@@ -49,11 +48,8 @@ bool Statistics::loadTermData( const QString& firstLang, const QString& testLang
         return( false );
     }
     
-    //QByteArray compressedData( dataFile.readAll() );
     QByteArray data( dataFile.readAll() );
     dataFile.close();
-
-    //QByteArray data( Util::qUncompress( compressedData ) );
 
     QDataStream in( data, IO_ReadOnly );
 
@@ -92,10 +88,7 @@ bool Statistics::loadTermData( const QString& firstLang, const QString& testLang
         termData.nextRepetitionDate = tempNextRepetitionDate;
 
         allTermData[ tempTermUid ] = termData;
-
-        cerr << tempTermUid << ": interval=" << tempInterval << " repetition=" << tempRepetition << " EF=" << tempEasinessFactor << " nextRepDate=" << tempNextRepetitionDate.toString() << endl;
     }
-cerr << "allTermData.size=" << allTermData.count() << endl;
     currentLanguages = key;
 
     return( true );
@@ -188,10 +181,8 @@ TermData Statistics::loadTermData( const QString& termUid, const QString& firstL
     uint entryCount = ( fileSize - headerSize ) / Statistics::termDataEntrySize;
 
     bool isTermDataFound = seekTermData( termUid, dataFile, headerSize, entryCount, in );
-    cerr << "isTermDataFound=" << isTermDataFound << endl;
     if( isTermDataFound ) {
         in >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
-cerr << "tempNextRepetitionDate=" << tempNextRepetitionDate.toString() << endl;
 
         termData.interval = tempInterval;
         termData.repetition = tempRepetition;
@@ -217,8 +208,6 @@ bool Statistics::saveTermData( const QString& firstLang, const QString& testLang
         out << termUid << termData.interval << termData.repetition << termData.easinessFactor << termData.nextRepetitionDate;
     }
 
-    //QByteArray compressedData( Util::qCompress( data ) ); 
-
     QFile dataFile( getTermDataFilename( firstLang, testLang ) );
     QFileInfo dataFileInfo( dataFile );
 
@@ -228,7 +217,6 @@ bool Statistics::saveTermData( const QString& firstLang, const QString& testLang
     if( !dataFile.open( IO_WriteOnly ) )
         return( false );
 
-    //dataFile.writeBlock( compressedData );
     dataFile.writeBlock( data );
     dataFile.close();
 
@@ -245,7 +233,6 @@ bool Statistics::saveTermData( const QString& termUid, const QString& firstLang,
 bool Statistics::overwriteTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData ) {
     bool isNewRecordWritten = false;
 
-cerr << "overwriteTermData uid=" << termUid << " nr date=" << termData.nextRepetitionDate.toString() << endl;
     QFile dataFile( getTermDataFilename( firstLang, testLang ) );
     if( !dataFile.exists() )
         return( false );
@@ -308,7 +295,6 @@ cerr << "overwriteTermData uid=" << termUid << " nr date=" << termData.nextRepet
 }
 
 bool Statistics::insertTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& newTermData ) {
-cerr << "insertTermData uid=" << termUid << " nr date=" << newTermData.nextRepetitionDate.toString() << endl;
     bool isNewRecordWritten = false;
 
     QFile dataFile( getTermDataFilename( firstLang, testLang ) );
@@ -420,50 +406,11 @@ cerr << "insertTermData uid=" << termUid << " nr date=" << newTermData.nextRepet
     return( isNewRecordWritten );
 }
 
-// This method is temporary.  It's used to uncompress the term data files.
-// It should be removed once the new implementation of term data files is over.
-bool Statistics::saveUncompressedTermData( const QString& firstLang, const QString& testLang ) const {
-    QByteArray data;
-
-    QDataStream out( data, IO_WriteOnly );
-    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
-
-    out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
-    for( QMap<QString, TermData>::ConstIterator it = allTermData.begin(); it != allTermData.end(); it++ ) {
-        QString termUid = it.key();
-        TermData termData = it.data();
-        out << termUid << termData.interval << termData.repetition << termData.easinessFactor << termData.nextRepetitionDate;
-    }
-
-    //QByteArray compressedData( Util::qCompress( data ) ); 
-
-    QString filename = getTermDataFilename( firstLang, testLang );
-    QFile dataFile( filename.left( filename.length() - 2 ) );
-    QFileInfo dataFileInfo( dataFile );
-
-    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
-        return( false );
-
-    if( !dataFile.open( IO_WriteOnly ) )
-        return( false );
-
-    //dataFile.writeBlock( compressedData );
-    dataFile.writeBlock( data );
-    dataFile.close();
-
-    return( true );
-}
-
 QString Statistics::getTermDataFilename( const QString& firstLang, const QString& testLang ) const {
-    //QString firstLang = prefs.getFirstLanguage();
-    //QString testLang = prefs.getTestLanguage();
     if( !firstLang.isEmpty() && !testLang.isEmpty() ) {
         BilingualKey key( firstLang, testLang );
         return( applicationDirName + "/termData_" + key.toString() + ".dat" );
     }
     else
         return( QString::null );
-    //return( applicationDirName + "/termData_de-fr.dat.z" );
-
-    //return( applicationDirName + "/termData_de-fr.dat" );
 }

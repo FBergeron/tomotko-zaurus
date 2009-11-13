@@ -69,9 +69,9 @@ void EasinessFactorDistribution::paintEvent( QPaintEvent* ) {
             if( ef == 13 )
                 strEF = QString( "%1" ).arg( (double)( ef / 10.0 ) );
             else if( ef == 31 )
-                strEF = QString( ">3.0" );
+                strEF = QChar( 0x2265 ) + QString( "3.0" ); // "Greater than or equal to" unicode character
             else
-                strEF = QString( "<%1" ).arg( (double)( ef / 10.0 ) );
+                strEF = QChar( 0x2264 ) + QString( "%1" ).arg( (double)( ef / 10.0 ) ); // "Less than or equal" unicode character
             p.drawText( barX - interBarGap / 2, size().height() - 40 + i % 2 * 20, barWidth + interBarGap, 20, AlignTop | AlignHCenter | DontClip, strEF );
 
             total = 0;
