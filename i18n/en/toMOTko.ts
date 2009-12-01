@@ -5,6 +5,10 @@
         <source>NumberOfTermsPerEF</source>
         <translation>Number of words per Easiness Factor values.</translation>
     </message>
+    <message>
+        <source>Average</source>
+        <translation>Average EF (μ)=%1</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

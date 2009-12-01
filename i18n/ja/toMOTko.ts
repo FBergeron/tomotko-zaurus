@@ -5,6 +5,10 @@
         <source>NumberOfTermsPerEF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Average</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

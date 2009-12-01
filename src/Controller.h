@@ -82,7 +82,7 @@ public:
     void reveal();
 
     void getSchedule( int* schedule );
-    void getEFDistribution( QMap<int,int>& efDist );
+    void getEFDistribution( QMap<int,int>& efDist, float& efSum, int& efCount );
 
     bool saveData();
     void loadData();
@@ -142,8 +142,8 @@ private:
 
     void getScheduleRec( Folder* folder, int* schedule );
     void getScheduleRec( Vocabulary* vocab, int* schedule );
-    void getEFDistributionRec( Folder* folder, QMap<int,int>& efDist );
-    void getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist );
+    void getEFDistributionRec( Folder* folder, QMap<int,int>& efDist, float& efSum, int& efCount );
+    void getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist, float& efSum, int& efCount );
 
     int writeFileIntoZipFile( zipFile outputFile, const char* filename, const char* data, int length ) const; 
 

@@ -5,6 +5,10 @@
         <source>NumberOfTermsPerEF</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Average</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -528,27 +532,11 @@ Overwrite the current assignment?</source>
         <translation>世界語</translation>
     </message>
     <message>
-        <source>fi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>he</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>hi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>it</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ko</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>la</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -560,20 +548,12 @@ Overwrite the current assignment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>rm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ro</source>
         <translation>羅馬尼亞語</translation>
     </message>
     <message>
         <source>ru</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sv</source>
-        <translation></translation>
     </message>
     <message>
         <source>sw</source>

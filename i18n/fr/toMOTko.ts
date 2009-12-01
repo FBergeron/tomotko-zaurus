@@ -5,6 +5,10 @@
         <source>NumberOfTermsPerEF</source>
         <translation>Nombre de mots classés par Facteur de Facilité.</translation>
     </message>
+    <message>
+        <source>Average</source>
+        <translation>FF moyen (μ)=%1</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

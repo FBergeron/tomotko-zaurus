@@ -15,7 +15,7 @@ class EasinessFactorDistribution : public QWidget {
     
 public:
 
-    EasinessFactorDistribution( QWidget* parent, const QMap<int,int>& termsForEF );
+    EasinessFactorDistribution( QWidget* parent, const QMap<int,int>& termsForEF, const float& averageEF );
     ~EasinessFactorDistribution();
 
 public slots:
@@ -29,6 +29,7 @@ protected:
 private:
 
     const QMap<int,int>& termsForEF;
+    const float& averageEF;
 
 };
 

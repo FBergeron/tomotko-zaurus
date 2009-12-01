@@ -83,7 +83,10 @@ ProgressData Controller::getProgressData() {
     }
 
     getSchedule( progressData.scheduleForDay );
-    getEFDistribution( progressData.efDistribution );
+    float efSum = 0.0f;
+    int efCount = 0;
+    getEFDistribution( progressData.efDistribution, efSum, efCount );
+    progressData.averageEF = efSum / efCount;
 
     return( progressData );
 }
@@ -1674,8 +1677,8 @@ void Controller::getSchedule( int* schedule ) {
     getScheduleRec( vocabTree, schedule );
 }
 
-void Controller::getEFDistribution( QMap<int,int>& efDist ) {
-    getEFDistributionRec( vocabTree, efDist );
+void Controller::getEFDistribution( QMap<int,int>& efDist, float& efSum, int& efCount ) {
+    getEFDistributionRec( vocabTree, efDist, efSum, efCount );
 }
 
 void Controller::getScheduleRec( Folder* folder, int* schedule ) {
@@ -1719,18 +1722,18 @@ void Controller::getScheduleRec( Vocabulary* vocab, int* schedule ) {
     }
 }
 
-void Controller::getEFDistributionRec( Folder* folder, QMap<int,int>& efDist ) {
+void Controller::getEFDistributionRec( Folder* folder, QMap<int,int>& efDist, float& efSum, int& efCount ) {
     if( !folder->isMarkedForDeletion() && folder->isMarkedForStudy() ) {
         for( Base* child = folder->first(); child; child = folder->next() ) {
             if( strcmp( child->className(), "Folder" ) == 0 )
-                getEFDistributionRec( (Folder*)child, efDist );
+                getEFDistributionRec( (Folder*)child, efDist, efSum, efCount );
             else if( strcmp( child->className(), "Vocabulary" ) == 0 )
-                getEFDistributionRec( (Vocabulary*)child, efDist );
+                getEFDistributionRec( (Vocabulary*)child, efDist, efSum, efCount );
         }
     }
 }
 
-void Controller::getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist ) {
+void Controller::getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist, float& efSum, int& efCount ) {
     if( vocab->isMarkedForStudy() ) {
         QString firstLang = prefs.getFirstLanguage();
         QString testLang = prefs.getTestLanguage();
@@ -1748,6 +1751,9 @@ void Controller::getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist 
                 int count = ( efDist.contains( index ) ? efDist[ index ] : 0 );
                 count++;
                 efDist.insert( index, count );
+
+                efSum += termData.easinessFactor;
+                efCount++;
             }
         }
     }
