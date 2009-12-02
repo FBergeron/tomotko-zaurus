@@ -39,7 +39,7 @@ const int scheduleLength = 28; // In days.
 
 struct ProgressData {
     
-    ProgressData() : averageEF( 0.0f ), efStandardDeviation( 0.0f ) {
+    ProgressData() : efValueCount( 0 ), efAverage( 0.0f ), efStandardDeviation( 0.0f ) {
         for( int i = 0; i < scheduleLength; i++ )
             scheduleForDay[ i ] = 0;
 
@@ -55,14 +55,16 @@ struct ProgressData {
             efDistribution.insert( key, value );
         }
         currTerm = data.currTerm;
-        averageEF = data.averageEF;
+        efValueCount = data.efValueCount;
+        efAverage = data.efAverage;
         efStandardDeviation = data.efStandardDeviation;
     }
 
     int                     scheduleForDay[ scheduleLength ];
     QMap<int,int>           efDistribution;
     CurrTermProgressData    currTerm;
-    float                   averageEF;
+    int                     efValueCount;
+    float                   efAverage;
     float                   efStandardDeviation;
 
 };

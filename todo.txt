@@ -1,8 +1,5 @@
 ToDo
 ----
-Display total and "ecart-type" (in English: Standard Deviation)
-Verify what happens when the average takes a lot of space (value like 0.333333333)...
-
 The methods insertTermData() and overwriteTermData()... Should they have an output param isTermDataWritten instead of using return value?  It's a little bit inconsistent with previous existing methods which use return value to indicate an error?  Or is it?
 Check if I still need SuperMemo2::getCurrentTermEasinessFactor() and implement it if it's the case.  Same thing for Repetition and NextRepetition.
 Test if the Progress Dialog data are synchronized.  

@@ -83,10 +83,13 @@ ProgressData Controller::getProgressData() {
     }
 
     getSchedule( progressData.scheduleForDay );
+
     float efSum = 0.0f;
-    int efCount = 0;
-    getEFDistribution( progressData.efDistribution, efSum, efCount );
-    progressData.averageEF = efSum / efCount;
+    progressData.efValueCount = 0;
+    getEFDistribution( progressData.efDistribution, efSum, progressData.efValueCount );
+    progressData.efAverage = efSum / progressData.efValueCount;
+
+    progressData.efStandardDeviation = getEFStandardDeviation( progressData.efAverage );
 
     return( progressData );
 }
@@ -1681,6 +1684,12 @@ void Controller::getEFDistribution( QMap<int,int>& efDist, float& efSum, int& ef
     getEFDistributionRec( vocabTree, efDist, efSum, efCount );
 }
 
+float Controller::getEFStandardDeviation( const float& efAverage ) {
+    int efCount = 0;
+    float squaredVariationSum = getEFStandardDeviationRec( vocabTree, efAverage, efCount );
+    return( sqrt( squaredVariationSum / efCount ) );
+}
+
 void Controller::getScheduleRec( Folder* folder, int* schedule ) {
     if( !folder->isMarkedForDeletion() && folder->isMarkedForStudy() ) {
         for( Base* child = folder->first(); child; child = folder->next() ) {
@@ -1757,5 +1766,45 @@ void Controller::getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist,
             }
         }
     }
+}
+
+float Controller::getEFStandardDeviationRec( Folder* folder, const float& efAverage, int& efCount ) {
+    float squaredVariationSum = 0.0f;
+
+    if( !folder->isMarkedForDeletion() && folder->isMarkedForStudy() ) {
+        for( Base* child = folder->first(); child; child = folder->next() ) {
+            if( strcmp( child->className(), "Folder" ) == 0 )
+                squaredVariationSum += getEFStandardDeviationRec( (Folder*)child, efAverage, efCount );
+            else if( strcmp( child->className(), "Vocabulary" ) == 0 )
+                squaredVariationSum += getEFStandardDeviationRec( (Vocabulary*)child, efAverage, efCount );
+        }
+    }
+
+    return( squaredVariationSum );
+}
+
+float Controller::getEFStandardDeviationRec( Vocabulary* vocab, const float& efAverage, int& efCount ) {
+    float squaredVariationSum = 0.0f;
+
+    if( vocab->isMarkedForStudy() ) {
+        QString firstLang = prefs.getFirstLanguage();
+        QString testLang = prefs.getTestLanguage();
+        for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
+            const Term& term = it.data();
+            if( !term.isMarkedForDeletion() && term.isMarkedForStudy() && 
+                term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
+                Translation firstLangTrans = term.getTranslation( firstLang );
+                Translation testLangTrans = term.getTranslation( testLang );
+                TermKey termKey( term.getUid(), term.getVocabUid() );
+                TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
+
+                //cerr << "ef=" << termData.easinessFactor << " avg=" << efAverage << endl;
+                squaredVariationSum += pow( termData.easinessFactor - efAverage, 2 );
+                efCount++;
+            }
+        }
+    }
+
+    return( squaredVariationSum );
 }
 

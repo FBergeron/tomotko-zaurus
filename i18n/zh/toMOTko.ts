@@ -6,8 +6,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Average</source>
-        <translation type="unfinished"></translation>
+        <source>EFAverage</source>
+        <translation type="unfinished">μ: %1</translation>
+    </message>
+    <message>
+        <source>EFValueCount</source>
+        <translation type="unfinished">n: %1</translation>
+    </message>
+    <message>
+        <source>EFStandardDeviation</source>
+        <translation type="unfinished">σ: %1</translation>
     </message>
 </context>
 <context>

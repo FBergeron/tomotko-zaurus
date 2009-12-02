@@ -6,8 +6,16 @@
         <translation>Numero de palabras clasificadas por Factor de Facilidad.</translation>
     </message>
     <message>
-        <source>Average</source>
-        <translation>FF medio (μ)=%1</translation>
+        <source>EFAverage</source>
+        <translation>FF medio (μ): %1</translation>
+    </message>
+    <message>
+        <source>EFValueCount</source>
+        <translation>Nombre de valores: %1</translation>
+    </message>
+    <message>
+        <source>EFStandardDeviation</source>
+        <translation>Desviación (σ): %1</translation>
     </message>
 </context>
 <context>

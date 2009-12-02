@@ -27,7 +27,7 @@ void ProgressDialog::init() {
     efDistributionTab = new QWidget( this );
     efDistributionTabLayout = new QVBoxLayout( efDistributionTab );
     efDistributionTabLayout->setSpacing( 2 );
-    efDistribution = new EasinessFactorDistribution( efDistributionTab, progressData.efDistribution, progressData.averageEF );
+    efDistribution = new EasinessFactorDistribution( efDistributionTab, progressData.efDistribution, progressData.efValueCount, progressData.efAverage, progressData.efStandardDeviation );
     efDistributionTabLayout->addWidget( efDistribution, 1 );
 
     if( isDataForCurrTermAvailable ) {

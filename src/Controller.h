@@ -15,6 +15,7 @@
 #include <qtextcodec.h>
 #include <qtextstream.h>
 #include <qxml.h>
+#include <math.h>
 #include <stdlib.h>
 #include "FolderParser.h"
 #include "OriginalQuiz.h"
@@ -83,6 +84,7 @@ public:
 
     void getSchedule( int* schedule );
     void getEFDistribution( QMap<int,int>& efDist, float& efSum, int& efCount );
+    float getEFStandardDeviation( const float& efAverage );
 
     bool saveData();
     void loadData();
@@ -144,6 +146,8 @@ private:
     void getScheduleRec( Vocabulary* vocab, int* schedule );
     void getEFDistributionRec( Folder* folder, QMap<int,int>& efDist, float& efSum, int& efCount );
     void getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist, float& efSum, int& efCount );
+    float getEFStandardDeviationRec( Folder* folder, const float& efAverage, int& efCount );
+    float getEFStandardDeviationRec( Vocabulary* vocab, const float& efAverage, int& efCount );
 
     int writeFileIntoZipFile( zipFile outputFile, const char* filename, const char* data, int length ) const; 
 

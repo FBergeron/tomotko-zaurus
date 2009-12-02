@@ -6,8 +6,16 @@
         <translation>Number of words per Easiness Factor values.</translation>
     </message>
     <message>
-        <source>Average</source>
-        <translation>Average EF (μ)=%1</translation>
+        <source>EFAverage</source>
+        <translation>Average EF (μ): %1</translation>
+    </message>
+    <message>
+        <source>EFValueCount</source>
+        <translation>Number of values: %1</translation>
+    </message>
+    <message>
+        <source>EFStandardDeviation</source>
+        <translation>Deviation (σ): %1</translation>
     </message>
 </context>
 <context>
