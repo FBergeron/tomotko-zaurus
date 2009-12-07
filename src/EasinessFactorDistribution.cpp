@@ -26,16 +26,24 @@ void EasinessFactorDistribution::paintEvent( QPaintEvent* ) {
     }
 
     QPainter p( this );
+    QFontMetrics fm( p.fontMetrics() );
+
+    int margin = 20;
+    int padding = 10;
+    int y = margin;
 
     int colCount = valueCount / 2 + 1;
 
     // Paint title.
     p.setPen( black );
-    p.drawText( 20, 10, size().width(), 40, AlignTop | WordBreak, tr( "NumberOfTermsPerEF" ) );
+    int titleHeight = ( fm.width( tr( "NumberOfTermsPerEF" ) ) > width() - 2 * margin ? 2 * fm.height() : fm.height() );
+    p.drawText( margin, y, size().width() - 2 * margin, titleHeight, AlignTop | WordBreak, tr( "NumberOfTermsPerEF" ) );
 
-    p.moveTo( 20, 40 );
-    p.lineTo( 20, size().height() - 80 );
-    p.lineTo( size().width() - 20, size().height() - 80 );
+    y += padding + titleHeight;
+
+    p.moveTo( margin, y );
+    p.lineTo( margin, size().height() - margin - 3 * fm.height() - padding );
+    p.lineTo( size().width() - margin, size().height() -margin - 3 * fm.height() - padding );
 
     int interBarGap = 2;
     int barWidth = ( ( size().width() - 20 - 20 - 20 - 20 ) / colCount ) - interBarGap;
@@ -48,15 +56,15 @@ void EasinessFactorDistribution::paintEvent( QPaintEvent* ) {
             total += termsForEF[ ef ];
 
         if( i % 2 == 0 ) {
-            int barX = 20 + 20 + ( col * ( barWidth + interBarGap ) );
+            int barX = 2 * margin + ( col * ( barWidth + interBarGap ) );
 
             // Paint vertical bar.
             if( maxTermCount > 0 ) {
-                int barHeight = (int)( ( size().height() - 160 ) * total / maxTermCount );
-                int barY = size().height() - 80 - barHeight;
+                int barHeight = (int)( ( size().height() - y - padding - 4 * fm.height() - margin ) * total / maxTermCount );
+                int barY = size().height() - margin - 3 * fm.height() - padding - barHeight;
                 p.setBrush( black );
                 if( total > 0 ) 
-                    p.drawText( barX, barY - 20, barWidth, 20, AlignTop | AlignHCenter | DontClip, QString::number( total ) );
+                    p.drawText( barX, barY - fm.height(), barWidth, fm.height(), AlignTop | AlignHCenter | DontClip, QString::number( total ) );
                 if( barHeight > 0 ) {
                     p.setBrush( blue );
                     p.drawRect( barX, barY, barWidth, barHeight );
@@ -72,20 +80,20 @@ void EasinessFactorDistribution::paintEvent( QPaintEvent* ) {
                 strEF = QChar( 0x2265 ) + QString( "3.0" ); // "Greater than or equal to" unicode character
             else
                 strEF = QChar( 0x2264 ) + QString( "%1" ).arg( (double)( ef / 10.0 ) ); // "Less than or equal" unicode character
-            p.drawText( barX - interBarGap / 2, size().height() - 80 + i % 2 * 20, barWidth + interBarGap, 20, AlignTop | AlignHCenter | DontClip, strEF );
+            p.drawText( barX - interBarGap / 2, size().height() - margin - 3 * fm.height() - padding + i % 2 * fm.height(), barWidth + interBarGap, fm.height(), AlignTop | AlignHCenter | DontClip, strEF );
 
             total = 0;
         }
     }
 
-    int y = size().height() - 40; 
-    p.drawText( 20, y, tr( "EFValueCount" ).arg( efValueCount ) );
+    y = size().height() - margin - fm.height(); 
+    p.drawText( margin, y, tr( "EFValueCount" ).arg( efValueCount ) );
 
     QString averageString = tr( "EFAverage" ).arg( efAverage );
-    p.drawText( size().width() - p.fontMetrics().width( averageString ) - 20, y, averageString );
+    p.drawText( size().width() - p.fontMetrics().width( averageString ) - margin, y, averageString );
 
-    y += 20;
+    y += fm.height();
     
     QString standardDeviationString = tr( "EFStandardDeviation" ).arg( efStandardDeviation );
-    p.drawText( size().width() - p.fontMetrics().width( standardDeviationString ) - 20, y, standardDeviationString );
+    p.drawText( size().width() - p.fontMetrics().width( standardDeviationString ) - margin, y, standardDeviationString );
 }

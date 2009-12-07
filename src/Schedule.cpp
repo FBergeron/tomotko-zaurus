@@ -21,28 +21,36 @@ void Schedule::paintEvent( QPaintEvent* ) {
     }
 
     QPainter p( this );
+    QFontMetrics fm( p.fontMetrics() );
+
+    int margin = 20;
+    int padding = 10;
+    int y = margin; 
 
     // Paint title.
     p.setPen( black );
-    p.drawText( 20, 10, size().width(), 40, AlignTop | WordBreak, tr( "NumberOfTermsScheduled" ) );
+    int titleHeight = ( fm.width( tr( "NumberOfTermsScheduled" ) ) > width() - 2 * margin ? 2 * fm.height() : fm.height() );
+    p.drawText( margin, y, width() - 2 * margin, titleHeight, AlignTop | WordBreak, tr( "NumberOfTermsScheduled" ) );
 
-    p.moveTo( 20, 40 );
-    p.lineTo( 20, size().height() - 60 );
-    p.lineTo( size().width() - 20, size().height() - 60 );
+    y += padding + titleHeight;
+
+    p.moveTo( margin, y );
+    p.lineTo( margin, size().height() - padding - 2 * fm.height() - margin );
+    p.lineTo( size().width() - margin, size().height() - padding - 2 * fm.height() - margin );
 
     int interBarGap = (int)( 10 / interval );
-    int barWidth = ( ( size().width() - 20 - 20 - 20 - 20 ) / scheduleLength ) - interBarGap;
+    int barWidth = ( ( size().width() - 4 * margin ) / scheduleLength ) - interBarGap;
     for( int i = 0; i < scheduleLength; i++ ) {
 
-        int barX = 20 + 20 + ( i * ( barWidth + interBarGap ) );
+        int barX = 2 * margin + ( i * ( barWidth + interBarGap ) );
 
         // Paint vertical bar.
         if( maxTermCount > 0 ) {
-            int barHeight = (int)( ( size().height() - 120 ) * termsForDay[ i ] / maxTermCount );
-            int barY = size().height() - 60 - barHeight;
+            int barHeight = (int)( ( size().height() - y - padding - 3 * fm.height() - margin ) * termsForDay[ i ] / maxTermCount );
+            int barY = size().height() - margin - 2 * fm.height() - padding - barHeight;
             p.setBrush( black );
             if( termsForDay[ i ] > 0 ) 
-                p.drawText( barX, barY - 20, barWidth, 20, AlignTop | AlignHCenter | DontClip, QString::number( termsForDay[ i ] ) );
+                p.drawText( barX, barY - fm.height(), barWidth, fm.height(), AlignTop | AlignHCenter | DontClip, QString::number( termsForDay[ i ] ) );
             if( barHeight > 0 ) {
                 p.setBrush( blue );
                 p.drawRect( barX, barY, barWidth, barHeight );
@@ -66,6 +74,6 @@ void Schedule::paintEvent( QPaintEvent* ) {
                 day = day.left( 3 );
         }
 
-        p.drawText( barX - interBarGap / 2, size().height() - 60 + i % 2 * 20, barWidth + interBarGap, 20, AlignTop | AlignHCenter | DontClip, day );
+        p.drawText( barX - interBarGap / 2, size().height() - margin - 2 * fm.height() + i % 2 * fm.height(), barWidth + interBarGap, fm.height(), AlignTop | AlignHCenter | DontClip, day );
     }
 }
