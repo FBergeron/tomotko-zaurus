@@ -761,6 +761,10 @@ Overwrite the current assignment?</source>
         <source>NumberOfTermsScheduled</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ScheduleWeekNumber</source>
+        <translation type="unfinished">%1</translation>
+    </message>
 </context>
 <context>
     <name>ScrollableLineEdit</name>

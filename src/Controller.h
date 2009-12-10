@@ -40,8 +40,6 @@ class Controller : public QObject {
 
 public:
 
-    static const QString vocabTreeFilename; // Should be removed in version 0.11.x.
-
     Controller();
 
     bool init();

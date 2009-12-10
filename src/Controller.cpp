@@ -1,7 +1,5 @@
 #include "Controller.h"
 
-const QString Controller::vocabTreeFilename = QString( "tree" ); 
-
 Controller::Controller() : vocabTree( NULL ), quiz( NULL ) {
     applicationDirName = QDir::homeDirPath() + QString( "/.toMOTko" );
     markedXmlFilename = applicationDirName + QString( "/marked.xml" );
@@ -34,8 +32,13 @@ Folder* Controller::getVocabTree() {
 
 void Controller::initQuiz() {
     switch( getPreferences().getQuizAlgorithm() ) {
-        case Preferences::ORIGINAL   : quiz = new OriginalQuiz( applicationDirName, getPreferences().getQuizLength() ); break;
-        case Preferences::SUPERMEMO2 : quiz = new SuperMemo2Quiz( applicationDirName ); break;
+        case Preferences::ORIGINAL   : 
+            quiz = new OriginalQuiz( applicationDirName, getPreferences().getQuizLength() ); 
+            break;
+        case Preferences::SUPERMEMO2 : 
+            quiz = new SuperMemo2Quiz( applicationDirName ); 
+            getProgressData();
+            break;
     }
     if( quiz )
         quiz->init( getPreferences().getFirstLanguage(), getPreferences().getTestLanguage(), vocabTree );

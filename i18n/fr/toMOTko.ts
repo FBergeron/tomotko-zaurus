@@ -821,6 +821,10 @@ langues sélectionnées.</translation>
         <source>NumberOfTermsScheduled</source>
         <translation>Nombre de mots prévus pour les prochains jours.</translation>
     </message>
+    <message>
+        <source>ScheduleWeekNumber</source>
+        <translation>Semaine %1</translation>
+    </message>
 </context>
 <context>
     <name>ScrollableLineEdit</name>

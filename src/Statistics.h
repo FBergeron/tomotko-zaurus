@@ -67,7 +67,7 @@ private:
     QString                 applicationDirName;
 
     BilingualKey            currentLanguages;
-    QMap<QString, TermData> allTermData;
+    QMap<QString, TermData> termData;
 
 };
 

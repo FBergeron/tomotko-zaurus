@@ -59,21 +59,38 @@ void Schedule::paintEvent( QPaintEvent* ) {
         }
 
         // Paint weekday.
-        QString day;
+        if( interval <= 2 ) {
+            QString day;
 
-        if( i == 0 && interval < 3 )
-            day = tr( "Today" );
-        else if( i == 1 && interval < 3 ) 
-            day = tr( "Tomorrow" );
-        else {
-            day = Util::getWeekday( QDate::currentDate().addDays( i ).dayOfWeek() );
+            if( i == 0 )
+                day = tr( "Today" );
+            else if( i == 1 ) 
+                day = tr( "Tomorrow" );
+            else {
+                day = Util::getWeekday( QDate::currentDate().addDays( i ).dayOfWeek() );
 
-            if( interval > 2 )
-                day = day.left( 1 ); 
-            else if( interval > 1 )
-                day = day.left( 3 );
+                if( interval > 2 )
+                    day = day.left( 1 ); 
+                else if( interval > 1 )
+                    day = day.left( 3 );
+            }
+
+            p.drawText( barX - interBarGap / 2, size().height() - margin - 2 * fm.height() + i % 2 * fm.height(), barWidth + interBarGap, fm.height(), AlignTop | AlignHCenter | DontClip, day );
         }
+    }
 
-        p.drawText( barX - interBarGap / 2, size().height() - margin - 2 * fm.height() + i % 2 * fm.height(), barWidth + interBarGap, fm.height(), AlignTop | AlignHCenter | DontClip, day );
+    // Paint weeks
+    if( interval > 2 ) {
+        int y = size().height() - margin - 2 * fm.height();
+        for( int w = 1; w <= interval; w++ ) {
+            QString week = tr( "ScheduleWeekNumber" ).arg( w );
+            int leftX = 2 * margin + ( w - 1 ) * ( ( barWidth + interBarGap ) * 7 );
+            int rightX = leftX + ( barWidth + interBarGap ) * 7 - interBarGap; 
+            p.drawLine( leftX, y - 4, leftX, y );
+            p.drawLine( leftX, y, rightX, y );
+            p.drawLine( rightX, y - 4, rightX, y );
+            int middleX = (int)( leftX + ( ( rightX - leftX - fm.width( week ) ) / 2.0 ) );
+            p.drawText( middleX, y + fm.height(), week );
+        }
     }
 }

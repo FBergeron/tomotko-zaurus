@@ -16,21 +16,21 @@ Statistics::Statistics( const QString& applDirName ) : applicationDirName( applD
 }
 
 TermData Statistics::getTermData( const QString& termUid ) {
-    if( allTermData.contains( termUid ) )
-        return( allTermData[ termUid ] );
+    if( termData.contains( termUid ) )
+        return( termData[ termUid ] );
     else {
-        TermData termData;
-        termData.interval = 0;
-        termData.repetition = 0;
-        termData.easinessFactor = 2.5;
-        termData.nextRepetitionDate = QDate();
-        allTermData[ termUid ] = termData;
-        return( termData );
+        TermData aTermData;
+        aTermData.interval = 0;
+        aTermData.repetition = 0;
+        aTermData.easinessFactor = 2.5;
+        aTermData.nextRepetitionDate = QDate();
+        termData[ termUid ] = aTermData;
+        return( aTermData );
     }
 }
 
 void Statistics::setTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& data ) {
-    allTermData[ termUid ] = data;
+    termData[ termUid ] = data;
     saveTermData( termUid, firstLang, testLang, data ); 
 }
 
@@ -75,19 +75,19 @@ bool Statistics::loadTermData( const QString& firstLang, const QString& testLang
         return( false );
     }
 
-    allTermData.clear();
+    termData.clear();
 
     in.setVersion( 3 );
     while( !in.atEnd() ) {
         in >> tempTermUid >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
 
-        TermData termData;
-        termData.interval = tempInterval;
-        termData.repetition = tempRepetition;
-        termData.easinessFactor = tempEasinessFactor;
-        termData.nextRepetitionDate = tempNextRepetitionDate;
+        TermData aTermData;
+        aTermData.interval = tempInterval;
+        aTermData.repetition = tempRepetition;
+        aTermData.easinessFactor = tempEasinessFactor;
+        aTermData.nextRepetitionDate = tempNextRepetitionDate;
 
-        allTermData[ tempTermUid ] = termData;
+        termData[ tempTermUid ] = aTermData;
     }
     currentLanguages = key;
 
@@ -202,7 +202,7 @@ bool Statistics::saveTermData( const QString& firstLang, const QString& testLang
     out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
 
     out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
-    for( QMap<QString, TermData>::ConstIterator it = allTermData.begin(); it != allTermData.end(); it++ ) {
+    for( QMap<QString, TermData>::ConstIterator it = termData.begin(); it != termData.end(); it++ ) {
         QString termUid = it.key();
         TermData termData = it.data();
         out << termUid << termData.interval << termData.repetition << termData.easinessFactor << termData.nextRepetitionDate;

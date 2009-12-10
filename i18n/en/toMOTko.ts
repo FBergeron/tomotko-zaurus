@@ -818,6 +818,10 @@ languages.</translation>
         <source>NumberOfTermsScheduled</source>
         <translation>Number of terms scheduled for the coming days.</translation>
     </message>
+    <message>
+        <source>ScheduleWeekNumber</source>
+        <translation>Week %1</translation>
+    </message>
 </context>
 <context>
     <name>ScrollableLineEdit</name>

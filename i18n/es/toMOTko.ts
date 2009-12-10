@@ -818,6 +818,10 @@ por los idiomas selectionados.</translation>
         <source>NumberOfTermsScheduled</source>
         <translation>Número de palabras a estudiar por los proximas dias.</translation>
     </message>
+    <message>
+        <source>ScheduleWeekNumber</source>
+        <translation>Semana %1</translation>
+    </message>
 </context>
 <context>
     <name>ScrollableLineEdit</name>
