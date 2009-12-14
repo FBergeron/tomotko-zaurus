@@ -55,7 +55,7 @@ public:
     bool loadQuiz();
     void prepareQuiz();
     int getQuizAnswerCount() const;
-    ProgressData getProgressData();
+    ProgressData getProgressData( const QString& currTermUid = QString::null );
 
     Term* getCurrentTerm();
     bool hasNextTerm() const;

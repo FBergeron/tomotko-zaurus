@@ -709,17 +709,6 @@ FolderTreeItem* VocabularyManagerFrame::addFolder() {
     return( addFolder( NULL ) );
 }
 
-//FolderTreeItem* VocabularyManagerFrame::addFolder( Folder* folder, QMap<int,Vocabulary>* vocabularies = NULL ) {
-//    FolderTreeItem* newFolderItem = vocabTreeView->addFolder( folder, vocabularies );
-//    if( newFolderItem ) {
-//        newFolderItem->setPropertiesPanel( folderDetailsPropsPanel );
-//        folderDetailsPropsPanel->setFolder( newFolderItem->getFolder() );
-//        folderDetailsPropsPanel->updateCounters();
-//        vocabTreeView->ensureItemVisible( newFolderItem );
-//    }
-//    return( newFolderItem );
-//}
-
 FolderTreeItem* VocabularyManagerFrame::addFolder( Folder* folder, QMap<QString,Vocabulary>* vocabularies = NULL ) {
     FolderTreeItem* newFolderItem = vocabTreeView->addFolder( folder, vocabularies );
     if( newFolderItem ) {
@@ -1243,6 +1232,17 @@ uint VocabularyManagerFrame::getSelectedTermCount() const {
         termItem = (TermListItem*)termItem->nextSibling();
     }
     return( count );
+}
+
+QValueList<Term> VocabularyManagerFrame::getSelectedTerms() const {
+    QValueList<Term> terms;
+    TermListItem* termItem = (TermListItem*)termList->firstChild();
+    while( termItem ) {
+        if( termList->isSelected( termItem ) )
+            terms.append( *(termItem->getTerm()) );
+        termItem = (TermListItem*)termItem->nextSibling();
+    }
+    return( terms );
 }
 
 void VocabularyManagerFrame::search() {

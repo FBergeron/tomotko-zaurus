@@ -66,7 +66,7 @@ int Controller::getQuizAnswerCount() const {
     return( quiz ? quiz->getAnswerCount() : 0 );
 }
 
-ProgressData Controller::getProgressData() {
+ProgressData Controller::getProgressData( const QString& currTermUid /* = QString::null */ ) {
     QString firstLang = prefs.getFirstLanguage();
     QString testLang = prefs.getTestLanguage();
 
@@ -74,15 +74,12 @@ ProgressData Controller::getProgressData() {
 
     ProgressData progressData;
 
-    if( quiz ) {
-        TermKey currTermKey = quiz->getCurrentTerm();
-        if( !currTermKey.isNull() ) {
-            TermData termData = Statistics::instance()->getTermData( currTermKey.getTermUid().toString() );
+    if( !currTermUid.isNull() ) {
+        TermData termData = Statistics::instance()->getTermData( currTermUid );
 
-            progressData.currTerm.repetition = termData.repetition;
-            progressData.currTerm.easinessFactor = termData.easinessFactor;
-            progressData.currTerm.daysToNextRepetition = ( termData.nextRepetitionDate.isNull() ? 0 : QDate::currentDate().daysTo( termData.nextRepetitionDate ) );
-        }
+        progressData.currTerm.repetition = termData.repetition;
+        progressData.currTerm.easinessFactor = termData.easinessFactor;
+        progressData.currTerm.daysToNextRepetition = ( termData.nextRepetitionDate.isNull() ? 0 : QDate::currentDate().daysTo( termData.nextRepetitionDate ) );
     }
 
     getSchedule( progressData.scheduleForDay );

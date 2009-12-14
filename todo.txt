@@ -1,22 +1,14 @@
 ToDo
 ----
 Check if I still need the calls to updateEasinessFactor( control->getQuizCurrentTermEasinessFactor() ) that have been commented out in MainWindow.cpp.  I think so, so I need to reimplemented them differently as I have removed getQuizCurrentTermEasinessFactor from Controller.  Check what I do in QuizFrame in askTerm().
-Test if the Progress Dialog data are synchronized.  
-Stats should be visible for a word all the times (not only during a quiz)
 In the online help, add a section explaining how I use the application: sm-2 every day for 3 languages and from time to time, original quiz in opposite direction.
-When I cut-paste some terms (or probably any objects), I should keep the uid unchanged.  Otherwise, I can lose stats data associated to uid when "moving" terms to another location/folder.  Instead of creating new uid when pasting, it should probably done when copying.
-Keep the state of the checkbox when copying things.
-
+When I cut-paste some terms (or probably any objects), I should keep the uid unchanged.  Otherwise, I can lose stats data associated to uid when "moving" terms to another location/folder.  Instead of creating new uid when pasting, it should probably done when copying.  Keep the state of the checkbox when copying things.
 Remember the number of times a word has been asked and answered successfully and display these counter in the stats window.
 If I want to have resizable animated movie for CharacterDialog, check this link: http://doc.trolltech.com/3.3/movies-example.html#x498
 Solidify movieResized().    
 Handle NoTermsMarkedForStudy and NoTermsScheduledForStudy separately.  Improve the message too.  Should mention that we need to select parents folders and glossaries too.
 Bug: Fix the last column width in the properties panel.
-The termData should dissociated from quiz somehow.  For example, move Quiz::getCurrentTermEasinessFactor() to something like getEasinessFactor( term ) or term.getEasinessFactor().  Probably the first one is better, I think.
-When we QuizFrame::askTerm() and compute ef, repetition and nextRepetition, we provoke 3 calls to getTermData().  Should be refactored(?). 
-Maybe add a preference option to show/hide the sm-2 quiz info at the top.
 The AllDone message should be different for sm2 quiz.  These messages should be defined by quiz.
-When we start a quiz, reset the form.  We should not see previous quiz's values.
 Validate marked study items separately from scheduled terms?
 Disable gradeAnswer accelerators when performing a non-SM-2 quiz.
 It doesn't really make sense to have reinit() for sm2 quiz.  Maybe introduce isRestartable() property and adjust the buttons accordingly.
@@ -29,15 +21,12 @@ Make sure that when we remove a term that references to it are also removed (mar
 Don't forget: we can also remove terms from SearchDialog...  So we have to do the same handling here.  Could it be possible to put that in one place?
 Test delete term, vocab, folder and rec folder.
 Update the conversion scripts for uid if needed.
-Reread all folder, vocab and term files carefully regarding uid management.
 Fix this bug: When comparing version number when loading data, the number is an hexadecimal value.  So 10 should be 0a probably.
 Is there a way to handle imagePath in one place (within term class?)?
 Maybe we should add QScrollView to all pages in Preferences just in case like the QuizPage.
 Provide a tmk version of all the glossaries for zaurus version
 
-Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Refactor the code in editResultTerm() and editTerm().  The code is similar.  Maybe using signal/slot approach could work. There is a good example of that in page 18 of my Qt book for the FindDialog.
-Replace Unicode by UnicodeUTF8 when reading/writing xml files.
 Mention a note in the documentation about rightAnswer and wrongAnѕwer accelerators that, respectively do, gradeAnswer( 5 ) and gradeAnswer( 0 ).
 
 Mention in the release notes that in order to convert the data, it's required to start and quit the application right away after intalling the appliction.
@@ -46,7 +35,9 @@ Mention in the release notes that the resumable quiz will actually not been resu
 When we export on an existing file, a warning dialog need to be shown.
 Release 0.12.0
 
+Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Set minimum size for ProgressDialog.  Doesn't seem to work on Zaurus unless reimplementing resize.  Check on qt4.
+Maybe add a preference option to show/hide the sm-2 quiz info at the top.
 
 Implement a download glossary from website feature in the Glossary Manager. Same thing for upload(?)
 Remove Vocabulary::OldTermMap
@@ -61,7 +52,6 @@ The methods insertTermData() and overwriteTermData()... Should they have an outp
 Bug: I create a folder X.  Inside the folder X, I create a glossary with one term.  Then I quit.  I reopen, I cut the glossary and paste it in the root folder so that the folder X becomes empty.  Then I cut and paste the folder X in the same location (the root folder).  *BOUM* the folder is not empty anymore!!  It contains the glossary with one term.  This happens because when we cut the item, the link with its parent is kept.  The link should be removed.  However, if we have a glossary with many translations and that we cut it, we should only cut the current translations and keep the item intact for the unseen translations.  I think that the solution to that would be to copy the buffer on disk, in a specially dedicated location, and remove the data immediately.
 Try again to render a dash-umlaut.  Try it on the zaurus as the rendering bug may be related to the emulator.  Try also on latest version of Qt.
 
-Implement Unicode character plugin.
 Try to use pictureflow (http://code.google.com/p/pictureflow/).
 Use signal/slot for language selection.  I think it would be cleaner to have a localeChanged( const QString& ) signal. Same thing for driving quiz maybe.
 

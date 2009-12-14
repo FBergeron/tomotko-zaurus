@@ -53,48 +53,6 @@ FolderTreeItem* VocabTreeView::addFolder( FolderTreeItem* parentFolderItem, Fold
     return( newFolderItem );
 }
 
-//FolderTreeItem* VocabTreeView::addFolder( Folder* folder = NULL, QMap<int,Vocabulary>* vocabularies = NULL ) {
-//    FolderTreeItem* newFolderItem = NULL;
-//    if( folder )
-//        setUpdatesEnabled( false );
-//    TreeItem* selectedItem = (TreeItem*)currentItem();
-//    if( selectedItem && selectedItem->isFolder() ) {
-//        FolderTreeItem* folderItem = (FolderTreeItem*)selectedItem;
-//        newFolderItem = addFolder( folderItem, folder, vocabularies );
-//    }
-//    if( folder )
-//        setUpdatesEnabled( true );
-//    return( newFolderItem );
-//}
-//
-//FolderTreeItem* VocabTreeView::addFolder( FolderTreeItem* parentFolderItem, Folder* folder = NULL, QMap<int,Vocabulary>* vocabularies = NULL ) {
-//    Folder* parentFolder = parentFolderItem->getFolder();
-//    Folder* newFolder = controller.addFolder( parentFolder, folder );    
-//    if( !newFolder )
-//        return( NULL );
-//    FolderTreeItem* newFolderItem = new FolderTreeItem( parentFolderItem, newFolder, controller.getPreferences() );
-//    newFolderItem->setOpen( false );
-//    newFolderItem->setOn( !folder );
-//    parentFolderItem->setOpen( !folder );
-//    if( folder ) {
-//        for( Base* folderChild = folder->first(); folderChild; folderChild = folder->next() ) {
-//            if( strcmp( folderChild->className(), "Folder" ) == 0 ) {
-//                Folder* childFolder = (Folder*)folderChild;
-//                addFolder( newFolderItem, childFolder, vocabularies );
-//            }
-//            else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 ) {
-//                Vocabulary* childVocab = (Vocabulary*)folderChild;
-//                // childVocab contains only a reference to a vocabulary.  The actual data is found in the map.
-//                if( vocabularies && vocabularies->contains( childVocab->getId() ) ) {
-//                    Vocabulary& actualVocab = (*vocabularies)[ childVocab->getId() ];
-//                    addVocab( newFolderItem, &actualVocab );
-//                }
-//            }
-//        }
-//    }
-//    return( newFolderItem );
-//}
-
 VocabTreeItem* VocabTreeView::addVocab( Vocabulary* vocab = NULL ) {
     VocabTreeItem* newVocabItem = NULL;
     if( vocab )
@@ -133,15 +91,6 @@ void VocabTreeView::removeItem() {
 VocabTreeItem* VocabTreeView::getVocabTreeItem( const QUuid& uid ) {
     return( getVocabTreeItemRec( (TreeItem*)firstChild(), uid ) );
 }
-
-//VocabTreeItem* VocabTreeView::getVocabTreeItem( int id ) {
-//    return( getVocabTreeItemRec( (TreeItem*)firstChild(), id ) );
-//}
-
-//Vocabulary* VocabTreeView::getVocabulary( int id ) {
-//    VocabTreeItem* vocabTreeItem = getVocabTreeItemRec( (TreeItem*)firstChild(), id );
-//    return( vocabTreeItem ? vocabTreeItem->getVocabulary() : NULL );
-//}
 
 VocabTreeItem* VocabTreeView::getVocabTreeItemRec( TreeItem* item, const QUuid& uid ) {
     if( item ) {

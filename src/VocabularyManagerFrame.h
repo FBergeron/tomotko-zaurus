@@ -66,6 +66,8 @@ public:
 
     bool isDigraphEnabled() const;
 
+    QValueList<Term> getSelectedTerms() const;
+
 public slots:
 
     void copy();
@@ -124,7 +126,6 @@ private slots:
 
 private:
 
-    //FolderTreeItem* addFolder( Folder* folder, QMap<int,Vocabulary>* vocabularies = NULL );
     FolderTreeItem* addFolder( Folder* folder, QMap<QString,Vocabulary>* vocabularies = NULL );
     VocabTreeItem* addVocab( Vocabulary* vocab );
 

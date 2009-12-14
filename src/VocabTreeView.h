@@ -28,15 +28,11 @@ public:
 
     FolderTreeItem* addFolder( Folder* folder = NULL, QMap<QString,Vocabulary>* vocabularies = NULL );
     FolderTreeItem* addFolder( FolderTreeItem* parentFolderItem, Folder* folder = NULL, QMap<QString,Vocabulary>* vocabularies = NULL );
-    //FolderTreeItem* addFolder( Folder* folder = NULL, QMap<int,Vocabulary>* vocabularies = NULL );
-    //FolderTreeItem* addFolder( FolderTreeItem* parentFolderItem, Folder* folder = NULL, QMap<int,Vocabulary>* vocabularies = NULL );
     VocabTreeItem* addVocab( Vocabulary* vocab = NULL );
     VocabTreeItem* addVocab( FolderTreeItem* parentFolderItem, Vocabulary* vocab = NULL );
     void removeItem();
 
-    //Vocabulary* getVocabulary( int id );
     VocabTreeItem* getVocabTreeItem( const QUuid& uid );
-    //VocabTreeItem* getVocabTreeItem( int id );
 
     IdList getAllChildrenVocab( TreeItem* item ) const;
 
@@ -45,7 +41,6 @@ public:
 private:
 
     VocabTreeItem* getVocabTreeItemRec( TreeItem* item, const QUuid& uid );
-    //VocabTreeItem* getVocabTreeItemRec( TreeItem* item, int id );
 
     void getAllChildrenVocabRec( TreeItem* item, IdList& vocabList ) const;
     
