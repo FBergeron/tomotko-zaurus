@@ -1,7 +1,6 @@
 ToDo
 ----
-The methods insertTermData() and overwriteTermData()... Should they have an output param isTermDataWritten instead of using return value?  It's a little bit inconsistent with previous existing methods which use return value to indicate an error?  Or is it?
-Check if I still need SuperMemo2::getCurrentTermEasinessFactor() and implement it if it's the case.  Same thing for Repetition and NextRepetition.
+Check if I still need the calls to updateEasinessFactor( control->getQuizCurrentTermEasinessFactor() ) that have been commented out in MainWindow.cpp.  I think so, so I need to reimplemented them differently as I have removed getQuizCurrentTermEasinessFactor from Controller.  Check what I do in QuizFrame in askTerm().
 Test if the Progress Dialog data are synchronized.  
 Stats should be visible for a word all the times (not only during a quiz)
 In the online help, add a section explaining how I use the application: sm-2 every day for 3 languages and from time to time, original quiz in opposite direction.
@@ -58,6 +57,7 @@ Remove markedXmlFilename declaration and everything that's related to it.
 Remove code that remove prefs.xml file.  Now obsolete.
 Remove code that remove marked.xml file.  Now obsolete.
 
+The methods insertTermData() and overwriteTermData()... Should they have an output param isTermDataWritten instead of using return value?  It's a little bit inconsistent with previous existing methods which use return value to indicate an error?  Or is it?
 Bug: I create a folder X.  Inside the folder X, I create a glossary with one term.  Then I quit.  I reopen, I cut the glossary and paste it in the root folder so that the folder X becomes empty.  Then I cut and paste the folder X in the same location (the root folder).  *BOUM* the folder is not empty anymore!!  It contains the glossary with one term.  This happens because when we cut the item, the link with its parent is kept.  The link should be removed.  However, if we have a glossary with many translations and that we cut it, we should only cut the current translations and keep the item intact for the unseen translations.  I think that the solution to that would be to copy the buffer on disk, in a specially dedicated location, and remove the data immediately.
 Try again to render a dash-umlaut.  Try it on the zaurus as the rendering bug may be related to the emulator.  Try also on latest version of Qt.
 

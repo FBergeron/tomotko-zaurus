@@ -43,10 +43,6 @@ public:
     int getProgress() const;
     int getAnswerCount() const;
 
-    float getCurrentTermEasinessFactor();
-    int getCurrentTermRepetition();
-    int getCurrentTermNextRepetition();
-
 private:
 
     void initRec( const QString& firstLanguage, const QString& testLanguage, Folder* folder );

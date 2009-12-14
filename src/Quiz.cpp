@@ -13,17 +13,17 @@ void Quiz::init( const QString& firstLanguage, const QString& testLanguage, Fold
     this->initTermCount = 0;
 }
 
-float Quiz::getCurrentTermEasinessFactor() {
-    // Returns zero EF by default.  Subclasses should override this if needed.
-    return( 0.0f );
-}
+//float Quiz::getCurrentTermEasinessFactor() {
+//    // Returns zero EF by default.  Subclasses should override this if needed.
+//    return( 0.0f );
+//}
 
-int Quiz::getCurrentTermRepetition() {
-    // Returns -1 value by default.  Subclasses should override this if needed.
-    return( -1 );
-}
+//int Quiz::getCurrentTermRepetition() {
+//    // Returns -1 value by default.  Subclasses should override this if needed.
+//    return( -1 );
+//}
 
-int Quiz::getCurrentTermNextRepetition() {
-    // Returns zero value by default.  Subclasses should override this if needed.
-    return( 0 );
-}
+//int Quiz::getCurrentTermNextRepetition() {
+//    // Returns zero value by default.  Subclasses should override this if needed.
+//    return( 0 );
+//}

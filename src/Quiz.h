@@ -35,9 +35,9 @@ public:
     virtual int getInitialTermCount() const { return( initTermCount ); };    
     virtual int getAnswerCount() const = 0;
 
-    virtual float getCurrentTermEasinessFactor();
-    virtual int getCurrentTermRepetition();
-    virtual int getCurrentTermNextRepetition();
+    //virtual float getCurrentTermEasinessFactor();
+    //virtual int getCurrentTermRepetition();
+    //virtual int getCurrentTermNextRepetition();
 
 protected:
 

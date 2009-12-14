@@ -56,9 +56,6 @@ public:
     void prepareQuiz();
     int getQuizAnswerCount() const;
     ProgressData getProgressData();
-    float getQuizCurrentTermEasinessFactor() const;
-    int getQuizCurrentTermRepetition() const;
-    int getQuizCurrentTermNextRepetition() const;
 
     Term* getCurrentTerm();
     bool hasNextTerm() const;

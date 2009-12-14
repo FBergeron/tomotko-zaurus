@@ -200,35 +200,3 @@ int SuperMemo2Quiz::getAnswerCount() const {
     //dialog.show();
     //dialog.exec();
 //}
-
-float SuperMemo2Quiz::getCurrentTermEasinessFactor() {
-    TermKey currTermKey = getCurrentTerm();
-    if( !currTermKey.isNull() ) {
-        TermData termData = Statistics::instance()->getTermData( currTermKey.getTermUid().toString() );
-        return( termData.easinessFactor );
-    }
-
-    return( Quiz::getCurrentTermEasinessFactor() );
-}
-
-int SuperMemo2Quiz::getCurrentTermRepetition() {
-    TermKey currTermKey = getCurrentTerm();
-    if( !currTermKey.isNull() ) {
-        TermData termData = Statistics::instance()->getTermData( currTermKey.getTermUid().toString() );
-        return( termData.repetition );
-    }
-
-    return( Quiz::getCurrentTermRepetition() );
-}
-
-int SuperMemo2Quiz::getCurrentTermNextRepetition() {
-    TermKey currTermKey = getCurrentTerm();
-    if( !currTermKey.isNull() ) {
-        TermData termData = Statistics::instance()->getTermData( currTermKey.getTermUid().toString() );
-        int nextInterval = getNextInterval( termData.interval, termData.easinessFactor, termData.repetition );
-        return( nextInterval );
-    }
-
-    return( Quiz::getCurrentTermNextRepetition() );
-}
-

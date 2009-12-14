@@ -366,13 +366,11 @@ void QuizFrame::askTerm( const Term& term ) {
     controller->initRevealingSequence();
     setTerm( term );
 
-    float easinessFactor = controller->getQuizCurrentTermEasinessFactor();
-    int repetition = controller->getQuizCurrentTermRepetition();
-    int nextRepetition = controller->getQuizCurrentTermNextRepetition();
+    TermData termData = Statistics::instance()->getTermData( term.getUid().toString() );
 
-    emit( easinessFactorChanged( easinessFactor ) );
-    emit( repetitionChanged ( repetition ) );
-    emit( nextRepetitionChanged ( nextRepetition ) );
+    emit( easinessFactorChanged( termData.easinessFactor ) );
+    emit( repetitionChanged ( termData.repetition ) );
+    emit( nextRepetitionChanged ( termData.interval ) );
     reveal();
     setButtonsEnabled( true );
 }

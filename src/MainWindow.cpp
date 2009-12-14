@@ -403,8 +403,8 @@ void MainWindow::retranslateUi() {
     helpMenu->changeItem( helpMenuItemId, tr( "Help..." ) );
     helpMenu->changeItem( aboutMenuItemId, tr( "About..." ) );
 
-    updateEasinessFactor( control->getQuizCurrentTermEasinessFactor() );
-    updateNextRepetition( control->getQuizCurrentTermNextRepetition() );
+    //updateEasinessFactor( control->getQuizCurrentTermEasinessFactor() );
+    //updateNextRepetition( control->getQuizCurrentTermNextRepetition() );
 
     updateFirstLanguageValues();
     updateTestLanguageValues();
