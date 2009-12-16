@@ -171,7 +171,9 @@ QDataStream& operator>>( QDataStream& in, Term& term ) {
     term = Term( tempId, tempVocabUid, tempUid );
     for( Term::TranslationMap::ConstIterator it = tempTranslations.begin(); it != tempTranslations.end(); it++ ) {
         const Translation& trans = it.data();
-        term.addTranslation( trans );
+        // Prevent adding empty translations.
+        if( trans.getLanguage() ) 
+            term.addTranslation( trans );
     }
     for( Term::CommentMap::ConstIterator it = tempComments.begin(); it != tempComments.end(); it++ ) {
         const BilingualKey& key = it.key();

@@ -387,7 +387,6 @@ Vocabulary* Controller::loadVocabulary( const QString& parentDir ) {
 
             if( isOk ) // isOk means that the old format (without uid) is used.
                 filename = QString( parentDir + QString( "/vocab-" ) + QString::number( vocabId ) + QString( ".gz" ) );
-
         }
     }
     else
@@ -888,7 +887,7 @@ Folder* Controller::loadFolder( const QString& parentDir ) {
         QString entryPath = parentDir + "/" + entry;
         QFileInfo info( entryPath );
         if( info.isDir() && entry != "." && entry != ".." ) {
-            cerr << "entry=" << entry << " isTop=" << isTopLevelFolder << endl;
+            //cerr << "entry=" << entry << " isTop=" << isTopLevelFolder << endl;
             if( isTopLevelFolder ) 
                 newFolder = loadFolder( entryPath );
             else { 
@@ -916,7 +915,7 @@ Folder* Controller::loadFolder( const QString& parentDir ) {
 }
 
 bool Controller::saveFolder( Folder* folder, const QString& parentDir ) const {
-    cerr << "saveFolder folder=" << folder << " location=" << parentDir << " dirty? " << folder->isDirty() << endl;
+    //cerr << "saveFolder folder=" << folder << " location=" << parentDir << " dirty? " << folder->isDirty() << endl;
     // Create the folder.
     QString folderPath( parentDir + QString( "/" ) + folder->getUid().toString() );
     QDir folderDir( folderPath );
@@ -970,7 +969,7 @@ void Controller::writeVocabulariesInXml( Folder* folder, int depth, QTextStream&
 }
 
 bool Controller::deleteItemsMarkedForDeletion( Folder* folder ) {
-    cerr << "deleteItemsMarkedForDeletion folder uid=" << folder->getUid().toString() << endl;
+    //cerr << "deleteItemsMarkedForDeletion folder uid=" << folder->getUid().toString() << endl;
     for( Base* childItem = folder->first(); childItem; childItem = folder->next() ) {
         if( strcmp( childItem->className(), "Folder" ) == 0 ) {
             Folder* childFolder = (Folder*)childItem;
@@ -989,7 +988,7 @@ bool Controller::deleteItemsMarkedForDeletion( Folder* folder ) {
                 QValueList<QString> termsToRemove;
                 for( Vocabulary::TermMap::Iterator it = childVocab->begin(); it != childVocab->end(); it++ ) {
                     Term& term = it.data();
-                    cerr << "term id=" << term.getUid().toString() << term.getTranslation( "en" ).getWord() << " isMarked=" << term.isMarkedForDeletion() << endl;
+                    //cerr << "term id=" << term.getUid().toString() << term.getTranslation( "en" ).getWord() << " isMarked=" << term.isMarkedForDeletion() << endl;
 
                     if( term.isMarkedForDeletion() ) {
                         if( !term.getImagePath().isNull() && term.getImagePath().left( 1 ) != "/" ) {
@@ -1485,7 +1484,7 @@ void Controller::writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab,
 }
 
 bool Controller::saveVocabulary( Vocabulary* vocab, const QString& location ) const {
-    cerr << "saveVocabulary vocab=" << vocab << " title=" << vocab->getTitle() << " location=" << location << " isDirty? " << vocab->isDirty() << endl;
+    //cerr << "saveVocabulary vocab=" << vocab << " title=" << vocab->getTitle() << " location=" << location << " isDirty? " << vocab->isDirty() << endl;
     // Create the containing folder if needed.
     QString folderPath( location.find( "v-" ) == -1 ? location + QString( "/v-" ) + vocab->getUid().toString() : location );
     QDir folderDir( folderPath );

@@ -322,11 +322,11 @@ void VocabularyManagerFrame::importData() {
 
                 QCopEnvelope busyEnvImport( "QPE/System", "busy()" ); 
                 Base* newItem = controller->importData( folder, dialog.selectedFile(), languagesToImport );
-                cerr << "newItem=" << newItem << endl;
+                //cerr << "newItem=" << newItem << endl;
                 if( newItem ) {
                     TreeItem* newTreeItem = NULL;
                     if( strcmp( newItem->className(), "Folder" ) == 0 ) {
-                        cerr << "newItem is a folder" << endl;
+                        //cerr << "newItem is a folder" << endl;
                         Folder* newFolder = (Folder*)newItem;
                         newFolder->setModificationDate( QDateTime::currentDateTime() );
                         newFolder->setDirty( true );
@@ -334,14 +334,14 @@ void VocabularyManagerFrame::importData() {
                         newTreeItem = buildTreeRec( vocabTreeView, folderItem, newFolder, true ); 
                     }
                     else if( strcmp( newItem->className(), "Vocabulary" ) == 0 ) {
-                        cerr << "newItem is vocab" << endl;
+                        //cerr << "newItem is vocab" << endl;
                         Vocabulary* newVocab = (Vocabulary*)newItem;
                         newVocab->setModificationDate( QDateTime::currentDateTime() );
                         newVocab->setDirty( true );
                         folder->add( newVocab );
                         newTreeItem = buildTreeRec( folderItem, newVocab ); 
                     }
-                    cerr << "newTreeItem=" << newTreeItem << endl;
+                    //cerr << "newTreeItem=" << newTreeItem << endl;
                     if( newTreeItem ) {
                         vocabTreeView->ensureItemVisible( newTreeItem );
                         vocabTreeView->setSelected( newTreeItem, true );
@@ -1027,7 +1027,7 @@ FolderTreeItem* VocabularyManagerFrame::buildTreeRec( VocabTreeView* vocabTreeVi
                         }
                     }
                     if( folderItem->childCount() == 0 && folderItem->getFolder()->getParent() ) {
-                        cerr << "delete the folder item=" << folderItem << endl;
+                        //cerr << "delete the folder item=" << folderItem << endl;
                         delete folderItem;
                         folderItem = NULL;
                     }
