@@ -134,7 +134,7 @@ private:
     void doRemoveTerms( bool allowSelectTrans = true, bool confirmBeforeRemove = true );
     void doRemoveItem( bool confirmBeforeRemove = true );
 
-    void copyTerms() const;
+    void copyTerms( bool copyUid = false ) const;
     void pasteTerms();
     void pasteVocabulary();
     void pasteFolder();

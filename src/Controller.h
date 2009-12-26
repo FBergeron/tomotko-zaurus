@@ -90,8 +90,8 @@ public:
     Vocabulary* addVocabulary( Folder* parentFolder, Vocabulary* vocab = NULL ); 
     Folder* addFolder( Folder* parentFolder, Folder* folder = NULL ); 
 
-    void copy( Vocabulary* vocab );
-    void copy( Folder* folder );
+    void copy( Vocabulary* vocab, bool copyUid = false );
+    void copy( Folder* folder, bool copyUid = false );
 
     Vocabulary* loadVocabulary( const QString& parentDir );
     Folder* loadFolder( const QString& parentDir );
@@ -162,8 +162,8 @@ private:
     bool exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList* languages = NULL ) const;
     bool exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList* languages = NULL ) const;
 
-    Vocabulary* makeCopy( Vocabulary* vocab, const QString& firstLang, const QString& testLang ) const;
-    Folder* makeCopy( Folder* folder, const QString& firstLang, const QString& testLang ) const;
+    Vocabulary* makeCopy( Vocabulary* vocab, const QString& firstLang, const QString& testLang, bool copyUid = false ) const;
+    Folder* makeCopy( Folder* folder, const QString& firstLang, const QString& testLang, bool copyUid = false ) const;
 
     bool deleteItemsMarkedForDeletion( Folder* folder );
 

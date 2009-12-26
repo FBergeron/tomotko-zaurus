@@ -284,10 +284,10 @@ Vocabulary* Controller::addVocabulary( Folder* parentFolder, Vocabulary* vocab =
     return( newVocab );
 }
 
-void Controller::copy( Vocabulary* vocab ) {
+void Controller::copy( Vocabulary* vocab, bool copyUid = false ) {
     QString firstLang( getPreferences().getFirstLanguage() );
     QString testLang( getPreferences().getTestLanguage() );
-    Vocabulary* vocabCopy = makeCopy( vocab, firstLang, testLang );
+    Vocabulary* vocabCopy = makeCopy( vocab, firstLang, testLang, copyUid );
 
     QByteArray data;
     QDataStream out( data, IO_WriteOnly );
@@ -295,10 +295,10 @@ void Controller::copy( Vocabulary* vocab ) {
     setClipboardData( QString( "vocabulary" ), Util::qCompress( data ) );
 }
 
-void Controller::copy( Folder* folder ) {
+void Controller::copy( Folder* folder, bool copyUid /* = false */ ) {
     QString firstLang( getPreferences().getFirstLanguage() );
     QString testLang( getPreferences().getTestLanguage() );
-    Folder* folderCopy = makeCopy( folder, firstLang, testLang );
+    Folder* folderCopy = makeCopy( folder, firstLang, testLang, copyUid );
 
     QByteArray data;
     QDataStream out( data, IO_WriteOnly );
@@ -314,18 +314,26 @@ void Controller::copy( Folder* folder ) {
     setClipboardData( QString( "folder" ), Util::qCompress( data ) );
 }
 
-Vocabulary* Controller::makeCopy( Vocabulary* vocab, const QString& firstLang, const QString& testLang ) const {
+Vocabulary* Controller::makeCopy( Vocabulary* vocab, const QString& firstLang, const QString& testLang, bool copyUid /* = false */ ) const {
     QStringList languages;
     languages << firstLang << testLang;
 
-    Vocabulary* vocabCopy = new Vocabulary( -1, vocab->getTitle(), Util::createUuid() );
+    Vocabulary* vocabCopy;
+    if( copyUid ) 
+        vocabCopy = new Vocabulary( -1, vocab->getTitle(), vocab->getUid() );
+    else
+        vocabCopy = new Vocabulary( -1, vocab->getTitle(), Util::createUuid() );
     vocabCopy->setDescription( vocab->getDescription() );
     vocabCopy->setAuthor( vocab->getAuthor() );
     vocabCopy->setCreationDate( vocab->getCreationDate() );
     vocabCopy->setModificationDate( vocab->getModificationDate() );
     for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
         const Term& term = it.data();
-        Term* termCopy = new Term( 0, vocabCopy->getUid(), Util::createUuid() );
+        Term* termCopy;
+        if( copyUid )
+            termCopy = new Term( 0, vocabCopy->getUid(), term.getUid() );
+        else
+            termCopy = new Term( 0, QUuid(), Util::createUuid() );
 
         for( QStringList::ConstIterator it = languages.begin(); it != languages.end(); it++ ) {
             const QString& lang = *it;
@@ -345,11 +353,15 @@ Vocabulary* Controller::makeCopy( Vocabulary* vocab, const QString& firstLang, c
     return( vocabCopy );
 }
 
-Folder* Controller::makeCopy( Folder* folder, const QString& firstLang, const QString& testLang ) const {
+Folder* Controller::makeCopy( Folder* folder, const QString& firstLang, const QString& testLang, bool copyUid /* = false */ ) const {
     QStringList languages;
     languages << firstLang << testLang;
 
-    Folder* folderCopy = new Folder( -1, folder->getTitle(), Util::createUuid() );
+    Folder* folderCopy;
+    if( copyUid )
+        folderCopy = new Folder( -1, folder->getTitle(), folder->getUid() );
+    else
+        folderCopy = new Folder( -1, folder->getTitle(), Util::createUuid() );
     folderCopy->setDescription( folder->getDescription() );
     folderCopy->setAuthor( folder->getAuthor() );
     folderCopy->setCreationDate( folder->getCreationDate() );
@@ -358,14 +370,14 @@ Folder* Controller::makeCopy( Folder* folder, const QString& firstLang, const QS
         if( strcmp( folderChild->className(), "Folder" ) == 0 ) {
             Folder* childFolder = (Folder*)folderChild;
             if( childFolder->containsTermWithTranslations( firstLang, testLang ) ) {
-                Folder* childFolderCopy = makeCopy( childFolder, firstLang, testLang );
+                Folder* childFolderCopy = makeCopy( childFolder, firstLang, testLang, copyUid );
                 folderCopy->add( childFolderCopy );
             }
         }
         else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 ) {
             Vocabulary* childVocab = (Vocabulary*)folderChild;
             if( childVocab->containsTermWithTranslations( firstLang, testLang ) ) {
-                Vocabulary* childVocabCopy = makeCopy( childVocab, firstLang, testLang );
+                Vocabulary* childVocabCopy = makeCopy( childVocab, firstLang, testLang, copyUid );
                 folderCopy->add( childVocabCopy );
             }
         }

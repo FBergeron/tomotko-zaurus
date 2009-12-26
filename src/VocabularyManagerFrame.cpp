@@ -215,19 +215,19 @@ void VocabularyManagerFrame::cut() {
                 if( selectedItem->isFolder() ) {
                     FolderTreeItem* folderItem = (FolderTreeItem*)selectedItem;
                     Folder* folder = folderItem->getFolder();
-                    controller->copy( folder );
+                    controller->copy( folder, true );
                     doRemoveItem( false );
                 }
                 else {
                     VocabTreeItem* vocabItem = (VocabTreeItem*)selectedItem;
                     Vocabulary* vocab = vocabItem->getVocabulary();
-                    controller->copy( vocab );
+                    controller->copy( vocab, true );
                     doRemoveItem( false );
                 }
             }
         }
         else if( strcmp( widget->name(), "TermList" ) == 0 ) {
-            copyTerms();
+            copyTerms( true );
             doRemoveTerms( false, false );
         }
     }
@@ -1055,7 +1055,7 @@ VocabTreeItem* VocabularyManagerFrame::buildTreeRec( FolderTreeItem* parentItem,
         return( NULL );
 }
 
-void VocabularyManagerFrame::copyTerms() const {
+void VocabularyManagerFrame::copyTerms( bool copyUid /* = false */ ) const {
     QString firstLang( controller->getPreferences().getFirstLanguage() );
     QString testLang( controller->getPreferences().getTestLanguage() );
     QValueList<Term> termsToCopy;
@@ -1064,7 +1064,11 @@ void VocabularyManagerFrame::copyTerms() const {
     while( termItem ) {
         if( termList->isSelected( termItem ) ) {
             Term* term = termItem->getTerm();
-            Term* termCopy = new Term( 0, 0 ); // Don't need to copy ids.
+            Term* termCopy;
+            if( copyUid ) 
+                termCopy = new Term( 0, QUuid(), term->getUid() );
+            else
+                termCopy = new Term( 0 );
 
             // We copy only translations for the currenlty selected languages.
             QStringList languages;
@@ -1119,7 +1123,7 @@ void VocabularyManagerFrame::pasteTerms() {
     Vocabulary* currVocab = currVocabItem->getVocabulary();
     for( QValueList<Term>::ConstIterator it = termsToPaste.begin(); it != termsToPaste.end(); it++ ) {
         const Term& term = *it;
-        Term newTerm( 0, currVocab->getUid(), Util::createUuid() );
+        Term newTerm( 0, currVocab->getUid(), term.getUid() );
         for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
             const Translation& trans = it2.data();
             newTerm.addTranslation( trans );
@@ -1166,17 +1170,13 @@ void VocabularyManagerFrame::pasteVocabulary() {
 }
 
 void VocabularyManagerFrame::pasteFolder() {
-cerr << "pasteFolder begin" << endl;
     QByteArray data( Util::qUncompress( controller->getClipboardData() ) );
     QDataStream in( data, IO_ReadOnly );
 
     Folder folderToPaste;
     QMap<QString,Vocabulary> vocabularies;
-    cerr << 1 << endl;
     in >> folderToPaste;
-    cerr << 2 << endl;
     in >> vocabularies;
-    cerr << 3 << endl;
 
     FolderTreeItem* newFolderItem = addFolder( &folderToPaste, &vocabularies );
     // As the tree updates are disabled when adding new folders recursively,
@@ -1186,7 +1186,6 @@ cerr << "pasteFolder begin" << endl;
     newFolderItem->parent()->setOpen( false );
     vocabTreeView->setSelected( newFolderItem, true );
     vocabTreeView->ensureItemVisible( newFolderItem );
-cerr << "pasteFolder end" << endl;
 }
 
 void VocabularyManagerFrame::addListeners() {

@@ -1,8 +1,13 @@
 ToDo
 ----
+When we remove a term, we must mark for deletion its associated stats.
+Add a step where we delete stats marked for deletion.
+When we paste some items, we must unmark them for deletion (in the case of cut-paste, for example).
+Make sure that when we remove a term that references to it are also removed (markedForStudy and test, etc.)
+Keep the state of the checkbox when copying things. --> I think that attributes like markedForStudy and markedForDeletion should not be located into the items themselves but stored and managed externally to the items.  This data is contextual to how we use these items.
+Test delete term, vocab, folder and rec folder.
 Check if I still need the calls to updateEasinessFactor( control->getQuizCurrentTermEasinessFactor() ) that have been commented out in MainWindow.cpp.  I think so, so I need to reimplemented them differently as I have removed getQuizCurrentTermEasinessFactor from Controller.  Check what I do in QuizFrame in askTerm().
 In the online help, add a section explaining how I use the application: sm-2 every day for 3 languages and from time to time, original quiz in opposite direction.
-When I cut-paste some terms (or probably any objects), I should keep the uid unchanged.  Otherwise, I can lose stats data associated to uid when "moving" terms to another location/folder.  Instead of creating new uid when pasting, it should probably done when copying.  Keep the state of the checkbox when copying things.
 Remember the number of times a word has been asked and answered successfully and display these counter in the stats window.
 If I want to have resizable animated movie for CharacterDialog, check this link: http://doc.trolltech.com/3.3/movies-example.html#x498
 Solidify movieResized().    
@@ -17,11 +22,8 @@ Do I still need a TermKey?  Why not use the term uid directly instead?  Hmmm... 
 Why do we have the message "delete the folder item... several times when we launch the application?
 Verify if resumable quiz (ordinary ones) are still working (especially those that comes from the previous version).
 Test copy/cut/paste with images (local or not)
-Make sure that when we remove a term that references to it are also removed (markedForStudy and test, etc.)
 Don't forget: we can also remove terms from SearchDialog...  So we have to do the same handling here.  Could it be possible to put that in one place?
-Test delete term, vocab, folder and rec folder.
 Update the conversion scripts for uid if needed.
-Fix this bug: When comparing version number when loading data, the number is an hexadecimal value.  So 10 should be 0a probably.
 Is there a way to handle imagePath in one place (within term class?)?
 Maybe we should add QScrollView to all pages in Preferences just in case like the QuizPage.
 Provide a tmk version of all the glossaries for zaurus version
