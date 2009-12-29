@@ -152,6 +152,7 @@ void SuperMemo2Quiz::gradeAnswer( int grade ) {
     TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
     cerr << "TermData before: repetition=" << termData.repetition << " interval=" << termData.interval << " EF=" << termData.easinessFactor << " nextRepDate=" << ( termData.nextRepetitionDate.isNull() ? QString( "null" ) : termData.nextRepetitionDate.toString() ) << endl;
     if( grade >= 3 ) {
+        termData.successCount += 1;
         termData.interval = getNextInterval( termData.interval, termData.easinessFactor, termData.repetition );
         termData.repetition++;
         termData.nextRepetitionDate = QDate::currentDate().addDays( termData.interval );
@@ -159,12 +160,13 @@ void SuperMemo2Quiz::gradeAnswer( int grade ) {
         termsToRemove.append( terms[ currTermIndex ] ); // Stop asking the term for this quiz.
     }
     else {
+        termData.missCount += 1;
         termData.repetition = 0;
         termData.interval = 1;
-        //termData.nextRepetitionDate = QDate();
         termData.nextRepetitionDate = QDate::currentDate();
     }
     termData.easinessFactor = termData.easinessFactor + ( 0.1 - ( 5 - grade ) * ( 0.08 + ( 5 - grade ) * 0.02 ) );
+    termData.lastRepetitionDate = QDate::currentDate();
     if( termData.easinessFactor < 1.3 )
         termData.easinessFactor = 1.3;
 

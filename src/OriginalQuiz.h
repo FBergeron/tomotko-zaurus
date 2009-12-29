@@ -9,6 +9,7 @@
 #include "Folder.h"
 #include "Quiz.h"
 #include "StandbyTerm.h"
+#include "Statistics.h"
 #include "TermKey.h"
 #include "Vocabulary.h"
 

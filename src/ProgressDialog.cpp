@@ -51,6 +51,18 @@ void ProgressDialog::init() {
         QListViewItem* daysToNextRepetitionListViewItem = new QListViewItem( currTermInfo, tr( "DaysToNextRepetition" ), QString::number( progressData.currTerm.daysToNextRepetition ) );
         currTermInfo->insertItem( daysToNextRepetitionListViewItem );
 
+        QListViewItem* daysToLastRepetitionListViewItem = new QListViewItem( currTermInfo, tr( "DaysToLastRepetition" ), QString::number( progressData.currTerm.daysToLastRepetition ) );
+        currTermInfo->insertItem( daysToLastRepetitionListViewItem );
+
+        uint totalCount = progressData.currTerm.successCount + progressData.currTerm.missCount;
+        QString successRateStr = tr( "NullSuccessRate" );
+        if( totalCount > 0 ) {
+            uint successRate = progressData.currTerm.successCount * 100 / ( progressData.currTerm.successCount + progressData.currTerm.missCount );
+            successRateStr = QString( "%1% (%2/%3)" ).arg( successRate ).arg( progressData.currTerm.successCount ).arg( totalCount );
+        }
+        QListViewItem* successRateListViewItem = new QListViewItem( currTermInfo, tr( "SuccessRate" ), successRateStr );
+        currTermInfo->insertItem( successRateListViewItem );
+
         currTermTabLayout->addWidget( currTermInfo );
     }
 

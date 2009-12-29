@@ -1,6 +1,5 @@
 ToDo
 ----
-Remember the number of times a word has been asked and answered successfully and display these counter in the stats window.
 Verify this case:  We have a glossary with terms in 3 translations.  We delete a term (in 2 translations).  Will the remaining translation survive? yes
 Make sure that when we remove a term that references to it are also removed (markedForStudy and test, etc.)
 When we remove a term (or some of its translations), we must mark for deletion its associated stats as well.  And delete

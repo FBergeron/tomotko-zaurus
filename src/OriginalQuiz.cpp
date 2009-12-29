@@ -250,6 +250,10 @@ void OriginalQuiz::gradeAnswer( int grade ) {
 }
 
 void OriginalQuiz::rightAnswer() {
+    TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
+    termData.successCount += 1;
+    Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
+
     if( currTermPool == OriginalQuiz::poolCount - 1 )
         discardCurrentTerm();
     else {
@@ -259,6 +263,13 @@ void OriginalQuiz::rightAnswer() {
 }
 
 void OriginalQuiz::wrongAnswer() {
+    cerr << "wrongAnswer" << endl;
+    TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
+    cerr << "miss=" << termData.missCount << endl;
+    termData.missCount += 1;
+    Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
+    cerr << "ok" << endl;
+
     increaseTermPriority();
     putCurrentTermOnStandby();
 }

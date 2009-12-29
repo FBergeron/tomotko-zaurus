@@ -4,40 +4,66 @@
 #include <qdatetime.h>
 #include <qmap.h>
 
+/**
+ * Record of statistics data for a term.
+ */
 struct TermData {
 
-    TermData() : interval( 0 ), repetition( 0 ), easinessFactor( 2.5 ), nextRepetitionDate( QDate::currentDate() ) {
+    TermData() : interval( 0 ), repetition( 0 ), easinessFactor( 2.5 ), nextRepetitionDate( QDate::currentDate() ), 
+        lastRepetitionDate( QDate::currentDate() ), successCount( 0 ), missCount( 0 ) {
     }
 
     TermData( const TermData& termData ) : interval( termData.interval ), repetition( termData.repetition ), easinessFactor( termData.easinessFactor ), 
-        nextRepetitionDate( termData.nextRepetitionDate ) {
+        nextRepetitionDate( termData.nextRepetitionDate ), lastRepetitionDate( termData.lastRepetitionDate ), 
+            successCount( termData.successCount ), missCount( termData.missCount ) {
     }
 
     int interval;
     uint repetition;
     float easinessFactor; // EF
     QDate nextRepetitionDate;
+    QDate lastRepetitionDate;
+    uint successCount;
+    uint missCount;
+
 };
 
+/**
+ * Record of statistics data for the current terms (either in the quiz or the selected one in Vocabulary Manager).
+ */
 struct CurrTermProgressData {
 
     CurrTermProgressData() {
         repetition = 0;
         easinessFactor = 0.0f;
         daysToNextRepetition = 0;
+        daysToLastRepetition = 0;
+        successCount = 0;
+        missCount = 0;
     }
 
     CurrTermProgressData( const CurrTermProgressData& data ) 
-        : repetition( data.repetition ), easinessFactor( data.easinessFactor ), daysToNextRepetition( data.daysToNextRepetition ) {
+        : repetition( data.repetition ), easinessFactor( data.easinessFactor ), daysToNextRepetition( data.daysToNextRepetition ),
+            daysToLastRepetition( data.daysToLastRepetition ), successCount( data.successCount ), missCount( data.missCount ) {
     }
 
     int     repetition;
     float   easinessFactor;
     int     daysToNextRepetition;
+    int     daysToLastRepetition;
+    uint    successCount;
+    uint    missCount;
+
 };
 
+/**
+ * Number of days that we consider when building a schedule.
+ */
 const int scheduleLength = 28; // In days.
 
+/**
+ * Structure storing all the progress information.
+ */
 struct ProgressData {
     
     ProgressData() : efValueCount( 0 ), efAverage( 0.0f ), efStandardDeviation( 0.0f ) {
