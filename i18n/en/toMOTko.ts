@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>EFValueCount</source>
-        <translation>Number of values: %1</translation>
+        <translation>Number of words: %1</translation>
     </message>
     <message>
         <source>EFStandardDeviation</source>
@@ -1194,6 +1194,18 @@ in the Actions menu.</translation>
     <message>
         <source>Export...</source>
         <translation>Export...</translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForRemoveItemCaption</source>
+        <translation>Remove item</translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForRemoveItem</source>
+        <translation>The selected item contains terms
+that contain translations in 
+many languages.  Please indicate
+which translations to delete.
+</translation>
     </message>
 </context>
 <context>

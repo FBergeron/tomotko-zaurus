@@ -216,13 +216,13 @@ void VocabularyManagerFrame::cut() {
                     FolderTreeItem* folderItem = (FolderTreeItem*)selectedItem;
                     Folder* folder = folderItem->getFolder();
                     controller->copy( folder, true );
-                    doRemoveItem( false );
+                    doRemoveItem( false, false );
                 }
                 else {
                     VocabTreeItem* vocabItem = (VocabTreeItem*)selectedItem;
                     Vocabulary* vocab = vocabItem->getVocabulary();
                     controller->copy( vocab, true );
-                    doRemoveItem( false );
+                    doRemoveItem( false, false );
                 }
             }
         }
@@ -739,38 +739,117 @@ void VocabularyManagerFrame::removeItem() {
     doRemoveItem();
 }
 
-void VocabularyManagerFrame::doRemoveItem( bool confirmBeforeRemove = true ) {
-    int response;
-    if( confirmBeforeRemove ) {
-        QMessageBox msgBox( QObject::tr( "Warning" ), tr( "ConfirmRemoveItem" ),
-            QMessageBox::Warning,
-            QMessageBox::Yes,
-            QMessageBox::No | QMessageBox::Default | QMessageBox::Escape,
-            QMessageBox::NoButton,
-            this );
-        msgBox.setButtonText( QMessageBox::Yes, tr( "Yes" ) );
-        msgBox.setButtonText( QMessageBox::No, tr( "No" ) );
+void VocabularyManagerFrame::doRemoveItem( bool allowSelectTrans = true, bool confirmBeforeRemove = true ) {
+    const Preferences& prefs = controller->getPreferences();
+    TreeItem* currentItem = (TreeItem*)vocabTreeView->currentItem();
+    QStringList translationLanguages;
 
-        response = msgBox.exec();
+    if( currentItem->isFolder() ) {
+        FolderTreeItem* folderItem = (FolderTreeItem*)currentItem;
+        Folder* folder = folderItem->getFolder();
+        translationLanguages = folder->getTranslationLanguages();
     }
-    else
-        response = QMessageBox::Yes;
+    else {
+        VocabTreeItem* vocabItem = (VocabTreeItem*)currentItem;
+        Vocabulary* vocab = vocabItem->getVocabulary();
+        translationLanguages = vocab->getTranslationLanguages();
+    }
 
-    if( response == QMessageBox::Yes ) {
+    if( translationLanguages.count() <= 2 ) {
+        int response;
+        if( confirmBeforeRemove ) {
+            QMessageBox msgBox( QObject::tr( "Warning" ), tr( "ConfirmRemoveItem" ),
+                QMessageBox::Warning,
+                QMessageBox::Yes,
+                QMessageBox::No | QMessageBox::Default | QMessageBox::Escape,
+                QMessageBox::NoButton,
+                this );
+            msgBox.setButtonText( QMessageBox::Yes, tr( "Yes" ) );
+            msgBox.setButtonText( QMessageBox::No, tr( "No" ) );
+
+            response = msgBox.exec();
+        }
+        else
+            response = QMessageBox::Yes;
+
+        if( response == QMessageBox::Yes ) {
+            TreeItem* currentItem = (TreeItem*)vocabTreeView->currentItem();
+            if( currentItem->isFolder() ) {
+                FolderTreeItem* folderItem = (FolderTreeItem*)currentItem;
+                Folder* folder = folderItem->getFolder();
+                folder->setMarkedForDeletion( true );
+            }
+            else {
+                VocabTreeItem* vocabItem = (VocabTreeItem*)currentItem;
+                Vocabulary* vocab = vocabItem->getVocabulary();
+                vocab->setMarkedForDeletion( true );
+            }
+            vocabTreeView->removeItem();
+        }
+    }
+    else {
+        int response;
+        QStringList selectedLanguages;
+        if( allowSelectTrans ) {
+            TranslationSelectionDialog msgBox( tr( "MultipleTranslationsDetectedForRemoveItemCaption" ), tr( "MultipleTranslationsDetectedForRemoveItem" ), 
+                translationLanguages, TranslationSelectionDialog::selectionModeTargetLanguage, controller, this );
+            msgBox.setMaximumHeight( size().height() - 40 );
+            msgBox.setMaximumWidth( size().width() - 40 );
+            response = msgBox.exec();
+            if( response )
+                selectedLanguages = msgBox.getSelectedLanguages();
+        }
+        else {
+            selectedLanguages = QStringList();
+            selectedLanguages.append( controller->getPreferences().getFirstLanguage() );
+            selectedLanguages.append( controller->getPreferences().getTestLanguage() );
+        }
+        if( selectedLanguages.count() == 0 )
+            return;
+
         TreeItem* currentItem = (TreeItem*)vocabTreeView->currentItem();
         if( currentItem->isFolder() ) {
             FolderTreeItem* folderItem = (FolderTreeItem*)currentItem;
             Folder* folder = folderItem->getFolder();
-            folder->setMarkedForDeletion( true );
-            //folder->getParent()->remove( folder, false );
+            //if( folder->getTranslationLanguages().count() == 0 ) {
+            //    folder->setMarkedForDeletion( true );
+            //    vocabTreeView->removeItem();
+            //}
         }
         else {
             VocabTreeItem* vocabItem = (VocabTreeItem*)currentItem;
             Vocabulary* vocab = vocabItem->getVocabulary();
-            vocab->setMarkedForDeletion( true );
-            //vocab->getParent()->remove( vocab, false );
+            for( Vocabulary::TermMap::Iterator it = vocab->begin(); it != vocab->end(); it++ ) {
+                Term& term = it.data();
+
+                if( !term.isMarkedForDeletion() ) {
+                    for( QStringList::ConstIterator it = selectedLanguages.begin(); it != selectedLanguages.end(); it++ ) {
+                        QString lang = *it;
+                        term.removeTranslation( lang );
+                    }
+                    
+                    if( term.getTranslationCount() == 0 )
+                        term.setMarkedForDeletion( true );
+                }
+            }
+
+            QStringList vocabTranslationLanguages = vocab->getTranslationLanguages();
+            if( vocabTranslationLanguages.count() == 0 ) {
+                vocab->setMarkedForDeletion( true );
+                vocabTreeView->removeItem();
+            }
+            else {
+                vocab->setModificationDate( QDateTime::currentDateTime() );
+                vocab->setDirty( true );
+                if( prefs.isLanguageFilterEnabled() && !vocab->containsTermWithTranslations( prefs.getFirstLanguage(), prefs.getTestLanguage() ) ) {
+                    vocabTreeView->removeItem();
+                }
+                else {
+                    termList->clearSelection();
+                    updateUi();
+                }
+            }
         }
-        vocabTreeView->removeItem();
     }
 }
 
@@ -857,14 +936,11 @@ void VocabularyManagerFrame::removeTerms() {
     doRemoveTerms();
 }
 
-void VocabularyManagerFrame::doRemoveTerms( bool allowSelectTrans = true, bool confirmBeforeRemove = true ) {
-    int selectedItemCount = 0;
-    // Find all the translation languages of the selected terms.
+QStringList VocabularyManagerFrame::getTermSelectionTranslationLanguages() const {
     QStringList translationLanguages;
 
     for( TermListItem* termItem = (TermListItem*)termList->firstChild(); termItem; termItem = (TermListItem*)termItem->nextSibling() ) {
         if( termList->isSelected( termItem ) ) {
-            selectedItemCount++;
             Term* term = termItem->getTerm();
             for( Term::TranslationMap::ConstIterator it = term->translationsBegin(); it != term->translationsEnd(); it++ ) {
                 const Translation& trans = it.data();
@@ -874,7 +950,13 @@ void VocabularyManagerFrame::doRemoveTerms( bool allowSelectTrans = true, bool c
         }
     }
 
-    if( selectedItemCount == 0 )
+    return( translationLanguages );
+}
+
+void VocabularyManagerFrame::doRemoveTerms( bool allowSelectTrans = true, bool confirmBeforeRemove = true ) {
+    QStringList translationLanguages = getTermSelectionTranslationLanguages();
+
+    if( translationLanguages.count() == 0 )
         return;
 
     if( translationLanguages.count() <= 2 ) {

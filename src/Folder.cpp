@@ -167,20 +167,22 @@ Folder* Folder::getFolder( int id ) {
 
 QStringList Folder::getTranslationLanguages() {
     QStringList languages;
-    for( Base* child = children.first(); child; child = children.next() ) {
-        QStringList childLanguages;
-        if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
-            Vocabulary* vocab = (Vocabulary*)child;
-            childLanguages = vocab->getTranslationLanguages();
-        }
-        else if( strcmp( child->className(), "Folder" ) == 0 ) {
-            Folder* folder = (Folder*)child;
-            childLanguages = folder->getTranslationLanguages();
-        }
-        for( QStringList::ConstIterator it = childLanguages.begin(); it != childLanguages.end(); it++ ) {
-            const QString& lang = *it;
-            if( !languages.contains( lang ) )
-                languages.append( lang );
+    if( !isMarkedForDeletion() ) {
+        for( Base* child = children.first(); child; child = children.next() ) {
+            QStringList childLanguages;
+            if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
+                Vocabulary* vocab = (Vocabulary*)child;
+                childLanguages = vocab->getTranslationLanguages();
+            }
+            else if( strcmp( child->className(), "Folder" ) == 0 ) {
+                Folder* folder = (Folder*)child;
+                childLanguages = folder->getTranslationLanguages();
+            }
+            for( QStringList::ConstIterator it = childLanguages.begin(); it != childLanguages.end(); it++ ) {
+                const QString& lang = *it;
+                if( !languages.contains( lang ) )
+                    languages.append( lang );
+            }
         }
     }
     return( languages );

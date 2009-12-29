@@ -1018,6 +1018,7 @@ bool Controller::deleteItemsMarkedForDeletion( Folder* folder ) {
                 }
                 for( uint i = 0; i < termsToRemove.count(); i++ ) {
                     cerr << "removing term=" << termsToRemove[ i ] << endl;
+
                     childVocab->removeTerm( termsToRemove[ i ] );
                 }
             }

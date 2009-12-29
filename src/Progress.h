@@ -9,7 +9,8 @@ struct TermData {
     TermData() : interval( 0 ), repetition( 0 ), easinessFactor( 2.5 ), nextRepetitionDate( QDate::currentDate() ) {
     }
 
-    TermData( const TermData& termData ) : interval( termData.interval ), repetition( termData.repetition ), easinessFactor( termData.easinessFactor ), nextRepetitionDate( termData.nextRepetitionDate ) {
+    TermData( const TermData& termData ) : interval( termData.interval ), repetition( termData.repetition ), easinessFactor( termData.easinessFactor ), 
+        nextRepetitionDate( termData.nextRepetitionDate ) {
     }
 
     int interval;

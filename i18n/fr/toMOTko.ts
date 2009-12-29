@@ -11,7 +11,7 @@
     </message>
     <message>
         <source>EFValueCount</source>
-        <translation>Nombre de valeurs: %1</translation>
+        <translation>Nombre de mots: %1</translation>
     </message>
     <message>
         <source>EFStandardDeviation</source>
@@ -1199,6 +1199,18 @@ les glossaires/mots&quot; du menu Actions.</translation>
     <message>
         <source>Export...</source>
         <translation>Exporter...</translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForRemoveItemCaption</source>
+        <translation>Suppresion d'un item</translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForRemoveItem</source>
+        <translation>L'item sélectionné contient
+des mots comportant des
+traductions dans plusieurs
+langues.  Indiquez les traductions
+à effacer.</translation>
     </message>
 </context>
 <context>

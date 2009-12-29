@@ -525,11 +525,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>cs</source>
-        <translation>チェコ語</translation>
+        <translation type="obsolete">チェコ語</translation>
     </message>
     <message>
         <source>da</source>
-        <translation>デンマーク語</translation>
+        <translation type="obsolete">デンマーク語</translation>
     </message>
     <message>
         <source>el</source>
@@ -537,19 +537,19 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>eo</source>
-        <translation>エスペラント</translation>
+        <translation type="obsolete">エスペラント</translation>
     </message>
     <message>
         <source>fi</source>
-        <translation>フィンランド語</translation>
+        <translation type="obsolete">フィンランド語</translation>
     </message>
     <message>
         <source>he</source>
-        <translation>ヘブライ語</translation>
+        <translation type="obsolete">ヘブライ語</translation>
     </message>
     <message>
         <source>hi</source>
-        <translation>ヒンディー語</translation>
+        <translation type="obsolete">ヒンディー語</translation>
     </message>
     <message>
         <source>it</source>
@@ -561,7 +561,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>la</source>
-        <translation>ラテン語</translation>
+        <translation type="obsolete">ラテン語</translation>
     </message>
     <message>
         <source>nl</source>
@@ -573,11 +573,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>rm</source>
-        <translation>ロマンシュ語</translation>
+        <translation type="obsolete">ロマンシュ語</translation>
     </message>
     <message>
         <source>ro</source>
-        <translation>ルーマニア語</translation>
+        <translation type="obsolete">ルーマニア語</translation>
     </message>
     <message>
         <source>ru</source>
@@ -585,7 +585,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>sv</source>
-        <translation>スウェーデン語</translation>
+        <translation type="obsolete">スウェーデン語</translation>
     </message>
     <message>
         <source>sw</source>
@@ -597,7 +597,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>tl</source>
-        <translation>タガログ語</translation>
+        <translation type="obsolete">タガログ語</translation>
     </message>
     <message>
         <source>vi</source>
@@ -1118,6 +1118,14 @@ Overwrite the current assignment?</source>
     <message>
         <source>Export...</source>
         <translation>エクスポート...</translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForRemoveItemCaption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForRemoveItem</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

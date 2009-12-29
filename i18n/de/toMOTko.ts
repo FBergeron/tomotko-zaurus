@@ -1123,6 +1123,14 @@ Die neuen Daten sind zur Zeit nicht sichtbar. Sie müssen die entsprechenden Spr
         <source>Export...</source>
         <translation>Exportieren...</translation>
     </message>
+    <message>
+        <source>MultipleTranslationsDetectedForRemoveItemCaption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForRemoveItem</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ZFileDialog</name>

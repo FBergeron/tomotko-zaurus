@@ -131,8 +131,11 @@ private:
 
     FolderTreeItem* buildTreeRec( VocabTreeView* vocabTreeView, FolderTreeItem* parentItem, Folder* folder, bool closeFolder = false );
     VocabTreeItem* buildTreeRec( FolderTreeItem* parentItem, Vocabulary* vocab );
+
     void doRemoveTerms( bool allowSelectTrans = true, bool confirmBeforeRemove = true );
-    void doRemoveItem( bool confirmBeforeRemove = true );
+    void doRemoveItem( bool allowSelectTrans = true,  bool confirmBeforeRemove = true );
+
+    QStringList getTermSelectionTranslationLanguages() const;
 
     void copyTerms( bool copyUid = false ) const;
     void pasteTerms();

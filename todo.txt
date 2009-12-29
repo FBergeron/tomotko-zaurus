@@ -1,14 +1,15 @@
 ToDo
 ----
-When we remove a term, we must mark for deletion its associated stats.
+Remember the number of times a word has been asked and answered successfully and display these counter in the stats window.
+Verify this case:  We have a glossary with terms in 3 translations.  We delete a term (in 2 translations).  Will the remaining translation survive? yes
+Make sure that when we remove a term that references to it are also removed (markedForStudy and test, etc.)
+When we remove a term (or some of its translations), we must mark for deletion its associated stats as well.  And delete
 Add a step where we delete stats marked for deletion.
 When we paste some items, we must unmark them for deletion (in the case of cut-paste, for example).
-Make sure that when we remove a term that references to it are also removed (markedForStudy and test, etc.)
-Keep the state of the checkbox when copying things. --> I think that attributes like markedForStudy and markedForDeletion should not be located into the items themselves but stored and managed externally to the items.  This data is contextual to how we use these items.
 Test delete term, vocab, folder and rec folder.
 Check if I still need the calls to updateEasinessFactor( control->getQuizCurrentTermEasinessFactor() ) that have been commented out in MainWindow.cpp.  I think so, so I need to reimplemented them differently as I have removed getQuizCurrentTermEasinessFactor from Controller.  Check what I do in QuizFrame in askTerm().
 In the online help, add a section explaining how I use the application: sm-2 every day for 3 languages and from time to time, original quiz in opposite direction.
-Remember the number of times a word has been asked and answered successfully and display these counter in the stats window.
+When we remove a glossary/folder that contains words in more than 2 translations, we should mention it.  Partially done.
 If I want to have resizable animated movie for CharacterDialog, check this link: http://doc.trolltech.com/3.3/movies-example.html#x498
 Solidify movieResized().    
 Handle NoTermsMarkedForStudy and NoTermsScheduledForStudy separately.  Improve the message too.  Should mention that we need to select parents folders and glossaries too.
@@ -37,6 +38,7 @@ Mention in the release notes that the resumable quiz will actually not been resu
 When we export on an existing file, a warning dialog need to be shown.
 Release 0.12.0
 
+Keep the state of the checkbox when copying things. --> I think that attributes like markedForStudy and markedForDeletion should not be located into the items themselves but stored and managed externally to the items.  This data is contextual to how we use these items.
 Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Set minimum size for ProgressDialog.  Doesn't seem to work on Zaurus unless reimplementing resize.  Check on qt4.
 Maybe add a preference option to show/hide the sm-2 quiz info at the top.

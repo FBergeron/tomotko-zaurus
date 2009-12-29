@@ -96,10 +96,6 @@ void Vocabulary::removeTerm( const QUuid& uid ) {
     terms.remove( uid.toString() );
 }
 
-//void Vocabulary::removeTerm( const int& id ) {
-//    terms.remove( id );
-//}
-
 bool Vocabulary::isTermExists( const QUuid& uid ) const {
     return( terms.contains( uid.toString() ) );
 }
@@ -140,8 +136,6 @@ void Vocabulary::getItemsCount( uint* termCount, uint* checkedTermCount, uint* s
             if( !term.isMarkedForDeletion() ) {
                 if( !firstLang.isNull() && !testLang.isNull() ) {
                     if( term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
-                        //const Translation& firstLangTrans = term.getTranslation( firstLang );
-                        //const Translation& testLangTrans = term.getTranslation( testLang );
                         *termCount += 1;
                         if( term.isMarkedForStudy() ) {
                             *checkedTermCount += 1;
@@ -164,22 +158,28 @@ void Vocabulary::getItemsCount( uint* termCount, uint* checkedTermCount, uint* s
 }
 
 bool Vocabulary::containsTermWithTranslations( const QString& lang1, const QString& lang2 ) const {
-    for( Vocabulary::TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
-        const Term& term = it.data();
-        if( term.isTranslationExists( lang1 ) && term.isTranslationExists( lang2 ) )
-            return( true );
+    if( !isMarkedForDeletion() ) {
+        for( Vocabulary::TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
+            const Term& term = it.data();
+            if( !term.isMarkedForDeletion() && term.isTranslationExists( lang1 ) && term.isTranslationExists( lang2 ) )
+                return( true );
+        }
     }
     return( false );
 }
 
 QStringList Vocabulary::getTranslationLanguages() const {
     QStringList languages;
-    for( TermMap::ConstIterator it = begin(); it != end(); it++ ) {
-        const Term& term = it.data();
-        for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
-            const Translation& trans = it2.data();
-            if( !languages.contains( trans.getLanguage() ) )
-                languages.append( trans.getLanguage() );
+    if( !isMarkedForDeletion() ) {
+        for( TermMap::ConstIterator it = begin(); it != end(); it++ ) {
+            const Term& term = it.data();
+            if( !term.isMarkedForDeletion() ) {
+                for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
+                    const Translation& trans = it2.data();
+                    if( !languages.contains( trans.getLanguage() ) )
+                        languages.append( trans.getLanguage() );
+                }
+            }
         }
     }
     return( languages );
@@ -188,9 +188,11 @@ QStringList Vocabulary::getTranslationLanguages() const {
 void Vocabulary::removeTranslations( const QStringList& languages ) {
     for( TermMap::Iterator it = begin(); it != end(); it++ ) {
         Term& term = it.data();
-        for( QStringList::ConstIterator it2 = languages.begin(); it2 != languages.end(); it2++ ) {
-            const QString& lang = *it2;
-            term.removeTranslation( lang );
+        if( term.isMarkedForDeletion() ) {
+            for( QStringList::ConstIterator it2 = languages.begin(); it2 != languages.end(); it2++ ) {
+                const QString& lang = *it2;
+                term.removeTranslation( lang );
+            }
         }
     }
 }

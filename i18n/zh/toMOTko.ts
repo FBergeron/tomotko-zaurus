@@ -525,11 +525,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>cs</source>
-        <translation>捷克語</translation>
+        <translation type="obsolete">捷克語</translation>
     </message>
     <message>
         <source>da</source>
-        <translation>丹麦語</translation>
+        <translation type="obsolete">丹麦語</translation>
     </message>
     <message>
         <source>el</source>
@@ -537,7 +537,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>eo</source>
-        <translation>世界語</translation>
+        <translation type="obsolete">世界語</translation>
     </message>
     <message>
         <source>it</source>
@@ -557,7 +557,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>ro</source>
-        <translation>羅馬尼亞語</translation>
+        <translation type="obsolete">羅馬尼亞語</translation>
     </message>
     <message>
         <source>ru</source>
@@ -573,7 +573,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>tl</source>
-        <translation>他加祿語</translation>
+        <translation type="obsolete">他加祿語</translation>
     </message>
     <message>
         <source>vi</source>
@@ -1093,6 +1093,14 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>Export...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForRemoveItemCaption</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForRemoveItem</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

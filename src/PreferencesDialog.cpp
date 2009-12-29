@@ -239,12 +239,10 @@ void PreferencesDialog::init() {
 
     languagesRightPanelLayout->addWidget( languagesRightPanelFiller, 1 );
 
-    languagePageFiller = new QWidget( languagePage, "LanguagePageFiller" );
-
     languageLayout = new QVBoxLayout( languagePage );
     languageLayout->setSpacing( 2 );
-    languageLayout->addWidget( languagesPanel );
-    languageLayout->addWidget( languagePageFiller, 1 );
+    languageLayout->addWidget( languagesPanel, 1 );
+
     tab->addTab( quizPage, tr( "Quiz" ) );
     tab->addTab( languagePage, tr( "Languages" ) );
     tab->addTab( fontPage, tr( "Fonts" ) );

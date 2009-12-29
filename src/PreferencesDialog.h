@@ -212,7 +212,6 @@ private:
     QButton*            setAccelKeyButton;
     QButton*            resetAccelKeyButton;
 
-    QWidget*            languagePageFiller;
     QWidget*            languagesRightPanelFiller;
     QWidget*            quizPageFiller;
     QWidget*            fontPageFiller;
