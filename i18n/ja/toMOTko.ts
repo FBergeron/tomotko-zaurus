@@ -441,6 +441,22 @@ Overwrite the current assignment?</source>
         <source>EFDistributionInfo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>DaysToLastRepetition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NullSuccessRate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SuccessRate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SuccessRateDistributionInfo</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PropertiesPanel</name>
@@ -925,6 +941,25 @@ Overwrite the current assignment?</source>
     <message>
         <source>SequenceNotTerminated</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SuccessRateDistribution</name>
+    <message>
+        <source>NumberOfTermsPerSuccessRate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SuccessRateValueCount</source>
+        <translation type="unfinished">n: %1</translation>
+    </message>
+    <message>
+        <source>SuccessRateAverage</source>
+        <translation type="unfinished">μ: %1</translation>
+    </message>
+    <message>
+        <source>SuccessRateStandardDeviation</source>
+        <translation type="unfinished">σ: %1</translation>
     </message>
 </context>
 <context>

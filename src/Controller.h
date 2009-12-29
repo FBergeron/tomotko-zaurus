@@ -38,6 +38,8 @@ class Controller : public QObject {
 
     static const Q_UINT32 magicNumber( Q_UINT32( 0x22446680 ) );
 
+    static const uint successRateThreshold[];
+
 public:
 
     Controller();
@@ -78,8 +80,8 @@ public:
     void reveal();
 
     void getSchedule( int* schedule );
-    void getEFDistribution( QMap<int,int>& efDist, float& efSum, int& efCount );
-    float getEFStandardDeviation( const float& efAverage );
+    void getDataDistribution( QMap<int,int>& efDist, float& efSum, int& efCount, QMap<int,int>& successRateDist, float& successRateSum, int& successRateCount );
+    void getDataStandardDeviation( const float& efAverage, const float& successRateAverage, float& efDeviation, float& successRateDeviation );
 
     bool saveData();
     void loadData();
@@ -139,10 +141,10 @@ private:
 
     void getScheduleRec( Folder* folder, int* schedule );
     void getScheduleRec( Vocabulary* vocab, int* schedule );
-    void getEFDistributionRec( Folder* folder, QMap<int,int>& efDist, float& efSum, int& efCount );
-    void getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist, float& efSum, int& efCount );
-    float getEFStandardDeviationRec( Folder* folder, const float& efAverage, int& efCount );
-    float getEFStandardDeviationRec( Vocabulary* vocab, const float& efAverage, int& efCount );
+    void getDataDistributionRec( Folder* folder, QMap<int,int>& efDist, float& efSum, int& efCount, QMap<int,int>& successRateDist, float& successRateSum, int& successRateCount );
+    void getDataDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist, float& efSum, int& efCount, QMap<int,int>& successRateDist, float& successRateSum, int& successRateCount );
+    void getDataStandardDeviationRec( Folder* folder, const float& efAverage, int& efCount, const float& successRateAverage, int& successRateCount, float& efSquaredVariationSum, float& successRateSquaredVariationSum );
+    void getDataStandardDeviationRec( Vocabulary* vocab, const float& efAverage, int& efCount, const float& successRateAverage, int& successRateCount, float& efSquaredVariationSum, float& successRateSquaredVariationSum );
 
     int writeFileIntoZipFile( zipFile outputFile, const char* filename, const char* data, int length ) const; 
 

@@ -12,6 +12,7 @@
 #include "Progress.h"
 #include "Schedule.h"
 #include "SmartListView.h"
+#include "SuccessRateDistribution.h"
 
 class ProgressDialog : public QDialog {
 
@@ -39,11 +40,14 @@ private:
     QVBoxLayout*                scheduleTabLayout;
     QWidget*                    efDistributionTab;
     QVBoxLayout*                efDistributionTabLayout;
+    QWidget*                    successRateDistributionTab;
+    QVBoxLayout*                successRateDistributionTabLayout;
     QWidget*                    currTermTab;
     QVBoxLayout*                currTermTabLayout;
 
     Schedule*                   schedule;
     EasinessFactorDistribution* efDistribution;
+    SuccessRateDistribution*    successRateDistribution;
     QSlider*                    scheduleSlider;
 
     SmartListView*              currTermInfo;

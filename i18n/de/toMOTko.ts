@@ -170,11 +170,11 @@
     </message>
     <message>
         <source>EF: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">EF: %1</translation>
     </message>
     <message>
         <source>NR: %1 day(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">NR: %1 day(s)</translation>
     </message>
     <message>
         <source>Help...</source>
@@ -190,7 +190,7 @@
     </message>
     <message>
         <source>Repetition: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Repetition: %1</translation>
     </message>
 </context>
 <context>
@@ -443,6 +443,22 @@ Overwrite the current assignment?</source>
         <source>EFDistributionInfo</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>DaysToLastRepetition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NullSuccessRate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SuccessRate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SuccessRateDistributionInfo</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PropertiesPanel</name>
@@ -507,11 +523,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>cs</source>
-        <translation>Tschechische</translation>
+        <translation type="obsolete">Tschechische</translation>
     </message>
     <message>
         <source>da</source>
-        <translation>Dänische</translation>
+        <translation type="obsolete">Dänische</translation>
     </message>
     <message>
         <source>el</source>
@@ -519,19 +535,19 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>eo</source>
-        <translation>Esperanto</translation>
+        <translation type="obsolete">Esperanto</translation>
     </message>
     <message>
         <source>fi</source>
-        <translation>Finnische</translation>
+        <translation type="obsolete">Finnische</translation>
     </message>
     <message>
         <source>he</source>
-        <translation>Hebräische</translation>
+        <translation type="obsolete">Hebräische</translation>
     </message>
     <message>
         <source>hi</source>
-        <translation>Hindi</translation>
+        <translation type="obsolete">Hindi</translation>
     </message>
     <message>
         <source>it</source>
@@ -543,7 +559,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>la</source>
-        <translation>Latein</translation>
+        <translation type="obsolete">Latein</translation>
     </message>
     <message>
         <source>nl</source>
@@ -555,11 +571,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>rm</source>
-        <translation>Rätoromanisch</translation>
+        <translation type="obsolete">Rätoromanisch</translation>
     </message>
     <message>
         <source>ro</source>
-        <translation>Rumänische</translation>
+        <translation type="obsolete">Rumänische</translation>
     </message>
     <message>
         <source>ru</source>
@@ -567,7 +583,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>sv</source>
-        <translation>Schwedische</translation>
+        <translation type="obsolete">Schwedische</translation>
     </message>
     <message>
         <source>sw</source>
@@ -579,7 +595,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>tl</source>
-        <translation>Tagalog</translation>
+        <translation type="obsolete">Tagalog</translation>
     </message>
     <message>
         <source>vi</source>
@@ -927,6 +943,25 @@ Overwrite the current assignment?</source>
     <message>
         <source>SequenceNotTerminated</source>
         <translation>Die gerade bearbeitete Aufdeckreihenfolge endet nicht mit einem aufdeckbaren Eintrag. Entfernen Sie den letzen Operator oder fügen Sie einen aufdeckbaren Eintrag an.</translation>
+    </message>
+</context>
+<context>
+    <name>SuccessRateDistribution</name>
+    <message>
+        <source>NumberOfTermsPerSuccessRate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SuccessRateValueCount</source>
+        <translation type="unfinished">n: %1</translation>
+    </message>
+    <message>
+        <source>SuccessRateAverage</source>
+        <translation type="unfinished">μ: %1</translation>
+    </message>
+    <message>
+        <source>SuccessRateStandardDeviation</source>
+        <translation type="unfinished">σ: %1</translation>
     </message>
 </context>
 <context>

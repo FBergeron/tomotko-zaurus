@@ -27,6 +27,7 @@ HEADERS += src/Base.h \
            src/ResultListItem.h \
            src/HistoryField.h \
            src/EasinessFactorDistribution.h \
+           src/SuccessRateDistribution.h \
            src/Schedule.h \
            src/Progress.h \
            src/ProgressBar.h \
@@ -86,6 +87,7 @@ SOURCES += src/Util.cpp \
            src/ResultListItem.cpp \
            src/HistoryField.cpp \
            src/EasinessFactorDistribution.cpp \
+           src/SuccessRateDistribution.cpp \
            src/Schedule.cpp \
            src/ProgressBar.cpp \
            src/ProgressDialog.cpp \

@@ -456,7 +456,23 @@ Overwrite the current assignment?</translation>
     </message>
     <message>
         <source>EFDistributionInfo</source>
-        <translation>Distribution by EF</translation>
+        <translation>EF</translation>
+    </message>
+    <message>
+        <source>DaysToLastRepetition</source>
+        <translation>Day(s) since last repetition</translation>
+    </message>
+    <message>
+        <source>NullSuccessRate</source>
+        <translation>N/A</translation>
+    </message>
+    <message>
+        <source>SuccessRate</source>
+        <translation>Success Rate</translation>
+    </message>
+    <message>
+        <source>SuccessRateDistributionInfo</source>
+        <translation>Success Rate</translation>
     </message>
 </context>
 <context>
@@ -971,6 +987,25 @@ sequence doesn&apos;t end by a revealable
 item.  This is invalid.  Remove
 the last operator or add another
 revealable item.</translation>
+    </message>
+</context>
+<context>
+    <name>SuccessRateDistribution</name>
+    <message>
+        <source>NumberOfTermsPerSuccessRate</source>
+        <translation>Number of words per Success Rate values.</translation>
+    </message>
+    <message>
+        <source>SuccessRateValueCount</source>
+        <translation>Number of values: %1</translation>
+    </message>
+    <message>
+        <source>SuccessRateAverage</source>
+        <translation>Average Rate (μ): %1</translation>
+    </message>
+    <message>
+        <source>SuccessRateStandardDeviation</source>
+        <translation>Deviation (σ): %1</translation>
     </message>
 </context>
 <context>

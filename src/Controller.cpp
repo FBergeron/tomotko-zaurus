@@ -1,5 +1,7 @@
 #include "Controller.h"
 
+const uint Controller::successRateThreshold[] = { 0, 10, 30, 50, 70, 90, 99, 100 };
+
 Controller::Controller() : vocabTree( NULL ), quiz( NULL ) {
     applicationDirName = QDir::homeDirPath() + QString( "/.toMOTko" );
     markedXmlFilename = applicationDirName + QString( "/marked.xml" );
@@ -88,11 +90,17 @@ ProgressData Controller::getProgressData( const QString& currTermUid /* = QStrin
     getSchedule( progressData.scheduleForDay );
 
     float efSum = 0.0f;
+    float successRateSum = 0.0f;
     progressData.efValueCount = 0;
-    getEFDistribution( progressData.efDistribution, efSum, progressData.efValueCount );
+    progressData.successRateValueCount = 0;
+    getDataDistribution( progressData.efDistribution, efSum, progressData.efValueCount, 
+        progressData.successRateDistribution, successRateSum, progressData.successRateValueCount );
     progressData.efAverage = efSum / progressData.efValueCount;
+    progressData.successRateAverage = successRateSum / progressData.successRateValueCount;
 
-    progressData.efStandardDeviation = getEFStandardDeviation( progressData.efAverage );
+    progressData.efStandardDeviation = 0.0f;
+    progressData.successRateStandardDeviation = 0.0f;
+    getDataStandardDeviation( progressData.efAverage, progressData.successRateAverage, progressData.efStandardDeviation, progressData.successRateStandardDeviation );
 
     return( progressData );
 }
@@ -1683,14 +1691,18 @@ void Controller::getSchedule( int* schedule ) {
     getScheduleRec( vocabTree, schedule );
 }
 
-void Controller::getEFDistribution( QMap<int,int>& efDist, float& efSum, int& efCount ) {
-    getEFDistributionRec( vocabTree, efDist, efSum, efCount );
+void Controller::getDataDistribution( QMap<int,int>& efDist, float& efSum, int& efCount, QMap<int,int>& successRateDist, float& successRateSum, int& successRateCount ) {
+    getDataDistributionRec( vocabTree, efDist, efSum, efCount, successRateDist, successRateSum, successRateCount );
 }
 
-float Controller::getEFStandardDeviation( const float& efAverage ) {
+void Controller::getDataStandardDeviation( const float& efAverage, const float& successRateAverage, float& efDeviation, float& successRateDeviation ) {
     int efCount = 0;
-    float squaredVariationSum = getEFStandardDeviationRec( vocabTree, efAverage, efCount );
-    return( sqrt( squaredVariationSum / efCount ) );
+    float efSquaredVariationSum = 0.0f;
+    int successRateCount = 0;
+    float successRateSquaredVariationSum = 0.0f;
+    getDataStandardDeviationRec( vocabTree, efAverage, efCount, successRateAverage, successRateCount, efSquaredVariationSum, successRateSquaredVariationSum );
+    efDeviation = sqrt( efSquaredVariationSum / efCount );
+    successRateDeviation = sqrt( successRateSquaredVariationSum / successRateCount );
 }
 
 void Controller::getScheduleRec( Folder* folder, int* schedule ) {
@@ -1734,18 +1746,18 @@ void Controller::getScheduleRec( Vocabulary* vocab, int* schedule ) {
     }
 }
 
-void Controller::getEFDistributionRec( Folder* folder, QMap<int,int>& efDist, float& efSum, int& efCount ) {
+void Controller::getDataDistributionRec( Folder* folder, QMap<int,int>& efDist, float& efSum, int& efCount, QMap<int,int>& successRateDist, float& successRateSum, int& successRateCount ) {
     if( !folder->isMarkedForDeletion() && folder->isMarkedForStudy() ) {
         for( Base* child = folder->first(); child; child = folder->next() ) {
             if( strcmp( child->className(), "Folder" ) == 0 )
-                getEFDistributionRec( (Folder*)child, efDist, efSum, efCount );
+                getDataDistributionRec( (Folder*)child, efDist, efSum, efCount, successRateDist, successRateSum, successRateCount );
             else if( strcmp( child->className(), "Vocabulary" ) == 0 )
-                getEFDistributionRec( (Vocabulary*)child, efDist, efSum, efCount );
+                getDataDistributionRec( (Vocabulary*)child, efDist, efSum, efCount, successRateDist, successRateSum, successRateCount );
         }
     }
 }
 
-void Controller::getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist, float& efSum, int& efCount ) {
+void Controller::getDataDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist, float& efSum, int& efCount, QMap<int,int>& successRateDist, float& successRateSum, int& successRateCount ) {
     if( vocab->isMarkedForStudy() ) {
         QString firstLang = prefs.getFirstLanguage();
         QString testLang = prefs.getTestLanguage();
@@ -1759,36 +1771,49 @@ void Controller::getEFDistributionRec( Vocabulary* vocab, QMap<int,int>& efDist,
                 TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
 
                 int ef = (int)( ( termData.easinessFactor + 0.05 ) * 10.0 );
-                int index = ( ef >= 30 ? 30 : ef );
-                int count = ( efDist.contains( index ) ? efDist[ index ] : 0 );
-                count++;
-                efDist.insert( index, count );
+                int efIndex = ( ef >= 30 ? 30 : ef );
+                int count = ( efDist.contains( efIndex ) ? efDist[ efIndex ] : 0 );
+                efDist.insert( efIndex, count + 1 );
 
                 efSum += termData.easinessFactor;
                 efCount++;
+                
+                uint totalCount = termData.successCount + termData.missCount;
+                if( totalCount > 0 ) {
+                    uint successRate = termData.successCount * 100 / totalCount;
+
+                    int length = sizeof( Controller::successRateThreshold ) / sizeof( int );
+                    for( int successRateIndex = 0; successRateIndex < length; successRateIndex++ ) {
+                        if( successRate <= Controller::successRateThreshold[ successRateIndex ] ) {
+                            count = ( successRateDist.contains( successRateIndex ) ? successRateDist[ successRateIndex ] : 0 );
+                            successRateDist.insert( successRateIndex, count + 1 );
+
+                            successRateSum += successRate;
+                            successRateCount++;
+
+                            break;
+                        }
+                    }
+                }
             }
         }
     }
 }
 
-float Controller::getEFStandardDeviationRec( Folder* folder, const float& efAverage, int& efCount ) {
-    float squaredVariationSum = 0.0f;
-
+void Controller::getDataStandardDeviationRec( Folder* folder, const float& efAverage, int& efCount, const float& successRateAverage, int& successRateCount, float& efSquaredVariationSum, float& successRateSquaredVariationSum ) {
     if( !folder->isMarkedForDeletion() && folder->isMarkedForStudy() ) {
         for( Base* child = folder->first(); child; child = folder->next() ) {
-            if( strcmp( child->className(), "Folder" ) == 0 )
-                squaredVariationSum += getEFStandardDeviationRec( (Folder*)child, efAverage, efCount );
+            if( strcmp( child->className(), "Folder" ) == 0 ) 
+                getDataStandardDeviationRec( (Folder*)child, efAverage, efCount, successRateAverage, successRateCount, 
+                    efSquaredVariationSum, successRateSquaredVariationSum );
             else if( strcmp( child->className(), "Vocabulary" ) == 0 )
-                squaredVariationSum += getEFStandardDeviationRec( (Vocabulary*)child, efAverage, efCount );
+                getDataStandardDeviationRec( (Vocabulary*)child, efAverage, efCount, successRateAverage, successRateCount, 
+                    efSquaredVariationSum, successRateSquaredVariationSum );
         }
     }
-
-    return( squaredVariationSum );
 }
 
-float Controller::getEFStandardDeviationRec( Vocabulary* vocab, const float& efAverage, int& efCount ) {
-    float squaredVariationSum = 0.0f;
-
+void Controller::getDataStandardDeviationRec( Vocabulary* vocab, const float& efAverage, int& efCount, const float& successRateAverage, int& successRateCount, float& efSquaredVariationSum, float& successRateSquaredVariationSum ) {
     if( vocab->isMarkedForStudy() ) {
         QString firstLang = prefs.getFirstLanguage();
         QString testLang = prefs.getTestLanguage();
@@ -1802,12 +1827,17 @@ float Controller::getEFStandardDeviationRec( Vocabulary* vocab, const float& efA
                 TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
 
                 //cerr << "ef=" << termData.easinessFactor << " avg=" << efAverage << endl;
-                squaredVariationSum += pow( termData.easinessFactor - efAverage, 2 );
+                efSquaredVariationSum += pow( termData.easinessFactor - efAverage, 2 );
                 efCount++;
+
+                uint totalCount = termData.successCount + termData.missCount;
+                if( totalCount > 0 ) {
+                    uint successRate = termData.successCount * 100 / totalCount;
+
+                    successRateSquaredVariationSum += pow( successRate - successRateAverage, 2 );
+                    successRateCount++;
+                }
             }
         }
     }
-
-    return( squaredVariationSum );
 }
-

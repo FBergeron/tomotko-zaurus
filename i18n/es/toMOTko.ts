@@ -459,6 +459,22 @@ No obstante, asignar la teclea?</translation>
         <source>EFDistributionInfo</source>
         <translation>Repartición por FF</translation>
     </message>
+    <message>
+        <source>DaysToLastRepetition</source>
+        <translation>Dia(s) desde la ultima repetición</translation>
+    </message>
+    <message>
+        <source>NullSuccessRate</source>
+        <translation>N/A</translation>
+    </message>
+    <message>
+        <source>SuccessRate</source>
+        <translation>Proporción de respuestas correctas</translation>
+    </message>
+    <message>
+        <source>SuccessRateDistributionInfo</source>
+        <translation>Respuestas Correctas</translation>
+    </message>
 </context>
 <context>
     <name>PropertiesPanel</name>
@@ -971,6 +987,25 @@ la ventana.</translation>
 Se termina por un operator de unión.  Debe
 añadir un otro item o borrar el
 ultimo operator.</translation>
+    </message>
+</context>
+<context>
+    <name>SuccessRateDistribution</name>
+    <message>
+        <source>NumberOfTermsPerSuccessRate</source>
+        <translation>Proporción de respuestas correctas.</translation>
+    </message>
+    <message>
+        <source>SuccessRateValueCount</source>
+        <translation>Numero de valores: %1</translation>
+    </message>
+    <message>
+        <source>SuccessRateAverage</source>
+        <translation>Proporción media (μ): %1</translation>
+    </message>
+    <message>
+        <source>SuccessRateStandardDeviation</source>
+        <translation>Desviación (σ): %1</translation>
     </message>
 </context>
 <context>

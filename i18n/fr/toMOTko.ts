@@ -458,6 +458,22 @@ Affecter le raccourci quand même?</translation>
         <source>EFDistributionInfo</source>
         <translation>Distribution par FF</translation>
     </message>
+    <message>
+        <source>DaysToLastRepetition</source>
+        <translation>Jour(s) depuis la dernière répétition</translation>
+    </message>
+    <message>
+        <source>NullSuccessRate</source>
+        <translation>N/A</translation>
+    </message>
+    <message>
+        <source>SuccessRate</source>
+        <translation>Taux de bonnes réponses</translation>
+    </message>
+    <message>
+        <source>SuccessRateDistributionInfo</source>
+        <translation>Bonnes Réponses</translation>
+    </message>
 </context>
 <context>
     <name>PropertiesPanel</name>
@@ -977,6 +993,25 @@ opérateur d&apos;union.</translation>
     </message>
 </context>
 <context>
+    <name>SuccessRateDistribution</name>
+    <message>
+        <source>NumberOfTermsPerSuccessRate</source>
+        <translation>Nombre de mots classés par Taux de Bonnes Réponses.</translation>
+    </message>
+    <message>
+        <source>SuccessRateValueCount</source>
+        <translation>Nombre de valeurs: %1</translation>
+    </message>
+    <message>
+        <source>SuccessRateAverage</source>
+        <translation>Taux moyen (μ): %1</translation>
+    </message>
+    <message>
+        <source>SuccessRateStandardDeviation</source>
+        <translation>Écart-type (σ): %1</translation>
+    </message>
+</context>
+<context>
     <name>TermDialog</name>
     <message>
         <source>Word/Expr.</source>
@@ -1202,11 +1237,11 @@ les glossaires/mots&quot; du menu Actions.</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForRemoveItemCaption</source>
-        <translation>Suppresion d'un item</translation>
+        <translation>Suppresion d&apos;un item</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForRemoveItem</source>
-        <translation>L'item sélectionné contient
+        <translation>L&apos;item sélectionné contient
 des mots comportant des
 traductions dans plusieurs
 langues.  Indiquez les traductions

@@ -66,33 +66,53 @@ const int scheduleLength = 28; // In days.
  */
 struct ProgressData {
     
-    ProgressData() : efValueCount( 0 ), efAverage( 0.0f ), efStandardDeviation( 0.0f ) {
+    ProgressData() : efValueCount( 0 ), efAverage( 0.0f ), efStandardDeviation( 0.0f ), 
+        successRateValueCount( 0 ), successRateAverage( 0.0f ), successRateStandardDeviation( 0.0f ) {
         for( int i = 0; i < scheduleLength; i++ )
             scheduleForDay[ i ] = 0;
 
         efDistribution = QMap<int,int>();
+        successRateDistribution = QMap<int,int>();
     }
 
     ProgressData( const ProgressData& data ) {
         for( int i = 0; i < scheduleLength; i++ )
             scheduleForDay[ i ] = data.scheduleForDay[ i ];
+
         for( QMap<int,int>::ConstIterator it = data.efDistribution.begin(); it != data.efDistribution.end(); it++ ) {
             int key = it.key();
             int value = it.data();
             efDistribution.insert( key, value );
         }
-        currTerm = data.currTerm;
         efValueCount = data.efValueCount;
         efAverage = data.efAverage;
         efStandardDeviation = data.efStandardDeviation;
+
+        for( QMap<int,int>::ConstIterator it = data.successRateDistribution.begin(); it != data.successRateDistribution.end(); it++ ) {
+            int key = it.key();
+            int value = it.data();
+            successRateDistribution.insert( key, value );
+        }
+        successRateValueCount = data.successRateValueCount;
+        successRateAverage = data.successRateAverage;
+        successRateStandardDeviation = data.successRateStandardDeviation;
+
+        currTerm = data.currTerm;
     }
 
     int                     scheduleForDay[ scheduleLength ];
+
     QMap<int,int>           efDistribution;
-    CurrTermProgressData    currTerm;
     int                     efValueCount;
     float                   efAverage;
     float                   efStandardDeviation;
+
+    QMap<int,int>           successRateDistribution;
+    int                     successRateValueCount;
+    float                   successRateAverage;
+    float                   successRateStandardDeviation;
+
+    CurrTermProgressData    currTerm;
 
 };
 

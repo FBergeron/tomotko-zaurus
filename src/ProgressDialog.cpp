@@ -30,6 +30,12 @@ void ProgressDialog::init() {
     efDistribution = new EasinessFactorDistribution( efDistributionTab, progressData.efDistribution, progressData.efValueCount, progressData.efAverage, progressData.efStandardDeviation );
     efDistributionTabLayout->addWidget( efDistribution, 1 );
 
+    successRateDistributionTab = new QWidget( this );
+    successRateDistributionTabLayout = new QVBoxLayout( successRateDistributionTab );
+    successRateDistributionTabLayout->setSpacing( 2 );
+    successRateDistribution = new SuccessRateDistribution( successRateDistributionTab, progressData.successRateDistribution, progressData.successRateValueCount, progressData.successRateAverage, progressData.successRateStandardDeviation );
+    successRateDistributionTabLayout->addWidget( successRateDistribution, 1 );
+
     if( isDataForCurrTermAvailable ) {
         currTermTab = new QWidget( this );
         currTermTabLayout = new QVBoxLayout( currTermTab );
@@ -68,6 +74,7 @@ void ProgressDialog::init() {
 
     tab->addTab( scheduleTab, tr( "ScheduleInfo" ) );
     tab->addTab( efDistributionTab, tr( "EFDistributionInfo" ) );
+    tab->addTab( successRateDistributionTab, tr( "SuccessRateDistributionInfo" ) );
     if( isDataForCurrTermAvailable )
         tab->addTab( currTermTab, tr( "CurrentTermInfo" ) );
 
