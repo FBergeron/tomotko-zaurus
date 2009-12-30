@@ -34,6 +34,7 @@ Mention a note in the documentation about rightAnswer and wrongAnѕwer accelerat
 Mention in the release notes that in order to convert the data, it's required to start and quit the application right away after intalling the appliction.
 Mention in the release notes that the state of the folders (opened/closed) will be lost after upgrade.  No big deal.
 Mention in the release notes that the resumable quiz will actually not been resumable. No big deal.
+Mention that the statistics concern only terms marked for study.  Obviously, terms marked for deletion are not considered.
 When we export on an existing file, a warning dialog need to be shown.
 Release 0.12.0
 

@@ -16,7 +16,7 @@ void SuccessRateDistribution::paintEvent( QPaintEvent* ) {
     int maxTermCount = 0;
 
     for( int i = 0; i < colCount; i++ ) {
-        if( termsForSuccessRate[ i ] > maxTermCount )
+        if( termsForSuccessRate.contains( i ) && termsForSuccessRate[ i ] > maxTermCount )
             maxTermCount = termsForSuccessRate[ i ];
     }
 
@@ -42,15 +42,16 @@ void SuccessRateDistribution::paintEvent( QPaintEvent* ) {
     int barWidth = ( ( size().width() - 20 - 20 - 20 - 20 ) / colCount ) - interBarGap;
     int yNumLabels = size().height() - margin - 3 * fm.height() - padding;
     for( int i = 0; i < colCount; i++ ) {
+        int count = ( termsForSuccessRate.contains( i ) ? termsForSuccessRate[ i ] : 0 );
         int barX = 2 * margin + ( i * ( barWidth + interBarGap ) );
 
         // Paint vertical bar.
         if( maxTermCount > 0 ) {
-            int barHeight = (int)( ( size().height() - y - padding - 4 * fm.height() - margin ) * termsForSuccessRate[ i ] / maxTermCount );
+            int barHeight = (int)( ( size().height() - y - padding - 4 * fm.height() - margin ) * count / maxTermCount );
             int barY = size().height() - margin - 3 * fm.height() - padding - barHeight;
             p.setBrush( black );
-            if( termsForSuccessRate[ i ] > 0 ) 
-                p.drawText( barX, barY - fm.height(), barWidth, fm.height(), AlignTop | AlignHCenter | DontClip, QString::number( termsForSuccessRate[ i ] ) );
+            if( count > 0 ) 
+                p.drawText( barX, barY - fm.height(), barWidth, fm.height(), AlignTop | AlignHCenter | DontClip, QString::number( count ) );
             if( barHeight > 0 ) {
                 p.setBrush( blue );
                 p.drawRect( barX, barY, barWidth, barHeight );
