@@ -82,3 +82,25 @@ int main( int argc, char **argv ) {
 //    //controller->saveTermData();
 //    return( 0 );
 //}
+
+//int main( int /*argc*/, char ** /*argv*/ ) {
+//    Controller* controller = new Controller();
+//    controller->init();
+//    
+//    //QString firstLang = QString( "de" );
+//    //QString testLang = QString( "fr" );
+//    //QString firstLang = QString( "en" );
+//    //QString testLang = QString( "fr" );
+//    //QString firstLang = QString( "en" );
+//    //QString testLang = QString( "ja" );
+//    QString firstLang = QString( "es" );
+//    QString testLang = QString( "fr" );
+//    bool isLoaded = Statistics::instance()->loadTermData( firstLang, testLang );
+//    cerr << "loaded=" << isLoaded << endl;
+//    if( isLoaded ) {
+//        bool isSaved = Statistics::instance()->saveTermData( firstLang, testLang );
+//        cerr << "saved=" << isSaved << endl;
+//    }
+//    //controller->saveTermData();
+//    return( 0 );
+//}

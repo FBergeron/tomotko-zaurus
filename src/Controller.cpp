@@ -95,8 +95,10 @@ ProgressData Controller::getProgressData( const QString& currTermUid /* = QStrin
     progressData.successRateValueCount = 0;
     getDataDistribution( progressData.efDistribution, efSum, progressData.efValueCount, 
         progressData.successRateDistribution, successRateSum, progressData.successRateValueCount );
-    progressData.efAverage = efSum / progressData.efValueCount;
-    progressData.successRateAverage = successRateSum / progressData.successRateValueCount;
+    if( progressData.efValueCount > 0 )
+        progressData.efAverage = efSum / progressData.efValueCount;
+    if( progressData.successRateValueCount > 0 )
+        progressData.successRateAverage = successRateSum / progressData.successRateValueCount;
 
     progressData.efStandardDeviation = 0.0f;
     progressData.successRateStandardDeviation = 0.0f;
@@ -1701,8 +1703,10 @@ void Controller::getDataStandardDeviation( const float& efAverage, const float& 
     int successRateCount = 0;
     float successRateSquaredVariationSum = 0.0f;
     getDataStandardDeviationRec( vocabTree, efAverage, efCount, successRateAverage, successRateCount, efSquaredVariationSum, successRateSquaredVariationSum );
-    efDeviation = sqrt( efSquaredVariationSum / efCount );
-    successRateDeviation = sqrt( successRateSquaredVariationSum / successRateCount );
+    if( efCount > 0 )
+        efDeviation = sqrt( efSquaredVariationSum / efCount );
+    if( successRateCount > 0 )
+        successRateDeviation = sqrt( successRateSquaredVariationSum / successRateCount );
 }
 
 void Controller::getScheduleRec( Folder* folder, int* schedule ) {

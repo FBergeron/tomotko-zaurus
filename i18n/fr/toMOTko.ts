@@ -17,6 +17,10 @@
         <source>EFStandardDeviation</source>
         <translation>Écart-type (σ): %1</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -1009,6 +1013,10 @@ opérateur d&apos;union.</translation>
     <message>
         <source>SuccessRateStandardDeviation</source>
         <translation>Écart-type (σ): %1</translation>
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation>N/A</translation>
     </message>
 </context>
 <context>

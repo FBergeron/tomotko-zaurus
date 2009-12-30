@@ -17,6 +17,10 @@
         <source>EFStandardDeviation</source>
         <translation type="unfinished">σ: %1</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -541,11 +545,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>cs</source>
-        <translation type="obsolete">捷克語</translation>
+        <translation>捷克語</translation>
     </message>
     <message>
         <source>da</source>
-        <translation type="obsolete">丹麦語</translation>
+        <translation>丹麦語</translation>
     </message>
     <message>
         <source>el</source>
@@ -553,7 +557,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>eo</source>
-        <translation type="obsolete">世界語</translation>
+        <translation>世界語</translation>
     </message>
     <message>
         <source>it</source>
@@ -573,7 +577,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>ro</source>
-        <translation type="obsolete">羅馬尼亞語</translation>
+        <translation>羅馬尼亞語</translation>
     </message>
     <message>
         <source>ru</source>
@@ -589,7 +593,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>tl</source>
-        <translation type="obsolete">他加祿語</translation>
+        <translation>他加祿語</translation>
     </message>
     <message>
         <source>vi</source>
@@ -936,6 +940,10 @@ Overwrite the current assignment?</source>
     <message>
         <source>SuccessRateStandardDeviation</source>
         <translation type="unfinished">σ: %1</translation>
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished">N/A</translation>
     </message>
 </context>
 <context>

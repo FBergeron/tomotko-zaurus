@@ -70,12 +70,12 @@ void SuccessRateDistribution::paintEvent( QPaintEvent* ) {
     y = size().height() - margin - fm.height(); 
     p.drawText( margin, y, tr( "SuccessRateValueCount" ).arg( successRateValueCount ) );
 
-    QString averageString = tr( "SuccessRateAverage" ).arg( successRateAverage );
+    QString averageString = tr( "SuccessRateAverage" ).arg( successRateValueCount > 0 ? QString::number( successRateAverage ) : tr( "N/A" ) );
     p.drawText( size().width() - p.fontMetrics().width( averageString ) - margin, y, averageString );
 
     y += fm.height();
     
-    QString standardDeviationString = tr( "SuccessRateStandardDeviation" ).arg( successRateStandardDeviation );
+    QString standardDeviationString = tr( "SuccessRateStandardDeviation" ).arg( successRateValueCount > 0 ? QString::number( successRateStandardDeviation ) : tr( "N/A" ) );
     p.drawText( size().width() - p.fontMetrics().width( standardDeviationString ) - margin, y, standardDeviationString );
 }
 

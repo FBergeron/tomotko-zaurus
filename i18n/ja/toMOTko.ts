@@ -17,6 +17,10 @@
         <source>EFStandardDeviation</source>
         <translation type="unfinished">σ: %1</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -541,11 +545,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>cs</source>
-        <translation type="obsolete">チェコ語</translation>
+        <translation>チェコ語</translation>
     </message>
     <message>
         <source>da</source>
-        <translation type="obsolete">デンマーク語</translation>
+        <translation>デンマーク語</translation>
     </message>
     <message>
         <source>el</source>
@@ -553,19 +557,19 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>eo</source>
-        <translation type="obsolete">エスペラント</translation>
+        <translation>エスペラント</translation>
     </message>
     <message>
         <source>fi</source>
-        <translation type="obsolete">フィンランド語</translation>
+        <translation>フィンランド語</translation>
     </message>
     <message>
         <source>he</source>
-        <translation type="obsolete">ヘブライ語</translation>
+        <translation>ヘブライ語</translation>
     </message>
     <message>
         <source>hi</source>
-        <translation type="obsolete">ヒンディー語</translation>
+        <translation>ヒンディー語</translation>
     </message>
     <message>
         <source>it</source>
@@ -577,7 +581,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>la</source>
-        <translation type="obsolete">ラテン語</translation>
+        <translation>ラテン語</translation>
     </message>
     <message>
         <source>nl</source>
@@ -589,11 +593,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>rm</source>
-        <translation type="obsolete">ロマンシュ語</translation>
+        <translation>ロマンシュ語</translation>
     </message>
     <message>
         <source>ro</source>
-        <translation type="obsolete">ルーマニア語</translation>
+        <translation>ルーマニア語</translation>
     </message>
     <message>
         <source>ru</source>
@@ -601,7 +605,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>sv</source>
-        <translation type="obsolete">スウェーデン語</translation>
+        <translation>スウェーデン語</translation>
     </message>
     <message>
         <source>sw</source>
@@ -613,7 +617,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>tl</source>
-        <translation type="obsolete">タガログ語</translation>
+        <translation>タガログ語</translation>
     </message>
     <message>
         <source>vi</source>
@@ -960,6 +964,10 @@ Overwrite the current assignment?</source>
     <message>
         <source>SuccessRateStandardDeviation</source>
         <translation type="unfinished">σ: %1</translation>
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished">N/A</translation>
     </message>
 </context>
 <context>

@@ -17,6 +17,10 @@
         <source>EFStandardDeviation</source>
         <translation>Desviación (σ): %1</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -1006,6 +1010,10 @@ ultimo operator.</translation>
     <message>
         <source>SuccessRateStandardDeviation</source>
         <translation>Desviación (σ): %1</translation>
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation>N/A</translation>
     </message>
 </context>
 <context>
