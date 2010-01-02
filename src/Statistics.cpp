@@ -23,7 +23,7 @@ TermData Statistics::getTermData( const QString& termUid ) {
         aTermData.interval = 0;
         aTermData.repetition = 0;
         aTermData.easinessFactor = 2.5;
-        aTermData.nextRepetitionDate = QDate();
+        aTermData.nextRepetitionDate = QDate::currentDate();
         aTermData.lastRepetitionDate = QDate();
         aTermData.successCount = 0;
         aTermData.missCount = 0;

@@ -2,8 +2,11 @@
 
 const QString Util::languageCodeList[] = { 
     QObject::tr( "en" ), QObject::tr( "fr" ), QObject::tr( "es" ), QObject::tr( "ja" ), QObject::tr( "de" ), 
-    QObject::tr( "ar" ), QObject::tr( "bg" ), QObject::tr( "el" ), QObject::tr( "it" ), QObject::tr( "ko" ), QObject::tr( "nl" ), 
-    QObject::tr( "pt" ), QObject::tr( "ru" ), QObject::tr( "sw" ), QObject::tr( "th" ), QObject::tr( "vi" ), QObject::tr( "zh" )
+    QObject::tr( "ar" ), QObject::tr( "bg" ), QObject::tr( "cs" ), QObject::tr( "da" ), QObject::tr( "el" ), 
+    QObject::tr( "eo" ), QObject::tr( "fi" ), QObject::tr( "he" ), QObject::tr( "hi" ), QObject::tr( "it" ), 
+    QObject::tr( "ko" ), QObject::tr( "la" ), QObject::tr( "nl" ), QObject::tr( "pt" ), QObject::tr( "rm" ),
+    QObject::tr( "ro" ), QObject::tr( "ru" ), QObject::tr( "sv" ), QObject::tr( "sw" ), QObject::tr( "th" ), 
+    QObject::tr( "tl" ), QObject::tr( "vi" ), QObject::tr( "zh" )
 };
 
 QMap<QString,QString>* Util::digraphMap = 0;

@@ -12,7 +12,6 @@ When we remove a glossary/folder that contains words in more than 2 translations
 If I want to have resizable animated movie for CharacterDialog, check this link: http://doc.trolltech.com/3.3/movies-example.html#x498
 Solidify movieResized().    
 Handle NoTermsMarkedForStudy and NoTermsScheduledForStudy separately.  Improve the message too.  Should mention that we need to select parents folders and glossaries too.
-Bug: Fix the last column width in the properties panel.
 The AllDone message should be different for sm2 quiz.  These messages should be defined by quiz.
 Validate marked study items separately from scheduled terms?
 Disable gradeAnswer accelerators when performing a non-SM-2 quiz.

@@ -10,7 +10,7 @@
 struct TermData {
 
     TermData() : interval( 0 ), repetition( 0 ), easinessFactor( 2.5 ), nextRepetitionDate( QDate::currentDate() ), 
-        lastRepetitionDate( QDate::currentDate() ), successCount( 0 ), missCount( 0 ) {
+        lastRepetitionDate( QDate() ), successCount( 0 ), missCount( 0 ) {
     }
 
     TermData( const TermData& termData ) : interval( termData.interval ), repetition( termData.repetition ), easinessFactor( termData.easinessFactor ), 

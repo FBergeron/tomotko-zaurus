@@ -17,10 +17,6 @@
         <source>EFStandardDeviation</source>
         <translation type="unfinished">σ: %1</translation>
     </message>
-    <message>
-        <source>N/A</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -707,6 +703,34 @@ Overwrite the current assignment?</source>
         <source>Sunday</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>fi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>he</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>la</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sv</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished">N/A</translation>
+    </message>
 </context>
 <context>
     <name>QuizFrame</name>
@@ -940,10 +964,6 @@ Overwrite the current assignment?</source>
     <message>
         <source>SuccessRateStandardDeviation</source>
         <translation type="unfinished">σ: %1</translation>
-    </message>
-    <message>
-        <source>N/A</source>
-        <translation type="unfinished">N/A</translation>
     </message>
 </context>
 <context>

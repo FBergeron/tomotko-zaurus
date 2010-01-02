@@ -20,5 +20,7 @@ bool ProgressBar::setIndicator( QString& indicator, int progress, int totalSteps
 
 QSize ProgressBar::sizeHint() const {
     QSize size = QProgressBar::sizeHint();
-    return( QSize( size.width() * 2, size.height() ) );
+    QFontMetrics fm( font() );
+    int width = fm.width( "(99999/00000) 999%" );
+    return( QSize( width + 20, size.height() ) );
 }

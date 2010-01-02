@@ -20,6 +20,7 @@ void ProgressDialog::init() {
     scheduleTabLayout->setSpacing( 2 );
     schedule = new Schedule( scheduleTab, progressData.scheduleForDay );
     scheduleSlider = new QSlider( 1, 4, 1, 1, QSlider::Horizontal, scheduleTab );
+    scheduleSlider->setTickmarks( QSlider::Above );
     connect( scheduleSlider, SIGNAL( valueChanged( int ) ), schedule, SLOT( setInterval( int ) ) );
     scheduleTabLayout->addWidget( schedule, 1 );
     scheduleTabLayout->addWidget( scheduleSlider );
@@ -57,7 +58,8 @@ void ProgressDialog::init() {
         QListViewItem* daysToNextRepetitionListViewItem = new QListViewItem( currTermInfo, tr( "DaysToNextRepetition" ), QString::number( progressData.currTerm.daysToNextRepetition ) );
         currTermInfo->insertItem( daysToNextRepetitionListViewItem );
 
-        QListViewItem* daysToLastRepetitionListViewItem = new QListViewItem( currTermInfo, tr( "DaysToLastRepetition" ), QString::number( progressData.currTerm.daysToLastRepetition ) );
+        QString strDaysToLastRepetition = ( progressData.currTerm.daysToLastRepetition == INT_MIN ? QObject::tr( "N/A" ) : QString::number( progressData.currTerm.daysToLastRepetition ) );
+        QListViewItem* daysToLastRepetitionListViewItem = new QListViewItem( currTermInfo, tr( "DaysToLastRepetition" ), strDaysToLastRepetition );
         currTermInfo->insertItem( daysToLastRepetitionListViewItem );
 
         uint totalCount = progressData.currTerm.successCount + progressData.currTerm.missCount;

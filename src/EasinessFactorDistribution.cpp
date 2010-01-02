@@ -89,11 +89,11 @@ void EasinessFactorDistribution::paintEvent( QPaintEvent* ) {
     y = size().height() - margin - fm.height(); 
     p.drawText( margin, y, tr( "EFValueCount" ).arg( efValueCount ) );
 
-    QString averageString = tr( "EFAverage" ).arg( efValueCount > 0 ? QString::number( efAverage ) : tr( "N/A" ) );
+    QString averageString = tr( "EFAverage" ).arg( efValueCount > 0 ? QString::number( efAverage ) : QObject::tr( "N/A" ) );
     p.drawText( size().width() - p.fontMetrics().width( averageString ) - margin, y, averageString );
 
     y += fm.height();
     
-    QString standardDeviationString = tr( "EFStandardDeviation" ).arg( efValueCount > 0 ? QString::number( efStandardDeviation ) : tr( "N/A" ) );
+    QString standardDeviationString = tr( "EFStandardDeviation" ).arg( efValueCount > 0 ? QString::number( efStandardDeviation ) : QObject::tr( "N/A" ) );
     p.drawText( size().width() - p.fontMetrics().width( standardDeviationString ) - margin, y, standardDeviationString );
 }

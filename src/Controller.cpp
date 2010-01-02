@@ -39,9 +39,9 @@ void Controller::initQuiz() {
             break;
         case Preferences::SUPERMEMO2 : 
             quiz = new SuperMemo2Quiz( applicationDirName ); 
-            getProgressData();
             break;
     }
+    getProgressData();
     if( quiz )
         quiz->init( getPreferences().getFirstLanguage(), getPreferences().getTestLanguage(), vocabTree );
 }
@@ -82,7 +82,7 @@ ProgressData Controller::getProgressData( const QString& currTermUid /* = QStrin
         progressData.currTerm.repetition = termData.repetition;
         progressData.currTerm.easinessFactor = termData.easinessFactor;
         progressData.currTerm.daysToNextRepetition = ( termData.nextRepetitionDate.isNull() ? 0 : QDate::currentDate().daysTo( termData.nextRepetitionDate ) );
-        progressData.currTerm.daysToLastRepetition = ( termData.lastRepetitionDate.isNull() ? 0 : termData.lastRepetitionDate.daysTo( QDate::currentDate() ) );
+        progressData.currTerm.daysToLastRepetition = ( termData.lastRepetitionDate.isNull() ? INT_MIN : termData.lastRepetitionDate.daysTo( QDate::currentDate() ) );
         progressData.currTerm.successCount = termData.successCount;
         progressData.currTerm.missCount = termData.missCount;
     }

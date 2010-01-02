@@ -17,10 +17,6 @@
         <source>EFStandardDeviation</source>
         <translation>Deviation (σ): %1</translation>
     </message>
-    <message>
-        <source>N/A</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -751,6 +747,10 @@ and disk space.</translation>
         <source>Sunday</source>
         <translation>Sunday</translation>
     </message>
+    <message>
+        <source>N/A</source>
+        <translation>N/A</translation>
+    </message>
 </context>
 <context>
     <name>QuizFrame</name>
@@ -1010,10 +1010,6 @@ revealable item.</translation>
     <message>
         <source>SuccessRateStandardDeviation</source>
         <translation>Deviation (σ): %1</translation>
-    </message>
-    <message>
-        <source>N/A</source>
-        <translation>N/A</translation>
     </message>
 </context>
 <context>
