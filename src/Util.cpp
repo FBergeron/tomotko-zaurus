@@ -136,10 +136,10 @@ QString Util::term2Xml( const Term& term, QStringList* languages, uint indentLev
     }
     for( Term::CommentMap::ConstIterator it = term.commentsBegin(); it != term.commentsEnd(); it++ ) {
         const BilingualKey& key = it.key();
-        const QString& comment = it.data();
+        const Comment& comment = it.data();
         if( !comment.isEmpty() ) {
             if( !languages || ( languages->contains( key.getFirstLanguage() ) && languages->contains( key.getSecondLanguage() ) ) )
-                ts << indent << "\t<comment languages=\"" << key.toString() << "\">" << Util::escapeXml( comment ) << "</comment>" << endl;
+                ts << indent << "\t<comment languages=\"" << key.toString() << "\">" << Util::escapeXml( comment.getText() ) << "</comment>" << endl;
         }
     }
     ts << indent << QString( "</term>" ) << endl;

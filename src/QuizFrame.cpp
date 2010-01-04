@@ -305,7 +305,7 @@ void QuizFrame::setTerm( const Term& term ) {
     const QString testLangAlt = testLangTranslation.getAlt();
     const QString testLangWord = testLangTranslation.getWord();
 
-    QString comment;
+    Comment comment;
     BilingualKey commentKey( controller->getQuizFirstLanguage(), controller->getQuizTestLanguage() );
     if( term.isCommentExists( commentKey ) )
         comment = term.getComment( commentKey );
@@ -319,7 +319,7 @@ void QuizFrame::setTerm( const Term& term ) {
     testLangTermLineEdit->setText( testLangWord );
     testLangTermLineEdit->setCursorPosition( 0 );
 
-    commentMultiLineEdit->setText( comment );
+    commentMultiLineEdit->setText( comment.getText() );
     commentMultiLineEdit->setCursorPosition( 0, 0 );
 
     Folder* vocabTree = controller->getVocabTree();

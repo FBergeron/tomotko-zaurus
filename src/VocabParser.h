@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "BilingualKey.h"
+#include "Comment.h"
 #include "Term.h"
 #include "Translation.h"
 #include "Vocabulary.h"
@@ -33,7 +34,7 @@ private:
 
     QString lang;
     QString word;
-    QString comment;
+    QString commentText;
     BilingualKey commentKey;
     QString alt;
 

@@ -27,6 +27,10 @@ void Comment::setText( const QString& text ) {
     this->text = text;
 }
 
+bool Comment::isEmpty() const {
+    return( this->text.isEmpty() );
+}
+
 bool Comment::isMarkedForDeletion() const {
     return( markedForDeletion );
 }
@@ -36,7 +40,7 @@ void Comment::setMarkedForDeletion( bool isMarkedForDeletion ) {
 }
 
 QDataStream& operator<<( QDataStream& out, const Comment& comment ) {
-    out << comment.uid << comment.text;
+    out << comment.uid.toString() << comment.text;
     return( out );
 }
 

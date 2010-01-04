@@ -12,7 +12,7 @@ Term::Term( const Term& term ) : uid( term.uid ), id( term.id ), vocabUid( term.
     }
     for( CommentMap::ConstIterator it = term.comments.begin(); it != term.comments.end(); it++ ) {
         const BilingualKey& key = it.key();
-        const QString& comment = it.data();
+        const Comment& comment = it.data();
         addComment( key, comment );
     }
 }
@@ -92,7 +92,7 @@ int Term::getTranslationCount() const {
     return( translations.count() );
 }
 
-void Term::addComment( const BilingualKey& key, const QString& comment ) {
+void Term::addComment( const BilingualKey& key, const Comment& comment ) {
     comments.insert( key, comment );
 }
 
@@ -112,11 +112,11 @@ bool Term::isCommentExists( const BilingualKey& key ) const {
     return( comments.contains( key ) );
 }
 
-QString& Term::getComment( const BilingualKey& key )  {
+Comment& Term::getComment( const BilingualKey& key )  {
     return( comments[ key ] );
 }
 
-QString Term::getComment( const BilingualKey& key ) const {
+Comment Term::getComment( const BilingualKey& key ) const {
     return( comments[ key ] );
 }
 
@@ -150,22 +150,23 @@ QDataStream& operator>>( QDataStream& in, Term& term ) {
     QString tempVocabUidStr;
     QUuid tempVocabUid;
     Term::TranslationMap tempTranslations;
+
     Term::CommentMap tempComments;
+    Term::OldCommentMap tempOldComments;
     QString tempImagePath;
     if( Term::isOldFormat ) {
         int tempVocabId; // This value is dismissed.  The parent vocabulary will affect the vocabUid and the uid after reading all the terms. 
         in >> tempId;
         in >> tempVocabId;
         in >> tempTranslations;
-        in >> tempComments;
+        in >> tempOldComments;
         in >> tempImagePath;
     }
     else {
         in >> tempUidStr;
         tempUid = QUuid( tempUidStr );
-        //in >> tempVocabUidStr;
-        //tempVocabUid = QUuid( tempVocabUidStr );
-        in >> tempTranslations >> tempComments;
+        in >> tempTranslations;
+        in >> tempComments;
         in >> tempImagePath;
     }
     term = Term( tempId, tempVocabUid, tempUid );
@@ -175,13 +176,19 @@ QDataStream& operator>>( QDataStream& in, Term& term ) {
         if( trans.getLanguage() ) 
             term.addTranslation( trans );
     }
+    // Temporary for conversion from 0.11.x to 0.12.x.
+    for( Term::OldCommentMap::ConstIterator it = tempOldComments.begin(); it != tempOldComments.end(); it++ ) {
+        const BilingualKey& key = it.key();
+        const QString& commentText = it.data();
+        Comment comment( commentText ); // Uid will be assigned by the parent vocabulary.
+        term.addComment( key, comment );
+    }
     for( Term::CommentMap::ConstIterator it = tempComments.begin(); it != tempComments.end(); it++ ) {
         const BilingualKey& key = it.key();
-        const QString& comment = it.data();
+        const Comment& comment = it.data();
         term.addComment( key, comment );
     }
     term.setImagePath( tempImagePath );
 
     return( in );
 }
-

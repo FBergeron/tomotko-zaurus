@@ -138,7 +138,13 @@ void TermDialog::updateModel() {
     testLangTranslation.setAlt( testLangTermAltLineEdit->text() );
 
     BilingualKey commentKey( controller->getPreferences().getFirstLanguage(), controller->getPreferences().getTestLanguage() );
-    editedTerm->addComment( commentKey, commentMultiLineEdit->text() );
+    if( !editedTerm->isCommentExists( commentKey ) ) {
+        Comment comment( Util::createUuid() ); 
+        editedTerm->addComment( commentKey, comment );
+    }
+
+    Comment& comment = editedTerm->getComment( commentKey );
+    comment.setText( commentMultiLineEdit->text() ); 
 
     // If the path refers to an image in toMOTko's vocabulary, we use a relative path instead.
     QString vocabLocation = controller->getApplicationDirName() + "/" + vocab.getParent()->getPath() +
@@ -259,7 +265,7 @@ void TermDialog::updateUi() {
             testLangTermAltLineEdit->setCursorPosition( 0 );
             BilingualKey commentKey( controller->getPreferences().getFirstLanguage(), controller->getPreferences().getTestLanguage() );
             if( editedTerm->isCommentExists( commentKey ) ) {
-                commentMultiLineEdit->setText( editedTerm->getComment( commentKey ) );
+                commentMultiLineEdit->setText( editedTerm->getComment( commentKey ).getText() );
                 commentMultiLineEdit->setCursorPosition( 0, 0 );
             }
         }

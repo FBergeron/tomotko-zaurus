@@ -1,8 +1,9 @@
 ToDo
 ----
-I need to add Uid and markedForDeletion to translations and comments.  Stats should be associated to a pair of translation uids instead of term uid.  This way, if I cut terms (actually translations + comments), and paste them somewhere else, I will be able to keep the link with the associated stats.  Doing so, I should also add isMarkedForDeletion property for translations.  Because the Translations will have uid, I don't need to have a property markedForDeletion for stats.  I will be able to find the associated stats using the Translations uid, instead.
+When deleting a term (and its translations), remove the associated stats.  Now that Translations have uid, I don't need to have a property markedForDeletion for stats.  I will be able to find the associated stats using the Translations uid, instead.
     I have added markedForDeletion for Translation.  Now, do I need to consider its value in some methods of Term.cpp?  For example, operator>>() and operator<<()?
     Before trying this on the Zaurus, check the memory it takes before and after.  I'm curious how much memory it takes to use uid for translation and comments.  Is it a big deal?  I have about 4250 words at the moment.
+Should I remove empty Translations and Comments in TermDialog::updateModel()?
 Verify this case:  We have a glossary with terms in 3 translations.  We delete a term (in 2 translations).  Will the remaining translation survive? yes
 Make sure that when we remove a term that references to it are also removed (markedForStudy and test, etc.)
 When we remove a term (or some of its translations), we must delete its associated stats as well.  

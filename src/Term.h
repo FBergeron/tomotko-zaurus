@@ -9,6 +9,7 @@
 #include <qmap.h>
 #include <qstring.h>
 #include "BilingualKey.h"
+#include "Comment.h"
 #include "Translation.h"
 
 class Term {
@@ -22,7 +23,8 @@ public:
     ~Term();
    
     typedef QMap<QString, Translation> TranslationMap;
-    typedef QMap<BilingualKey, QString> CommentMap;
+    typedef QMap<BilingualKey, QString> OldCommentMap; // Temporary for data conversion from 0.11.x to 0.12.x.
+    typedef QMap<BilingualKey, Comment> CommentMap;
 
     const QUuid getUid() const;
     void setUid( const QUuid& uid );
@@ -44,12 +46,12 @@ public:
     TranslationMap::ConstIterator translationsEnd() const;
     int getTranslationCount() const;
    
-    void addComment( const BilingualKey& key, const QString& comment );
+    void addComment( const BilingualKey& key, const Comment& comment );
     void removeComment( const BilingualKey& key );
     void removeComments( const QString& language );
     bool isCommentExists( const BilingualKey& key ) const;
-    QString& getComment( const BilingualKey& key );
-    QString getComment( const BilingualKey& key ) const;
+    Comment& getComment( const BilingualKey& key );
+    Comment getComment( const BilingualKey& key ) const;
     CommentMap::ConstIterator commentsBegin() const;
     CommentMap::ConstIterator commentsEnd() const;
     const QString getImagePath() const;

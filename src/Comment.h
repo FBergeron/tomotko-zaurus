@@ -11,7 +11,7 @@ class Comment {
 public:
 
     Comment( const QUuid& uid = QUuid(), const QString& text = QString() );
-    Comment( const QString& text = QString() );
+    Comment( const QString& text );
     Comment( const Comment& comment );
     ~Comment();
 
@@ -19,6 +19,7 @@ public:
 
     const QString getText() const;
     void setText( const QString& text );
+    bool isEmpty() const;
 
     bool isMarkedForDeletion() const;
     void setMarkedForDeletion( bool isMarkedForDeletion );

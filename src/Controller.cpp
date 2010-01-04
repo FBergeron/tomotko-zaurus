@@ -68,45 +68,6 @@ int Controller::getQuizAnswerCount() const {
     return( quiz ? quiz->getAnswerCount() : 0 );
 }
 
-//ProgressData Controller::getProgressData( const QString& currTermUid /* = QString::null */ ) {
-//    QString firstLang = prefs.getFirstLanguage();
-//    QString testLang = prefs.getTestLanguage();
-//
-//    Statistics::instance()->loadTermData( firstLang, testLang );
-//
-//    ProgressData progressData;
-//
-//    if( !currTermUid.isNull() ) {
-//        TermData termData = Statistics::instance()->getTermData( currTermUid );
-//
-//        progressData.currTerm.repetition = termData.repetition;
-//        progressData.currTerm.easinessFactor = termData.easinessFactor;
-//        progressData.currTerm.daysToNextRepetition = ( termData.nextRepetitionDate.isNull() ? 0 : QDate::currentDate().daysTo( termData.nextRepetitionDate ) );
-//        progressData.currTerm.daysToLastRepetition = ( termData.lastRepetitionDate.isNull() ? INT_MIN : termData.lastRepetitionDate.daysTo( QDate::currentDate() ) );
-//        progressData.currTerm.successCount = termData.successCount;
-//        progressData.currTerm.missCount = termData.missCount;
-//    }
-//
-//    getSchedule( progressData.scheduleForDay );
-//
-//    float efSum = 0.0f;
-//    float successRateSum = 0.0f;
-//    progressData.efValueCount = 0;
-//    progressData.successRateValueCount = 0;
-//    getDataDistribution( progressData.efDistribution, efSum, progressData.efValueCount, 
-//        progressData.successRateDistribution, successRateSum, progressData.successRateValueCount );
-//    if( progressData.efValueCount > 0 )
-//        progressData.efAverage = efSum / progressData.efValueCount;
-//    if( progressData.successRateValueCount > 0 )
-//        progressData.successRateAverage = successRateSum / progressData.successRateValueCount;
-//
-//    progressData.efStandardDeviation = 0.0f;
-//    progressData.successRateStandardDeviation = 0.0f;
-//    getDataStandardDeviation( progressData.efAverage, progressData.successRateAverage, progressData.efStandardDeviation, progressData.successRateStandardDeviation );
-//
-//    return( progressData );
-//}
-
 ProgressData Controller::getProgressData( const BiUidKey& key /* = BiUidKey() */ ) {
     QString firstLang = prefs.getFirstLanguage();
     QString testLang = prefs.getTestLanguage();
@@ -307,7 +268,7 @@ Vocabulary* Controller::addVocabulary( Folder* parentFolder, Vocabulary* vocab =
             }
             for( Term::CommentMap::ConstIterator it3 = term.commentsBegin(); it3 != term.commentsEnd(); it3++ ) {
                 const BilingualKey& key = it3.key();
-                const QString& comment = it3.data();
+                const Comment& comment = it3.data();
                 newTerm.addComment( key, comment );
             }
             if( !term.getImagePath().isNull() ) {
@@ -1697,13 +1658,13 @@ void Controller::searchRec( const QString& query, Vocabulary* vocab, QValueList<
                 const QString& firstLang = prefs.getFirstLanguage();
                 const QString& testLang = prefs.getTestLanguage();
                 BilingualKey key( firstLang, testLang );
-                if( term.isCommentExists( key ) && term.getComment( key ).find( query ) != -1 )
+                if( term.isCommentExists( key ) && term.getComment( key ).getText().find( query ) != -1 )
                     isStringFound = true;
             }
             else {
                 for( Term::CommentMap::ConstIterator it = term.commentsBegin(); it != term.commentsEnd(); it++ ) {
-                    const QString& comment = it.data();
-                    if( comment.find( query ) != -1 ) {
+                    const Comment& comment = it.data();
+                    if( comment.getText().find( query ) != -1 ) {
                         isStringFound = true;
                         break;
                     }

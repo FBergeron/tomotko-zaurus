@@ -19,7 +19,7 @@ bool VocabParser::startElement( const QString&, const QString&, const QString& q
         tempCh = QString();
         if( qname == QString( "comment" ) ) {
             commentKey = attribs.value( QString( "languages" ) ); 
-            comment = QString();
+            commentText = QString();
         }
     }
     else if( qname == QString( "trans" ) ) {
@@ -53,9 +53,11 @@ bool VocabParser::endElement( const QString&, const QString&, const QString& qna
     if( qname == QString( "word" ) )
         word = tempCh;
     else if( qname == QString( "comment" ) ) {
-        comment = tempCh;
-        if( languages.count() == 0 || ( languages.contains( commentKey.getFirstLanguage() ) && languages.contains( commentKey.getSecondLanguage() ) ) )
+        commentText = tempCh;
+        if( languages.count() == 0 || ( languages.contains( commentKey.getFirstLanguage() ) && languages.contains( commentKey.getSecondLanguage() ) ) ) {
+            Comment comment( Util::createUuid(), commentText );
             term.addComment( commentKey, comment );
+        }
     }
     else if( qname == QString( "alt" ) )
         alt = tempCh;

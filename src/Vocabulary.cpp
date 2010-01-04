@@ -405,7 +405,7 @@ QDataStream& readOldFormat( QDataStream& in, Vocabulary& vocab, Q_UINT16 version
         Term& term = it.data();
         term.setUid( Util::createUuid() );
         term.setVocabUid( tempUid );
-        // We need to generate uid for translation instances for this version.
+        // We need to generate uid for translation and comment instances for this version.
         if( version == 0x0010 ) {
             QValueList<Translation> convertedTranslations;
             for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
@@ -418,6 +418,21 @@ QDataStream& readOldFormat( QDataStream& in, Vocabulary& vocab, Q_UINT16 version
                 Translation trans = *it2;
                 term.removeTranslation( trans.getLanguage() );
                 term.addTranslation( trans );
+            }
+
+            Term::CommentMap convertedComments;
+            for( Term::CommentMap::ConstIterator it2 = term.commentsBegin(); it2 != term.commentsEnd(); it2++ ) {
+                const BilingualKey& key = it2.key();
+                const Comment& comment = it2.data();
+                Comment convertedComment( Util::createUuid(), comment.getText() );
+                convertedComments.insert( key, convertedComment );
+            }
+            // Replace the old comment instances by converted ones.
+            for( Term::CommentMap::ConstIterator it2 = term.commentsBegin(); it2 != term.commentsEnd(); it2++ ) {
+                const BilingualKey& key = it2.key();
+                const Comment& comment = it2.data();
+                term.removeComment( key );
+                term.addComment( key, comment );
             }
         }
         if( !term.getImagePath().isNull() ) {

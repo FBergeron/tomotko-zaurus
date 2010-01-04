@@ -23,6 +23,7 @@
 #include <qwidgetstack.h>
 #include <qpe/resource.h>
 #include "CharacterDialog.h"
+#include "Comment.h"
 #include "Controller.h"
 #include "GradeButton.h"
 #include "ImageBox.h"

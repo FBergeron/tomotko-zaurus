@@ -17,6 +17,7 @@
 #include <zlib.h>
 #include <stdlib.h>
 #include "Base.h"
+#include "Comment.h"
 #include "PixMap.h"
 #include "Term.h"
 

@@ -1210,7 +1210,7 @@ void VocabularyManagerFrame::pasteTerms() {
         }
         for( Term::CommentMap::ConstIterator it3 = term.commentsBegin(); it3 != term.commentsEnd(); it3++ ) {
             const BilingualKey& key = it3.key();
-            const QString& comment = it3.data();
+            const Comment& comment = it3.data();
             newTerm.addComment( key, comment );
         }
         if( !term.getImagePath().isNull() ) {
