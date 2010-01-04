@@ -1,9 +1,12 @@
 ToDo
 ----
-I need to add Uid to translations.  Stats should be associated to a pair of translation uids instead of term uid.  This way, if I cut terms (actually translations + comments), and paste them somewhere else, I will be able to keep the link with the associated stats.  Doing so, I should also add isMarkedForDeletion property for translations.  Because the Translations will have uid, I don't need to have a property markedForDeletion for stats.  I will be able to find the associated stats using the Translations uid, instead.
+I need to add Uid and markedForDeletion to translations and comments.  Stats should be associated to a pair of translation uids instead of term uid.  This way, if I cut terms (actually translations + comments), and paste them somewhere else, I will be able to keep the link with the associated stats.  Doing so, I should also add isMarkedForDeletion property for translations.  Because the Translations will have uid, I don't need to have a property markedForDeletion for stats.  I will be able to find the associated stats using the Translations uid, instead.
+    I have added markedForDeletion for Translation.  Now, do I need to consider its value in some methods of Term.cpp?  For example, operator>>() and operator<<()?
+    Before trying this on the Zaurus, check the memory it takes before and after.  I'm curious how much memory it takes to use uid for translation and comments.  Is it a big deal?  I have about 4250 words at the moment.
 Verify this case:  We have a glossary with terms in 3 translations.  We delete a term (in 2 translations).  Will the remaining translation survive? yes
 Make sure that when we remove a term that references to it are also removed (markedForStudy and test, etc.)
-When we remove a term (or some of its translations), we must mark for deletion its associated stats as well.  And delete
+When we remove a term (or some of its translations), we must delete its associated stats as well.  
+Delete comments (and translation) marked for deletion.
 When we paste some items, we must unmark them for deletion (in the case of cut-paste, for example).
 Test delete term, vocab, folder and rec folder.
 Check if I still need the calls to updateEasinessFactor( control->getQuizCurrentTermEasinessFactor() ) that have been commented out in MainWindow.cpp.  I think so, so I need to reimplemented them differently as I have removed getQuizCurrentTermEasinessFactor from Controller.  Check what I do in QuizFrame in askTerm().
@@ -37,11 +40,12 @@ Mention that the statistics concern only terms marked for study.  Obviously, ter
 When we export on an existing file, a warning dialog need to be shown.
 Release 0.12.0
 
+Make a graph that displays the progress in time, for example, we could record the average success rate and ef and chart it on a graph.  The info could also be coupled (or normalized) with the number of words maybe.  
 When I search a word and click view vocabulary, the word is selected but is not necessarily visible.  A call to ensureVisible() is needed so that the scrollbar is positioned properly.
 In doRemoveTerms(), instead of deleting Translation instances, we should mark them for deletion instead.  This will allow to undo the suppression in the future.
 Let's say that I cut a term having more than 2 translations.  In this case, I will store in the buffer, only the 2 translations corresponding to the selected languages.  If I paste then, in another vocabulary, what happens with the term's uid?  It should be different from the original, I think.  Unless that we store all the translations into the buffer.  Then, copy and cut really consider the whole term (with all its translations).  For now, we copy only the translations of the selected languages.  Most probably that copy/cut/paste should always consider the whole items.  Consider also the case where I cut a term, select different languages and do paste in a different vocabulary.  Same thing with folder and vocabulary... 
 
-Keep the state of the checkbox when copying things. --> I think that attributes like markedForStudy and markedForDeletion should not be located into the items themselves but stored and managed externally to the items.  This data is contextual to how we use these items.
+Keep the state of the checkbox when copying things. --> I think that attributes like markedForStudy and markedForDeletion should not be located into the items themselves but stored and managed externally to the items.  This data is contextual to how we use these items.  This way, I could also save memory.  Instead of having a boolean for each item, I would only keep the identifiers of the marked items in a table.
 Most probably that dependency to Controller in VocabTreeView could be removed.  Code depending on controller should be relocated to VocabularyManagerFrame.
 Set minimum size for ProgressDialog.  Doesn't seem to work on Zaurus unless reimplementing resize.  Check on qt4.
 Maybe add a preference option to show/hide the sm-2 quiz info at the top.

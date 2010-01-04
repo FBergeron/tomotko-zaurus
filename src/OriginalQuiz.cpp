@@ -163,7 +163,7 @@ void OriginalQuiz::initRec( const QString& firstLang, const QString& testLang, V
                 Translation firstLangTrans = term.getTranslation( firstLang );
                 Translation testLangTrans = term.getTranslation( testLang );
                 //cerr << "NEW TERMKEY=" << term.getUid().toString() << " vocab=" << term.getVocabUid().toString() << endl;
-                TermKey termKey( term.getUid(), term.getVocabUid() );
+                TermKey termKey( term.getUid(), term.getVocabUid(), firstLangTrans.getUid(), testLangTrans.getUid() );
                 addTerm( termKey, ( poolCount - 1 ) - initQuizLength );
                 allTerms.append( termKey );
                 initTermCount++;
@@ -250,9 +250,12 @@ void OriginalQuiz::gradeAnswer( int grade ) {
 }
 
 void OriginalQuiz::rightAnswer() {
-    TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
+    //TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
+    BiUidKey key( currTerm.getFirstLanguageTranslationUid().toString(), currTerm.getTestLanguageTranslationUid().toString() );
+    TermData termData = Statistics::instance()->getTermData( key );
     termData.successCount += 1;
-    Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
+    //Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
+    Statistics::instance()->setTermData( key, firstLang, testLang, termData ); 
 
     if( currTermPool == OriginalQuiz::poolCount - 1 )
         discardCurrentTerm();
@@ -264,10 +267,13 @@ void OriginalQuiz::rightAnswer() {
 
 void OriginalQuiz::wrongAnswer() {
     cerr << "wrongAnswer" << endl;
-    TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
+    //TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
+    BiUidKey key( currTerm.getFirstLanguageTranslationUid().toString(), currTerm.getTestLanguageTranslationUid().toString() );
+    TermData termData = Statistics::instance()->getTermData( key );
     cerr << "miss=" << termData.missCount << endl;
     termData.missCount += 1;
-    Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
+    //Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
+    Statistics::instance()->setTermData( key, firstLang, testLang, termData ); 
     cerr << "ok" << endl;
 
     increaseTermPriority();

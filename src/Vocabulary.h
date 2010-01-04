@@ -30,7 +30,7 @@ public:
     static QString parentPath;
 
     /**
-     * Deprecated type used for data conversion from 0.11.x to 0.12.x.  Will be removed in 0.13.
+     * Deprecated Type used for data conversion from 0.11.x to 0.12.x.  Should be removed in 0.13.
      */
     typedef QMap<int, Term> OldTermMap;
 
@@ -41,7 +41,7 @@ public:
 
     /**
      * Vocabulary constructor.
-     * @param id Numeric identifier (deprecated, will disappear in 0.13).
+     * @param id Numeric identifier (deprecated, should disappear in 0.13).
      * @param title Title of the vocabulary.
      * @param uid Unique identifier.
      */
@@ -70,13 +70,13 @@ public:
 
     /**
      * @returns Numeric identifier of the vocabulary.
-     * @deprecated Has been replaced by getUid(). Will disappear in 0.13.
+     * @deprecated Has been replaced by getUid(). Should disappear in 0.13.
      */
     int getId() const;
 
     /**
      * @returns Highest numeric identifier.
-     * @deprecated Numeric identifier has been replaced by getUid(). Will disappear in 0.13.
+     * @deprecated Numeric identifier has been replaced by getUid(). Should disappear in 0.13.
      */ 
     int getMaxId() const;
 
@@ -180,7 +180,7 @@ public:
     /**
      * Even terms that are marked for deletion are considered.
      * @param id Numeric identifier of the searched term.
-     * @deprecated Numeric identifier has been replaced by getUid(). Will disappear in 0.13.
+     * @deprecated Numeric identifier has been replaced by getUid(). Should disappear in 0.13.
      */
     bool isTermExists( const int& id ) const;
 
@@ -201,7 +201,7 @@ public:
      * Even terms marked for deletion are conѕidered.
      * @param id Numeric identifier of the searched term.
      * @returns Instance of term.
-     * @deprecated Numeric identifier has been replaced by getUid(). Will disappear in 0.13.
+     * @deprecated Numeric identifier has been replaced by getUid(). Should disappear in 0.13.
      */
     Term& getTerm( const int& id );
 

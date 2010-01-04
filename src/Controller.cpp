@@ -68,7 +68,46 @@ int Controller::getQuizAnswerCount() const {
     return( quiz ? quiz->getAnswerCount() : 0 );
 }
 
-ProgressData Controller::getProgressData( const QString& currTermUid /* = QString::null */ ) {
+//ProgressData Controller::getProgressData( const QString& currTermUid /* = QString::null */ ) {
+//    QString firstLang = prefs.getFirstLanguage();
+//    QString testLang = prefs.getTestLanguage();
+//
+//    Statistics::instance()->loadTermData( firstLang, testLang );
+//
+//    ProgressData progressData;
+//
+//    if( !currTermUid.isNull() ) {
+//        TermData termData = Statistics::instance()->getTermData( currTermUid );
+//
+//        progressData.currTerm.repetition = termData.repetition;
+//        progressData.currTerm.easinessFactor = termData.easinessFactor;
+//        progressData.currTerm.daysToNextRepetition = ( termData.nextRepetitionDate.isNull() ? 0 : QDate::currentDate().daysTo( termData.nextRepetitionDate ) );
+//        progressData.currTerm.daysToLastRepetition = ( termData.lastRepetitionDate.isNull() ? INT_MIN : termData.lastRepetitionDate.daysTo( QDate::currentDate() ) );
+//        progressData.currTerm.successCount = termData.successCount;
+//        progressData.currTerm.missCount = termData.missCount;
+//    }
+//
+//    getSchedule( progressData.scheduleForDay );
+//
+//    float efSum = 0.0f;
+//    float successRateSum = 0.0f;
+//    progressData.efValueCount = 0;
+//    progressData.successRateValueCount = 0;
+//    getDataDistribution( progressData.efDistribution, efSum, progressData.efValueCount, 
+//        progressData.successRateDistribution, successRateSum, progressData.successRateValueCount );
+//    if( progressData.efValueCount > 0 )
+//        progressData.efAverage = efSum / progressData.efValueCount;
+//    if( progressData.successRateValueCount > 0 )
+//        progressData.successRateAverage = successRateSum / progressData.successRateValueCount;
+//
+//    progressData.efStandardDeviation = 0.0f;
+//    progressData.successRateStandardDeviation = 0.0f;
+//    getDataStandardDeviation( progressData.efAverage, progressData.successRateAverage, progressData.efStandardDeviation, progressData.successRateStandardDeviation );
+//
+//    return( progressData );
+//}
+
+ProgressData Controller::getProgressData( const BiUidKey& key /* = BiUidKey() */ ) {
     QString firstLang = prefs.getFirstLanguage();
     QString testLang = prefs.getTestLanguage();
 
@@ -76,8 +115,8 @@ ProgressData Controller::getProgressData( const QString& currTermUid /* = QStrin
 
     ProgressData progressData;
 
-    if( !currTermUid.isNull() ) {
-        TermData termData = Statistics::instance()->getTermData( currTermUid );
+    if( !key.isNull() ) {
+        TermData termData = Statistics::instance()->getTermData( key );
 
         progressData.currTerm.repetition = termData.repetition;
         progressData.currTerm.easinessFactor = termData.easinessFactor;
@@ -1731,7 +1770,9 @@ void Controller::getScheduleRec( Vocabulary* vocab, int* schedule ) {
                 Translation firstLangTrans = term.getTranslation( firstLang );
                 Translation testLangTrans = term.getTranslation( testLang );
                 TermKey termKey( term.getUid(), term.getVocabUid() );
-                TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
+                //TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
+                BiUidKey key( firstLangTrans.getUid().toString(), testLangTrans.getUid().toString() );
+                TermData termData = Statistics::instance()->getTermData( key );
 
                 QDate today = QDate::currentDate();
                 for( int i = 0; i < scheduleLength; i++ ) {
@@ -1771,8 +1812,10 @@ void Controller::getDataDistributionRec( Vocabulary* vocab, QMap<int,int>& efDis
                 term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
                 Translation firstLangTrans = term.getTranslation( firstLang );
                 Translation testLangTrans = term.getTranslation( testLang );
-                TermKey termKey( term.getUid(), term.getVocabUid() );
-                TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
+                TermKey termKey( term.getUid(), term.getVocabUid(), firstLangTrans.getUid(), testLangTrans.getUid() );
+                BiUidKey key( firstLangTrans.getUid().toString(), testLangTrans.getUid().toString() );
+                //TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
+                TermData termData = Statistics::instance()->getTermData( key );
 
                 int ef = (int)( ( termData.easinessFactor + 0.05 ) * 10.0 );
                 int efIndex = ( ef >= 30 ? 30 : ef );
@@ -1827,8 +1870,10 @@ void Controller::getDataStandardDeviationRec( Vocabulary* vocab, const float& ef
                 term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
                 Translation firstLangTrans = term.getTranslation( firstLang );
                 Translation testLangTrans = term.getTranslation( testLang );
-                TermKey termKey( term.getUid(), term.getVocabUid() );
-                TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
+                TermKey termKey( term.getUid(), term.getVocabUid(), firstLangTrans.getUid(), testLangTrans.getUid() );
+                //TermData termData = Statistics::instance()->getTermData( termKey.getTermUid().toString() );
+                BiUidKey key( firstLangTrans.getUid().toString(), testLangTrans.getUid().toString() );
+                TermData termData = Statistics::instance()->getTermData( key );
 
                 //cerr << "ef=" << termData.easinessFactor << " avg=" << efAverage << endl;
                 efSquaredVariationSum += pow( termData.easinessFactor - efAverage, 2 );

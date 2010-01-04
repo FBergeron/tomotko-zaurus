@@ -17,6 +17,7 @@
 #include <qxml.h>
 #include <math.h>
 #include <stdlib.h>
+#include "BiUidKey.h"
 #include "FolderParser.h"
 #include "OriginalQuiz.h"
 #include "Preferences.h"
@@ -57,7 +58,8 @@ public:
     bool loadQuiz();
     void prepareQuiz();
     int getQuizAnswerCount() const;
-    ProgressData getProgressData( const QString& currTermUid = QString::null );
+    //ProgressData getProgressData( const QString& currTermUid = QString::null );
+    ProgressData getProgressData( const BiUidKey& key = BiUidKey() );
 
     Term* getCurrentTerm();
     bool hasNextTerm() const;

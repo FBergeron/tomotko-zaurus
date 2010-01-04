@@ -15,9 +15,13 @@ Statistics* Statistics::instance() {
 Statistics::Statistics( const QString& applDirName ) : applicationDirName( applDirName ) {
 }
 
-TermData Statistics::getTermData( const QString& termUid ) {
-    if( termData.contains( termUid ) )
-        return( termData[ termUid ] );
+TermData Statistics::getTermData( const BiUidKey& key ) {
+cerr << "getTermData key=" << key.toString() << " contains=" << termData.contains( key ) << endl;
+    if( termData.contains( key ) ) {
+        TermData data( termData[ key ] );
+cerr << "ef=" << data.easinessFactor << " success=" << data.successCount << " miss=" << data.missCount << endl;
+        return( termData[ key ] );
+    }
     else {
         TermData aTermData;
         aTermData.interval = 0;
@@ -27,14 +31,14 @@ TermData Statistics::getTermData( const QString& termUid ) {
         aTermData.lastRepetitionDate = QDate();
         aTermData.successCount = 0;
         aTermData.missCount = 0;
-        termData[ termUid ] = aTermData;
+        termData[ key ] = aTermData;
         return( aTermData );
     }
 }
 
-void Statistics::setTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& data ) {
-    termData[ termUid ] = data;
-    saveTermData( termUid, firstLang, testLang, data ); 
+void Statistics::setTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& data ) {
+    termData[ key ] = data;
+    saveTermData( key, firstLang, testLang, data ); 
 }
 
 bool Statistics::loadTermData( const QString& firstLang, const QString& testLang ) {
@@ -58,7 +62,7 @@ bool Statistics::loadTermData( const QString& firstLang, const QString& testLang
 
     Q_UINT32 tempMagicNumber;
     Q_UINT16 tempVersion;
-    QString tempTermUid;
+    QString tempKey;
     int tempInterval;
     uint tempRepetition;
     float tempEasinessFactor;
@@ -85,7 +89,7 @@ bool Statistics::loadTermData( const QString& firstLang, const QString& testLang
 
     in.setVersion( 3 );
     while( !in.atEnd() ) {
-        in >> tempTermUid >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
+        in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
         in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
 
         TermData aTermData;
@@ -97,7 +101,7 @@ bool Statistics::loadTermData( const QString& firstLang, const QString& testLang
         aTermData.successCount = tempSuccessCount;
         aTermData.missCount = tempMissCount;
 
-        termData[ tempTermUid ] = aTermData;
+        termData[ BiUidKey( tempKey ) ] = aTermData;
     }
     currentLanguages = key;
 
@@ -108,8 +112,8 @@ bool Statistics::loadTermData( const QString& firstLang, const QString& testLang
  * Search for a term data dichotomically and position the stream at the beginning of the record, if found.
  * Returns true when the record is found, false otherwise.
  */
-bool Statistics::seekTermData( const QString& termUid, QFile& dataFile, const uint headerSize, const uint entryCount, QDataStream& in ) {
-    QString tempTermUid;
+bool Statistics::seekTermData( const BiUidKey& key, QFile& dataFile, const uint headerSize, const uint entryCount, QDataStream& in ) {
+    QString tempKey;
     int min = 0;
     int max = entryCount - 1;
     for( ;; ) {
@@ -117,12 +121,11 @@ bool Statistics::seekTermData( const QString& termUid, QFile& dataFile, const ui
         
         int entryIndex = min + jump;
         int pos = headerSize + entryIndex * Statistics::termDataEntrySize;
-
         dataFile.at( pos );
 
-        in >> tempTermUid;
-
-        int keyTest = tempTermUid.compare( termUid );
+        in >> tempKey;
+        int keyTest = tempKey.compare( key.toString() );
+//cerr << "pos=" << pos << " tempKey=" << tempKey << " key=" << key.toString() << " eq?" << keyTest<< endl;
         if( keyTest == 0 )
             return( true );
         else {
@@ -141,7 +144,7 @@ bool Statistics::seekTermData( const QString& termUid, QFile& dataFile, const ui
     return( false );
 }
 
-TermData Statistics::loadTermData( const QString& termUid, const QString& firstLang, const QString& testLang ) {
+TermData Statistics::loadTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang ) {
     TermData termData;
 
     QFile dataFile( getTermDataFilename( firstLang, testLang ) );
@@ -155,7 +158,7 @@ TermData Statistics::loadTermData( const QString& termUid, const QString& firstL
 
     Q_UINT32 tempMagicNumber;
     Q_UINT16 tempVersion;
-    QString tempTermUid;
+    QString tempKey;
     int tempInterval;
     uint tempRepetition;
     float tempEasinessFactor;
@@ -186,15 +189,14 @@ TermData Statistics::loadTermData( const QString& termUid, const QString& firstL
 
     // Read the first entry to determine its size.
     if( Statistics::termDataEntrySize == 0 && !in.atEnd() ) {
-        in >> tempTermUid >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
+        in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
         in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
-
         Statistics::termDataEntrySize = dataFile.at() - headerSize;
     }
 
     uint entryCount = ( fileSize - headerSize ) / Statistics::termDataEntrySize;
 
-    bool isTermDataFound = seekTermData( termUid, dataFile, headerSize, entryCount, in );
+    bool isTermDataFound = seekTermData( key, dataFile, headerSize, entryCount, in );
     if( isTermDataFound ) {
         in >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
         in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
@@ -220,10 +222,10 @@ bool Statistics::saveTermData( const QString& firstLang, const QString& testLang
     out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
 
     out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
-    for( QMap<QString, TermData>::ConstIterator it = termData.begin(); it != termData.end(); it++ ) {
-        QString termUid = it.key();
+    for( QMap<BiUidKey, TermData>::ConstIterator it = termData.begin(); it != termData.end(); it++ ) {
+        BiUidKey key = it.key();
         TermData termData = it.data();
-        out << termUid << termData.interval << termData.repetition << termData.easinessFactor << termData.nextRepetitionDate;
+        out << key.toString() << termData.interval << termData.repetition << termData.easinessFactor << termData.nextRepetitionDate;
         out << termData.lastRepetitionDate << termData.successCount << termData.missCount;
     }
 
@@ -242,14 +244,14 @@ bool Statistics::saveTermData( const QString& firstLang, const QString& testLang
     return( true );
 }
 
-bool Statistics::saveTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData ) {
-    if( overwriteTermData( termUid, firstLang, testLang, termData ) )
+bool Statistics::saveTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& termData ) {
+    if( overwriteTermData( key, firstLang, testLang, termData ) )
         return( true );
 
-    return( insertTermData( termUid, firstLang, testLang, termData ) );
+    return( insertTermData( key, firstLang, testLang, termData ) );
 }
 
-bool Statistics::overwriteTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData ) {
+bool Statistics::overwriteTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& termData ) {
     bool isNewRecordWritten = false;
 
     QFile dataFile( getTermDataFilename( firstLang, testLang ) );
@@ -263,7 +265,7 @@ bool Statistics::overwriteTermData( const QString& termUid, const QString& first
 
     Q_UINT32 tempMagicNumber;
     Q_UINT16 tempVersion;
-    QString tempTermUid;
+    QString tempKey;
    
     QDataStream in( &dataFile );
 
@@ -295,7 +297,7 @@ bool Statistics::overwriteTermData( const QString& termUid, const QString& first
         uint tempSuccessCount;
         uint tempMissCount;
 
-        in >> tempTermUid >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
+        in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
         in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
 
         Statistics::termDataEntrySize = dataFile.at() - headerSize;
@@ -303,7 +305,7 @@ bool Statistics::overwriteTermData( const QString& termUid, const QString& first
 
     uint entryCount = ( fileSize - headerSize ) / Statistics::termDataEntrySize;
 
-    bool isTermDataFound = seekTermData( termUid, dataFile, headerSize, entryCount, in );
+    bool isTermDataFound = seekTermData( key, dataFile, headerSize, entryCount, in );
     if( isTermDataFound ) {
         QDataStream out( &dataFile );
 
@@ -318,7 +320,7 @@ bool Statistics::overwriteTermData( const QString& termUid, const QString& first
     return( isNewRecordWritten );
 }
 
-bool Statistics::insertTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& newTermData ) {
+bool Statistics::insertTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& newTermData ) {
     bool isNewRecordWritten = false;
 
     QFile dataFile( getTermDataFilename( firstLang, testLang ) );
@@ -379,7 +381,7 @@ bool Statistics::insertTermData( const QString& termUid, const QString& firstLan
 
     if( dataFileExists ) {
         while( !in.atEnd() ) {
-            QString tempTermUid;
+            QString tempKey;
             int tempInterval;
             uint tempRepetition;
             float tempEasinessFactor;
@@ -388,22 +390,24 @@ bool Statistics::insertTermData( const QString& termUid, const QString& firstLan
             uint tempSuccessCount;
             uint tempMissCount;
 
-            in >> tempTermUid >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
+            in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
             in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
 
-            if( !isNewRecordWritten && termUid.compare( tempTermUid ) < 0 ) {
-                out << termUid << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
+            if( !isNewRecordWritten && key.toString().compare( tempKey ) < 0 ) {
+                out << key.toString() << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
                 out << newTermData.lastRepetitionDate << newTermData.successCount << newTermData.missCount;
 
                 isNewRecordWritten = true;
             }
 
-            out << tempTermUid << tempInterval << tempRepetition << tempEasinessFactor << tempNextRepetitionDate;
+//cerr << "insert a record key=" << tempKey << endl;
+            out << tempKey << tempInterval << tempRepetition << tempEasinessFactor << tempNextRepetitionDate;
             out << tempLastRepetitionDate << tempSuccessCount << tempMissCount;
         }
         // The new record is the last one.
         if( !isNewRecordWritten ) {
-            out << termUid << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
+//cerr << "insert the last record key=" << key.toString() << endl;
+            out << key.toString() << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
             out << newTermData.lastRepetitionDate << newTermData.successCount << newTermData.missCount;
             
             isNewRecordWritten = true;
@@ -411,7 +415,8 @@ bool Statistics::insertTermData( const QString& termUid, const QString& firstLan
         dataFile.close();
     }
     else { 
-        out << termUid << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
+//cerr << "insert a record2 key=" << key.toString() << " ef=" << newTermData.easinessFactor << " success=" << newTermData.successCount << " miss=" << newTermData.missCount << endl;
+        out << key.toString() << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
         out << newTermData.lastRepetitionDate << newTermData.successCount << newTermData.missCount;
 
         isNewRecordWritten = true;

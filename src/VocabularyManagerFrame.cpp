@@ -986,7 +986,6 @@ void VocabularyManagerFrame::doRemoveTerms( bool allowSelectTrans = true, bool c
                 if( termList->isSelected( termItem ) ) {
                     Term* term = termItem->getTerm();
                     term->setMarkedForDeletion( true );
-                    cerr << "ALLO!! term " << term->getUid().toString() << " has been marked!!!" << endl;
                     delete( termItem );
                 }
                 termItem = nextTermItem;
@@ -1035,7 +1034,6 @@ void VocabularyManagerFrame::doRemoveTerms( bool allowSelectTrans = true, bool c
                 
                 if( term->getTranslationCount() == 0 ) {
                     term->setMarkedForDeletion( true );
-                    cerr << "ALLO!! term " << term->getUid().toString() << " has been marked!!!" << endl;
                     delete( termItem );
                 }
             }
@@ -1152,7 +1150,7 @@ void VocabularyManagerFrame::copyTerms( bool copyUid /* = false */ ) const {
             else
                 termCopy = new Term( 0 );
 
-            // We copy only translations for the currenlty selected languages.
+            // We copy only translations for the currently selected languages.
             QStringList languages;
             languages << firstLang << testLang;
 

@@ -433,21 +433,23 @@ void MainWindow::search() {
 }
 
 void MainWindow::showProgressDetails() {
-    QString currTermUid;
+    Preferences& prefs = control->getPreferences();
+    BiUidKey key;
     if( mainPanel->visibleWidget() == quizFrame ) {
         Term* currTerm = control->getCurrentTerm();
-        if( currTerm )
-            currTermUid = currTerm->getUid().toString();
+        key = BiUidKey( currTerm->getTranslation( prefs.getFirstLanguage() ).getUid().toString(), 
+            currTerm->getTranslation( prefs.getTestLanguage() ).getUid().toString() );
     }
     else if( mainPanel->visibleWidget() == vocabManagerFrame ) {
         QValueList<Term> selectedTerms = vocabManagerFrame->getSelectedTerms();
         if( selectedTerms.count() == 1 ) {
-            Term term = selectedTerms[ 0 ];
-            currTermUid = term.getUid().toString();
+            Term currTerm = selectedTerms[ 0 ];
+            key = BiUidKey( currTerm.getTranslation( prefs.getFirstLanguage() ).getUid().toString(), 
+                currTerm.getTranslation( prefs.getTestLanguage() ).getUid().toString() );
         }
     }
 
-    ProgressData progressData = control->getProgressData( currTermUid );
+    ProgressData progressData = control->getProgressData( key );
 
     ProgressDialog dialog( this, progressData );
     dialog.resize( 440, 330 ); 

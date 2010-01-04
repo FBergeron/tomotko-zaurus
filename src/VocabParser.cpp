@@ -61,7 +61,7 @@ bool VocabParser::endElement( const QString&, const QString&, const QString& qna
         alt = tempCh;
     else if( qname == QString( "trans" ) ) {
         if( languages.count() == 0 || languages.contains( lang ) ) {
-            Translation translation( lang, word, alt );
+            Translation translation( Util::createUuid(), lang, word, alt );
             term.addTranslation( translation ); 
         }
     }

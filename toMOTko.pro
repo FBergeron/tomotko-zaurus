@@ -12,6 +12,7 @@ HEADERS += src/Base.h \
            src/Util.h \
            src/ImageBox.h \
            src/BilingualKey.h \
+           src/BiUidKey.h \
            src/DigraphLineEdit.h \
            src/ScrollableLineEdit.h \
            src/ScrollableMultiLineEdit.h \
@@ -54,6 +55,7 @@ HEADERS += src/Base.h \
            src/OriginalQuiz.h \
            src/SuperMemo2Quiz.h \
            src/Translation.h \
+           src/Comment.h \
            src/SmartListView.h \
            src/ContentListView.h \
            src/VocabTreeView.h \
@@ -72,6 +74,7 @@ HEADERS += src/Base.h \
 SOURCES += src/Util.cpp \ 
            src/ImageBox.cpp \
            src/BilingualKey.cpp \
+           src/BiUidKey.cpp \
            src/DigraphLineEdit.cpp \
            src/ScrollableLineEdit.cpp \
            src/ScrollableMultiLineEdit.cpp \
@@ -113,6 +116,7 @@ SOURCES += src/Util.cpp \
            src/OriginalQuiz.cpp \
            src/SuperMemo2Quiz.cpp \
            src/Translation.cpp \
+           src/Comment.cpp \
            src/SmartListView.cpp \
            src/ContentListView.cpp \
            src/VocabTreeView.cpp \

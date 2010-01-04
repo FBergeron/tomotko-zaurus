@@ -120,14 +120,18 @@ void TermDialog::show() {
 }
 
 void TermDialog::updateModel() {
-    if( !editedTerm->isTranslationExists( controller->getPreferences().getFirstLanguage() ) )
-        editedTerm->addTranslation( controller->getPreferences().getFirstLanguage() );
+    if( !editedTerm->isTranslationExists( controller->getPreferences().getFirstLanguage() ) ) {
+        Translation firstLangTrans( Util::createUuid(), controller->getPreferences().getFirstLanguage() );
+        editedTerm->addTranslation( firstLangTrans );
+    }
 
     Translation& firstLangTranslation = editedTerm->getTranslation( controller->getPreferences().getFirstLanguage() );
     firstLangTranslation.setWord( firstLangTermLineEdit->text() );
 
-    if( !editedTerm->isTranslationExists( controller->getPreferences().getTestLanguage() ) )
-        editedTerm->addTranslation( controller->getPreferences().getTestLanguage() );
+    if( !editedTerm->isTranslationExists( controller->getPreferences().getTestLanguage() ) ) {
+        Translation testLangTrans( Util::createUuid(), controller->getPreferences().getTestLanguage() );
+        editedTerm->addTranslation( testLangTrans );
+    }
 
     Translation& testLangTranslation = editedTerm->getTranslation( controller->getPreferences().getTestLanguage() );
     testLangTranslation.setWord( testLangTermLineEdit->text() );

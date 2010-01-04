@@ -275,6 +275,10 @@ bool Vocabulary::load( const QString& filename ) {
     for( TermMap::Iterator it = tempVocab.begin(); it != tempVocab.end(); it++ ) {
         Term& term = it.data();
         term.setVocabUid( uid );
+for( QMap<QString,Translation>::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
+    const Translation& trans = it2.data();
+    cerr << "termUid=" << term.getUid().toString() << " transUid=" << trans.getUid().toString() << endl;
+}
         addTerm( term );
     }
     return( true );
@@ -388,9 +392,11 @@ QDataStream& readOldFormat( QDataStream& in, Vocabulary& vocab, Q_UINT16 version
         tempUid = Util::createUuid();
 
     Term::isOldFormat = true; // Set the conversion flag to make Term's operator>> behave correctly. 
+    Translation::isOldFormat = true; // Set the conversion flag to make Translation's operator>> behave correctly.
     in >> tempId >> tempTitle >> tempOldTerms;
 
     Term::isOldFormat = false; // Reset the conversion flag.
+    Translation::isOldFormat = false; // Reset the conversion flag.
 
     in >> tempDescription >> tempAuthor >> tempCreationDate >> tempModificationDate;
 
@@ -399,6 +405,21 @@ QDataStream& readOldFormat( QDataStream& in, Vocabulary& vocab, Q_UINT16 version
         Term& term = it.data();
         term.setUid( Util::createUuid() );
         term.setVocabUid( tempUid );
+        // We need to generate uid for translation instances for this version.
+        if( version == 0x0010 ) {
+            QValueList<Translation> convertedTranslations;
+            for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
+                const Translation& trans = it2.data();
+                Translation convertedTrans( Util::createUuid(), trans.getLanguage(), trans.getWord(), trans.getAlt() );
+                convertedTranslations.append( convertedTrans );
+            }
+            // Replace the old translation instances by converted ones.
+            for( QValueList<Translation>::Iterator it2 = convertedTranslations.begin(); it2 != convertedTranslations.end(); it2++ ) {
+                Translation trans = *it2;
+                term.removeTranslation( trans.getLanguage() );
+                term.addTranslation( trans );
+            }
+        }
         if( !term.getImagePath().isNull() ) {
             QFileInfo imageFileInfo( term.getImagePath() );
             if( term.getImagePath() == QString::number( term.getId() ) + "." + imageFileInfo.extension( false ) ) {

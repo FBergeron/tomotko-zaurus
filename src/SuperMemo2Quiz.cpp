@@ -68,8 +68,10 @@ void SuperMemo2Quiz::initRec( const QString& firstLang, const QString& testLang,
                 term.isTranslationExists( firstLang ) && term.isTranslationExists( testLang ) ) {
                 Translation firstLangTrans = term.getTranslation( firstLang );
                 Translation testLangTrans = term.getTranslation( testLang );
-                TermKey termKey( term.getUid(), term.getVocabUid() );
-                TermData termData = Statistics::instance()->loadTermData( termKey.getTermUid().toString(), firstLang, testLang );
+                TermKey termKey( term.getUid(), term.getVocabUid(), firstLangTrans.getUid(), testLangTrans.getUid() );
+                //TermData termData = Statistics::instance()->loadTermData( termKey.getTermUid().toString(), firstLang, testLang );
+                BiUidKey key( firstLangTrans.getUid().toString(), testLangTrans.getUid().toString() );
+                TermData termData = Statistics::instance()->loadTermData( key, firstLang, testLang );
                 cerr << "uid=" << term.getUid().toString();
                 if( termData.nextRepetitionDate.isNull() )
                     cerr << "nr date is null" << endl;
@@ -149,7 +151,9 @@ int SuperMemo2Quiz::getNextInterval( int interval, float easinessFactor, int rep
 
 void SuperMemo2Quiz::gradeAnswer( int grade ) {
     TermKey currTerm = terms[ currTermIndex ];
-    TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
+    //TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
+    BiUidKey key( currTerm.getFirstLanguageTranslationUid().toString(), currTerm.getTestLanguageTranslationUid().toString() );
+    TermData termData = Statistics::instance()->getTermData( key );
     cerr << "TermData before: repetition=" << termData.repetition << " interval=" << termData.interval << " EF=" << termData.easinessFactor << " nextRepDate=" << ( termData.nextRepetitionDate.isNull() ? QString( "null" ) : termData.nextRepetitionDate.toString() ) << endl;
     if( grade >= 3 ) {
         termData.successCount += 1;
@@ -171,7 +175,8 @@ void SuperMemo2Quiz::gradeAnswer( int grade ) {
         termData.easinessFactor = 1.3;
 
     cerr << "TermData after : repetition=" << termData.repetition << " interval=" << termData.interval << " EF=" << termData.easinessFactor << " nextRepDate=" << termData.nextRepetitionDate.toString() << endl;
-    Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
+    //Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
+    Statistics::instance()->setTermData( key, firstLang, testLang, termData ); 
 }
 
 int SuperMemo2Quiz::getProgress() const {

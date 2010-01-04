@@ -9,12 +9,14 @@ class TermKey {
 
 public:
 
-    TermKey( const QUuid& termUid = QUuid(), const QUuid& vocabUid = QUuid() );
+    TermKey( const QUuid& termUid = QUuid(), const QUuid& vocabUid = QUuid(), const QUuid& firstLangTransUid = QUuid(), const QUuid& testLangTransUid = QUuid() );
     TermKey( const TermKey& key );
     ~TermKey();
 
     QUuid getTermUid() const;
     QUuid getVocabUid() const;
+    QUuid getFirstLanguageTranslationUid() const;
+    QUuid getTestLanguageTranslationUid() const;
     bool isNull() const;
 
     int operator==( const TermKey& key ) const;
@@ -26,6 +28,8 @@ private:
 
     QUuid termUid;
     QUuid vocabUid;
+    QUuid firstLangTransUid;
+    QUuid testLangTransUid;
 
 };
 

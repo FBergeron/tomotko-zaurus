@@ -104,3 +104,21 @@ int main( int argc, char **argv ) {
 //    //controller->saveTermData();
 //    return( 0 );
 //}
+
+//int main( int /*argc*/, char ** /*argv*/ ) {
+//    Controller* controller = new Controller();
+//    controller->init();
+//    
+//    QString firstLang = QString( "en" );
+//    QString testLang = QString( "ja" );
+//    BiUidKey key( "{5da6f446-557b-43fe-bb90-559384631029}|{bdbebae9-7e83-4edb-86f0-853a8df30de5}" );
+//    cerr << "my looking key=" << key.toString() << endl;
+//    TermData termData = Statistics::instance()->loadTermData( key, firstLang, testLang );
+//    cerr << "ef=" << termData.easinessFactor << " success=" << termData.successCount << " miss=" << termData.missCount << endl;
+//    //if( isLoaded ) {
+//    //    bool isSaved = Statistics::instance()->saveTermData( firstLang, testLang );
+//    //    cerr << "saved=" << isSaved << endl;
+//    //}
+//    //controller->saveTermData();
+//    return( 0 );
+//}

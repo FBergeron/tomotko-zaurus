@@ -9,6 +9,7 @@
 #include <qobject.h>
 #include <qstring.h>
 #include "BilingualKey.h"
+#include "BiUidKey.h"
 #include "Progress.h"
 #include "Util.h"
 
@@ -24,16 +25,16 @@ public:
     static void makeInstance( const QString& applDirName );
     static Statistics* instance();
 
-    TermData getTermData( const QString& termUid );
-    void setTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData );
+    TermData getTermData( const BiUidKey& key );
+    void setTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& termData );
     bool loadTermData( const QString& firstLang, const QString& testLang );
-    TermData loadTermData( const QString& termUid, const QString& firstLang, const QString& testLang );
+    TermData loadTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang );
 
     /*
      * Save term data.  Existing record will be overwritten.  Otherwise, new record will be inserted.
-     * Returns true if the record was saved, false otherwise.
+     * @returns True if the record was saved, false otherwise.
      */
-    bool saveTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData );
+    bool saveTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& termData );
     bool saveTermData( const QString& firstLang, const QString& testLang ) const;
     bool saveUncompressedTermData( const QString& firstLang, const QString& testLang ) const;
 
@@ -44,15 +45,15 @@ private:
     /*
      * Save term data for an existing record.  This function overwrite the file and should not be used
      * to insert new record.
-     * Returns true if the record was written, false otherwise.
+     * @returns True if the record was written, false otherwise.
      */
-    bool overwriteTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& termData );
+    bool overwriteTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& termData );
 
     /*
      * Insert new term data record.
-     * Returns true if the record was written, false otherwise.
+     * @returns True if the record was written, false otherwise.
      */
-    bool insertTermData( const QString& termUid, const QString& firstLang, const QString& testLang, const TermData& newTermData );
+    bool insertTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& newTermData );
 
     static Statistics* singleton;
 
@@ -60,14 +61,14 @@ private:
 
     /*
      * Search for a term data dichotomically and position the stream at the beginning of the record, if found.
-     * Returns true when the record is found, false otherwise.
+     * @returns True when the record is found, false otherwise.
      */
-    bool seekTermData( const QString& termUid, QFile& dataFile, const uint headerSize, const uint entryCount, QDataStream& in );
+    bool seekTermData( const BiUidKey& key, QFile& dataFile, const uint headerSize, const uint entryCount, QDataStream& in );
 
     QString                 applicationDirName;
 
     BilingualKey            currentLanguages;
-    QMap<QString, TermData> termData;
+    QMap<BiUidKey, TermData> termData;
 
 };
 
