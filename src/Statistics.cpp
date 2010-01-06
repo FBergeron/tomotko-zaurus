@@ -443,6 +443,20 @@ bool Statistics::insertTermData( const BiUidKey& key, const QString& firstLang, 
     return( isNewRecordWritten );
 }
 
+bool Statistics::removeTermData( const QString& transLang, const QUuid& transUid ) {
+    QDir dataDir( applicationDirName );
+    for( uint i = 0; i < dataDir.count(); i++ ) {
+        if( dataDir[ i ].left( 9 ) == "termData_" ) {
+            if( dataDir[ i ].mid( 9, 2 ) == transLang || dataDir[ i ].mid( 11, 2 ) == transLang )
+                return( removeTermDataFromFile( transUid, dataDir[ i ] ) );
+        }
+    }
+}
+
+bool Statistics::removeTermDataFromFile( const QUuid& transUid, const QString& filename ) {
+    cerr << "removeTermDataFromFile filename=" << filename << " uid=" << transUid.toString() << endl;
+}
+
 QString Statistics::getTermDataFilename( const QString& firstLang, const QString& testLang ) const {
     if( !firstLang.isEmpty() && !testLang.isEmpty() ) {
         BilingualKey key( firstLang, testLang );

@@ -32,7 +32,7 @@ private:
     QUuid   uid;
     QString text;
     
-    bool    markedForDeletion;
+    //bool    markedForDeletion;
 
 };
 

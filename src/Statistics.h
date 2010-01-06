@@ -30,7 +30,7 @@ public:
     bool loadTermData( const QString& firstLang, const QString& testLang );
     TermData loadTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang );
 
-    /*
+    /**
      * Save term data.  Existing record will be overwritten.  Otherwise, new record will be inserted.
      * @returns True if the record was saved, false otherwise.
      */
@@ -38,28 +38,38 @@ public:
     bool saveTermData( const QString& firstLang, const QString& testLang ) const;
     bool saveUncompressedTermData( const QString& firstLang, const QString& testLang ) const;
 
+    /**
+     * Remove data associated to the given translation in parameter.
+     * @parameter transLang Language of the translation.
+     * @parameter transUid Identifier of the translation.
+     * @returns True if the data has been successfully removed.
+     */
+    bool removeTermData( const QString& transLang, const QUuid& transUid );
+
     QString getTermDataFilename( const QString& firstLang, const QString& testLang ) const;
 
 private:
 
-    /*
+    /**
      * Save term data for an existing record.  This function overwrite the file and should not be used
      * to insert new record.
      * @returns True if the record was written, false otherwise.
      */
     bool overwriteTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& termData );
 
-    /*
+    /**
      * Insert new term data record.
      * @returns True if the record was written, false otherwise.
      */
     bool insertTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& newTermData );
 
+    bool removeTermDataFromFile( const QUuid& transUid, const QString& transLang );
+
     static Statistics* singleton;
 
     Statistics( const QString& applDirName );
 
-    /*
+    /**
      * Search for a term data dichotomically and position the stream at the beginning of the record, if found.
      * @returns True when the record is found, false otherwise.
      */

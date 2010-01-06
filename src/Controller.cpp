@@ -1015,6 +1015,22 @@ bool Controller::deleteItemsMarkedForDeletion( Folder* folder ) {
                     Term& term = it.data();
                     //cerr << "term id=" << term.getUid().toString() << term.getTranslation( "en" ).getWord() << " isMarked=" << term.isMarkedForDeletion() << endl;
 
+                    QMap<QString,QString> translationsToRemove;
+                    for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
+                        const Translation& trans = it2.data();
+                        if( trans.isMarkedForDeletion() ) {
+                            // We cannot remove the translation directly because we have a reference on it.
+                            translationsToRemove.insert( trans.getUid().toString(), trans.getLanguage() );
+                        }
+                    }
+                    for( QMap<QString,QString>::Iterator it3 = translationsToRemove.begin(); it3 != translationsToRemove.end(); it3++ ) {
+                        QString transUidStr = it3.key();
+                        QString transLang = it3.data();
+                        term.removeTranslation( transLang );
+                        term.removeComments( transLang );
+                        Statistics::instance()->removeTermData( transLang, QUuid( transUidStr ) );
+                    }
+
                     if( term.isMarkedForDeletion() ) {
                         if( !term.getImagePath().isNull() && term.getImagePath().left( 1 ) != "/" ) {
                             const QString& imagePath = getApplicationDirName() + "/" + childVocab->getParent()->getPath() +

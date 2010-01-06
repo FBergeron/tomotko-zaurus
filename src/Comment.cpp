@@ -1,18 +1,18 @@
 #include "Comment.h"
 
 Comment::Comment( const QUuid& uid /* = QUuid() */, const QString& text /* = QString() */ ) 
-    : uid( uid ), text( text ), markedForDeletion( false ) {
+    : uid( uid ), text( text )/*, markedForDeletion( false )*/ {
 }
 
 Comment::Comment( const QString& text )
-    : uid( QUuid() ), text( text ), markedForDeletion( false ) {
+    : uid( QUuid() ), text( text )/*, markedForDeletion( false )*/ {
 }
 
 Comment::~Comment() {
 }
 
 Comment::Comment( const Comment& comment )
-    : uid( comment.uid), text( comment.text ), markedForDeletion( comment.markedForDeletion ) {
+    : uid( comment.uid), text( comment.text )/*, markedForDeletion( comment.markedForDeletion )*/ {
 }
 
 QUuid Comment::getUid() const {
@@ -31,13 +31,13 @@ bool Comment::isEmpty() const {
     return( this->text.isEmpty() );
 }
 
-bool Comment::isMarkedForDeletion() const {
-    return( markedForDeletion );
-}
-
-void Comment::setMarkedForDeletion( bool isMarkedForDeletion ) {
-    markedForDeletion = isMarkedForDeletion;
-}
+//bool Comment::isMarkedForDeletion() const {
+//    return( markedForDeletion );
+//}
+//
+//void Comment::setMarkedForDeletion( bool isMarkedForDeletion ) {
+//    markedForDeletion = isMarkedForDeletion;
+//}
 
 QDataStream& operator<<( QDataStream& out, const Comment& comment ) {
     out << comment.uid.toString() << comment.text;
