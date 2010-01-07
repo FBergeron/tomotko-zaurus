@@ -58,6 +58,10 @@ bool Term::isMarkedForDeletion() const {
 
 void Term::setMarkedForDeletion( bool isMarkedForDeletion ) {
     markedForDeletion = isMarkedForDeletion;
+    for( TranslationMap::Iterator it = translations.begin(); it != translations.end(); it++ ) {
+        Translation& trans = it.data();
+        trans.setMarkedForDeletion( isMarkedForDeletion );
+    }
 }
 
 void Term::addTranslation( const Translation& translation ) {

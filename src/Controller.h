@@ -14,6 +14,7 @@
 #include <qstringlist.h>
 #include <qtextcodec.h>
 #include <qtextstream.h>
+#include <qvaluelist.h>
 #include <qxml.h>
 #include <math.h>
 #include <stdlib.h>
@@ -170,6 +171,8 @@ private:
     Folder* makeCopy( Folder* folder, const QString& firstLang, const QString& testLang, bool copyUid = false ) const;
 
     bool deleteItemsMarkedForDeletion( Folder* folder );
+    bool deleteItemsMarkedForDeletionRec( Folder* folder, QMap<QString,QValueList<QString> >& transToDelete );
+    bool deleteItemsMarkedForDeletionRec( Vocabulary* vocab, QMap<QString,QValueList<QString> >& transToDelete );
 
     int findFolderId( const QString& filename ) const;
     QString findFolderUid( const QString& dirPath ) const;

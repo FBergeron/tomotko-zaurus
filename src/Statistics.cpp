@@ -447,10 +447,11 @@ bool Statistics::removeTermData( const QString& transLang, const QUuid& transUid
     QDir dataDir( applicationDirName );
     for( uint i = 0; i < dataDir.count(); i++ ) {
         if( dataDir[ i ].left( 9 ) == "termData_" ) {
-            if( dataDir[ i ].mid( 9, 2 ) == transLang || dataDir[ i ].mid( 11, 2 ) == transLang )
-                return( removeTermDataFromFile( transUid, dataDir[ i ] ) );
+            if( dataDir[ i ].mid( 9, 2 ) == transLang || dataDir[ i ].mid( 12, 2 ) == transLang )
+                return( removeTermDataFromFile( transUid, applicationDirName + "/" + dataDir[ i ] ) );
         }
     }
+    return( false );
 }
 
 bool Statistics::removeTermDataFromFile( const QUuid& transUid, const QString& filename ) {

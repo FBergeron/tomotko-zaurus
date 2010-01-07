@@ -994,63 +994,25 @@ void Controller::writeVocabulariesInXml( Folder* folder, int depth, QTextStream&
 }
 
 bool Controller::deleteItemsMarkedForDeletion( Folder* folder ) {
+    QMap<QString,QValueList<QString> > transToDelete;
+    if( deleteItemsMarkedForDeletionRec( folder, transToDelete ) ) {
+        //return( deleteStats( transToDelete ) );
+        return( true );
+    }
+    return( false );
+}
+
+bool Controller::deleteItemsMarkedForDeletionRec( Folder* folder, QMap<QString,QValueList<QString> >& transToDelete ) {
     //cerr << "deleteItemsMarkedForDeletion folder uid=" << folder->getUid().toString() << endl;
+    // Process children first.
     for( Base* childItem = folder->first(); childItem; childItem = folder->next() ) {
         if( strcmp( childItem->className(), "Folder" ) == 0 ) {
             Folder* childFolder = (Folder*)childItem;
-            deleteItemsMarkedForDeletion( childFolder );
+            deleteItemsMarkedForDeletionRec( childFolder, transToDelete );
         }
         else if( strcmp( childItem->className(), "Vocabulary" ) == 0 ) {
             Vocabulary* childVocab = (Vocabulary*)childItem; 
-            if( childVocab->isMarkedForDeletion() ) {
-                QString vocabDir( applicationDirName + "/" + folder->getPath() + "/v-" + childVocab->getUid().toString() );
-                if( !Util::deleteDirectory( vocabDir ) ) {
-                    cerr << "Cannot delete glossary directory " << vocabDir << endl;
-                    return( false );
-                }
-            }
-            else {
-                QValueList<QString> termsToRemove;
-                for( Vocabulary::TermMap::Iterator it = childVocab->begin(); it != childVocab->end(); it++ ) {
-                    Term& term = it.data();
-                    //cerr << "term id=" << term.getUid().toString() << term.getTranslation( "en" ).getWord() << " isMarked=" << term.isMarkedForDeletion() << endl;
-
-                    QMap<QString,QString> translationsToRemove;
-                    for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
-                        const Translation& trans = it2.data();
-                        if( trans.isMarkedForDeletion() ) {
-                            // We cannot remove the translation directly because we have a reference on it.
-                            translationsToRemove.insert( trans.getUid().toString(), trans.getLanguage() );
-                        }
-                    }
-                    for( QMap<QString,QString>::Iterator it3 = translationsToRemove.begin(); it3 != translationsToRemove.end(); it3++ ) {
-                        QString transUidStr = it3.key();
-                        QString transLang = it3.data();
-                        term.removeTranslation( transLang );
-                        term.removeComments( transLang );
-                        Statistics::instance()->removeTermData( transLang, QUuid( transUidStr ) );
-                    }
-
-                    if( term.isMarkedForDeletion() ) {
-                        if( !term.getImagePath().isNull() && term.getImagePath().left( 1 ) != "/" ) {
-                            const QString& imagePath = getApplicationDirName() + "/" + childVocab->getParent()->getPath() +
-                                "/v-" + childVocab->getUid().toString() + "/" + term.getImagePath();
-                            QFile imageFile( imagePath );
-                            if( imageFile.exists() ) {
-                                if( !imageFile.remove() )
-                                    cerr << "Could not remove image " << imagePath << endl;
-                            }
-                        }
-                        // We cannot remove the term directly because we have a reference on it.
-                        termsToRemove.append( term.getUid().toString() );
-                    }
-                }
-                for( uint i = 0; i < termsToRemove.count(); i++ ) {
-                    cerr << "removing term=" << termsToRemove[ i ] << endl;
-
-                    childVocab->removeTerm( termsToRemove[ i ] );
-                }
-            }
+            deleteItemsMarkedForDeletionRec( childVocab, transToDelete );
         }
     }
 
@@ -1065,6 +1027,62 @@ bool Controller::deleteItemsMarkedForDeletion( Folder* folder ) {
     }
 
     return( true );
+}
+
+bool Controller::deleteItemsMarkedForDeletionRec( Vocabulary* vocab, QMap<QString,QValueList<QString> >& transToDelete ) {
+    // Process children first.
+    QValueList<QString> termsToRemove;
+    for( Vocabulary::TermMap::Iterator it = vocab->begin(); it != vocab->end(); it++ ) {
+        Term& term = it.data();
+        //cerr << "term id=" << term.getUid().toString() << term.getTranslation( "en" ).getWord() << " isMarked=" << term.isMarkedForDeletion() << endl;
+
+        QMap<QString,QString> translationsToRemove;
+        for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
+            const Translation& trans = it2.data();
+            if( trans.isMarkedForDeletion() ) {
+                QValueList<QString> transUidToDelete;
+                if( !transToDelete.contains( trans.getLanguage() ) )
+                    transToDelete.insert( trans.getLanguage(), transUidToDelete );
+                transUidToDelete.append( trans.getUid().toString() );
+
+                // We cannot remove the translation directly because we have a reference on it.
+                translationsToRemove.insert( trans.getUid().toString(), trans.getLanguage() );
+cerr << "trans marked for deletion. uid,lang=" << trans.getUid().toString() << ", " << trans.getLanguage() << endl; 
+            }
+        }
+        for( QMap<QString,QString>::Iterator it3 = translationsToRemove.begin(); it3 != translationsToRemove.end(); it3++ ) {
+            QString transUidStr = it3.key();
+            QString transLang = it3.data();
+            term.removeTranslation( transLang );
+            term.removeComments( transLang );
+cerr << "just before stats removal uid,lang=" << transLang << ", " << transUidStr << endl;
+        }
+
+        if( term.isMarkedForDeletion() ) {
+            if( !term.getImagePath().isNull() && term.getImagePath().left( 1 ) != "/" ) {
+                const QString& imagePath = getApplicationDirName() + "/" + vocab->getParent()->getPath() +
+                    "/v-" + vocab->getUid().toString() + "/" + term.getImagePath();
+                QFile imageFile( imagePath );
+                if( imageFile.exists() ) {
+                    if( !imageFile.remove() )
+                        cerr << "Could not remove image " << imagePath << endl;
+                }
+            }
+            // We cannot remove the term directly because we have a reference on it.
+            termsToRemove.append( term.getUid().toString() );
+        }
+    }
+    for( uint i = 0; i < termsToRemove.count(); i++ ) {
+        cerr << "removing term=" << termsToRemove[ i ] << endl;
+        vocab->removeTerm( termsToRemove[ i ] );
+    }
+    if( vocab->isMarkedForDeletion() ) {
+        QString vocabDir( applicationDirName + "/" + vocab->getParent()->getPath() + "/v-" + vocab->getUid().toString() );
+        if( !Util::deleteDirectory( vocabDir ) ) {
+            cerr << "Cannot delete glossary directory " << vocabDir << endl;
+            return( false );
+        }
+    }
 }
 
 int Controller::findFolderId( const QString& filename ) const {

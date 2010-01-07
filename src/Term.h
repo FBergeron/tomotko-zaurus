@@ -35,6 +35,12 @@ public:
     bool isMarkedForStudy() const;
     void setMarkedForStudy( bool isMarkedForStudy );
     bool isMarkedForDeletion() const;
+
+    /**
+     * Indicate that a term must be deleted.
+     * All sub-items (like translations) will also be marked for deletion.
+     * @parameter isMarkedForDeletion True to indicate that the term must be deleted, false otherwise.
+     */
     void setMarkedForDeletion( bool isMarkedForDeletion );
 
     void addTranslation( const Translation& translation );

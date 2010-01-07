@@ -1,5 +1,6 @@
 ToDo
 ----
+When deleting items marked for deletion, we must collect marked translations and accumulate them in a collection and handle them at the end.  This way, we will prevent rewriting the stats file too many times.
 When deleting a term (and its translations), remove the associated stats.  Now that Translations have uid, I don't need to have a property markedForDeletion for stats.  I will be able to find the associated stats using the Translations uid, instead.
     I have added markedForDeletion for Translation.  Now, do I need to consider its value in some methods of Term.cpp?  For example, operator>>() and operator<<()?
     Before trying this on the Zaurus, check the memory it takes before and after.  I'm curious how much memory it takes to use uid for translation and comments.  Is it a big deal?  I have about 4250 words at the moment.
