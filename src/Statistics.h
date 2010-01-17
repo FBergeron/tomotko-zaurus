@@ -8,6 +8,7 @@
 #include <qmap.h>
 #include <qobject.h>
 #include <qstring.h>
+#include <qstringlist.h>
 #include "BilingualKey.h"
 #include "BiUidKey.h"
 #include "Progress.h"
@@ -38,15 +39,13 @@ public:
     bool saveTermData( const QString& firstLang, const QString& testLang ) const;
     bool saveUncompressedTermData( const QString& firstLang, const QString& testLang ) const;
 
-    /**
-     * Remove data associated to the given translation in parameter.
-     * @parameter transLang Language of the translation.
-     * @parameter transUid Identifier of the translation.
-     * @returns True if the data has been successfully removed.
-     */
-    bool removeTermData( const QString& transLang, const QUuid& transUid );
-
     QString getTermDataFilename( const QString& firstLang, const QString& testLang ) const;
+
+    void addDeletedTranslation( const QUuid& uid, const QString& lang );
+    void removeDeletedTranslation( const QUuid& uid, const QString& lang );
+    bool purgeObsoleteData();
+
+    QStringList toString() const; // For debugging.
 
 private:
 
@@ -63,7 +62,7 @@ private:
      */
     bool insertTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& newTermData );
 
-    bool removeTermDataFromFile( const QUuid& transUid, const QString& transLang );
+    bool removeTermData( QValueList<QString>& transUidList, const QString& filename );
 
     static Statistics* singleton;
 
@@ -78,7 +77,9 @@ private:
     QString                 applicationDirName;
 
     BilingualKey            currentLanguages;
-    QMap<BiUidKey, TermData> termData;
+    QMap<BiUidKey,TermData> termData;
+
+    QMap<QString,QValueList<QString> > deletedTranslations; 
 
 };
 

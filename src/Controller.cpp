@@ -994,25 +994,32 @@ void Controller::writeVocabulariesInXml( Folder* folder, int depth, QTextStream&
 }
 
 bool Controller::deleteItemsMarkedForDeletion( Folder* folder ) {
-    QMap<QString,QValueList<QString> > transToDelete;
-    if( deleteItemsMarkedForDeletionRec( folder, transToDelete ) ) {
-        //return( deleteStats( transToDelete ) );
-        return( true );
-    }
-    return( false );
+    bool isOk = true;
+
+    isOk = deleteItemsMarkedForDeletionRec( folder );
+    cerr << "deleteItemsMarkedForDeletionRec isOk=" << isOk << endl;
+    if( !isOk )
+        return( false );
+
+    isOk = Statistics::instance()->purgeObsoleteData();
+    cerr << "purgeObsoleteData isOk=" << isOk << endl;
+    if( !isOk )
+        return( false );
+
+    return( true );
 }
 
-bool Controller::deleteItemsMarkedForDeletionRec( Folder* folder, QMap<QString,QValueList<QString> >& transToDelete ) {
+bool Controller::deleteItemsMarkedForDeletionRec( Folder* folder ) {
     //cerr << "deleteItemsMarkedForDeletion folder uid=" << folder->getUid().toString() << endl;
     // Process children first.
     for( Base* childItem = folder->first(); childItem; childItem = folder->next() ) {
         if( strcmp( childItem->className(), "Folder" ) == 0 ) {
             Folder* childFolder = (Folder*)childItem;
-            deleteItemsMarkedForDeletionRec( childFolder, transToDelete );
+            deleteItemsMarkedForDeletionRec( childFolder );
         }
         else if( strcmp( childItem->className(), "Vocabulary" ) == 0 ) {
             Vocabulary* childVocab = (Vocabulary*)childItem; 
-            deleteItemsMarkedForDeletionRec( childVocab, transToDelete );
+            deleteItemsMarkedForDeletionRec( childVocab );
         }
     }
 
@@ -1029,7 +1036,7 @@ bool Controller::deleteItemsMarkedForDeletionRec( Folder* folder, QMap<QString,Q
     return( true );
 }
 
-bool Controller::deleteItemsMarkedForDeletionRec( Vocabulary* vocab, QMap<QString,QValueList<QString> >& transToDelete ) {
+bool Controller::deleteItemsMarkedForDeletionRec( Vocabulary* vocab ) {
     // Process children first.
     QValueList<QString> termsToRemove;
     for( Vocabulary::TermMap::Iterator it = vocab->begin(); it != vocab->end(); it++ ) {
@@ -1040,13 +1047,9 @@ bool Controller::deleteItemsMarkedForDeletionRec( Vocabulary* vocab, QMap<QStrin
         for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
             const Translation& trans = it2.data();
             if( trans.isMarkedForDeletion() ) {
-                QValueList<QString> transUidToDelete;
-                if( !transToDelete.contains( trans.getLanguage() ) )
-                    transToDelete.insert( trans.getLanguage(), transUidToDelete );
-                transUidToDelete.append( trans.getUid().toString() );
-
                 // We cannot remove the translation directly because we have a reference on it.
                 translationsToRemove.insert( trans.getUid().toString(), trans.getLanguage() );
+                Statistics::instance()->addDeletedTranslation( trans.getUid(), trans.getLanguage() );
 cerr << "trans marked for deletion. uid,lang=" << trans.getUid().toString() << ", " << trans.getLanguage() << endl; 
             }
         }
@@ -1055,7 +1058,7 @@ cerr << "trans marked for deletion. uid,lang=" << trans.getUid().toString() << "
             QString transLang = it3.data();
             term.removeTranslation( transLang );
             term.removeComments( transLang );
-cerr << "just before stats removal uid,lang=" << transLang << ", " << transUidStr << endl;
+//cerr << "just before stats removal uid,lang=" << transLang << ", " << transUidStr << endl;
         }
 
         if( term.isMarkedForDeletion() ) {
@@ -1083,6 +1086,7 @@ cerr << "just before stats removal uid,lang=" << transLang << ", " << transUidSt
             return( false );
         }
     }
+    return( true );
 }
 
 int Controller::findFolderId( const QString& filename ) const {

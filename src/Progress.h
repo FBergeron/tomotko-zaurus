@@ -18,6 +18,20 @@ struct TermData {
             successCount( termData.successCount ), missCount( termData.missCount ) {
     }
 
+    QString toString() const {
+        QString str;
+
+        str.append( "i=" ).append( QString::number( interval ) ).append( "," );
+        str.append( "r=" ).append( QString::number( repetition ) ).append( "," );
+        str.append( "EF=" ).append( QString::number( easinessFactor ) ).append( "," );
+        str.append( "nr=" ).append( nextRepetitionDate.toString() ).append( "," );
+        str.append( "lr=" ).append( lastRepetitionDate.toString() ).append( "," );
+        str.append( "sc=" ).append( QString::number( successCount ) ).append( "," );
+        str.append( "mc=" ).append( QString::number( missCount ) ).append( ";" );
+
+        return( str );
+    }
+
     int interval;
     uint repetition;
     float easinessFactor; // EF

@@ -443,19 +443,105 @@ bool Statistics::insertTermData( const BiUidKey& key, const QString& firstLang, 
     return( isNewRecordWritten );
 }
 
-bool Statistics::removeTermData( const QString& transLang, const QUuid& transUid ) {
-    QDir dataDir( applicationDirName );
-    for( uint i = 0; i < dataDir.count(); i++ ) {
-        if( dataDir[ i ].left( 9 ) == "termData_" ) {
-            if( dataDir[ i ].mid( 9, 2 ) == transLang || dataDir[ i ].mid( 12, 2 ) == transLang )
-                return( removeTermDataFromFile( transUid, applicationDirName + "/" + dataDir[ i ] ) );
+bool Statistics::removeTermData( QValueList<QString>& transUidList, const QString& filename ) {
+    cerr << "removeTermData filename=" << filename << " count=" << transUidList.count() << endl;
+    for( QValueList<QString>::ConstIterator it = transUidList.begin(); it != transUidList.end(); it++ ) {
+        cerr << "uid=" << (*it) << endl;
+    }
+    cerr << "toto" << endl;
+
+    QFile dataFile( filename );
+    if( !dataFile.open( IO_ReadOnly ) ) {
+        cerr << "Cannot open metadata file: " << dataFile.name() << endl;
+        return( false );
+    }
+
+    QFile newDataFile( filename + ".tmp" );
+    if( newDataFile.exists() && !newDataFile.remove() ) {
+        dataFile.close();
+        return( false );
+    }
+
+    if( !newDataFile.open( IO_WriteOnly ) ) {
+        cerr << "Cannot open metadata file: " << newDataFile.name() << endl;
+        dataFile.close();
+        return( false );
+    }
+
+    Q_UINT32 tempMagicNumber;
+    Q_UINT16 tempVersion;
+   
+    QDataStream in;
+    QDataStream out( &newDataFile );
+
+    in.setDevice( &dataFile );
+    in >> tempMagicNumber >> tempVersion;
+    if( tempMagicNumber != Statistics::magicNumber ) {
+        cerr << "Wrong magic number: Incompatible statistics data file." << endl;
+        dataFile.close();
+        newDataFile.close();
+        return( false );
+    }
+    if( tempVersion > 0x0001 ) {
+        cerr << "Statistics data file is from a more recent version.  Upgrade toMOTko." << endl;
+        dataFile.close();
+        newDataFile.close();
+        return( false );
+    }
+    if( tempVersion < 0x0001 ) {
+        cerr << "Statistics data format too old.  You must use an anterior version of toMOTko." << endl;
+        dataFile.close();
+        newDataFile.close();
+        return( false );
+    }
+
+    in.setVersion( 3 );
+    
+    out.setVersion( 3 );
+    out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
+
+    while( !in.atEnd() ) {
+        QString tempKey;
+        int tempInterval;
+        uint tempRepetition;
+        float tempEasinessFactor;
+        QDate tempNextRepetitionDate;
+        QDate tempLastRepetitionDate;
+        uint tempSuccessCount;
+        uint tempMissCount;
+
+        in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
+        in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
+
+        BiUidKey key( tempKey );
+        if( !transUidList.contains( key.getFirstUid() ) && !transUidList.contains( key.getSecondUid() ) ) {
+            out << tempKey << tempInterval << tempRepetition << tempEasinessFactor << tempNextRepetitionDate;
+            out << tempLastRepetitionDate << tempSuccessCount << tempMissCount;
+        }
+        else {
+            // We omit writing the record so that it's effectively removed.
+            // Also remove the record from memory.
+            termData.remove( key );
         }
     }
-    return( false );
-}
+    dataFile.close();
+    newDataFile.close();
 
-bool Statistics::removeTermDataFromFile( const QUuid& transUid, const QString& filename ) {
-    cerr << "removeTermDataFromFile filename=" << filename << " uid=" << transUid.toString() << endl;
+    if( !dataFile.remove() ) {
+        cerr << "Cannot remove file: " << dataFile.name() << endl;
+        return( false );
+    }
+
+    if( !Util::copy( newDataFile.name(), dataFile.name() ) ) {
+        cerr << "Cannot copy file: " << newDataFile.name() << " to " << dataFile.name() << endl;
+        return( false );
+    }
+
+    // If we cannot remove the temporay file, it's not a fatal error at this point so we just display a warning.
+    if( !newDataFile.remove() )
+        cerr << "Cannot remove file: " << dataFile.name() << endl;
+
+    return( true );
 }
 
 QString Statistics::getTermDataFilename( const QString& firstLang, const QString& testLang ) const {
@@ -465,4 +551,68 @@ QString Statistics::getTermDataFilename( const QString& firstLang, const QString
     }
     else
         return( QString::null );
+}
+
+void Statistics::addDeletedTranslation( const QUuid& uid, const QString& lang ) {
+    cerr << "addDeletedTranslation uid=" << uid.toString() << " lang=" << lang << endl;
+    if( !deletedTranslations.contains( lang ) ) {
+        QValueList<QString> transUidList;
+        deletedTranslations.insert( lang, transUidList );
+    }
+    QValueList<QString>& transUidList = deletedTranslations[ lang ];
+    transUidList.append( uid.toString() );
+    cerr << "addDeletedTranslation count=" << transUidList.count() << endl;
+    for( QValueList<QString>::ConstIterator it = transUidList.begin(); it != transUidList.end(); it++ )
+        cerr << (*it) << ",";
+    cerr << endl;
+}
+
+void Statistics::removeDeletedTranslation( const QUuid& uid, const QString& lang ) {
+    if( deletedTranslations.contains( lang ) ) {
+        QValueList<QString>& transUidList = deletedTranslations[ lang ];
+        if( transUidList.contains( uid.toString() ) )
+            transUidList.remove( uid.toString() );
+    }
+}
+
+bool Statistics::purgeObsoleteData() {
+    QDir dataDir( applicationDirName );
+    for( uint i = 0; i < dataDir.count(); i++ ) {
+        if( dataDir[ i ].left( 9 ) == "termData_" ) {
+            QValueList<QString> languages;
+            QString firstLang = dataDir[ i ].mid( 9, 2 );
+            QString secondLang = dataDir[ i ].mid( 12, 2 );
+            languages << firstLang << secondLang;
+            QValueList<QString> transUidList;
+            for( QValueList<QString>::ConstIterator it = languages.begin(); it != languages.end(); it++ ) {
+                QString lang = *it;
+                if( deletedTranslations.contains( lang ) ) {
+                    const QValueList<QString>& transUidList2 = deletedTranslations[ lang ];
+                    for( QValueList<QString>::ConstIterator it2 = transUidList2.begin(); it2 != transUidList2.end(); it2++ ) {
+                        QString uid = *it2;
+                        transUidList << uid;
+                    }
+                }
+            }
+            if( transUidList.count() > 0 ) {
+                if( !removeTermData( transUidList, applicationDirName + "/" + dataDir[ i ] ) )
+                    return( false );
+            }
+        }
+    }
+    deletedTranslations.clear();
+    return( true );
+}
+
+QStringList Statistics::toString() const {
+    QStringList str;
+
+    for( QMap<BiUidKey, TermData>::ConstIterator it = termData.begin(); it != termData.end(); it++ ) {
+        BiUidKey key = it.key();
+        TermData termData = it.data();
+   
+        str += key.toString() + " <=> " + termData.toString();
+    }
+
+    return( str );
 }

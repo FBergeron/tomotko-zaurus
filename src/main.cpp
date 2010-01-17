@@ -122,3 +122,35 @@ int main( int argc, char **argv ) {
 //    //controller->saveTermData();
 //    return( 0 );
 //}
+
+//int main( int /*argc*/, char ** /*argv*/ ) {
+//    Controller* controller = new Controller();
+//    controller->init();
+//    
+//    QString firstLang = QString( "en" );
+//    QString testLang = QString( "ja" );
+//    bool isLoaded = Statistics::instance()->loadTermData( firstLang, testLang );
+//    cerr << "loaded=" << isLoaded << " BEFORE=" <<endl;
+//
+//    QStringList str = Statistics::instance()->toString();
+//    for( QStringList::ConstIterator it = str.begin(); it != str.end(); it++ ) {
+//        cerr << (*it).latin1() << endl;
+//    }
+//
+////    // Remove 3 first entries.
+////    QStringList uidToRemove;
+////    uidToRemove += "{10e2d7da-6060-4345-b773-da1abd8dbf98}";
+////    uidToRemove += "{11517bc0-2443-42d9-9fe7-7702daf9f6cd}";
+////    uidToRemove += "{205f60e4-32f2-4095-bc60-21e9593cdb13}";
+////
+////    Statistics::instance()->removeTermDataFromFile( uidToRemove, "/home/fred/.toMOTko/termData_en-ja.dat" );
+////
+////    cerr << "AFTER=" << endl;
+////    str = Statistics::instance()->toString();
+////    for( QStringList::ConstIterator it = str.begin(); it != str.end(); it++ ) {
+////        cerr << (*it).latin1() << endl;
+////    }
+//
+//    return( 0 );
+//}
+
