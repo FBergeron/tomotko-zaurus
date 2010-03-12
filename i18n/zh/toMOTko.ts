@@ -568,6 +568,10 @@ Overwrite the current assignment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>no</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>pt</source>
         <translation type="unfinished"></translation>
     </message>

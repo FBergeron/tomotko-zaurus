@@ -580,6 +580,10 @@ Overwrite the current assignment?</source>
         <translation>ラテン語</translation>
     </message>
     <message>
+        <source>no</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>nl</source>
         <translation>オランダ語</translation>
     </message>

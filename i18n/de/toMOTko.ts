@@ -562,6 +562,10 @@ Overwrite the current assignment?</source>
         <translation>Latein</translation>
     </message>
     <message>
+        <source>no</source>
+        <translation>Norwegisch</translation>
+    </message>
+    <message>
         <source>nl</source>
         <translation>Holländisch</translation>
     </message>

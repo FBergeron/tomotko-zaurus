@@ -581,6 +581,10 @@ Affecter le raccourci quand même?</translation>
         <translation>Néerlandais</translation>
     </message>
     <message>
+        <source>no</source>
+        <translation>Norvégien</translation>
+    </message>
+    <message>
         <source>pt</source>
         <translation>Portuguais</translation>
     </message>

@@ -12,7 +12,7 @@ const QString PreferencesDialog::studyLanguageList[] = {
     QString( "en" ), QString( "fr" ), QString( "es" ), QString( "ja" ), QString( "de" ), 
     QString( "ar" ), QString( "bg" ), QString( "cs" ), QString( "da" ), QString( "el" ),
     QString( "eo" ), QString( "fi" ), QString( "he" ), QString( "hi" ), QString( "it" ), 
-    QString( "ko" ), QString( "la" ), QString( "nl" ), QString( "pt" ), QString( "rm" ), 
+    QString( "ko" ), QString( "la" ), QString( "no" ), QString( "nl" ), QString( "pt" ), QString( "rm" ), 
     QString( "ro" ), QString( "ru" ), QString( "sv" ), QString( "sw" ), QString( "th" ), 
     QString( "tl" ), QString( "vi" ), QString( "zh" )
 };

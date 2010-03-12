@@ -602,6 +602,10 @@ No obstante, asignar la teclea?</translation>
         <translation>Deutch</translation>
     </message>
     <message>
+        <source>no</source>
+        <translation>Noruego</translation>
+    </message>
+    <message>
         <source>pt</source>
         <translation>Portugués</translation>
     </message>
