@@ -534,7 +534,7 @@ Overwrite the current assignment?</translation>
     </message>
     <message>
         <source>bg</source>
-        <translation>Bulgar</translation>
+        <translation>Bulgarian</translation>
     </message>
     <message>
         <source>cs</source>

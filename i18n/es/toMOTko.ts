@@ -555,7 +555,7 @@ No obstante, asignar la teclea?</translation>
     </message>
     <message>
         <source>bg</source>
-        <translation>Bulgar</translation>
+        <translation>Búlgaro</translation>
     </message>
     <message>
         <source>cs</source>
