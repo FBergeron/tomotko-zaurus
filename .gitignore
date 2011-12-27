@@ -1,0 +1,8 @@
+Makefile
+moc_*.cpp
+*.o
+*.qm
+*.swp
+tags
+toMOTko
+toMOTko_*.ipk

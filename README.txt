@@ -11,19 +11,25 @@ Environment: Qtopia 1.5.4 (This is Sharp's closed-source version); Qt 2.3.2.
 Some features of Qt are not included in this binary version on Qt.  To get the list of available features, take a look at the file /opt/Qtopia/include/qfeatures.h.  For example, QInputDialog is not defined.  That's why I had to implement PromptDialog.  The class has been removed since though.
 
 
-How to build the application
-----------------------------
+How to set up development environment
+-------------------------------------
 In order to build the application, it's more convenient to do it on a Linux machine with a faster processor and more memory.  Using another machine to compile an application that will work on a different architecture is what we call cross-compiling.  It's probably possible to compile the application natively on the Zaurus itself but I have never considered the idea.  It already takes 42 seconds on a Core2 Duo E6300 with more than 2 GB of RAM memory, imagine on the Zaurus...
 
-So here is what I did to set up Debian (stable) machine to cross-compile Zaurus application :
+So here is what I did to set up my development environment:
 
-The main problem was to find the right documentation...  There is a lot of links everywhere but it's not always clear for which configuration and for which environment.
+I downloaded an ISO image of Debian Etch from Debian's official website (http://www.debian.org).  There is an archive section where the file debian-40r9-i386-netinst.iso can be found.  At the time I write this documentation, the url was: http://cdimage.debian.org/cdimage/archive/4.0_r9/i386/iso-cd/debian-40r9-i386-netinst.iso.
+
+Using Virtual Box (https://www.virtualbox.org), I created a virtual machine where I installed Debian Etch.
+
+Now for the cross-compiling setup, the main problem was to find the right documentation...  There is a lot of links everywhere but it's not always clear for which configuration and for which environment.
 
 I've made 2 or 3 attempts to setup the cross-compiling environment.  The best link I found is this one :
 
 http://www.ossh.com/zaurus/mirrors/docs.zaurus.com/linux_compiler_setup_howto.shtml
 
 where I found all the required packages (see rpm files included in etc/QtopiaDevRPM).
+
+If these links are dead, the files can also be found in the etc/QtopiaDevRPM directory.
 
 So here is basically what I did :
 
@@ -37,17 +43,20 @@ $ alien -i glibc-arm-2.2.2-0.i386.rpm
 $ alien -i linux-headers-arm-sa1100-2.4.6-3.i386.rpm
 $ alien -i qtopia-free-1.5.0-1.i386.rpm
 $ aptitude install qt3-dev-tools qt3-linguist
+$ aptitude install tmake
 $ exit
 
 At this moment, my setup is pretty much complete.  I can compile and test the example application and it runs either on my Debian machine or my Zaurus.  For more details, read the documention in /opt/Qtopia/doc/index.html.  
 
-Important! I renamed/changed my $PATH to use the proper gcc/g++ (gcc on /opt/... or gcc-2.95) or manually changed it in the Makefile.  But a better approach is rather to use environment variable instead.  To do that, add the -e option when using make (e.g.: make -e).  Check bin/dev-x86-qpe.sh for details.  Using more recent version of gcc/g++ do NOT work!
+Important! I renamed/changed my $PATH to use the proper gcc/g++ (gcc on /opt/... or gcc-2.95) or manually changed it in the Makefile.  But a better approach is rather to use environment variable instead.  To do that, add the -e option when using make (e.g.: make -e).  Check bin/dev-x86-qpe.sh for details.  Also please note that using more recent version of gcc/g++ do NOT work!  That's why I'm using an old version of Debian for this because I was unable to build gcc-2.95 from source using a newer distro.
 
-The same procedure works for Ubuntu.
+The same procedure works for an old version Ubuntu (one that provides gcc-2.95 and g++-2.95 packages).
+
+One last thing:  The setup for zlib library must be done for the first time.  Read the instructions below.
 
 
-Common operations
------------------
+Common operations during development
+------------------------------------
 To generate/update the translation file (.ts) :
 
 $ lupdate -verbose toMOTko.pro
@@ -169,7 +178,7 @@ To round up a positive float number in C++: uint roundedValue = (uint)( val + 0.
 
 About zlib
 ----------
-I downloaded the source code from the zlib website.
+I downloaded the source code from the zlib website (http://zlib.net).
 The latest version was zlib-1.2.3.  The same version that is already installed on my system.
 
 I think that if I had wanted a different version, that I should have done this procedure :
