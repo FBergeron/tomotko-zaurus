@@ -179,24 +179,21 @@ To round up a positive float number in C++: uint roundedValue = (uint)( val + 0.
 About zlib
 ----------
 I downloaded the source code from the zlib website (http://zlib.net).
-The latest version was zlib-1.2.3.  The same version that is already installed on my system.
-
-I think that if I had wanted a different version, that I should have done this procedure :
+The latest version was zlib-1.2.3.
 
 To build the .so file, as written in the INSTALL file :
-cd zaurus/zlib-1.2.1
-# I don't know if it's necessary.  This is for using gcc-2.95.
-source ../tomotko/trunk/bin/dev-x86-qpe.sh
-./configure --shared
+# cd ~/zlib-1.2.3
+# source ../tomotko-zaurus/bin/dev-x86-qpe.sh
+# ./configure --shared
 # make clean;make
 
 To install it at the right place :
 
 # su
-# cp libz.so.1.2.1 /opt/Qtopia/lib
+# cp libz.so.1.2.3 /opt/Qtopia/lib
 # cd /opt/Qtopia/lib
-# ln -s libz.so.1.2.1 libz.so
-# ln -s libz.so.1.2.1 libz.so.1
+# ln -s libz.so.1.2.3 libz.so
+# ln -s libz.so.1.2.3 libz.so.1
 
 I also had to install the header files (zlib.h, zconf.h, etc.).
 
