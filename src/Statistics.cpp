@@ -103,7 +103,7 @@ bool Statistics::loadTermData( const QString& firstLang, const QString& testLang
         in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
 #ifdef DEBUG
         cout << "tempKey=" << tempKey << " tempInterval=" << tempInterval << " tempRepetition=" << tempRepetition << " tempEasinessFactor=" << tempEasinessFactor;
-        cout << "tempSuccessCount=" << tempSuccessCount << " tempMissCount=" << tempMissCount << endl;
+        cout << " tempSuccessCount=" << tempSuccessCount << " tempMissCount=" << tempMissCount << endl;
 #endif
 
         TermData aTermData;
@@ -159,6 +159,9 @@ bool Statistics::seekTermData( const BiUidKey& key, QFile& dataFile, const uint 
 }
 
 TermData Statistics::loadTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang ) {
+#ifdef DEBUG
+    cout << "loadTermData2" << endl; 
+#endif
     TermData termData;
 
     QFile dataFile( getTermDataFilename( firstLang, testLang ) );
@@ -561,6 +564,34 @@ bool Statistics::removeTermData( QValueList<QString>& transUidList, const QStrin
 //
 //    return( true );
     return( false );
+}
+
+void Statistics::convertTermData( const QString& firstLang, const QString& testLang, Folder* topFolder ) {
+#ifdef DEBUG
+    cout << "convertTermData firstLang=" << firstLang << " testLang=" << testLang << endl;
+#endif
+    QValueList<BiUidKey> keysToRemove;
+    for( QMap<BiUidKey, TermData>::ConstIterator it = termData.begin(); it != termData.end(); it++ ) {
+        BiUidKey key = it.key();
+        TermData data = it.data();
+#ifdef DEBUG
+        cout << "key=" << key.toString() << endl;
+#endif
+        Term* term = topFolder->getTerm( QUuid( key.getFirstUid() ) );
+        if( term && term->isTranslationExists( firstLang ) && term->isTranslationExists( testLang ) ) {
+            keysToRemove.append( key );
+            BiUidKey newKey( term->getTranslation( firstLang ).getUid().toString(), 
+                term->getTranslation( testLang ).getUid().toString() );
+            termData[ newKey ] = data;
+        }
+        else {
+#ifdef DEBUG
+            cout << "Not found!" << endl;
+#endif
+        }
+    }
+    for( uint i = 0; i < keysToRemove.count(); i++ )
+        termData.remove( keysToRemove[ i ] );
 }
 
 QString Statistics::getTermDataFilename( const QString& firstLang, const QString& testLang ) const {

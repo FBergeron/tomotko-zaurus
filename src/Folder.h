@@ -58,6 +58,7 @@ public:
     Folder* getFolder( int id );
     Vocabulary* getVocabulary( const QUuid& uid );
     Vocabulary* getVocabulary( int id );
+    Term* getTerm( const QUuid& uid );
     Folder* getRoot() const;
     Folder* getParent() const;
     QString getOldPath() const;
@@ -88,6 +89,8 @@ private:
 
     Vocabulary* getVocabularyRec( const QUuid& uid );
     Vocabulary* getVocabularyRec( int id );
+
+    Term* getTermRec( const QUuid& uid );
 
     QUuid       uid;
     int         id;

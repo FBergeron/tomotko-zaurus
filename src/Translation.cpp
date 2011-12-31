@@ -1,7 +1,6 @@
 #include "Translation.h"
 
 bool Translation::isOldFormat = false; // Temporary flag for data conversion from 0.11.x to 0.12.x.
-//bool Translation::isOldFormat = true; // Temporary flag for data conversion from 0.11.x to 0.12.x.
 
 Translation::Translation( const QUuid& uid /* = QUuid() */, const QString& lang /* = QString() */, const QString& word /* = QString() */, const QString& alt /* = QString() */ ) 
     : uid( uid ), lang( lang ), word( word ), alt( alt ), markedForDeletion( false ) {

@@ -73,6 +73,7 @@ ProgressData Controller::getProgressData( const BiUidKey& key /* = BiUidKey() */
     QString testLang = prefs.getTestLanguage();
 
     Statistics::instance()->loadTermData( firstLang, testLang );
+    Statistics::instance()->convertTermData( firstLang, testLang, vocabTree );
 
     ProgressData progressData;
 

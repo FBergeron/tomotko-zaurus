@@ -6,14 +6,18 @@ Load existing data in memory.  The new version is 17 (0x0011).  The old version 
         This means that my current data has no uid for Translations and Comments.  
         So I believe that I must do a similar process that what's found in Vocabulary::readOldFormat().
         To this end, I replace temporarily "in >> tempVocab;" by "readOldFormatTemp( in tempVocab, tempVersion );" in Vocab.
+            When doing that, I do not need to set Translation::isOldFormat = true.  It's done programmatically. 
     The stats are not properly loaded though.  There is a problem with the uid of the terms (or translations).
         The key for the stats corresponds to a term's UID.
+        I have implemented a conversion method that must be called for each existing language pairs.  
+            The function is called in Controller::getProgressData() and must be called manually.
+                To do this, uncomment convertTermData() call and invoke the progress dialog for all lang pairs.
 Removed commented out functions that write something to disk.
 Save data properly with latest data format
-    To save the data, I must first load my current data.
+    Now that the data are properly set in memory, I need to save it on disk.
 Load data property with latest data format.
-Load data from previous old format and convert if needed.
 
+Load data from previous old format and convert if needed.
 When deleting items, mark them for deletion: comments, stats, and translations.  We will deal with them after.
 When pasting items, unmark them for deletion: comments, stats, and translations.
 I don't think that the transToDelete parameter in Controller::deleteItemsMarkedForDeletionRec() is still needed there.
@@ -27,6 +31,7 @@ Make sure that when we remove a term that references to it are also removed (mar
 When we remove a term (or some of its translations), we must delete its associated stats as well.  
 Delete comments (and translation) marked for deletion.
 When we paste some items, we must unmark them for deletion (in the case of cut-paste, for example).
+Consider adding a parameter for methods that look for item so that items marked for deletion are ignored or not.
 Test delete term, vocab, folder and rec folder.
 Check if I still need the calls to updateEasinessFactor( control->getQuizCurrentTermEasinessFactor() ) that have been commented out in MainWindow.cpp.  I think so, so I need to reimplemented them differently as I have removed getQuizCurrentTermEasinessFactor from Controller.  Check what I do in QuizFrame in askTerm().
 In the online help, add a section explaining how I use the application: sm-2 every day for 3 languages and from time to time, original quiz in opposite direction.

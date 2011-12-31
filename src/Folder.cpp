@@ -235,6 +235,10 @@ Vocabulary* Folder::getVocabulary( const QUuid& uid ) {
     return( getVocabularyRec( uid ) );
 }
 
+Term* Folder::getTerm( const QUuid& uid ) {
+    return( getTermRec( uid ) );
+}
+
 Vocabulary* Folder::getVocabulary( int id ) {
     return( getVocabularyRec( id ) );
 }
@@ -553,6 +557,23 @@ Vocabulary* Folder::getVocabularyRec( const QUuid& uid ) {
             if( vocab )
                 return( vocab );
         }
+    }
+    return( NULL );
+}
+
+Term* Folder::getTermRec( const QUuid& uid ) {
+    for( Base* child = children.first(); child; child = children.next() ) { 
+        Term* term = NULL;
+        if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
+            Vocabulary* vocab = (Vocabulary*)child;
+            if( vocab->isTermExists( uid ) )
+                term = &(vocab->getTerm( uid ));
+        }
+        else if( strcmp( child->className(), "Folder" ) == 0 ) {
+            term = ((Folder*)child)->getTermRec( uid );
+        }
+        if( term )
+            return( term );
     }
     return( NULL );
 }

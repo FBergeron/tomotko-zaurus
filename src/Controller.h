@@ -64,6 +64,10 @@ public:
 
     Term* getCurrentTerm();
     bool hasNextTerm() const;
+
+    /*
+     * Find a term from a vocabulary specified in the termKey parameter.
+     */
     Term* getTerm( const TermKey& termKey, const QString& firstLang = QString::null, const QString& testLang = QString::null );
     Term* getNextTerm();
  
@@ -184,7 +188,7 @@ private:
     QString convertPath( const QString& path, QMap<QString,Folder*>& newFolders ) const;
 
     void searchRec( const QString& query, Folder* folder, QValueList<TermKey>& results );
-    void searchRec( const QString& query, Vocabulary* folder, QValueList<TermKey>& results );
+    void searchRec( const QString& query, Vocabulary* vocab, QValueList<TermKey>& results );
 
     Preferences         prefs;
 

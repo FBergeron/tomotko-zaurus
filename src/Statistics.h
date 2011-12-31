@@ -11,6 +11,7 @@
 #include <qstringlist.h>
 #include "BilingualKey.h"
 #include "BiUidKey.h"
+#include "Folder.h"
 #include "Progress.h"
 #include "Util.h"
 
@@ -46,6 +47,8 @@ public:
     bool purgeObsoleteData();
 
     QStringList toString() const; // For debugging.
+
+    void convertTermData( const QString& firstLang, const QString& testLang, Folder* topFolder );
 
 private:
 
