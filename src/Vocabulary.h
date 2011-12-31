@@ -303,6 +303,7 @@ public:
     friend QDataStream& operator<<( QDataStream& out, const Vocabulary& vocab );
     friend QDataStream& operator>>( QDataStream& in, Vocabulary& vocab );
     friend QDataStream& readOldFormat( QDataStream& in, Vocabulary& vocab, Q_UINT16 version );
+    friend QDataStream& readOldFormatTemp( QDataStream& in, Vocabulary& vocab, Q_UINT16 version );
 
 private:
 

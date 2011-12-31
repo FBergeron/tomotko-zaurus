@@ -3,7 +3,11 @@ ToDo
 Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)
 Load existing data in memory.  The new version is 17 (0x0011).  The old version is 16 (0x0010).
     If I set Translation::isOldFormat = true, the vocab data is all loaded.  
+        This means that my current data has no uid for Translations and Comments.  
+        So I believe that I must do a similar process that what's found in Vocabulary::readOldFormat().
+        To this end, I replace temporarily "in >> tempVocab;" by "readOldFormatTemp( in tempVocab, tempVersion );" in Vocab.
     The stats are not properly loaded though.  There is a problem with the uid of the terms (or translations).
+        The key for the stats corresponds to a term's UID.
 Removed commented out functions that write something to disk.
 Save data properly with latest data format
     To save the data, I must first load my current data.

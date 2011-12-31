@@ -265,7 +265,8 @@ bool Vocabulary::load( const QString& filename ) {
 
     in.setVersion( 3 );
     if( tempVersion == 0x0011 ) // With UID.
-        in >> tempVocab;
+        //in >> tempVocab;
+        readOldFormatTemp( in, tempVocab, tempVersion ); 
     else if( tempVersion < 0x0011 )
         readOldFormat( in, tempVocab, tempVersion ); 
 
@@ -398,6 +399,117 @@ QDataStream& operator>>( QDataStream& in, Vocabulary& vocab ) {
     vocab.setAuthor( tempAuthor );
     vocab.setCreationDate( tempCreationDate );
     vocab.setModificationDate( tempModificationDate );
+
+    return( in );
+}
+
+QDataStream& readOldFormatTemp( QDataStream& in, Vocabulary& vocab, Q_UINT16 version ) {
+#ifdef DEBUG
+    cout << "readOldFormatTemp" << endl;
+#endif
+    QString tempUidStr;
+    QUuid tempUid;
+    int tempId;
+    QString tempTitle;
+    Vocabulary::TermMap tempTerms;
+    Vocabulary::OldTermMap tempOldTerms;
+    QString tempDescription;
+    QString tempAuthor;
+    QDateTime tempCreationDate;
+    QDateTime tempModificationDate;
+    if( version == 0x0011 )
+        tempUid = Util::createUuid();
+
+    //Term::isOldFormat = true; // Set the conversion flag to make Term's operator>> behave correctly. 
+    Translation::isOldFormat = true; // Set the conversion flag to make Translation's operator>> behave correctly.
+    in >> tempUidStr;
+#ifdef DEBUG
+    cout << "tempUidStr=" << tempUidStr << endl;
+#endif
+    tempUid = QUuid( tempUidStr );
+    in >> tempTitle;
+#ifdef DEBUG
+    cout << "tempTitle=" << tempTitle << endl;
+#endif
+    in >> tempTerms;
+
+    //Term::isOldFormat = false; // Reset the conversion flag.
+    Translation::isOldFormat = false; // Reset the conversion flag.
+
+    in >> tempDescription >> tempAuthor >> tempCreationDate >> tempModificationDate;
+#ifdef DEBUG
+    cout << "tempDescription=" << tempDescription << " tempAuthor=" << tempAuthor << endl;
+#endif
+    vocab = Vocabulary( tempId, tempTitle, tempUid );
+    for( Vocabulary::TermMap::Iterator it = tempTerms.begin(); it != tempTerms.end(); it++ ) {
+        Term& term = it.data();
+    //    term.setUid( Util::createUuid() );
+        term.setVocabUid( tempUid );
+#ifdef DEBUG
+        cout << "term.uid=" << term.getUid().toString() << " term.vocabUid=" << term.getVocabUid().toString() << endl;
+#endif
+        // We need to generate uid for translation and comment instances for this version.
+        if( version == 0x0011 ) {
+            QValueList<Translation> convertedTranslations;
+            for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
+                const Translation& trans = it2.data();
+                Translation convertedTrans( Util::createUuid(), trans.getLanguage(), trans.getWord(), trans.getAlt() );
+                convertedTranslations.append( convertedTrans );
+            }
+            // Replace the old translation instances by converted ones.
+            for( QValueList<Translation>::Iterator it2 = convertedTranslations.begin(); it2 != convertedTranslations.end(); it2++ ) {
+                Translation trans = *it2;
+                term.removeTranslation( trans.getLanguage() );
+                term.addTranslation( trans );
+            }
+
+            Term::CommentMap convertedComments;
+            for( Term::CommentMap::ConstIterator it2 = term.commentsBegin(); it2 != term.commentsEnd(); it2++ ) {
+                const BilingualKey& key = it2.key();
+                const Comment& comment = it2.data();
+                Comment convertedComment( Util::createUuid(), comment.getText() );
+                convertedComments.insert( key, convertedComment );
+            }
+            // Replace the old comment instances by converted ones.
+            for( Term::CommentMap::ConstIterator it2 = term.commentsBegin(); it2 != term.commentsEnd(); it2++ ) {
+                const BilingualKey& key = it2.key();
+                const Comment& comment = it2.data();
+                term.removeComment( key );
+                term.addComment( key, comment );
+            }
+        }
+//        if( !term.getImagePath().isNull() ) {
+//#ifdef DEBUG
+//            cout << "IMAGE imagePath=" << term.getImagePath() << endl;
+//#endif
+//            QFileInfo imageFileInfo( term.getImagePath() );
+//            if( term.getImagePath() == QString::number( term.getId() ) + "." + imageFileInfo.extension( false ) ) {
+//                // Temporary code for data conversion between 0.11.x and 0.12.x. 
+//                // Copy the image into a temporary directory with its uid filename.
+//                // When saving data, the image will be copied in its vocabulary directory and the temporary directory will be removed.
+//                QFileInfo parentPathInfo( Vocabulary::parentPath );
+//                QString applDir( parentPathInfo.dirPath().left( parentPathInfo.dirPath().find( ".toMOTko" ) + 8 ) );
+//                QString tempDirPath( applDir + "/tmp" );
+//                QString absImagePath( parentPathInfo.dirPath() + "/v-" + QString::number( tempId ) + "/" + term.getImagePath() );
+//                QString tempImageCopyPath( tempDirPath + "/" + term.getUid().toString() + "." + imageFileInfo.extension( false ) );
+//                if( !Util::makeDirectory( tempDirPath ) )
+//                    cerr << "Cannot create directory " << tempDirPath << endl;
+//                else {
+//                    if( !Util::copy( absImagePath, tempImageCopyPath ) )
+//                        cerr << "Cannot copy image " << absImagePath << " to directory " << tempImageCopyPath << endl;
+//                }
+//                term.setImagePath( term.getUid().toString() + "." + imageFileInfo.extension( false ) );
+//            }
+//        }
+
+        vocab.addTerm( term );
+    }
+   
+    vocab.setDescription( tempDescription );
+    vocab.setAuthor( tempAuthor );
+    vocab.setCreationDate( tempCreationDate );
+    vocab.setModificationDate( tempModificationDate );
+    vocab.setDirty( true ); // Force saving data.
 
     return( in );
 }
