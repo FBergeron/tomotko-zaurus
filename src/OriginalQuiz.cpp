@@ -70,34 +70,35 @@ cerr << "quiz ver=" << tempVersion << endl;
 }
 
 bool OriginalQuiz::save() {
-    QByteArray data;
-
-    QDataStream out( data, IO_WriteOnly );
-    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
-
-    // 0x0009 means 0.9.x version.  
-    out << Q_UINT32( OriginalQuiz::magicNumber ) << Q_UINT16( 0x000a ) << *this;
-    
-    QByteArray compressedData( Util::qCompress( data ) ); 
-
-    QFile dataFile( getFilename() );
-    QFileInfo dataFileInfo( dataFile );
-
-    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
-        return( false );
-
-    if( !dataFile.open( IO_WriteOnly ) )
-        return( false );
-
-    int ret = dataFile.writeBlock( compressedData );
-    dataFile.close();
-
-    if( ret == -1 || dataFile.status() != IO_Ok ) {
-        dataFile.resetStatus();
-        return( false );
-    }
-
-    return( true );
+//    QByteArray data;
+//
+//    QDataStream out( data, IO_WriteOnly );
+//    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
+//
+//    // 0x0009 means 0.9.x version.  
+//    out << Q_UINT32( OriginalQuiz::magicNumber ) << Q_UINT16( 0x000a ) << *this;
+//    
+//    QByteArray compressedData( Util::qCompress( data ) ); 
+//
+//    QFile dataFile( getFilename() );
+//    QFileInfo dataFileInfo( dataFile );
+//
+//    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
+//        return( false );
+//
+//    if( !dataFile.open( IO_WriteOnly ) )
+//        return( false );
+//
+//    int ret = dataFile.writeBlock( compressedData );
+//    dataFile.close();
+//
+//    if( ret == -1 || dataFile.status() != IO_Ok ) {
+//        dataFile.resetStatus();
+//        return( false );
+//    }
+//
+//    return( true );
+    return( false );
 }
 
 void OriginalQuiz::conclude() {

@@ -230,6 +230,9 @@ void Vocabulary::setParent( Folder* parent ) {
 }
 
 bool Vocabulary::load( const QString& filename ) {
+#ifdef DEBUG
+    cout << "load filename=" << filename << endl;
+#endif
     QFile dataFile( filename );
     if( !dataFile.open( IO_ReadOnly ) )
         return( false );
@@ -244,6 +247,9 @@ bool Vocabulary::load( const QString& filename ) {
     Vocabulary tempVocab;
 
     in >> tempMagicNumber >> tempVersion;
+#ifdef DEBUG
+    cout << "tempMagicNumber=" << tempMagicNumber << " tempVersion=" << tempVersion << endl;
+#endif
     if( tempMagicNumber != Vocabulary::magicNumber ) {
         cerr << "Wrong magic number: Incompatible vocabulary data file." << endl;
         return( false );
@@ -285,63 +291,67 @@ for( QMap<QString,Translation>::ConstIterator it2 = term.translationsBegin(); it
 }
 
 bool Vocabulary::save( const QString& filename ) const {
-    QByteArray data;
-
-    QDataStream out( data, IO_WriteOnly );
-    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
-//cerr << "Size of saved Vocab=" << getSize() << " this=" << this << endl;
-//for( TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
-//    const Term& term = it.data();
-//    cerr << "term uid=" << term.getUid().toString() << endl;
-//}
-    out << Q_UINT32( Vocabulary::magicNumber ) << Q_UINT16( 0x0011 ) << *this;
-
-    QByteArray compressedData( Util::qCompress( data ) ); 
-
-    QFile dataFile( filename );
-    QFileInfo dataFileInfo( dataFile );
-
-    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
-        return( false );
-
-    if( !dataFile.open( IO_WriteOnly ) )
-        return( false );
-
-    int ret = dataFile.writeBlock( compressedData );
-    dataFile.close();
-
-    // Temporary code for data conversion between 0.11.x and 0.12.x. 
-    for( Vocabulary::TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
-        const Term& term = it.data();
-        if( !term.getImagePath().isNull() ) {
-            QFileInfo imageFileInfo( term.getImagePath() );
-            if( term.getImagePath() == term.getUid().toString() + "." + imageFileInfo.extension( false ) ) {
-                QFileInfo parentPathInfo( Vocabulary::parentPath );
-                QString absImagePath( parentPathInfo.dirPath() + "/v-" + getUid().toString() + "/" + term.getImagePath() );
-                QFileInfo absImagePathInfo( absImagePath );
-                if( !absImagePathInfo.exists() ) {
-                    QString applDir( parentPathInfo.dirPath().left( parentPathInfo.dirPath().find( ".toMOTko" ) + 8 ) );
-                    QString tempDirPath( applDir + "/tmp" );
-                    QString tempImageCopyPath( tempDirPath + "/" + term.getUid().toString() + "." + imageFileInfo.extension( false ) );
-                    QFileInfo tempImageCopyPathInfo( tempImageCopyPath );
-                    if( tempImageCopyPathInfo.exists() ) {
-                        if( !Util::copy( tempImageCopyPath, absImagePath ) )
-                            cerr << "Cannot copy image " << tempImageCopyPath << " to " << absImagePath << endl;
-                    }
-                }
-            }
-        }
-    }
-
-    if( ret == -1 || dataFile.status() != IO_Ok ) {
-        dataFile.resetStatus();
-        return( false );
-    }
-
-    return( true );
+//    QByteArray data;
+//
+//    QDataStream out( data, IO_WriteOnly );
+//    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
+////cerr << "Size of saved Vocab=" << getSize() << " this=" << this << endl;
+////for( TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
+////    const Term& term = it.data();
+////    cerr << "term uid=" << term.getUid().toString() << endl;
+////}
+//    out << Q_UINT32( Vocabulary::magicNumber ) << Q_UINT16( 0x0011 ) << *this;
+//
+//    QByteArray compressedData( Util::qCompress( data ) ); 
+//
+//    QFile dataFile( filename );
+//    QFileInfo dataFileInfo( dataFile );
+//
+//    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
+//        return( false );
+//
+//    if( !dataFile.open( IO_WriteOnly ) )
+//        return( false );
+//
+//    int ret = dataFile.writeBlock( compressedData );
+//    dataFile.close();
+//
+//    // Temporary code for data conversion between 0.11.x and 0.12.x. 
+//    for( Vocabulary::TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
+//        const Term& term = it.data();
+//        if( !term.getImagePath().isNull() ) {
+//            QFileInfo imageFileInfo( term.getImagePath() );
+//            if( term.getImagePath() == term.getUid().toString() + "." + imageFileInfo.extension( false ) ) {
+//                QFileInfo parentPathInfo( Vocabulary::parentPath );
+//                QString absImagePath( parentPathInfo.dirPath() + "/v-" + getUid().toString() + "/" + term.getImagePath() );
+//                QFileInfo absImagePathInfo( absImagePath );
+//                if( !absImagePathInfo.exists() ) {
+//                    QString applDir( parentPathInfo.dirPath().left( parentPathInfo.dirPath().find( ".toMOTko" ) + 8 ) );
+//                    QString tempDirPath( applDir + "/tmp" );
+//                    QString tempImageCopyPath( tempDirPath + "/" + term.getUid().toString() + "." + imageFileInfo.extension( false ) );
+//                    QFileInfo tempImageCopyPathInfo( tempImageCopyPath );
+//                    if( tempImageCopyPathInfo.exists() ) {
+//                        if( !Util::copy( tempImageCopyPath, absImagePath ) )
+//                            cerr << "Cannot copy image " << tempImageCopyPath << " to " << absImagePath << endl;
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    if( ret == -1 || dataFile.status() != IO_Ok ) {
+//        dataFile.resetStatus();
+//        return( false );
+//    }
+//
+//    return( true );
+    return( false );
 }
 
 QDataStream& operator<<( QDataStream& out, const Vocabulary& vocab ) {
+#ifdef DEBUG
+    cout << "Vocabulary.operator<<" << endl;
+#endif
     out << vocab.uid.toString() << vocab.title << vocab.terms;
     out << vocab.description << vocab.author << vocab.creationDate << vocab.modificationDate;
 
@@ -349,6 +359,9 @@ QDataStream& operator<<( QDataStream& out, const Vocabulary& vocab ) {
 }
 
 QDataStream& operator>>( QDataStream& in, Vocabulary& vocab ) {
+#ifdef DEBUG
+    cout << "Vocabulary.operator>>" << endl;
+#endif
     QString tempUidStr;
     QUuid tempUid;
     QString tempTitle;
@@ -359,10 +372,21 @@ QDataStream& operator>>( QDataStream& in, Vocabulary& vocab ) {
     QDateTime tempModificationDate;
 
     in >> tempUidStr;
+#ifdef DEBUG
+    cout << "tempUidStr=" << tempUidStr << endl;
+#endif
     tempUid = QUuid( tempUidStr );
-    in >> tempTitle >> tempTerms;
+    in >> tempTitle;
+#ifdef DEBUG
+    cout << "tempTitle=" << tempTitle << endl;
+#endif
+    in >> tempTerms;
 
-    in >> tempDescription >> tempAuthor >> tempCreationDate >> tempModificationDate;
+    in >> tempDescription >> tempAuthor;
+#ifdef DEBUG
+    cout << "tempDescription=" << tempDescription << " tempAuthor=" << tempAuthor << endl;
+#endif
+    in >> tempCreationDate >> tempModificationDate;
 
     vocab = Vocabulary( -1, tempTitle, tempUid );
     for( Vocabulary::TermMap::ConstIterator it = tempTerms.begin(); it != tempTerms.end(); it++ ) {

@@ -242,3 +242,5 @@ Miscellaneous
 To connect with ssh on tomotko's website:
 
 ssh -t fbergeron,tomotko@shell.sourceforge.net create
+
+To debug the program, I have inserted at many places #ifdef DEBUG blocks.  To enable them, edit Makefile and replace -DNO_DEBUG by -DDEBUG and recompile.

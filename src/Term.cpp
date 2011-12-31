@@ -148,6 +148,9 @@ QDataStream& operator<<( QDataStream& out, const Term& term ) {
 }
 
 QDataStream& operator>>( QDataStream& in, Term& term ) {
+#ifdef DEBUG
+    cout << "Term.operator>> Term::isOldFormat=" << Term::isOldFormat << endl;
+#endif
     QString tempUidStr;
     QUuid tempUid;
     int tempId = -1;
@@ -168,9 +171,19 @@ QDataStream& operator>>( QDataStream& in, Term& term ) {
     }
     else {
         in >> tempUidStr;
+#ifdef DEBUG
+        cout << "tempUidStr=" << tempUidStr << endl;
+#endif
         tempUid = QUuid( tempUidStr );
         in >> tempTranslations;
-        in >> tempComments;
+#ifdef DEBUG
+        cout << 1 << endl;
+#endif
+        //in >> tempComments; // This is temporary to retrieve existing data. Remove it when loading data properly. 
+        in >> tempOldComments;
+#ifdef DEBUG
+        cout << 2 << endl;
+#endif
         in >> tempImagePath;
     }
     term = Term( tempId, tempVocabUid, tempUid );

@@ -21,8 +21,9 @@ bool SuperMemo2Quiz::load() {
 }
 
 bool SuperMemo2Quiz::save() {
-    // Nothing to do here as SM-2 quizzes are not resumable.
-    return( true );
+    //// Nothing to do here as SM-2 quizzes are not resumable.
+    //return( true );
+    return( false );
 }
 
 void SuperMemo2Quiz::conclude() {

@@ -1,5 +1,15 @@
 ToDo
 ----
+Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)
+Load existing data in memory.  The new version is 17 (0x0011).  The old version is 16 (0x0010).
+    If I set Translation::isOldFormat = true, the vocab data is all loaded.  
+    The stats are not properly loaded though.  There is a problem with the uid of the terms (or translations).
+Removed commented out functions that write something to disk.
+Save data properly with latest data format
+    To save the data, I must first load my current data.
+Load data property with latest data format.
+Load data from previous old format and convert if needed.
+
 When deleting items, mark them for deletion: comments, stats, and translations.  We will deal with them after.
 When pasting items, unmark them for deletion: comments, stats, and translations.
 I don't think that the transToDelete parameter in Controller::deleteItemsMarkedForDeletionRec() is still needed there.
