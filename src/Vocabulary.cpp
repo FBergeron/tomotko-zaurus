@@ -121,6 +121,23 @@ Term& Vocabulary::getTerm( const int& id ) {
     }
 }
 
+Base* Vocabulary::getObject( const QUuid& uid ) {
+#ifdef DEBUG
+    cout << "Vocabulary::getObject uid=" << uid.toString() << endl;
+#endif
+    if( isTermExists( uid ) ) {
+        Term& term = getTerm( uid );
+        return( &term );
+    }
+    for( TermMap::Iterator it = terms.begin(); it != terms.end(); it++ ) {
+        Term& term = it.data();
+        Base* object = term.getObject( uid );
+        if( object )
+            return( object );
+    }
+    return( NULL );
+}
+
 bool Vocabulary::isEmpty() const {
     return( terms.isEmpty() );
 }

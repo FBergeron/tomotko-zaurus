@@ -8,11 +8,12 @@
 #include <qdatastream.h>
 #include <qmap.h>
 #include <qstring.h>
+#include "Base.h"
 #include "BilingualKey.h"
 #include "Comment.h"
 #include "Translation.h"
 
-class Term {
+class Term : public Base {
 
 public:
 
@@ -22,6 +23,11 @@ public:
     Term( const Term& term );
     ~Term();
    
+    /**
+     * @returns Class name = "Term".
+     */
+    const char* className() const { return "Term"; }
+
     typedef QMap<QString, Translation> TranslationMap;
     typedef QMap<BilingualKey, QString> OldCommentMap; // Temporary for data conversion from 0.11.x to 0.12.x.
     typedef QMap<BilingualKey, Comment> CommentMap;
@@ -63,6 +69,7 @@ public:
     const QString getImagePath() const;
     void setImagePath( const QString& imagePath );
 
+    Base* getObject( const QUuid& uid );
    
     friend QDataStream& operator<<( QDataStream& out, const Term& term );
     friend QDataStream& operator>>( QDataStream& in, Term& term );

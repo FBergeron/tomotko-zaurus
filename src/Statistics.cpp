@@ -577,17 +577,40 @@ void Statistics::convertTermData( const QString& firstLang, const QString& testL
 #ifdef DEBUG
         cout << "key=" << key.toString() << endl;
 #endif
-        Term* term = topFolder->getTerm( QUuid( key.getFirstUid() ) );
-        if( term && term->isTranslationExists( firstLang ) && term->isTranslationExists( testLang ) ) {
-            keysToRemove.append( key );
-            BiUidKey newKey( term->getTranslation( firstLang ).getUid().toString(), 
-                term->getTranslation( testLang ).getUid().toString() );
-            termData[ newKey ] = data;
-        }
-        else {
+        if( key.getFirstUid() == key.getSecondUid() ) {
+            QUuid termKey( key.getFirstUid() );
+            Term* term = topFolder->getTerm( termKey );
+            if( term && term->isTranslationExists( firstLang ) && term->isTranslationExists( testLang ) ) {
+                keysToRemove.append( key );
+                BiUidKey newKey( term->getTranslation( firstLang ).getUid().toString(), 
+                    term->getTranslation( testLang ).getUid().toString() );
+                termData[ newKey ] = data;
+            }
+            else {
 #ifdef DEBUG
-            cout << "Not found!" << endl;
+                cout << "Not found!" << endl;
 #endif
+                Base* object = topFolder->getObject( termKey );
+                if( object ) {
+                    if( strcmp( object->className(), "Term" ) == 0 ) {
+                        keysToRemove.append( key );
+#ifdef DEBUG
+                        cout << "The key points a term without related translations so I remove the key." << endl;
+#endif
+                    }
+                    else {
+#ifdef DEBUG
+                        cout << "className=" << object->className() << ".  What should I do with that?  Delete the key?" << endl;
+#endif
+                    }
+                }
+                else {
+#ifdef DEBUG
+                    cout << "Really..." << endl;
+#endif
+                    keysToRemove.append( key );
+                }
+            }
         }
     }
     for( uint i = 0; i < keysToRemove.count(); i++ )

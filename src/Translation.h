@@ -5,8 +5,9 @@
 #include <iostream.h>
 #include <qdatastream.h>
 #include <qstring.h>
+#include "Base.h"
 
-class Translation {
+class Translation : public Base {
 
 public:
 
@@ -16,6 +17,11 @@ public:
     Translation( const QString lang, const QString word = QString(), const QString alt = QString() );
     Translation( const Translation& trans );
     ~Translation();
+
+    /**
+     * @returns Class name = "Translation".
+     */
+    const char* className() const { return "Translation"; }
 
     QUuid getUid() const;
 

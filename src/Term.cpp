@@ -140,6 +140,23 @@ void Term::setImagePath( const QString& imagePath ) {
     this->imagePath = imagePath;
 }
 
+Base* Term::getObject( const QUuid& uid ) {
+#ifdef DEUG
+    cout << "Term::getObject uid=" << uid.toString() << endl;
+#endif
+    for( TranslationMap::Iterator it = translations.begin(); it != translations.end(); it++ ) {
+        Translation& trans = it.data();
+        if( trans.getUid() == uid )
+            return( &trans );
+    }
+    for( CommentMap::Iterator it = comments.begin(); it != comments.end(); it++ ) {
+        Comment& comment = it.data();
+        if( comment.getUid() == uid )
+            return( &comment );
+    }
+    return( NULL );
+}
+
 QDataStream& operator<<( QDataStream& out, const Term& term ) {
     out << term.uid.toString();
     out << /*term.vocabUid.toString() <<*/ term.translations << term.comments << term.imagePath;

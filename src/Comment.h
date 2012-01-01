@@ -5,8 +5,9 @@
 #include <iostream.h>
 #include <qdatastream.h>
 #include <qstring.h>
+#include "Base.h"
 
-class Comment {
+class Comment : public Base {
 
 public:
 
@@ -14,6 +15,11 @@ public:
     Comment( const QString& text );
     Comment( const Comment& comment );
     ~Comment();
+
+    /**
+     * @returns Class name = "Comment".
+     */
+    const char* className() const { return "Comment"; }
 
     QUuid getUid() const;
 

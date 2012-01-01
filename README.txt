@@ -141,6 +141,7 @@ What to do before a release
 - Remove traces if any.
 - Build latest ipk file.
 - Test it.
+- Remove -DDEBUG in Makefile if it's there and test again.
 - Update version number in the website (version.txt), Doxygen.
 - Update website if necessary (screenshots, new features, download link, etc.)
 - Run doxygen to update the documentation.

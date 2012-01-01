@@ -239,6 +239,10 @@ Term* Folder::getTerm( const QUuid& uid ) {
     return( getTermRec( uid ) );
 }
 
+Base* Folder::getObject( const QUuid& uid ) {
+    return( getObjectRec( uid ) );
+}
+
 Vocabulary* Folder::getVocabulary( int id ) {
     return( getVocabularyRec( id ) );
 }
@@ -574,6 +578,27 @@ Term* Folder::getTermRec( const QUuid& uid ) {
         }
         if( term )
             return( term );
+    }
+    return( NULL );
+}
+
+Base* Folder::getObjectRec( const QUuid& uid ) {
+#ifdef DEBUG
+    cout << "Folder::getObjectRec uid=" << uid.toString() << endl;
+#endif
+    if( getUid() == uid )
+        return( this );
+    for( Base* child = children.first(); child; child = children.next() ) { 
+        Base* object = NULL;
+        if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
+            Vocabulary* vocab = (Vocabulary*)child;
+            object = vocab->getObject( uid );
+        }
+        else if( strcmp( child->className(), "Folder" ) == 0 ) {
+            object = ((Folder*)child)->getObjectRec( uid );
+        }
+        if( object )
+            return( object );
     }
     return( NULL );
 }

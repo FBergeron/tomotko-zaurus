@@ -206,6 +206,13 @@ public:
     Term& getTerm( const int& id );
 
     /**
+     * Retrieve the object identified by the uid.
+     * @param uid Identifier of the searched term.
+     * @returns NULL if the object is not found.
+     */
+    Base* getObject( const QUuid& uid );
+
+    /**
      * @returns Number of term instances contained in the vocabulary, including terms marked for deletion.
      */
     const uint getSize() const;
