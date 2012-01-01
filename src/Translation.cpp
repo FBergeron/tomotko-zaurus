@@ -54,6 +54,9 @@ void Translation::setMarkedForDeletion( bool isMarkedForDeletion ) {
 }
 
 QDataStream& operator<<( QDataStream& out, const Translation& translation ) {
+#ifdef DEBUG
+    cout << "Translation::operator<< uid=" << translation.uid.toString() << endl;
+#endif
     out << translation.uid.toString() << translation.lang << translation.word << translation.alt;
     return( out );
 }

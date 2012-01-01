@@ -309,61 +309,60 @@ for( QMap<QString,Translation>::ConstIterator it2 = term.translationsBegin(); it
 }
 
 bool Vocabulary::save( const QString& filename ) const {
-//    QByteArray data;
-//
-//    QDataStream out( data, IO_WriteOnly );
-//    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
-////cerr << "Size of saved Vocab=" << getSize() << " this=" << this << endl;
-////for( TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
-////    const Term& term = it.data();
-////    cerr << "term uid=" << term.getUid().toString() << endl;
-////}
-//    out << Q_UINT32( Vocabulary::magicNumber ) << Q_UINT16( 0x0011 ) << *this;
-//
-//    QByteArray compressedData( Util::qCompress( data ) ); 
-//
-//    QFile dataFile( filename );
-//    QFileInfo dataFileInfo( dataFile );
-//
-//    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
-//        return( false );
-//
-//    if( !dataFile.open( IO_WriteOnly ) )
-//        return( false );
-//
-//    int ret = dataFile.writeBlock( compressedData );
-//    dataFile.close();
-//
-//    // Temporary code for data conversion between 0.11.x and 0.12.x. 
-//    for( Vocabulary::TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
-//        const Term& term = it.data();
-//        if( !term.getImagePath().isNull() ) {
-//            QFileInfo imageFileInfo( term.getImagePath() );
-//            if( term.getImagePath() == term.getUid().toString() + "." + imageFileInfo.extension( false ) ) {
-//                QFileInfo parentPathInfo( Vocabulary::parentPath );
-//                QString absImagePath( parentPathInfo.dirPath() + "/v-" + getUid().toString() + "/" + term.getImagePath() );
-//                QFileInfo absImagePathInfo( absImagePath );
-//                if( !absImagePathInfo.exists() ) {
-//                    QString applDir( parentPathInfo.dirPath().left( parentPathInfo.dirPath().find( ".toMOTko" ) + 8 ) );
-//                    QString tempDirPath( applDir + "/tmp" );
-//                    QString tempImageCopyPath( tempDirPath + "/" + term.getUid().toString() + "." + imageFileInfo.extension( false ) );
-//                    QFileInfo tempImageCopyPathInfo( tempImageCopyPath );
-//                    if( tempImageCopyPathInfo.exists() ) {
-//                        if( !Util::copy( tempImageCopyPath, absImagePath ) )
-//                            cerr << "Cannot copy image " << tempImageCopyPath << " to " << absImagePath << endl;
-//                    }
-//                }
-//            }
-//        }
-//    }
-//
-//    if( ret == -1 || dataFile.status() != IO_Ok ) {
-//        dataFile.resetStatus();
-//        return( false );
-//    }
-//
-//    return( true );
-    return( false );
+    QByteArray data;
+
+    QDataStream out( data, IO_WriteOnly );
+    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
+//cerr << "Size of saved Vocab=" << getSize() << " this=" << this << endl;
+//for( TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
+//    const Term& term = it.data();
+//    cerr << "term uid=" << term.getUid().toString() << endl;
+//}
+    out << Q_UINT32( Vocabulary::magicNumber ) << Q_UINT16( 0x0011 ) << *this;
+
+    QByteArray compressedData( Util::qCompress( data ) ); 
+
+    QFile dataFile( filename );
+    QFileInfo dataFileInfo( dataFile );
+
+    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
+        return( false );
+
+    if( !dataFile.open( IO_WriteOnly ) )
+        return( false );
+
+    int ret = dataFile.writeBlock( compressedData );
+    dataFile.close();
+
+    // Temporary code for data conversion between 0.11.x and 0.12.x. 
+    for( Vocabulary::TermMap::ConstIterator it = terms.begin(); it != terms.end(); it++ ) {
+        const Term& term = it.data();
+        if( !term.getImagePath().isNull() ) {
+            QFileInfo imageFileInfo( term.getImagePath() );
+            if( term.getImagePath() == term.getUid().toString() + "." + imageFileInfo.extension( false ) ) {
+                QFileInfo parentPathInfo( Vocabulary::parentPath );
+                QString absImagePath( parentPathInfo.dirPath() + "/v-" + getUid().toString() + "/" + term.getImagePath() );
+                QFileInfo absImagePathInfo( absImagePath );
+                if( !absImagePathInfo.exists() ) {
+                    QString applDir( parentPathInfo.dirPath().left( parentPathInfo.dirPath().find( ".toMOTko" ) + 8 ) );
+                    QString tempDirPath( applDir + "/tmp" );
+                    QString tempImageCopyPath( tempDirPath + "/" + term.getUid().toString() + "." + imageFileInfo.extension( false ) );
+                    QFileInfo tempImageCopyPathInfo( tempImageCopyPath );
+                    if( tempImageCopyPathInfo.exists() ) {
+                        if( !Util::copy( tempImageCopyPath, absImagePath ) )
+                            cerr << "Cannot copy image " << tempImageCopyPath << " to " << absImagePath << endl;
+                    }
+                }
+            }
+        }
+    }
+
+    if( ret == -1 || dataFile.status() != IO_Ok ) {
+        dataFile.resetStatus();
+        return( false );
+    }
+
+    return( true );
 }
 
 QDataStream& operator<<( QDataStream& out, const Vocabulary& vocab ) {

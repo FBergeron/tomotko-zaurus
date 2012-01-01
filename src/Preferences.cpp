@@ -128,47 +128,49 @@ bool Preferences::load() {
 }
 
 bool Preferences::save() {
-//    QByteArray data;
-//
-//    QDataStream out( data, IO_WriteOnly );
-//    out.setVersion( 3 );
-//
-//    out << Q_UINT32( Preferences::magicNumber ) << Q_UINT16( 0x0012 );
-//
-//    out << quizAlgorithm << quizCharacterImageLocation << ( quizCharacterImagesAnimated ? 1 : 0 );
-//    out << quizLength << sequences;
-//    int languageFilterEnabledAsInt = ( languageFilterEnabled ? 1 : 0 );
-//    int digraphEnabledAsInt = ( digraphEnabled ? 1 : 0 ); 
-//    int quizButtonsHiddenAsInt = ( quizButtonsHidden ? 1 : 0 );
-//    int altInTermListShownAsInt = ( altInTermListShown ? 1 : 0 );
-//    out << languageFilterEnabledAsInt << interfaceLanguage << digraphEnabledAsInt << quizButtonsHiddenAsInt << altInTermListShownAsInt;
-//    out << firstLanguage << testLanguage;
-//    out << studyLanguages;
-//    out << closedFolders;
-//    out << labelsFontFamily << labelsFontSizeModifier << fontFamily << fontSizeModifier << fontOverrideFamilies << fontOverrideSizes;
-//    out << accel;
-//
-//    QByteArray compressedData( Util::qCompress( data ) ); 
-//
-//    QFile dataFile( prefsFilename );
-//    QFileInfo dataFileInfo( dataFile );
-//
-//    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
-//        return( false );
-//
-//    if( !dataFile.open( IO_WriteOnly ) )
-//        return( false );
-//
-//    int ret = dataFile.writeBlock( compressedData );
-//    dataFile.close();
-//
-//    if( ret == -1 || dataFile.status() != IO_Ok ) {
-//        dataFile.resetStatus();
-//        return( false );
-//    }
-//
-//    return( true );
-    return( false );
+#ifdef DEBUG
+    cout << "Preferences::save" << endl;
+#endif
+    QByteArray data;
+
+    QDataStream out( data, IO_WriteOnly );
+    out.setVersion( 3 );
+
+    out << Q_UINT32( Preferences::magicNumber ) << Q_UINT16( 0x0012 );
+
+    out << quizAlgorithm << quizCharacterImageLocation << ( quizCharacterImagesAnimated ? 1 : 0 );
+    out << quizLength << sequences;
+    int languageFilterEnabledAsInt = ( languageFilterEnabled ? 1 : 0 );
+    int digraphEnabledAsInt = ( digraphEnabled ? 1 : 0 ); 
+    int quizButtonsHiddenAsInt = ( quizButtonsHidden ? 1 : 0 );
+    int altInTermListShownAsInt = ( altInTermListShown ? 1 : 0 );
+    out << languageFilterEnabledAsInt << interfaceLanguage << digraphEnabledAsInt << quizButtonsHiddenAsInt << altInTermListShownAsInt;
+    out << firstLanguage << testLanguage;
+    out << studyLanguages;
+    out << closedFolders;
+    out << labelsFontFamily << labelsFontSizeModifier << fontFamily << fontSizeModifier << fontOverrideFamilies << fontOverrideSizes;
+    out << accel;
+
+    QByteArray compressedData( Util::qCompress( data ) ); 
+
+    QFile dataFile( prefsFilename );
+    QFileInfo dataFileInfo( dataFile );
+
+    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
+        return( false );
+
+    if( !dataFile.open( IO_WriteOnly ) )
+        return( false );
+
+    int ret = dataFile.writeBlock( compressedData );
+    dataFile.close();
+
+    if( ret == -1 || dataFile.status() != IO_Ok ) {
+        dataFile.resetStatus();
+        return( false );
+    }
+
+    return( true );
 }
 
 uint Preferences::getQuizLength() const {

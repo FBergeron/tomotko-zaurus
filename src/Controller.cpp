@@ -966,45 +966,44 @@ Folder* Controller::loadFolder( const QString& parentDir ) {
 }
 
 bool Controller::saveFolder( Folder* folder, const QString& parentDir ) const {
-    ////cerr << "saveFolder folder=" << folder << " location=" << parentDir << " dirty? " << folder->isDirty() << endl;
-    //// Create the folder.
-    //QString folderPath( parentDir + QString( "/" ) + folder->getUid().toString() );
-    //QDir folderDir( folderPath );
-    //if( folder->isDirty() && !folderDir.exists() ) {
-    //    if( !folderDir.mkdir( folderDir.path() ) ) {
-    //        cerr << "Could not make directory " << folderPath << endl;
-    //        return( false );
-    //    }
-    //}
+    //cerr << "saveFolder folder=" << folder << " location=" << parentDir << " dirty? " << folder->isDirty() << endl;
+    // Create the folder.
+    QString folderPath( parentDir + QString( "/" ) + folder->getUid().toString() );
+    QDir folderDir( folderPath );
+    if( folder->isDirty() && !folderDir.exists() ) {
+        if( !folderDir.mkdir( folderDir.path() ) ) {
+            cerr << "Could not make directory " << folderPath << endl;
+            return( false );
+        }
+    }
 
-    //// Write the folder data.
-    //if( folder->isDirty() ) {
-    //    QString folderDataFilename( QString( folderDir.path() + QString( "/metadata.gz" ) ) );
-    //    if( !folder->saveMetadata( folderDataFilename ) ) {
-    //        cerr << "Could not write folder metadata " << folderDataFilename << endl;
-    //        return( false );
-    //    }
-    //    folder->setDirty( false );
-    //}
+    // Write the folder data.
+    if( folder->isDirty() ) {
+        QString folderDataFilename( QString( folderDir.path() + QString( "/metadata.gz" ) ) );
+        if( !folder->saveMetadata( folderDataFilename ) ) {
+            cerr << "Could not write folder metadata " << folderDataFilename << endl;
+            return( false );
+        }
+        folder->setDirty( false );
+    }
 
-    //// Handle children recursively.
-    //if( !folder->isEmpty() ) {
-    //    for( Base* folderChild = folder->first(); folderChild; folderChild = folder->next() ) {
-    //        if( strcmp( folderChild->className(), "Folder" ) == 0 ) {
-    //            Folder* childFolder = (Folder*)folderChild;
-    //            if( !childFolder->isMarkedForDeletion() ) 
-    //                saveFolder( childFolder, folderDir.path() );
-    //        }
-    //        else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 ) {
-    //            Vocabulary* childVocab = (Vocabulary*)folderChild;
-    //            if( !childVocab->isMarkedForDeletion() )
-    //                saveVocabulary( childVocab, folderDir.path() );
-    //        }
-    //    }
-    //}
+    // Handle children recursively.
+    if( !folder->isEmpty() ) {
+        for( Base* folderChild = folder->first(); folderChild; folderChild = folder->next() ) {
+            if( strcmp( folderChild->className(), "Folder" ) == 0 ) {
+                Folder* childFolder = (Folder*)folderChild;
+                if( !childFolder->isMarkedForDeletion() ) 
+                    saveFolder( childFolder, folderDir.path() );
+            }
+            else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 ) {
+                Vocabulary* childVocab = (Vocabulary*)folderChild;
+                if( !childVocab->isMarkedForDeletion() )
+                    saveVocabulary( childVocab, folderDir.path() );
+            }
+        }
+    }
 
-    //return( true );
-    return( false );
+    return( true );
 }
 
 void Controller::writeVocabulariesInXml( Folder* folder, int depth, QTextStream& ts, QStringList* languages ) {
@@ -1206,94 +1205,95 @@ QString Controller::convertPath( const QString& path, QMap<QString,Folder*>& new
 }
 
 bool Controller::saveData() {
-    //cerr << "saveData begin" << endl;
-    //if( !deleteItemsMarkedForDeletion( vocabTree ) ) {
-    //    // Just write a warning message.  We don't return( false ) here
-    //    // because we want to try to save the new data, at least.
-    //    cerr << "Could not delete all items marked for deletion." << endl;
-    //}
-    //cerr << "marked items has been deleted." << endl;
+    cerr << "saveData begin" << endl;
+    if( !deleteItemsMarkedForDeletion( vocabTree ) ) {
+        // Just write a warning message.  We don't return( false ) here
+        // because we want to try to save the new data, at least.
+        cerr << "Could not delete all items marked for deletion." << endl;
+    }
+    cerr << "marked items has been deleted." << endl;
 
-    //if( !saveFolder( vocabTree, applicationDirName ) )
-    //    return( false );
-    //cerr << "term data has been saved ok." << endl;
-    //
-    //// Temporary code for data conversion between 0.11.x and 0.12.x. 
-    //QString tempImageCopyDir( applicationDirName + "/tmp" );
-    //QFileInfo tempImageCopyDirInfo( tempImageCopyDir );
-    //if( tempImageCopyDirInfo.exists() ) {
-    //    if( !Util::deleteDirectory( tempImageCopyDir ) )
-    //        cerr << "Cannot remove directory " << tempImageCopyDir << endl;
-    //}
+    if( !saveFolder( vocabTree, applicationDirName ) )
+        return( false );
+    cerr << "term data has been saved ok." << endl;
+    
+    // Temporary code for data conversion between 0.11.x and 0.12.x. 
+    QString tempImageCopyDir( applicationDirName + "/tmp" );
+    QFileInfo tempImageCopyDirInfo( tempImageCopyDir );
+    if( tempImageCopyDirInfo.exists() ) {
+        if( !Util::deleteDirectory( tempImageCopyDir ) )
+            cerr << "Cannot remove directory " << tempImageCopyDir << endl;
+    }
 
-    //if( !saveMarkedItems( vocabTree ) )
-    //    return( false );
-    //return( prefs.save() );
-    return( false );
+    if( !saveMarkedItems( vocabTree ) )
+        return( false );
+    return( prefs.save() );
 }
 
 bool Controller::saveMarkedItems( Folder* folder ) {
-    //QByteArray data;
+#ifdef DEBUG
+    cout << "saveMarkedItems folder=" << folder->getUid().toString() << endl;
+#endif
+    QByteArray data;
 
-    //QDataStream out( data, IO_WriteOnly );
-    //out.setVersion( 3 );
+    QDataStream out( data, IO_WriteOnly );
+    out.setVersion( 3 );
 
-    //out << Q_UINT32( Preferences::magicNumber ) << Q_UINT16( 0x0012 );
+    out << Q_UINT32( Preferences::magicNumber ) << Q_UINT16( 0x0012 );
 
-    //UidList folderUids;
-    //UidList vocabUids;
-    //UidListMap termUids;
+    UidList folderUids;
+    UidList vocabUids;
+    UidListMap termUids;
 
-    //saveMarkedItemsRec( folder, folderUids, vocabUids, termUids );
+    saveMarkedItemsRec( folder, folderUids, vocabUids, termUids );
 
-    //out << folderUids << vocabUids << termUids;
+    out << folderUids << vocabUids << termUids;
 
-    //QByteArray compressedData( Util::qCompress( data ) ); 
+    QByteArray compressedData( Util::qCompress( data ) ); 
 
-    //QFile dataFile( markedFilename );
-    //QFileInfo dataFileInfo( dataFile );
+    QFile dataFile( markedFilename );
+    QFileInfo dataFileInfo( dataFile );
 
-    //if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
-    //    return( false );
+    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
+        return( false );
 
-    //if( !dataFile.open( IO_WriteOnly ) )
-    //    return( false );
+    if( !dataFile.open( IO_WriteOnly ) )
+        return( false );
 
-    //int ret = dataFile.writeBlock( compressedData );
-    //dataFile.close();
+    int ret = dataFile.writeBlock( compressedData );
+    dataFile.close();
 
-    //if( ret == -1 || dataFile.status() != IO_Ok ) {
-    //    dataFile.resetStatus();
-    //    return( false );
-    //}
+    if( ret == -1 || dataFile.status() != IO_Ok ) {
+        dataFile.resetStatus();
+        return( false );
+    }
 
-    //return( true );
-    return( false );
+    return( true );
 }
 
 void Controller::saveMarkedItemsRec( Folder* folder, UidList& folderUids, UidList& vocabUids, UidListMap& termUids ) {
-    //if( folder->isMarkedForStudy() )
-    //    folderUids.append( folder->getUid().toString() );
-    //if( !folder->isEmpty() ) {
-    //    for( Base* folderChild = folder->first(); folderChild; folderChild = folder->next() ) {
-    //        if( strcmp( folderChild->className(), "Folder" ) == 0 )
-    //            saveMarkedItemsRec( (Folder*)folderChild, folderUids, vocabUids, termUids );
-    //        else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 )
-    //            saveMarkedItemsRec( (Vocabulary*)folderChild, vocabUids, termUids );
-    //    }
-    //}
+    if( folder->isMarkedForStudy() )
+        folderUids.append( folder->getUid().toString() );
+    if( !folder->isEmpty() ) {
+        for( Base* folderChild = folder->first(); folderChild; folderChild = folder->next() ) {
+            if( strcmp( folderChild->className(), "Folder" ) == 0 )
+                saveMarkedItemsRec( (Folder*)folderChild, folderUids, vocabUids, termUids );
+            else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 )
+                saveMarkedItemsRec( (Vocabulary*)folderChild, vocabUids, termUids );
+        }
+    }
 }
 
 void Controller::saveMarkedItemsRec( Vocabulary* vocab, UidList& vocabUids, UidListMap& termUids ) {
-    //if( vocab->isMarkedForStudy() )
-    //    vocabUids.append( vocab->getUid().toString() );
-    //UidList termUidList;
-    //for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
-    //    const Term& term = it.data();
-    //    if( term.isMarkedForStudy() )
-    //        termUidList.append( term.getUid().toString() );
-    //}
-    //termUids.insert( vocab->getUid().toString(), termUidList );
+    if( vocab->isMarkedForStudy() )
+        vocabUids.append( vocab->getUid().toString() );
+    UidList termUidList;
+    for( Vocabulary::TermMap::ConstIterator it = vocab->begin(); it != vocab->end(); it++ ) {
+        const Term& term = it.data();
+        if( term.isMarkedForStudy() )
+            termUidList.append( term.getUid().toString() );
+    }
+    termUids.insert( vocab->getUid().toString(), termUidList );
 }
 
 void Controller::loadMarkedItems( Folder* folder ) {
@@ -1577,29 +1577,28 @@ void Controller::writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab,
 }
 
 bool Controller::saveVocabulary( Vocabulary* vocab, const QString& location ) const {
-    ////cerr << "saveVocabulary vocab=" << vocab << " title=" << vocab->getTitle() << " location=" << location << " isDirty? " << vocab->isDirty() << endl;
-    //// Create the containing folder if needed.
-    //QString folderPath( location.find( "v-" ) == -1 ? location + QString( "/v-" ) + vocab->getUid().toString() : location );
-    //QDir folderDir( folderPath );
-    //if( vocab->isDirty() && !folderDir.exists() ) {
-    //    if( !folderDir.mkdir( folderDir.path() ) ) {
-    //        cerr << "Cannot create directory " << folderPath << endl;
-    //        return( false );
-    //    }
-    //}
+    //cerr << "saveVocabulary vocab=" << vocab << " title=" << vocab->getTitle() << " location=" << location << " isDirty? " << vocab->isDirty() << endl;
+    // Create the containing folder if needed.
+    QString folderPath( location.find( "v-" ) == -1 ? location + QString( "/v-" ) + vocab->getUid().toString() : location );
+    QDir folderDir( folderPath );
+    if( vocab->isDirty() && !folderDir.exists() ) {
+        if( !folderDir.mkdir( folderDir.path() ) ) {
+            cerr << "Cannot create directory " << folderPath << endl;
+            return( false );
+        }
+    }
 
-    //// Write the vocab data.
-    //if( vocab->isDirty() ) {
-    //    QString dataFilename( QString( folderDir.path() + QString( "/" ) + QString( "data.gz" ) ) );
-    //    if( !vocab->save( dataFilename ) ) {
-    //        cerr << "Could not write vocab data " << dataFilename << endl;
-    //        return( false );
-    //    }
-    //    vocab->setDirty( false );
-    //}
+    // Write the vocab data.
+    if( vocab->isDirty() ) {
+        QString dataFilename( QString( folderDir.path() + QString( "/" ) + QString( "data.gz" ) ) );
+        if( !vocab->save( dataFilename ) ) {
+            cerr << "Could not write vocab data " << dataFilename << endl;
+            return( false );
+        }
+        vocab->setDirty( false );
+    }
 
-    //return( true );
-    return( false );
+    return( true );
 }
 
 void Controller::initRevealingSequence() {

@@ -13,9 +13,24 @@ Load existing data in memory.  The new version is 17 (0x0011).  The old version 
             The function is called in Controller::getProgressData() and must be called manually.
                 To do this, uncomment convertTermData() call and invoke the progress dialog for all lang pairs.
                     This function will also remove statistics entry that point to inexisting or unrelated objects.
-Removed commented out functions that write something to disk.
+Removed commented out functions that write something to disk. - OK
 Save data properly with latest data format
     Now that the data are properly set in memory, I need to save it on disk.
+        When I save the data, no errors occur.  However, when I read back the data, I'm unable to read the uid for Translation instances.
+            Here is what to do to reproduce:
+                a) In Term::operator>>(), we must have: 
+                    //in >> tempComments; // This is temporary to retrieve existing data. Remove it when loading data properly. 
+                    in >> tempOldComments;
+                b) In Controller.cpp, we must have:
+                    Statistics::instance()->loadTermData( firstLang, testLang );
+                    Statistics::instance()->convertTermData( firstLang, testLang, vocabTree );
+                c) In Vocabulary::load(), we must have:
+                    //in >> tempVocab;
+                    readOldFormatTemp( in, tempVocab, tempVersion ); 
+                Then, we compile and execute, invoke the Progress Dialog for all the language pairs, and quit.
+                Switch the commented lines in a), b) and c)
+                Recompile and reexecute.
+I must test the image processing.  Verify if the images are still pointing at the right location.  Test that on my Zaurus.
 Load data property with latest data format.
 
 Is there a tool that would find dead code? I have installed lcov.  Doc can be found in /usr/share/doc/lcov.  I have not really looked at it.

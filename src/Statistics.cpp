@@ -233,337 +233,335 @@ TermData Statistics::loadTermData( const BiUidKey& key, const QString& firstLang
 }
 
 bool Statistics::saveTermData( const QString& firstLang, const QString& testLang ) const {
-//    QByteArray data;
-//
-//    QDataStream out( data, IO_WriteOnly );
-//    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
-//
-//    out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
-//    for( QMap<BiUidKey, TermData>::ConstIterator it = termData.begin(); it != termData.end(); it++ ) {
-//        BiUidKey key = it.key();
-//        TermData termData = it.data();
-//        out << key.toString() << termData.interval << termData.repetition << termData.easinessFactor << termData.nextRepetitionDate;
-//        out << termData.lastRepetitionDate << termData.successCount << termData.missCount;
-//    }
-//
-//    QFile dataFile( getTermDataFilename( firstLang, testLang ) );
-//    QFileInfo dataFileInfo( dataFile );
-//
-//    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
-//        return( false );
-//
-//    if( !dataFile.open( IO_WriteOnly ) )
-//        return( false );
-//
-//    dataFile.writeBlock( data );
-//    dataFile.close();
-//
-//    return( true );
-    return( false );
+#ifdef DEBUG
+    cout << "saveTermData firstLang=" << firstLang << " testLang=" << testLang << endl;
+#endif
+    QByteArray data;
+
+    QDataStream out( data, IO_WriteOnly );
+    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
+
+    out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
+    for( QMap<BiUidKey, TermData>::ConstIterator it = termData.begin(); it != termData.end(); it++ ) {
+        BiUidKey key = it.key();
+        TermData termData = it.data();
+        out << key.toString() << termData.interval << termData.repetition << termData.easinessFactor << termData.nextRepetitionDate;
+        out << termData.lastRepetitionDate << termData.successCount << termData.missCount;
+    }
+
+    QFile dataFile( getTermDataFilename( firstLang, testLang ) );
+    QFileInfo dataFileInfo( dataFile );
+
+    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
+        return( false );
+
+    if( !dataFile.open( IO_WriteOnly ) )
+        return( false );
+
+    dataFile.writeBlock( data );
+    dataFile.close();
+
+    return( true );
 }
 
 bool Statistics::saveTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& termData ) {
-    //if( overwriteTermData( key, firstLang, testLang, termData ) )
-    //    return( true );
+    if( overwriteTermData( key, firstLang, testLang, termData ) )
+        return( true );
 
-    //return( insertTermData( key, firstLang, testLang, termData ) );
-    return( false );
+    return( insertTermData( key, firstLang, testLang, termData ) );
 }
 
 bool Statistics::overwriteTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& termData ) {
-    //bool isNewRecordWritten = false;
+    bool isNewRecordWritten = false;
 
-    //QFile dataFile( getTermDataFilename( firstLang, testLang ) );
-    //if( !dataFile.exists() )
-    //    return( false );
+    QFile dataFile( getTermDataFilename( firstLang, testLang ) );
+    if( !dataFile.exists() )
+        return( false );
 
-    //if( !dataFile.open( IO_ReadWrite ) ) {
-    //    cerr << "Cannot open metadata file: " << dataFile.name() << endl;
-    //    return( false );
-    //}
+    if( !dataFile.open( IO_ReadWrite ) ) {
+        cerr << "Cannot open metadata file: " << dataFile.name() << endl;
+        return( false );
+    }
 
-    //Q_UINT32 tempMagicNumber;
-    //Q_UINT16 tempVersion;
-    //QString tempKey;
+    Q_UINT32 tempMagicNumber;
+    Q_UINT16 tempVersion;
+    QString tempKey;
    
-    //QDataStream in( &dataFile );
+    QDataStream in( &dataFile );
 
-    //in >> tempMagicNumber >> tempVersion;
-    //if( tempMagicNumber != Statistics::magicNumber ) {
-    //    cerr << "Wrong magic number: Incompatible statistics data file." << endl;
-    //    return( false );
-    //}
-    //if( tempVersion > 0x0001 ) {
-    //    cerr << "Statistics data file is from a more recent version.  Upgrade toMOTko." << endl;
-    //    return( false );
-    //}
-    //if( tempVersion < 0x0001 ) {
-    //    cerr << "Statistics data format too old.  You must use an anterior version of toMOTko." << endl;
-    //    return( false );
-    //}
+    in >> tempMagicNumber >> tempVersion;
+    if( tempMagicNumber != Statistics::magicNumber ) {
+        cerr << "Wrong magic number: Incompatible statistics data file." << endl;
+        return( false );
+    }
+    if( tempVersion > 0x0001 ) {
+        cerr << "Statistics data file is from a more recent version.  Upgrade toMOTko." << endl;
+        return( false );
+    }
+    if( tempVersion < 0x0001 ) {
+        cerr << "Statistics data format too old.  You must use an anterior version of toMOTko." << endl;
+        return( false );
+    }
 
-    //uint headerSize = dataFile.at();
-    //uint fileSize = QFileInfo( dataFile ).size();
-    //in.setVersion( 3 );
+    uint headerSize = dataFile.at();
+    uint fileSize = QFileInfo( dataFile ).size();
+    in.setVersion( 3 );
 
-    //// Read the first entry to determine its size.
-    //if( Statistics::termDataEntrySize == 0 && !in.atEnd() ) {
-    //    int tempInterval;
-    //    uint tempRepetition;
-    //    float tempEasinessFactor;
-    //    QDate tempNextRepetitionDate;
-    //    QDate tempLastRepetitionDate;
-    //    uint tempSuccessCount;
-    //    uint tempMissCount;
+    // Read the first entry to determine its size.
+    if( Statistics::termDataEntrySize == 0 && !in.atEnd() ) {
+        int tempInterval;
+        uint tempRepetition;
+        float tempEasinessFactor;
+        QDate tempNextRepetitionDate;
+        QDate tempLastRepetitionDate;
+        uint tempSuccessCount;
+        uint tempMissCount;
 
-    //    in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
-    //    in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
+        in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
+        in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
 
-    //    Statistics::termDataEntrySize = dataFile.at() - headerSize;
-    //}
+        Statistics::termDataEntrySize = dataFile.at() - headerSize;
+    }
 
-    //uint entryCount = ( fileSize - headerSize ) / Statistics::termDataEntrySize;
+    uint entryCount = ( fileSize - headerSize ) / Statistics::termDataEntrySize;
 
-    //bool isTermDataFound = seekTermData( key, dataFile, headerSize, entryCount, in );
-    //if( isTermDataFound ) {
-    //    QDataStream out( &dataFile );
+    bool isTermDataFound = seekTermData( key, dataFile, headerSize, entryCount, in );
+    if( isTermDataFound ) {
+        QDataStream out( &dataFile );
 
-    //    out << termData.interval << termData.repetition << termData.easinessFactor << termData.nextRepetitionDate;
-    //    out << termData.lastRepetitionDate << termData.successCount << termData.missCount;
+        out << termData.interval << termData.repetition << termData.easinessFactor << termData.nextRepetitionDate;
+        out << termData.lastRepetitionDate << termData.successCount << termData.missCount;
 
-    //    isNewRecordWritten = true;
-    //}
-    //
-    //dataFile.close();
+        isNewRecordWritten = true;
+    }
+    
+    dataFile.close();
 
-    //return( isNewRecordWritten );
-    return( false );
+    return( isNewRecordWritten );
 }
 
 bool Statistics::insertTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& newTermData ) {
-//    bool isNewRecordWritten = false;
-//
-//    QFile dataFile( getTermDataFilename( firstLang, testLang ) );
-//    bool dataFileExists = dataFile.exists();
-//
-//    if( dataFileExists ) {
-//        if( !dataFile.open( IO_ReadOnly ) ) {
-//            cerr << "Cannot open metadata file: " << dataFile.name() << endl;
-//            return( false );
-//        }
-//    }
-//
-//    QFile newDataFile( getTermDataFilename( firstLang, testLang ) + ( dataFileExists ? ".tmp" : "" ) );
-//    if( newDataFile.exists() && !newDataFile.remove() ) {
-//        dataFile.close();
-//        return( false );
-//    }
-//
-//    if( !newDataFile.open( IO_WriteOnly ) ) {
-//        cerr << "Cannot open metadata file: " << newDataFile.name() << endl;
-//        dataFile.close();
-//        return( false );
-//    }
-//
-//    Q_UINT32 tempMagicNumber;
-//    Q_UINT16 tempVersion;
-//   
-//    QDataStream in;
-//    QDataStream out( &newDataFile );
-//
-//    if( dataFileExists ) {
-//        in.setDevice( &dataFile );
-//        in >> tempMagicNumber >> tempVersion;
-//        if( tempMagicNumber != Statistics::magicNumber ) {
-//            cerr << "Wrong magic number: Incompatible statistics data file." << endl;
-//            dataFile.close();
-//            newDataFile.close();
-//            return( false );
-//        }
-//        if( tempVersion > 0x0001 ) {
-//            cerr << "Statistics data file is from a more recent version.  Upgrade toMOTko." << endl;
-//            dataFile.close();
-//            newDataFile.close();
-//            return( false );
-//        }
-//        if( tempVersion < 0x0001 ) {
-//            cerr << "Statistics data format too old.  You must use an anterior version of toMOTko." << endl;
-//            dataFile.close();
-//            newDataFile.close();
-//            return( false );
-//        }
-//
-//        in.setVersion( 3 );
-//    }
-//
-//    out.setVersion( 3 );
-//    out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
-//
-//    if( dataFileExists ) {
-//        while( !in.atEnd() ) {
-//            QString tempKey;
-//            int tempInterval;
-//            uint tempRepetition;
-//            float tempEasinessFactor;
-//            QDate tempNextRepetitionDate;
-//            QDate tempLastRepetitionDate;
-//            uint tempSuccessCount;
-//            uint tempMissCount;
-//
-//            in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
-//            in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
-//
-//            if( !isNewRecordWritten && key.toString().compare( tempKey ) < 0 ) {
-//                out << key.toString() << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
-//                out << newTermData.lastRepetitionDate << newTermData.successCount << newTermData.missCount;
-//
-//                isNewRecordWritten = true;
-//            }
-//
-////cout << "insert a record key=" << tempKey << endl;
-//            out << tempKey << tempInterval << tempRepetition << tempEasinessFactor << tempNextRepetitionDate;
-//            out << tempLastRepetitionDate << tempSuccessCount << tempMissCount;
-//        }
-//        // The new record is the last one.
-//        if( !isNewRecordWritten ) {
-////cout << "insert the last record key=" << key.toString() << endl;
-//            out << key.toString() << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
-//            out << newTermData.lastRepetitionDate << newTermData.successCount << newTermData.missCount;
-//            
-//            isNewRecordWritten = true;
-//        }
-//        dataFile.close();
-//    }
-//    else { 
-////cout << "insert a record2 key=" << key.toString() << " ef=" << newTermData.easinessFactor << " success=" << newTermData.successCount << " miss=" << newTermData.missCount << endl;
-//        out << key.toString() << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
-//        out << newTermData.lastRepetitionDate << newTermData.successCount << newTermData.missCount;
-//
-//        isNewRecordWritten = true;
-//    }
-//    
-//    newDataFile.close();
-//
-//    if( dataFileExists ) {
-//        if( !dataFile.remove() ) {
-//            cerr << "Cannot remove file: " << dataFile.name() << endl;
-//            return( false );
-//        }
-//
-//        if( !Util::copy( newDataFile.name(), dataFile.name() ) ) {
-//            cerr << "Cannot copy file: " << newDataFile.name() << " to " << dataFile.name() << endl;
-//            return( false );
-//        }
-//
-//        // If we cannot remove the temporay file, it's not a fatal error at this point so we just display a warning.
-//        if( !newDataFile.remove() )
-//            cerr << "Cannot remove file: " << dataFile.name() << endl;
-//    }
-//
-//    return( isNewRecordWritten );
-    return( false );
+    bool isNewRecordWritten = false;
+
+    QFile dataFile( getTermDataFilename( firstLang, testLang ) );
+    bool dataFileExists = dataFile.exists();
+
+    if( dataFileExists ) {
+        if( !dataFile.open( IO_ReadOnly ) ) {
+            cerr << "Cannot open metadata file: " << dataFile.name() << endl;
+            return( false );
+        }
+    }
+
+    QFile newDataFile( getTermDataFilename( firstLang, testLang ) + ( dataFileExists ? ".tmp" : "" ) );
+    if( newDataFile.exists() && !newDataFile.remove() ) {
+        dataFile.close();
+        return( false );
+    }
+
+    if( !newDataFile.open( IO_WriteOnly ) ) {
+        cerr << "Cannot open metadata file: " << newDataFile.name() << endl;
+        dataFile.close();
+        return( false );
+    }
+
+    Q_UINT32 tempMagicNumber;
+    Q_UINT16 tempVersion;
+   
+    QDataStream in;
+    QDataStream out( &newDataFile );
+
+    if( dataFileExists ) {
+        in.setDevice( &dataFile );
+        in >> tempMagicNumber >> tempVersion;
+        if( tempMagicNumber != Statistics::magicNumber ) {
+            cerr << "Wrong magic number: Incompatible statistics data file." << endl;
+            dataFile.close();
+            newDataFile.close();
+            return( false );
+        }
+        if( tempVersion > 0x0001 ) {
+            cerr << "Statistics data file is from a more recent version.  Upgrade toMOTko." << endl;
+            dataFile.close();
+            newDataFile.close();
+            return( false );
+        }
+        if( tempVersion < 0x0001 ) {
+            cerr << "Statistics data format too old.  You must use an anterior version of toMOTko." << endl;
+            dataFile.close();
+            newDataFile.close();
+            return( false );
+        }
+
+        in.setVersion( 3 );
+    }
+
+    out.setVersion( 3 );
+    out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
+
+    if( dataFileExists ) {
+        while( !in.atEnd() ) {
+            QString tempKey;
+            int tempInterval;
+            uint tempRepetition;
+            float tempEasinessFactor;
+            QDate tempNextRepetitionDate;
+            QDate tempLastRepetitionDate;
+            uint tempSuccessCount;
+            uint tempMissCount;
+
+            in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
+            in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
+
+            if( !isNewRecordWritten && key.toString().compare( tempKey ) < 0 ) {
+                out << key.toString() << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
+                out << newTermData.lastRepetitionDate << newTermData.successCount << newTermData.missCount;
+
+                isNewRecordWritten = true;
+            }
+
+//cout << "insert a record key=" << tempKey << endl;
+            out << tempKey << tempInterval << tempRepetition << tempEasinessFactor << tempNextRepetitionDate;
+            out << tempLastRepetitionDate << tempSuccessCount << tempMissCount;
+        }
+        // The new record is the last one.
+        if( !isNewRecordWritten ) {
+//cout << "insert the last record key=" << key.toString() << endl;
+            out << key.toString() << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
+            out << newTermData.lastRepetitionDate << newTermData.successCount << newTermData.missCount;
+            
+            isNewRecordWritten = true;
+        }
+        dataFile.close();
+    }
+    else { 
+//cout << "insert a record2 key=" << key.toString() << " ef=" << newTermData.easinessFactor << " success=" << newTermData.successCount << " miss=" << newTermData.missCount << endl;
+        out << key.toString() << newTermData.interval << newTermData.repetition << newTermData.easinessFactor << newTermData.nextRepetitionDate;
+        out << newTermData.lastRepetitionDate << newTermData.successCount << newTermData.missCount;
+
+        isNewRecordWritten = true;
+    }
+    
+    newDataFile.close();
+
+    if( dataFileExists ) {
+        if( !dataFile.remove() ) {
+            cerr << "Cannot remove file: " << dataFile.name() << endl;
+            return( false );
+        }
+
+        if( !Util::copy( newDataFile.name(), dataFile.name() ) ) {
+            cerr << "Cannot copy file: " << newDataFile.name() << " to " << dataFile.name() << endl;
+            return( false );
+        }
+
+        // If we cannot remove the temporay file, it's not a fatal error at this point so we just display a warning.
+        if( !newDataFile.remove() )
+            cerr << "Cannot remove file: " << dataFile.name() << endl;
+    }
+
+    return( isNewRecordWritten );
 }
 
 bool Statistics::removeTermData( QValueList<QString>& transUidList, const QString& filename ) {
-//    cout << "removeTermData filename=" << filename << " count=" << transUidList.count() << endl;
-//    for( QValueList<QString>::ConstIterator it = transUidList.begin(); it != transUidList.end(); it++ ) {
-//        cout << "uid=" << (*it) << endl;
-//    }
-//    cout << "toto" << endl;
-//
-//    QFile dataFile( filename );
-//    if( !dataFile.open( IO_ReadOnly ) ) {
-//        cerr << "Cannot open metadata file: " << dataFile.name() << endl;
-//        return( false );
-//    }
-//
-//    QFile newDataFile( filename + ".tmp" );
-//    if( newDataFile.exists() && !newDataFile.remove() ) {
-//        dataFile.close();
-//        return( false );
-//    }
-//
-//    if( !newDataFile.open( IO_WriteOnly ) ) {
-//        cerr << "Cannot open metadata file: " << newDataFile.name() << endl;
-//        dataFile.close();
-//        return( false );
-//    }
-//
-//    Q_UINT32 tempMagicNumber;
-//    Q_UINT16 tempVersion;
-//   
-//    QDataStream in;
-//    QDataStream out( &newDataFile );
-//
-//    in.setDevice( &dataFile );
-//    in >> tempMagicNumber >> tempVersion;
-//    if( tempMagicNumber != Statistics::magicNumber ) {
-//        cerr << "Wrong magic number: Incompatible statistics data file." << endl;
-//        dataFile.close();
-//        newDataFile.close();
-//        return( false );
-//    }
-//    if( tempVersion > 0x0001 ) {
-//        cerr << "Statistics data file is from a more recent version.  Upgrade toMOTko." << endl;
-//        dataFile.close();
-//        newDataFile.close();
-//        return( false );
-//    }
-//    if( tempVersion < 0x0001 ) {
-//        cerr << "Statistics data format too old.  You must use an anterior version of toMOTko." << endl;
-//        dataFile.close();
-//        newDataFile.close();
-//        return( false );
-//    }
-//
-//    in.setVersion( 3 );
-//    
-//    out.setVersion( 3 );
-//    out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
-//
-//    while( !in.atEnd() ) {
-//        QString tempKey;
-//        int tempInterval;
-//        uint tempRepetition;
-//        float tempEasinessFactor;
-//        QDate tempNextRepetitionDate;
-//        QDate tempLastRepetitionDate;
-//        uint tempSuccessCount;
-//        uint tempMissCount;
-//
-//        in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
-//        in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
-//
-//        BiUidKey key( tempKey );
-//        if( !transUidList.contains( key.getFirstUid() ) && !transUidList.contains( key.getSecondUid() ) ) {
-//            out << tempKey << tempInterval << tempRepetition << tempEasinessFactor << tempNextRepetitionDate;
-//            out << tempLastRepetitionDate << tempSuccessCount << tempMissCount;
-//        }
-//        else {
-//            // We omit writing the record so that it's effectively removed.
-//            // Also remove the record from memory.
-//            termData.remove( key );
-//        }
-//    }
-//    dataFile.close();
-//    newDataFile.close();
-//
-//    if( !dataFile.remove() ) {
-//        cerr << "Cannot remove file: " << dataFile.name() << endl;
-//        return( false );
-//    }
-//
-//    if( !Util::copy( newDataFile.name(), dataFile.name() ) ) {
-//        cerr << "Cannot copy file: " << newDataFile.name() << " to " << dataFile.name() << endl;
-//        return( false );
-//    }
-//
-//    // If we cannot remove the temporay file, it's not a fatal error at this point so we just display a warning.
-//    if( !newDataFile.remove() )
-//        cerr << "Cannot remove file: " << dataFile.name() << endl;
-//
-//    return( true );
-    return( false );
+    cout << "removeTermData filename=" << filename << " count=" << transUidList.count() << endl;
+    for( QValueList<QString>::ConstIterator it = transUidList.begin(); it != transUidList.end(); it++ ) {
+        cout << "uid=" << (*it) << endl;
+    }
+    cout << "toto" << endl;
+
+    QFile dataFile( filename );
+    if( !dataFile.open( IO_ReadOnly ) ) {
+        cerr << "Cannot open metadata file: " << dataFile.name() << endl;
+        return( false );
+    }
+
+    QFile newDataFile( filename + ".tmp" );
+    if( newDataFile.exists() && !newDataFile.remove() ) {
+        dataFile.close();
+        return( false );
+    }
+
+    if( !newDataFile.open( IO_WriteOnly ) ) {
+        cerr << "Cannot open metadata file: " << newDataFile.name() << endl;
+        dataFile.close();
+        return( false );
+    }
+
+    Q_UINT32 tempMagicNumber;
+    Q_UINT16 tempVersion;
+   
+    QDataStream in;
+    QDataStream out( &newDataFile );
+
+    in.setDevice( &dataFile );
+    in >> tempMagicNumber >> tempVersion;
+    if( tempMagicNumber != Statistics::magicNumber ) {
+        cerr << "Wrong magic number: Incompatible statistics data file." << endl;
+        dataFile.close();
+        newDataFile.close();
+        return( false );
+    }
+    if( tempVersion > 0x0001 ) {
+        cerr << "Statistics data file is from a more recent version.  Upgrade toMOTko." << endl;
+        dataFile.close();
+        newDataFile.close();
+        return( false );
+    }
+    if( tempVersion < 0x0001 ) {
+        cerr << "Statistics data format too old.  You must use an anterior version of toMOTko." << endl;
+        dataFile.close();
+        newDataFile.close();
+        return( false );
+    }
+
+    in.setVersion( 3 );
+    
+    out.setVersion( 3 );
+    out << Q_UINT32( Statistics::magicNumber ) << Q_UINT16( 0x0001 );
+
+    while( !in.atEnd() ) {
+        QString tempKey;
+        int tempInterval;
+        uint tempRepetition;
+        float tempEasinessFactor;
+        QDate tempNextRepetitionDate;
+        QDate tempLastRepetitionDate;
+        uint tempSuccessCount;
+        uint tempMissCount;
+
+        in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
+        in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
+
+        BiUidKey key( tempKey );
+        if( !transUidList.contains( key.getFirstUid() ) && !transUidList.contains( key.getSecondUid() ) ) {
+            out << tempKey << tempInterval << tempRepetition << tempEasinessFactor << tempNextRepetitionDate;
+            out << tempLastRepetitionDate << tempSuccessCount << tempMissCount;
+        }
+        else {
+            // We omit writing the record so that it's effectively removed.
+            // Also remove the record from memory.
+            termData.remove( key );
+        }
+    }
+    dataFile.close();
+    newDataFile.close();
+
+    if( !dataFile.remove() ) {
+        cerr << "Cannot remove file: " << dataFile.name() << endl;
+        return( false );
+    }
+
+    if( !Util::copy( newDataFile.name(), dataFile.name() ) ) {
+        cerr << "Cannot copy file: " << newDataFile.name() << " to " << dataFile.name() << endl;
+        return( false );
+    }
+
+    // If we cannot remove the temporay file, it's not a fatal error at this point so we just display a warning.
+    if( !newDataFile.remove() )
+        cerr << "Cannot remove file: " << dataFile.name() << endl;
+
+    return( true );
 }
 
 void Statistics::convertTermData( const QString& firstLang, const QString& testLang, Folder* topFolder ) {

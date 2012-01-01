@@ -332,38 +332,37 @@ bool Folder::loadMetadata( const QString& filename ) {
 }
 
 bool Folder::saveMetadata( const QString& filename ) const {
-    //QByteArray data;
+    QByteArray data;
 
-    //QDataStream out( data, IO_WriteOnly );
-    //out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
+    QDataStream out( data, IO_WriteOnly );
+    out.setVersion( 3 /* QDataStream::Qt_3 ? */ );
 
-    //out << Q_UINT32( Folder::magicNumber ) << Q_UINT16( 0x0011 );
-    //out << getUid().toString() << getTitle() << getDescription() << getAuthor() << getCreationDate() << getModificationDate();  
+    out << Q_UINT32( Folder::magicNumber ) << Q_UINT16( 0x0011 );
+    out << getUid().toString() << getTitle() << getDescription() << getAuthor() << getCreationDate() << getModificationDate();  
 
-    //QByteArray compressedData( Util::qCompress( data ) ); 
+    QByteArray compressedData( Util::qCompress( data ) ); 
 
-    //QFile dataFile( filename );
-    //QFileInfo dataFileInfo( dataFile );
+    QFile dataFile( filename );
+    QFileInfo dataFileInfo( dataFile );
 
-    //if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
-    //    return( false );
+    if( !Util::makeDirectory( dataFileInfo.dirPath() ) )
+        return( false );
 
-    //if( !dataFile.open( IO_WriteOnly ) )
-    //    return( false );
+    if( !dataFile.open( IO_WriteOnly ) )
+        return( false );
 
-    //int ret = dataFile.writeBlock( compressedData );
-    //dataFile.close();
+    int ret = dataFile.writeBlock( compressedData );
+    dataFile.close();
 
-    //// Temporary code for data conversion between 0.11.x and 0.12.x. 
-    //Vocabulary::parentPath = filename; // This hack will be used by Term to copy images from temporary directory to vocab's directory.
+    // Temporary code for data conversion between 0.11.x and 0.12.x. 
+    Vocabulary::parentPath = filename; // This hack will be used by Term to copy images from temporary directory to vocab's directory.
 
-    //if( ret == -1 || dataFile.status() != IO_Ok ) {
-    //    dataFile.resetStatus();
-    //    return( false );
-    //}
+    if( ret == -1 || dataFile.status() != IO_Ok ) {
+        dataFile.resetStatus();
+        return( false );
+    }
 
-    //return( true );
-    return( false );
+    return( true );
 }
 
 void Folder::buildVocabCopiesMap( QMap<QString,Vocabulary>& vocabularies ) const {
