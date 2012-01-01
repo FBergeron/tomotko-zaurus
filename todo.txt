@@ -12,8 +12,8 @@ Load existing data in memory.  The new version is 17 (0x0011).  The old version 
         I have implemented a conversion method that must be called for each existing language pairs.  
             The function is called in Controller::getProgressData() and must be called manually.
                 To do this, uncomment convertTermData() call and invoke the progress dialog for all lang pairs.
+                    This function will also remove statistics entry that point to inexisting or unrelated objects.
 Check the content of the term 00000-000. 
-Check also the not found word.
 Removed commented out functions that write something to disk.
 Save data properly with latest data format
     Now that the data are properly set in memory, I need to save it on disk.

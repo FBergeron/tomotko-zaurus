@@ -612,6 +612,27 @@ void Statistics::convertTermData( const QString& firstLang, const QString& testL
                 }
             }
         }
+        else {
+            Base* obj1 = topFolder->getObject( key.getFirstUid() );
+            if( obj1 ) {
+            }
+            else {
+#ifdef DEBUG
+                cout << "Part of the key points to inexisting object so I remove the key." << endl;
+#endif
+                keysToRemove.append( key );
+            }
+
+            Base* obj2 = topFolder->getObject( key.getSecondUid() );
+            if( obj2 ) {
+            }
+            else {
+#ifdef DEBUG
+                cout << "Part of the key points to inexisting object so I remove the key." << endl;
+#endif
+                keysToRemove.append( key );
+            }
+        }
     }
     for( uint i = 0; i < keysToRemove.count(); i++ )
         termData.remove( keysToRemove[ i ] );
