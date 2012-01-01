@@ -467,6 +467,11 @@ QDataStream& readOldFormatTemp( QDataStream& in, Vocabulary& vocab, Q_UINT16 ver
 #endif
         // We need to generate uid for translation and comment instances for this version.
         if( version == 0x0011 ) {
+            // Correct the term's uid if it's null.  The associated termData will be deleted but that's no big deal.
+            QUuid nullUid;
+            if( term.getUid() == nullUid )
+                term.setUid( Util::createUuid() );
+
             QValueList<Translation> convertedTranslations;
             for( Term::TranslationMap::ConstIterator it2 = term.translationsBegin(); it2 != term.translationsEnd(); it2++ ) {
                 const Translation& trans = it2.data();
@@ -474,50 +479,33 @@ QDataStream& readOldFormatTemp( QDataStream& in, Vocabulary& vocab, Q_UINT16 ver
                 convertedTranslations.append( convertedTrans );
             }
             // Replace the old translation instances by converted ones.
-            for( QValueList<Translation>::Iterator it2 = convertedTranslations.begin(); it2 != convertedTranslations.end(); it2++ ) {
-                Translation trans = *it2;
+            for( QValueList<Translation>::Iterator it3 = convertedTranslations.begin(); it3 != convertedTranslations.end(); it3++ ) {
+                Translation trans = *it3;
                 term.removeTranslation( trans.getLanguage() );
                 term.addTranslation( trans );
             }
 
             Term::CommentMap convertedComments;
-            for( Term::CommentMap::ConstIterator it2 = term.commentsBegin(); it2 != term.commentsEnd(); it2++ ) {
-                const BilingualKey& key = it2.key();
-                const Comment& comment = it2.data();
+            for( Term::CommentMap::ConstIterator it4 = term.commentsBegin(); it4 != term.commentsEnd(); it4++ ) {
+                const BilingualKey& key = it4.key();
+                const Comment& comment = it4.data();
+#ifdef DEBUG
+                cout << "comment key=" << key.toString() << endl;
+#endif
                 Comment convertedComment( Util::createUuid(), comment.getText() );
                 convertedComments.insert( key, convertedComment );
             }
             // Replace the old comment instances by converted ones.
-            for( Term::CommentMap::ConstIterator it2 = term.commentsBegin(); it2 != term.commentsEnd(); it2++ ) {
-                const BilingualKey& key = it2.key();
-                const Comment& comment = it2.data();
+            for( Term::CommentMap::ConstIterator it5 = convertedComments.begin(); it5 != convertedComments.end(); it5++ ) {
+                const BilingualKey& key = it5.key();
+                const Comment& comment = it5.data();
                 term.removeComment( key );
                 term.addComment( key, comment );
+#ifdef DEBUG
+                cout << "new Comment key=" << key.toString() << " comment.uid=" << comment.getUid().toString() << endl;
+#endif
             }
         }
-//        if( !term.getImagePath().isNull() ) {
-//#ifdef DEBUG
-//            cout << "IMAGE imagePath=" << term.getImagePath() << endl;
-//#endif
-//            QFileInfo imageFileInfo( term.getImagePath() );
-//            if( term.getImagePath() == QString::number( term.getId() ) + "." + imageFileInfo.extension( false ) ) {
-//                // Temporary code for data conversion between 0.11.x and 0.12.x. 
-//                // Copy the image into a temporary directory with its uid filename.
-//                // When saving data, the image will be copied in its vocabulary directory and the temporary directory will be removed.
-//                QFileInfo parentPathInfo( Vocabulary::parentPath );
-//                QString applDir( parentPathInfo.dirPath().left( parentPathInfo.dirPath().find( ".toMOTko" ) + 8 ) );
-//                QString tempDirPath( applDir + "/tmp" );
-//                QString absImagePath( parentPathInfo.dirPath() + "/v-" + QString::number( tempId ) + "/" + term.getImagePath() );
-//                QString tempImageCopyPath( tempDirPath + "/" + term.getUid().toString() + "." + imageFileInfo.extension( false ) );
-//                if( !Util::makeDirectory( tempDirPath ) )
-//                    cerr << "Cannot create directory " << tempDirPath << endl;
-//                else {
-//                    if( !Util::copy( absImagePath, tempImageCopyPath ) )
-//                        cerr << "Cannot copy image " << absImagePath << " to directory " << tempImageCopyPath << endl;
-//                }
-//                term.setImagePath( term.getUid().toString() + "." + imageFileInfo.extension( false ) );
-//            }
-//        }
 
         vocab.addTerm( term );
     }

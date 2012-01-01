@@ -867,6 +867,12 @@ void Controller::loadData() {
         vocabTree = folder;
     }
     loadMarkedItems( vocabTree );
+
+    // Test if obj with null uid are still existing.  
+    QUuid nullUid;
+    Base* objWithNullUid = vocabTree->getObject( nullUid );
+    if( objWithNullUid )
+        cout << "There is still an object with nullUid: " << objWithNullUid->className() << endl;
 }
 
 void Controller::rightAnswer() {

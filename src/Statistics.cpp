@@ -634,6 +634,12 @@ void Statistics::convertTermData( const QString& firstLang, const QString& testL
             }
         }
     }
+
+    //QUuid nullUid;
+    //Base* objWithNullUid = topFolder->getObject( nullUid );
+    //if( objWithNullUid )
+    //    cout << "There is still an object with nullUid: " << objWithNullUid->className() << endl;
+
     for( uint i = 0; i < keysToRemove.count(); i++ )
         termData.remove( keysToRemove[ i ] );
 }
