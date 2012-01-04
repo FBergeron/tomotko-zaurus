@@ -126,7 +126,7 @@ QString Util::term2Xml( const Term& term, QStringList* languages, uint indentLev
     for( Term::TranslationMap::ConstIterator it = term.translationsBegin(); it != term.translationsEnd(); it++ ) {
         const Translation& translation = it.data();
         if( !languages || languages->contains( translation.getLanguage() ) ) {
-            ts << indent << QString( "\t<trans lang=\"" ) << translation.getLanguage() << QString( "\">" ) << endl;
+            ts << indent << QString( "\t<trans uid=\"" ) << translation.getUid().toString() << QString( "\" lang=\"" ) << translation.getLanguage() << QString( "\">" ) << endl;
             if( !translation.getWord().isEmpty() )
                 ts << indent << QString( "\t\t<word>" ) << Util::escapeXml( translation.getWord() ) << QString( "</word>" ) << endl;
             if( !translation.getAlt().isEmpty() )
@@ -139,7 +139,7 @@ QString Util::term2Xml( const Term& term, QStringList* languages, uint indentLev
         const Comment& comment = it.data();
         if( !comment.isEmpty() ) {
             if( !languages || ( languages->contains( key.getFirstLanguage() ) && languages->contains( key.getSecondLanguage() ) ) )
-                ts << indent << "\t<comment languages=\"" << key.toString() << "\">" << Util::escapeXml( comment.getText() ) << "</comment>" << endl;
+                ts << indent << "\t<comment uid=\"" << comment.getUid().toString() << "\" languages=\"" << key.toString() << "\">" << Util::escapeXml( comment.getText() ) << "</comment>" << endl;
         }
     }
     ts << indent << QString( "</term>" ) << endl;
