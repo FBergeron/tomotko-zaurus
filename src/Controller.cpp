@@ -73,7 +73,7 @@ ProgressData Controller::getProgressData( const BiUidKey& key /* = BiUidKey() */
     QString testLang = prefs.getTestLanguage();
 
     Statistics::instance()->loadTermData( firstLang, testLang );
-    Statistics::instance()->convertTermData( firstLang, testLang, vocabTree );
+    //Statistics::instance()->convertTermData( firstLang, testLang, vocabTree );
 
     ProgressData progressData;
 
@@ -1421,6 +1421,23 @@ bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList
 }
 
 bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList* languages ) const {
+    if( vocab->isEmpty() )
+        return( true );
+
+    if( languages ) {
+        bool isVocabPertinent = false;
+        QStringList vocabLanguages = vocab->getTranslationLanguages();
+        for( QStringList::ConstIterator it = languages->begin(); it != languages->end(); it++ ) {
+            const QString& lang = *it;
+            if( vocabLanguages.contains( lang ) ) {
+                isVocabPertinent = true;
+                break;
+            }
+        }
+        if( !isVocabPertinent )
+            return( true );
+    }
+
     QString vocabPath = ( path == QString::null ? QString( "v-" + vocab->getUid().toString() ) : path + "/v-" + vocab->getUid().toString() );
 
     // Copy the referred images first.
@@ -1477,19 +1494,34 @@ bool Controller::exportData( Folder* folder, const QString& file, QStringList* l
 
 bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList* languages ) const {
     QString folderPath = ( path == QString::null ? folder->getUid().toString() : path + QString( "/" ) + folder->getUid().toString() );
-    if( !folder->isEmpty() ) {
-        QCString folderDataFilename = QString( folderPath + "/metadata.xml" ).latin1();
-        const char* filenameInZip = (const char*) ( folderDataFilename.data() );
-
-        QByteArray buffer;
-        QTextStream ts( buffer, IO_WriteOnly );
-        ts.setEncoding( QTextStream::UnicodeUTF8 );
-        writeFolderDataInXml( ts, *folder );
-
-        int err = writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
-        if( err != ZIP_OK )
-            return( false );
+    if( folder->isEmpty() ) 
+        return( true );
+    
+    if( languages ) {
+        bool isFolderPertinent = false;
+        QStringList folderLanguages = folder->getTranslationLanguages();
+        for( QStringList::ConstIterator it = languages->begin(); it != languages->end(); it++ ) {
+            const QString& lang = *it;
+            if( folderLanguages.contains( lang ) ) {
+                isFolderPertinent = true;
+                break;
+            }
+        }
+        if( !isFolderPertinent )
+            return( true );
     }
+
+    QCString folderDataFilename = QString( folderPath + "/metadata.xml" ).latin1();
+    const char* filenameInZip = (const char*) ( folderDataFilename.data() );
+
+    QByteArray buffer;
+    QTextStream ts( buffer, IO_WriteOnly );
+    ts.setEncoding( QTextStream::UnicodeUTF8 );
+    writeFolderDataInXml( ts, *folder );
+
+    int err = writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
+    if( err != ZIP_OK )
+        return( false );
 
     for( Base* child = folder->first(); child; child = folder->next() ) { 
         if( strcmp( child->className(), "Vocabulary" ) == 0 ) {

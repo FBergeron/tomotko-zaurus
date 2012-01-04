@@ -45,6 +45,11 @@ public:
     bool containsTermWithTranslations( const QString& lang1, const QString& lang2 );
     bool isReachableFromRoot() const;
 
+    /**
+     * Get the list of all the languages used in a folder (including its vocabularies and subfolders recursively).
+     * Items marked for deletions are ignored.
+     * @returns List of languages.
+     */
     QStringList getTranslationLanguages();
     void removeTranslations( const QStringList& languages );
 

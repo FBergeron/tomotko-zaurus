@@ -196,8 +196,8 @@ QDataStream& operator>>( QDataStream& in, Term& term ) {
 #ifdef DEBUG
         cout << 1 << endl;
 #endif
-        //in >> tempComments; // This is temporary to retrieve existing data. Remove it when loading data properly. 
-        in >> tempOldComments;
+        in >> tempComments; // This is temporary to retrieve existing data. Remove it when loading data properly. 
+        //in >> tempOldComments;
 #ifdef DEBUG
         cout << 2 << endl;
 #endif

@@ -282,8 +282,8 @@ bool Vocabulary::load( const QString& filename ) {
 
     in.setVersion( 3 );
     if( tempVersion == 0x0011 ) // With UID.
-        //in >> tempVocab;
-        readOldFormatTemp( in, tempVocab, tempVersion ); 
+        in >> tempVocab;
+        //readOldFormatTemp( in, tempVocab, tempVersion ); 
     else if( tempVersion < 0x0011 )
         readOldFormat( in, tempVocab, tempVersion ); 
 

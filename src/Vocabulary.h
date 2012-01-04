@@ -242,7 +242,9 @@ public:
     bool containsTermWithTranslations( const QString& lang1, const QString& lang2 ) const;
 
     /**
-     * @returns List of languages of the term translations found in the vocabulary.  Terms marked for deletion are ignored by this method.
+     * Get the list of all the languages used in a vocabulary.
+     * Items marked for deletions are ignored.
+     * @returns List of languages.
      */
     QStringList getTranslationLanguages() const;
 
