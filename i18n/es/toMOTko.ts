@@ -22,15 +22,21 @@
     <name>ExportDialog</name>
     <message>
         <source>Languages</source>
-        <translation type="unfinished">Idiomas</translation>
+        <translation>Idiomas</translation>
     </message>
     <message>
         <source>CheckAllLanguages</source>
-        <translation type="unfinished">Seleccionar todos los idiomas</translation>
+        <translation>Seleccionar todos los idiomas</translation>
     </message>
     <message>
         <source>IncludeStats</source>
-        <translation type="unfinished"></translation>
+        <translation>Incluir estadísticas SM-2</translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForExport</source>
+        <translation>El glosario contiene palabras
+en varios idiomas.  Seleccione las
+traducciones a exportar.</translation>
     </message>
 </context>
 <context>
@@ -1108,7 +1114,7 @@ traducciones a importar.</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForExport</source>
-        <translation>El glosario contiene palabras
+        <translation type="obsolete">El glosario contiene palabras
 en varios idiomas.  Seleccione las
 traducciones a exportar.</translation>
     </message>
@@ -1215,18 +1221,18 @@ seleccionada(s)?</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForFolderExport</source>
-        <translation>La carpeta contiene palabras
+        <translation type="obsolete">La carpeta contiene palabras
 en varios idiomas.  Seleccione las
 traducciones a exportar.</translation>
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation type="obsolete">La carpeta ha ido exportado
+        <translation type="unfinished">La carpeta ha ido exportado
 con éxito.</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation type="obsolete">Un error ocurió. La carpeta
+        <translation type="unfinished">Un error ocurió. La carpeta
 no ha ido exportado.</translation>
     </message>
     <message>

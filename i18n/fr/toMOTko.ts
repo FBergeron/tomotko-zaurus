@@ -22,15 +22,22 @@
     <name>ExportDialog</name>
     <message>
         <source>Languages</source>
-        <translation type="unfinished">Langues</translation>
+        <translation>Langues</translation>
     </message>
     <message>
         <source>CheckAllLanguages</source>
-        <translation type="unfinished">Cocher toutes les langues</translation>
+        <translation>Cocher toutes les langues</translation>
     </message>
     <message>
         <source>IncludeStats</source>
         <translation>Inclure statistiques SM-2</translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForExport</source>
+        <translation>Le glossaire contient des mots
+traduits dans plusieurs langues.  
+Veuillez indiquer les traductions
+à exporter.</translation>
     </message>
 </context>
 <context>
@@ -1111,7 +1118,7 @@ Veuillez indiquer les traductions
     </message>
     <message>
         <source>MultipleTranslationsDetectedForExport</source>
-        <translation>Le glossaire contient des mots
+        <translation type="obsolete">Le glossaire contient des mots
 traduits dans plusieurs langues.  
 Veuillez indiquer les traductions
 à exporter.</translation>
@@ -1220,18 +1227,18 @@ mot(s) sélectionné(s)?</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForFolderExport</source>
-        <translation>Le dossier contient des mots
+        <translation type="obsolete">Le dossier contient des mots
 traduits dans plusieurs langues.
 Veuillez indiquer les traductions
 à exporter.</translation>
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation type="obsolete">Le dossier a été exporté avec succès.</translation>
+        <translation type="unfinished">Le dossier a été exporté avec succès.</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation type="obsolete">Une erreur est survenue. Le
+        <translation type="unfinished">Une erreur est survenue. Le
 dossier n&apos;a pas pu être
 exporté.</translation>
     </message>

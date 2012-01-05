@@ -22,15 +22,23 @@
     <name>ExportDialog</name>
     <message>
         <source>Languages</source>
-        <translation type="unfinished">Languages</translation>
+        <translation>Languages</translation>
     </message>
     <message>
         <source>CheckAllLanguages</source>
-        <translation type="unfinished">Check all languages</translation>
+        <translation>Check all languages</translation>
     </message>
     <message>
         <source>IncludeStats</source>
         <translation>Include SM-2 statistics data</translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForExport</source>
+        <translation type="unfinished">The glossary contains terms 
+translated in many languages.  
+Please indicate which translations 
+to export.
+</translation>
     </message>
 </context>
 <context>
@@ -1109,7 +1117,7 @@ to import.
     </message>
     <message>
         <source>MultipleTranslationsDetectedForExport</source>
-        <translation>The glossary contains terms 
+        <translation type="obsolete">The glossary contains terms 
 translated in many languages.  
 Please indicate which translations 
 to export.
@@ -1216,7 +1224,7 @@ the selected term(s)?</translation>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForFolderExport</source>
-        <translation>The folder contains terms
+        <translation type="obsolete">The folder contains terms
 translated in many languages.
 Please indicate which translations
 to export.
@@ -1224,11 +1232,11 @@ to export.
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation type="obsolete">The folder has been exported successfully.</translation>
+        <translation type="unfinished">The folder has been exported successfully.</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation type="obsolete">An error has occurred.  The folder
+        <translation type="unfinished">An error has occurred.  The folder
 has not been exported.</translation>
     </message>
     <message>

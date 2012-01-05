@@ -384,17 +384,19 @@ void VocabularyManagerFrame::exportData() {
 void VocabularyManagerFrame::exportVocabulary( Vocabulary* vocab ) {
     QStringList translationLanguages = vocab->getTranslationLanguages();
     QStringList languagesToExport = translationLanguages;
-    if( translationLanguages.count() > 2 ) {
-        TranslationSelectionDialog msgBox( tr( "Export..." ), tr( "MultipleTranslationsDetectedForExport" ), 
-            translationLanguages, TranslationSelectionDialog::selectionModeAllLanguages, controller, this );
-        msgBox.setMaximumHeight( size().height() - 40 );
-        msgBox.setMaximumWidth( size().width() - 40 );
-        int response = msgBox.exec();
-        if( response )
-            languagesToExport = msgBox.getSelectedLanguages();
-        else 
-            return; // Cancel export.
-    }
+    bool exportStats = false;
+
+    ExportDialog msgBox( tr( "Export..." ), translationLanguages, 
+        ExportDialog::selectionModeAllLanguages, controller, this );
+    msgBox.setMaximumHeight( size().height() - 40 );
+    msgBox.setMaximumWidth( size().width() - 40 );
+    int response = msgBox.exec();
+    if( !response )
+        return; // Cancel export.
+
+    if( !msgBox.getSelectedLanguages().isEmpty() )
+        languagesToExport = msgBox.getSelectedLanguages();
+    exportStats = msgBox.getIncludeStats();
 
     QDir dir( QPEApplication::documentDir() );
     ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, false, this );
@@ -409,36 +411,66 @@ void VocabularyManagerFrame::exportVocabulary( Vocabulary* vocab ) {
         else
             QMessageBox::warning( this, QObject::tr( "OperationFailed" ), tr( "GlossaryExportFailed" ) );
     }
+
+    //QStringList translationLanguages = vocab->getTranslationLanguages();
+    //QStringList languagesToExport = translationLanguages;
+    //if( translationLanguages.count() > 2 ) {
+    //    TranslationSelectionDialog msgBox( tr( "Export..." ), tr( "MultipleTranslationsDetectedForExport" ), 
+    //        translationLanguages, TranslationSelectionDialog::selectionModeAllLanguages, controller, this );
+    //    msgBox.setMaximumHeight( size().height() - 40 );
+    //    msgBox.setMaximumWidth( size().width() - 40 );
+    //    int response = msgBox.exec();
+    //    if( response )
+    //        languagesToExport = msgBox.getSelectedLanguages();
+    //    else 
+    //        return; // Cancel export.
+    //}
+
+    //QDir dir( QPEApplication::documentDir() );
+    //ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, false, this );
+    //dialog.setSelection( vocab->getTitle() + QString( ".tmk" ) ); 
+    //int result = dialog.exec();
+    //if( result ) {
+    //    QCopEnvelope busyEnv( "QPE/System", "busy()" ); 
+    //    bool isOk = controller->exportData( vocab, dialog.selectedFile(), &languagesToExport );
+    //    QCopEnvelope freeEnv( "QPE/System", "notBusy()" ); 
+    //    if( isOk )
+    //        QMessageBox::information( this, QObject::tr( "OperationSuccessful" ), tr( "GlossaryExportSuccessful" ) );
+    //    else
+    //        QMessageBox::warning( this, QObject::tr( "OperationFailed" ), tr( "GlossaryExportFailed" ) );
+    //}
 }
 
 void VocabularyManagerFrame::exportFolder( Folder* folder ) {
     QStringList translationLanguages = folder->getTranslationLanguages();
     QStringList languagesToExport = translationLanguages;
-    if( translationLanguages.count() > 2 ) {
-        ExportDialog msgBox( tr( "Export..." ), tr( "MultipleTranslationsDetectedForFolderExport" ), 
-            translationLanguages, ExportDialog::selectionModeAllLanguages, controller, this );
-        msgBox.setMaximumHeight( size().height() - 40 );
-        msgBox.setMaximumWidth( size().width() - 40 );
-        int response = msgBox.exec();
-        if( response )
-            languagesToExport = msgBox.getSelectedLanguages();
-        else 
-            return; // Cancel export.
-    }
+    bool exportStats = false;
 
-    //QDir dir( QPEApplication::documentDir() );
-    //ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, false, this );
-    //dialog.setSelection( folder->getTitle() + QString( ".tmk" ) ); 
-    //int result = dialog.exec();
-    //if( result ) {
-    //    QCopEnvelope busyEnv( "QPE/System", "busy()" ); 
-    //    bool isOk = controller->exportData( folder, dialog.selectedFile(), &languagesToExport );
-    //    QCopEnvelope freeEnv( "QPE/System", "notBusy()" ); 
-    //    if( isOk )
-    //        QMessageBox::information( this, QObject::tr( "OperationSuccessful" ), tr( "FolderExportSuccessful" ) );
-    //    else
-    //        QMessageBox::warning( this, QObject::tr( "OperationFailed" ), tr( "FolderExportFailed" ) );
-    //}
+    ExportDialog msgBox( tr( "Export..." ), translationLanguages, 
+        ExportDialog::selectionModeAllLanguages, controller, this );
+    msgBox.setMaximumHeight( size().height() - 40 );
+    msgBox.setMaximumWidth( size().width() - 40 );
+    int response = msgBox.exec();
+    if( !response )
+        return; // Cancel export.
+
+    if( !msgBox.getSelectedLanguages().isEmpty() )
+        languagesToExport = msgBox.getSelectedLanguages();
+    exportStats = msgBox.getIncludeStats();
+
+    QDir dir( QPEApplication::documentDir() );
+    ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, false, this );
+    dialog.setSelection( folder->getTitle() + QString( ".tmk" ) ); 
+    int result = dialog.exec();
+    if( result ) {
+        QCopEnvelope busyEnv( "QPE/System", "busy()" ); 
+        bool isOk = controller->exportData( folder, dialog.selectedFile(), &languagesToExport );
+        QCopEnvelope freeEnv( "QPE/System", "notBusy()" ); 
+        if( isOk )
+            QMessageBox::information( this, QObject::tr( "OperationSuccessful" ), tr( "FolderExportSuccessful" ) );
+        else
+            QMessageBox::warning( this, QObject::tr( "OperationFailed" ), tr( "FolderExportFailed" ) );
+    }
 
     //QStringList translationLanguages = folder->getTranslationLanguages();
     //QStringList languagesToExport = translationLanguages;

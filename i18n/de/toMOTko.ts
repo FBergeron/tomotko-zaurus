@@ -22,15 +22,19 @@
     <name>ExportDialog</name>
     <message>
         <source>Languages</source>
-        <translation type="unfinished">Sprachen</translation>
+        <translation>Sprachen</translation>
     </message>
     <message>
         <source>CheckAllLanguages</source>
-        <translation type="unfinished">Alle Sprachen auswählen</translation>
+        <translation>Alle Sprachen auswählen</translation>
     </message>
     <message>
         <source>IncludeStats</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForExport</source>
+        <translation>Die Daten die Sie exportieren möchten enthalten mehrere Übersetzungen. Bitte wählen Sie die zu exportierenden Übersetzungen.</translation>
     </message>
 </context>
 <context>
@@ -1057,7 +1061,7 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForExport</source>
-        <translation>Die Daten die Sie exportieren möchten enthalten mehrere Übersetzungen. Bitte wählen Sie die zu exportierenden Übersetzungen.</translation>
+        <translation type="obsolete">Die Daten die Sie exportieren möchten enthalten mehrere Übersetzungen. Bitte wählen Sie die zu exportierenden Übersetzungen.</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -1153,15 +1157,15 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForFolderExport</source>
-        <translation>Der Ordner enthält Wörter mit Übersetzungen in mehreren Sprachen. Bitte wählen Sie die zu exportierenden Übersetzungen.</translation>
+        <translation type="obsolete">Der Ordner enthält Wörter mit Übersetzungen in mehreren Sprachen. Bitte wählen Sie die zu exportierenden Übersetzungen.</translation>
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation type="obsolete">Der Ordner wurde erfolgreich exportiert.</translation>
+        <translation type="unfinished">Der Ordner wurde erfolgreich exportiert.</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation type="obsolete">Ein Fehler ist aufgetreten. Der Ordner wurde nicht exportiert.</translation>
+        <translation type="unfinished">Ein Fehler ist aufgetreten. Der Ordner wurde nicht exportiert.</translation>
     </message>
     <message>
         <source>Import...</source>

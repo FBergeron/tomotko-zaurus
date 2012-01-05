@@ -22,14 +22,18 @@
     <name>ExportDialog</name>
     <message>
         <source>Languages</source>
-        <translation type="unfinished">言語</translation>
+        <translation>言語</translation>
     </message>
     <message>
         <source>CheckAllLanguages</source>
-        <translation type="unfinished">全ての言語にチェックを入れる</translation>
+        <translation>全ての言語にチェックを入れる</translation>
     </message>
     <message>
         <source>IncludeStats</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MultipleTranslationsDetectedForExport</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1054,10 +1058,6 @@ Overwrite the current assignment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MultipleTranslationsDetectedForExport</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Glossaries</source>
         <translation>用語集</translation>
     </message>
@@ -1142,16 +1142,12 @@ Overwrite the current assignment?</source>
         <translation>言葉</translation>
     </message>
     <message>
-        <source>MultipleTranslationsDetectedForFolderExport</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>FolderExportSuccessful</source>
-        <translation type="obsolete">エクスポートができました</translation>
+        <translation type="unfinished">エクスポートができました</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation type="obsolete">エクスポートができませんでした</translation>
+        <translation type="unfinished">エクスポートができませんでした</translation>
     </message>
     <message>
         <source>Import...</source>

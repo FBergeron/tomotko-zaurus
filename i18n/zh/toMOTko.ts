@@ -32,6 +32,10 @@
         <source>IncludeStats</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>MultipleTranslationsDetectedForExport</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -1106,10 +1110,6 @@ Overwrite the current assignment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MultipleTranslationsDetectedForExport</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>GlossaryExportSuccessful</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1142,10 +1142,6 @@ Overwrite the current assignment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MultipleTranslationsDetectedForFolderExport</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Import...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1175,6 +1171,14 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForRemoveItem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FolderExportSuccessful</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>FolderExportFailed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

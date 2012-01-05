@@ -25,10 +25,11 @@ public:
     static const int selectionModeStudyLanguages    = 1;
     static const int selectionModeAllLanguages      = 2;
 
-    ExportDialog( const QString& caption, const QString& message, const QStringList& languages, int selectionMode, Controller* controller, QWidget* parent );
+    ExportDialog( const QString& caption, const QStringList& languages, int selectionMode, Controller* controller, QWidget* parent );
     ~ExportDialog(); 
 
     QStringList getSelectedLanguages();
+    bool getIncludeStats();
 
 private slots:
 
@@ -36,7 +37,7 @@ private slots:
 
 private:
 
-    void init( const QString& caption, const QString& message, const QStringList& languages, int selectionMode );
+    void init( const QString& caption, const QStringList& languages, int selectionMode );
 
     QLabel*         messageLabel;
     SmartListView*  languageList;
