@@ -103,7 +103,7 @@ public:
     static bool makeDirectory( const QString& dir );
     static bool copy( const QString& fromFile, const QString& toFile );
     static bool deleteDirectory( const QString& dir );
-    static QString term2Xml( const Term& term, QStringList* languages = NULL, uint indentLevel = 0 );
+    static QString term2Xml( const Term& term, QStringList& exportedTransUidList, QStringList* languages = NULL, uint indentLevel = 0 );
     static int getDefaultQuizLength();
     static QString getDefaultLabelsFontFamily();
     static int getDefaultLabelsFontSizeModifier();

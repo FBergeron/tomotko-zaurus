@@ -109,7 +109,7 @@ QString Util::escapeXml( QString xml ) {
     return( escapedStr );
 }
 
-QString Util::term2Xml( const Term& term, QStringList* languages, uint indentLevel = 0 ) {
+QString Util::term2Xml( const Term& term, QStringList& exportedTransUidList, QStringList* languages, uint indentLevel = 0 ) {
     QString indent;
     for( uint i = 0; i < indentLevel; i++ )
         indent += QString( "\t" );
@@ -127,6 +127,8 @@ QString Util::term2Xml( const Term& term, QStringList* languages, uint indentLev
         const Translation& translation = it.data();
         if( !languages || languages->contains( translation.getLanguage() ) ) {
             ts << indent << QString( "\t<trans uid=\"" ) << translation.getUid().toString() << QString( "\" lang=\"" ) << translation.getLanguage() << QString( "\">" ) << endl;
+            if( !exportedTransUidList.contains( translation.getUid().toString() ) )
+                exportedTransUidList.append( translation.getUid().toString() );
             if( !translation.getWord().isEmpty() )
                 ts << indent << QString( "\t\t<word>" ) << Util::escapeXml( translation.getWord() ) << QString( "</word>" ) << endl;
             if( !translation.getAlt().isEmpty() )

@@ -1006,18 +1006,18 @@ bool Controller::saveFolder( Folder* folder, const QString& parentDir ) const {
     return( true );
 }
 
-void Controller::writeVocabulariesInXml( Folder* folder, int depth, QTextStream& ts, QStringList* languages ) {
-    if( !folder->isEmpty() ) {
-        for( Base* folderChild = folder->first(); folderChild; folderChild = folder->next() ) {
-            if( strcmp( folderChild->className(), "Folder" ) == 0 )
-                writeVocabulariesInXml( (Folder*)folderChild, depth, ts, languages );
-            else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 ) {
-                Vocabulary* vocab = (Vocabulary*)folderChild;
-                writeVocabularyInXml( ts, *vocab, languages, false, depth );
-            }
-        }
-    }
-}
+//void Controller::writeVocabulariesInXml( Folder* folder, int depth, QTextStream& ts, QStringList* languages ) {
+//    if( !folder->isEmpty() ) {
+//        for( Base* folderChild = folder->first(); folderChild; folderChild = folder->next() ) {
+//            if( strcmp( folderChild->className(), "Folder" ) == 0 )
+//                writeVocabulariesInXml( (Folder*)folderChild, depth, ts, languages );
+//            else if( strcmp( folderChild->className(), "Vocabulary" ) == 0 ) {
+//                Vocabulary* vocab = (Vocabulary*)folderChild;
+//                writeVocabularyInXml( ts, *vocab, languages, false, depth );
+//            }
+//        }
+//    }
+//}
 
 bool Controller::deleteItemsMarkedForDeletion( Folder* folder ) {
     bool isOk = true;
@@ -1412,11 +1412,19 @@ bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList
     if( outputFile == NULL )
         return( false );
 
-    QStringList transBiUidKeyList;
-    bool isOk = exportVocabularyIntoZip( vocab, outputFile, QString::null, transBiUidKeyList, languages );
+    QStringList exportedTransUidList;
+    bool isOk = exportVocabularyIntoZip( vocab, outputFile, QString::null, exportedTransUidList, languages );
+
+#ifdef DEBUG
+    cout << "exportedTransUidList=" << endl;
+    for( QStringList::ConstIterator it = exportedTransUidList.begin(); it != exportedTransUidList.end(); it++ )
+        cout << *it << endl;
+    cout << "end of exportedTransUidList" << endl;
+    cout << "exportStats=" << exportStats << " isOk=" << isOk << endl;
+#endif
 
     if( isOk && exportStats )
-        isOk = exportStatsIntoZip( outputFile, transBiUidKeyList );
+        isOk = exportStatsIntoZip( outputFile, exportedTransUidList );
 
     if( zipClose( outputFile, "Closing comment" ) != 0 )
         return( false );
@@ -1424,7 +1432,7 @@ bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList
     return( isOk );
 }
 
-bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList& transBiUidKeyList, QStringList* languages /* = NULL */ ) const {
+bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList& exportedTransUidList, QStringList* languages /* = NULL */ ) const {
     if( vocab->isEmpty() )
         return( true );
 
@@ -1477,14 +1485,26 @@ bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile,
     QByteArray buffer;
     QTextStream ts( buffer, IO_WriteOnly );
     ts.setEncoding( QTextStream::UnicodeUTF8 );
-    writeVocabularyInXml( ts, *vocab, languages );
+    writeVocabularyInXml( ts, *vocab, languages, exportedTransUidList );
     int err = writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
 
     return( err == ZIP_OK );
 }
 
-bool Controller::exportStatsIntoZip( zipFile outputFile, QStringList& transBiUidKeyList ) const {
-    return( true );
+bool Controller::exportStatsIntoZip( zipFile outputFile, QStringList& exportedTransUidList ) const {
+#ifdef DEBUG
+    cout << "exportStatsIntoZip" << endl;
+#endif
+    QCString dataFilename = QString( "/stats.xml" ).latin1();
+    const char* filenameInZip = (const char*)dataFilename.data();
+
+    QByteArray buffer;
+    QTextStream ts( buffer, IO_WriteOnly );
+    ts.setEncoding( QTextStream::UnicodeUTF8 );
+    writeStatsInXml( ts, *Statistics::instance(), exportedTransUidList );
+    int err = writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
+
+    return( err == ZIP_OK );
 }
 
 bool Controller::exportData( Folder* folder, const QString& file, QStringList* languages, bool exportStats /* = false */ ) const {
@@ -1492,11 +1512,11 @@ bool Controller::exportData( Folder* folder, const QString& file, QStringList* l
     if( outputFile == NULL )
         return( false );
 
-    QStringList transBiUidKeyList;
-    bool isOk = exportFolderRecIntoZip( folder, outputFile, QString::null, transBiUidKeyList, languages );
+    QStringList exportedTransUidList;
+    bool isOk = exportFolderRecIntoZip( folder, outputFile, QString::null, exportedTransUidList, languages );
 
     if( isOk && exportStats )
-        isOk = exportStatsIntoZip( outputFile, transBiUidKeyList );
+        isOk = exportStatsIntoZip( outputFile, exportedTransUidList );
 
     if( zipClose( outputFile, "Closing comment" ) != 0 )
         return( false );
@@ -1504,7 +1524,7 @@ bool Controller::exportData( Folder* folder, const QString& file, QStringList* l
     return( isOk );
 }
 
-bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList& transBiUidKeyList, QStringList* languages ) const {
+bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList& exportedTransUidList, QStringList* languages ) const {
     QString folderPath = ( path == QString::null ? folder->getUid().toString() : path + QString( "/" ) + folder->getUid().toString() );
     if( folder->isEmpty() ) 
         return( true );
@@ -1538,12 +1558,12 @@ bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QSt
     for( Base* child = folder->first(); child; child = folder->next() ) { 
         if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
             Vocabulary* childVocab = (Vocabulary*)child;
-            if( !exportVocabularyIntoZip( childVocab, outputFile, folderPath, transBiUidKeyList, languages ) )
+            if( !exportVocabularyIntoZip( childVocab, outputFile, folderPath, exportedTransUidList, languages ) )
                 return( false );
         }
         else if( strcmp( child->className(), "Folder" ) == 0 ) {
             Folder* childFolder = (Folder*)child;
-            if( !exportFolderRecIntoZip( childFolder, outputFile, folderPath, transBiUidKeyList, languages ) )
+            if( !exportFolderRecIntoZip( childFolder, outputFile, folderPath, exportedTransUidList, languages ) )
                 return( false );
         }
     }
@@ -1594,7 +1614,7 @@ void Controller::writeFolderDataInXml( QTextStream& ts, const Folder& folder ) c
     ts << QString( "</folder>" ) << endl;
 }
 
-void Controller::writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab, QStringList* languages, bool writeXmlDirective = true, int depth = 0 ) const {
+void Controller::writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab, QStringList* languages, QStringList& exportedTransUidList, bool writeXmlDirective = true, int depth = 0 ) const {
     if( writeXmlDirective ) {
         for( int i = 0; i < depth; i++ )
             ts << "\t";
@@ -1613,11 +1633,26 @@ void Controller::writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab,
         const Term& term = it.data();
         for( int i = 0; i < depth; i++ )
             ts << "\t";
-        ts << Util::term2Xml( term, languages, depth + 1 );
+        ts << Util::term2Xml( term, exportedTransUidList, languages, depth + 1 );
     }
     for( int i = 0; i < depth; i++ )
         ts << "\t";
     ts << QString( "</glossary>" ) << endl;
+}
+
+void Controller::writeStatsInXml( QTextStream& ts, const Statistics& stats, const QStringList& exportedTransUidList, bool writeXmlDirective /* = true */ ) const {
+    if( writeXmlDirective )
+        ts << QString( "<?xml version=\"1.0\"?>" ) << endl;
+
+    //ts << QString( "<glossary uid=\"" ) << vocab.getUid().toString() << "\" name=\"" << Util::escapeXml( vocab.getTitle() ) << "\" ";
+    //ts << QString( "author=\"" ) << Util::escapeXml( vocab.getAuthor() ) << "\">" << endl;
+
+    //ts << QString( "\t<desc>" ) << Util::escapeXml( vocab.getDescription() ) << QString( "</desc>" ) << endl;
+    //for( Vocabulary::TermMap::ConstIterator it = vocab.begin(); it != vocab.end(); it++ ) {
+    //    const Term& term = it.data();
+    //    ts << Util::term2Xml( term, exportedTransUidList, languages, depth + 1 );
+    //}
+    //ts << QString( "</glossary>" ) << endl;
 }
 
 bool Controller::saveVocabulary( Vocabulary* vocab, const QString& location ) const {

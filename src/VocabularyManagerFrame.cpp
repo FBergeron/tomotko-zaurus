@@ -404,7 +404,7 @@ void VocabularyManagerFrame::exportVocabulary( Vocabulary* vocab ) {
     int result = dialog.exec();
     if( result ) {
         QCopEnvelope busyEnv( "QPE/System", "busy()" ); 
-        bool isOk = controller->exportData( vocab, dialog.selectedFile(), &languagesToExport );
+        bool isOk = controller->exportData( vocab, dialog.selectedFile(), &languagesToExport, exportStats );
         QCopEnvelope freeEnv( "QPE/System", "notBusy()" ); 
         if( isOk )
             QMessageBox::information( this, QObject::tr( "OperationSuccessful" ), tr( "GlossaryExportSuccessful" ) );
@@ -436,7 +436,7 @@ void VocabularyManagerFrame::exportFolder( Folder* folder ) {
     int result = dialog.exec();
     if( result ) {
         QCopEnvelope busyEnv( "QPE/System", "busy()" ); 
-        bool isOk = controller->exportData( folder, dialog.selectedFile(), &languagesToExport );
+        bool isOk = controller->exportData( folder, dialog.selectedFile(), &languagesToExport, exportStats );
         QCopEnvelope freeEnv( "QPE/System", "notBusy()" ); 
         if( isOk )
             QMessageBox::information( this, QObject::tr( "OperationSuccessful" ), tr( "FolderExportSuccessful" ) );

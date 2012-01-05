@@ -1,7 +1,8 @@
 ToDo
 ----
 I'm doing #3467481 for VocabularyManagerFrame::exportFolder.  I must do the same thing for VocabularyManagerFrame::exportVocab.
-
+    If the Show all glossaries option is enabled when export data with stats, I have to load all the stats in memory (for all the languages) temporarily, and then, clean the stats again once the export is done.  Add a loadTermData(void) and a clear methods for Statistics.
+I've commented out the method writeVocabulariesInXML().  Remove it permanently?
 Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)
 Load existing data in memory.  The new version is 17 (0x0011).  The old version is 16 (0x0010).
     If I set Translation::isOldFormat = true, the vocab data is all loaded.  
