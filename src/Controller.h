@@ -107,8 +107,8 @@ public:
     bool saveFolder( Folder* folder, const QString& parentDir ) const;
 
     bool saveVocabulary( Vocabulary* vocab, const QString& location ) const;
-    bool exportData( Vocabulary* vocab, const QString& file, QStringList* languages = NULL ) const;
-    bool exportData( Folder* folder, const QString& file, QStringList* languages = NULL ) const;
+    bool exportData( Vocabulary* vocab, const QString& file, QStringList* languages = NULL, bool exportStats = false ) const;
+    bool exportData( Folder* folder, const QString& file, QStringList* languages = NULL, bool exportData = false ) const;
     void writeFolderDataInXml( QTextStream& ts, const Folder& folder ) const;
     void writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab, QStringList* languages, bool writeXmlDirective = true, int depth = 0 ) const;
 
@@ -168,8 +168,9 @@ private:
     bool importFolderFromZip( Folder* folder, const QString& folderLocation, zipFile inputFile );
     bool importVocabularyFromZip( Vocabulary* vocab, const QString& vocabLocation, const QStringList& languages, zipFile inputFile );
     bool importImageFromZip( const QString& imgPath, zipFile inputFile );
-    bool exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList* languages = NULL ) const;
-    bool exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList* languages = NULL ) const;
+    bool exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList& transBiUidKeyList, QStringList* languages = NULL ) const;
+    bool exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList& transBiUidKeyList, QStringList* languages = NULL ) const;
+    bool exportStatsIntoZip( zipFile outputFile, QStringList& transBiUidKeyList ) const;
 
     Vocabulary* makeCopy( Vocabulary* vocab, const QString& firstLang, const QString& testLang, bool copyUid = false ) const;
     Folder* makeCopy( Folder* folder, const QString& firstLang, const QString& testLang, bool copyUid = false ) const;

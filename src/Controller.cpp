@@ -1407,12 +1407,16 @@ void Controller::initMarkedForStudyRec( Vocabulary* vocab, IdList& vocabIds, IdL
     }
 }
 
-bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList* languages ) const {
+bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList* languages, bool exportStats /* = false */ ) const {
     zipFile outputFile = zipOpen( file.latin1(), APPEND_STATUS_CREATE );
     if( outputFile == NULL )
         return( false );
 
-    bool isOk = exportVocabularyIntoZip( vocab, outputFile, QString::null, languages );
+    QStringList transBiUidKeyList;
+    bool isOk = exportVocabularyIntoZip( vocab, outputFile, QString::null, transBiUidKeyList, languages );
+
+    if( isOk && exportStats )
+        isOk = exportStatsIntoZip( outputFile, transBiUidKeyList );
 
     if( zipClose( outputFile, "Closing comment" ) != 0 )
         return( false );
@@ -1420,7 +1424,7 @@ bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList
     return( isOk );
 }
 
-bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList* languages ) const {
+bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList& transBiUidKeyList, QStringList* languages /* = NULL */ ) const {
     if( vocab->isEmpty() )
         return( true );
 
@@ -1479,12 +1483,20 @@ bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile,
     return( err == ZIP_OK );
 }
 
-bool Controller::exportData( Folder* folder, const QString& file, QStringList* languages ) const {
+bool Controller::exportStatsIntoZip( zipFile outputFile, QStringList& transBiUidKeyList ) const {
+    return( true );
+}
+
+bool Controller::exportData( Folder* folder, const QString& file, QStringList* languages, bool exportStats /* = false */ ) const {
     zipFile outputFile = zipOpen( file.latin1(), APPEND_STATUS_CREATE );
     if( outputFile == NULL )
         return( false );
 
-    bool isOk = exportFolderRecIntoZip( folder, outputFile, QString::null, languages );
+    QStringList transBiUidKeyList;
+    bool isOk = exportFolderRecIntoZip( folder, outputFile, QString::null, transBiUidKeyList, languages );
+
+    if( isOk && exportStats )
+        isOk = exportStatsIntoZip( outputFile, transBiUidKeyList );
 
     if( zipClose( outputFile, "Closing comment" ) != 0 )
         return( false );
@@ -1492,7 +1504,7 @@ bool Controller::exportData( Folder* folder, const QString& file, QStringList* l
     return( isOk );
 }
 
-bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList* languages ) const {
+bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList& transBiUidKeyList, QStringList* languages ) const {
     QString folderPath = ( path == QString::null ? folder->getUid().toString() : path + QString( "/" ) + folder->getUid().toString() );
     if( folder->isEmpty() ) 
         return( true );
@@ -1526,12 +1538,12 @@ bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QSt
     for( Base* child = folder->first(); child; child = folder->next() ) { 
         if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
             Vocabulary* childVocab = (Vocabulary*)child;
-            if( !exportVocabularyIntoZip( childVocab, outputFile, folderPath, languages ) )
+            if( !exportVocabularyIntoZip( childVocab, outputFile, folderPath, transBiUidKeyList, languages ) )
                 return( false );
         }
         else if( strcmp( child->className(), "Folder" ) == 0 ) {
             Folder* childFolder = (Folder*)child;
-            if( !exportFolderRecIntoZip( childFolder, outputFile, folderPath, languages ) )
+            if( !exportFolderRecIntoZip( childFolder, outputFile, folderPath, transBiUidKeyList, languages ) )
                 return( false );
         }
     }
