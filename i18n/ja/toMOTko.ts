@@ -19,6 +19,21 @@
     </message>
 </context>
 <context>
+    <name>ExportDialog</name>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished">言語</translation>
+    </message>
+    <message>
+        <source>CheckAllLanguages</source>
+        <translation type="unfinished">全ての言語にチェックを入れる</translation>
+    </message>
+    <message>
+        <source>IncludeStats</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Actions</source>
@@ -1132,11 +1147,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation>エクスポートができました</translation>
+        <translation type="obsolete">エクスポートができました</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation>エクスポートができませんでした</translation>
+        <translation type="obsolete">エクスポートができませんでした</translation>
     </message>
     <message>
         <source>Import...</source>

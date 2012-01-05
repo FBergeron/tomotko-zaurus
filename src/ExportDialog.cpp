@@ -1,11 +1,11 @@
-#include "TranslationSelectionDialog.h"
+#include "ExportDialog.h"
 
-TranslationSelectionDialog::TranslationSelectionDialog( const QString& caption, const QString& message, const QStringList& languages, int selectionMode, Controller* controller, QWidget* parent ) 
+ExportDialog::ExportDialog( const QString& caption, const QString& message, const QStringList& languages, int selectionMode, Controller* controller, QWidget* parent ) 
     : QDialog( parent, 0, TRUE ), controller( controller ) {
     init( caption, message, languages, selectionMode );
 }
 
-void TranslationSelectionDialog::init( const QString& caption, const QString& message, const QStringList& languages, int selectionMode ) {
+void ExportDialog::init( const QString& caption, const QString& message, const QStringList& languages, int selectionMode ) {
     QFont mediumFont( controller->getPreferences().getMediumFont() );
 
     messageLabel = new QLabel( message, this, "MessageLabel" );
@@ -35,21 +35,25 @@ void TranslationSelectionDialog::init( const QString& caption, const QString& me
     checkAllLanguagesButton = new QPushButton( tr( "CheckAllLanguages" ), this, "CheckAllLanguagesButton" );
     connect( checkAllLanguagesButton, SIGNAL( clicked() ), this, SLOT( checkAllLanguages() ) );
 
+    includeStatsCheckBox = new QCheckBox( tr( "IncludeStats" ), this, "IncludeStatsCheckBox" );
+    includeStatsCheckBox->setChecked( false );
+
     mainLayout = new QVBoxLayout( this );
     mainLayout->setMargin( 10 );
     mainLayout->setSpacing( 2 );
     mainLayout->addWidget( messageLabel );
     mainLayout->addWidget( languageList, 1 );
     mainLayout->addWidget( checkAllLanguagesButton );
+    mainLayout->addWidget( includeStatsCheckBox );
 
     setCaption( caption );
     setSizeGripEnabled( true );
 }
 
-TranslationSelectionDialog::~TranslationSelectionDialog() {
+ExportDialog::~ExportDialog() {
 }
 
-QStringList TranslationSelectionDialog::getSelectedLanguages() {
+QStringList ExportDialog::getSelectedLanguages() {
     QStringList selectedLanguages;
     for( QCheckListItem* item = (QCheckListItem*)languageList->firstChild(); item; item = (QCheckListItem*)item->nextSibling() ) {
         if( item->isOn() )
@@ -58,8 +62,9 @@ QStringList TranslationSelectionDialog::getSelectedLanguages() {
     return( selectedLanguages );
 }
 
-void TranslationSelectionDialog::checkAllLanguages() const {
+void ExportDialog::checkAllLanguages() const {
     for( QCheckListItem* item = (QCheckListItem*)languageList->firstChild(); item; item = (QCheckListItem*)item->nextSibling() ) {
         item->setOn( true );
     }
 }
+

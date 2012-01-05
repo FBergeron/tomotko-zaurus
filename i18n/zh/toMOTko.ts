@@ -19,6 +19,21 @@
     </message>
 </context>
 <context>
+    <name>ExportDialog</name>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CheckAllLanguages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IncludeStats</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Reveal</source>
@@ -1128,14 +1143,6 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>MultipleTranslationsDetectedForFolderExport</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FolderExportSuccessful</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>FolderExportFailed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

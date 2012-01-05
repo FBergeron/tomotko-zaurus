@@ -19,6 +19,21 @@
     </message>
 </context>
 <context>
+    <name>ExportDialog</name>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished">Langues</translation>
+    </message>
+    <message>
+        <source>CheckAllLanguages</source>
+        <translation type="unfinished">Cocher toutes les langues</translation>
+    </message>
+    <message>
+        <source>IncludeStats</source>
+        <translation>Inclure statistiques SM-2</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Actions</source>
@@ -1212,11 +1227,11 @@ Veuillez indiquer les traductions
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation>Le dossier a été exporté avec succès.</translation>
+        <translation type="obsolete">Le dossier a été exporté avec succès.</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation>Une erreur est survenue. Le
+        <translation type="obsolete">Une erreur est survenue. Le
 dossier n&apos;a pas pu être
 exporté.</translation>
     </message>

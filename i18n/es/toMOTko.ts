@@ -19,6 +19,21 @@
     </message>
 </context>
 <context>
+    <name>ExportDialog</name>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished">Idiomas</translation>
+    </message>
+    <message>
+        <source>CheckAllLanguages</source>
+        <translation type="unfinished">Seleccionar todos los idiomas</translation>
+    </message>
+    <message>
+        <source>IncludeStats</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Actions</source>
@@ -1206,12 +1221,12 @@ traducciones a exportar.</translation>
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation>La carpeta ha ido exportado
+        <translation type="obsolete">La carpeta ha ido exportado
 con éxito.</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation>Un error ocurió. La carpeta
+        <translation type="obsolete">Un error ocurió. La carpeta
 no ha ido exportado.</translation>
     </message>
     <message>

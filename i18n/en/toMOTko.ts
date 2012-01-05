@@ -19,6 +19,21 @@
     </message>
 </context>
 <context>
+    <name>ExportDialog</name>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished">Languages</translation>
+    </message>
+    <message>
+        <source>CheckAllLanguages</source>
+        <translation type="unfinished">Check all languages</translation>
+    </message>
+    <message>
+        <source>IncludeStats</source>
+        <translation>Include SM-2 statistics data</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Actions</source>
@@ -1209,11 +1224,11 @@ to export.
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation>The folder has been exported successfully.</translation>
+        <translation type="obsolete">The folder has been exported successfully.</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation>An error has occurred.  The folder
+        <translation type="obsolete">An error has occurred.  The folder
 has not been exported.</translation>
     </message>
     <message>

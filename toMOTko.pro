@@ -25,6 +25,7 @@ HEADERS += src/Base.h \
            src/CharacterDialog.h \
            src/TermDialog.h \
            src/TranslationSelectionDialog.h \
+           src/ExportDialog.h \
            src/ResultListItem.h \
            src/HistoryField.h \
            src/EasinessFactorDistribution.h \
@@ -87,6 +88,7 @@ SOURCES += src/Util.cpp \
            src/CharacterDialog.cpp \
            src/TermDialog.cpp \
            src/TranslationSelectionDialog.cpp \
+           src/ExportDialog.cpp \
            src/ResultListItem.cpp \
            src/HistoryField.cpp \
            src/EasinessFactorDistribution.cpp \

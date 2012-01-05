@@ -415,8 +415,8 @@ void VocabularyManagerFrame::exportFolder( Folder* folder ) {
     QStringList translationLanguages = folder->getTranslationLanguages();
     QStringList languagesToExport = translationLanguages;
     if( translationLanguages.count() > 2 ) {
-        TranslationSelectionDialog msgBox( tr( "Export..." ), tr( "MultipleTranslationsDetectedForFolderExport" ), 
-            translationLanguages, TranslationSelectionDialog::selectionModeAllLanguages, controller, this );
+        ExportDialog msgBox( tr( "Export..." ), tr( "MultipleTranslationsDetectedForFolderExport" ), 
+            translationLanguages, ExportDialog::selectionModeAllLanguages, controller, this );
         msgBox.setMaximumHeight( size().height() - 40 );
         msgBox.setMaximumWidth( size().width() - 40 );
         int response = msgBox.exec();
@@ -426,19 +426,47 @@ void VocabularyManagerFrame::exportFolder( Folder* folder ) {
             return; // Cancel export.
     }
 
-    QDir dir( QPEApplication::documentDir() );
-    ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, false, this );
-    dialog.setSelection( folder->getTitle() + QString( ".tmk" ) ); 
-    int result = dialog.exec();
-    if( result ) {
-        QCopEnvelope busyEnv( "QPE/System", "busy()" ); 
-        bool isOk = controller->exportData( folder, dialog.selectedFile(), &languagesToExport );
-        QCopEnvelope freeEnv( "QPE/System", "notBusy()" ); 
-        if( isOk )
-            QMessageBox::information( this, QObject::tr( "OperationSuccessful" ), tr( "FolderExportSuccessful" ) );
-        else
-            QMessageBox::warning( this, QObject::tr( "OperationFailed" ), tr( "FolderExportFailed" ) );
-    }
+    //QDir dir( QPEApplication::documentDir() );
+    //ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, false, this );
+    //dialog.setSelection( folder->getTitle() + QString( ".tmk" ) ); 
+    //int result = dialog.exec();
+    //if( result ) {
+    //    QCopEnvelope busyEnv( "QPE/System", "busy()" ); 
+    //    bool isOk = controller->exportData( folder, dialog.selectedFile(), &languagesToExport );
+    //    QCopEnvelope freeEnv( "QPE/System", "notBusy()" ); 
+    //    if( isOk )
+    //        QMessageBox::information( this, QObject::tr( "OperationSuccessful" ), tr( "FolderExportSuccessful" ) );
+    //    else
+    //        QMessageBox::warning( this, QObject::tr( "OperationFailed" ), tr( "FolderExportFailed" ) );
+    //}
+
+    //QStringList translationLanguages = folder->getTranslationLanguages();
+    //QStringList languagesToExport = translationLanguages;
+    //if( translationLanguages.count() > 2 ) {
+    //    TranslationSelectionDialog msgBox( tr( "Export..." ), tr( "MultipleTranslationsDetectedForFolderExport" ), 
+    //        translationLanguages, TranslationSelectionDialog::selectionModeAllLanguages, controller, this );
+    //    msgBox.setMaximumHeight( size().height() - 40 );
+    //    msgBox.setMaximumWidth( size().width() - 40 );
+    //    int response = msgBox.exec();
+    //    if( response )
+    //        languagesToExport = msgBox.getSelectedLanguages();
+    //    else 
+    //        return; // Cancel export.
+    //}
+
+    //QDir dir( QPEApplication::documentDir() );
+    //ZFileDialog dialog( tr( "Export..." ), dir.path(), ZFileDialog::AnyFile, false, this );
+    //dialog.setSelection( folder->getTitle() + QString( ".tmk" ) ); 
+    //int result = dialog.exec();
+    //if( result ) {
+    //    QCopEnvelope busyEnv( "QPE/System", "busy()" ); 
+    //    bool isOk = controller->exportData( folder, dialog.selectedFile(), &languagesToExport );
+    //    QCopEnvelope freeEnv( "QPE/System", "notBusy()" ); 
+    //    if( isOk )
+    //        QMessageBox::information( this, QObject::tr( "OperationSuccessful" ), tr( "FolderExportSuccessful" ) );
+    //    else
+    //        QMessageBox::warning( this, QObject::tr( "OperationFailed" ), tr( "FolderExportFailed" ) );
+    //}
 }
 
 void VocabularyManagerFrame::updateFonts() {

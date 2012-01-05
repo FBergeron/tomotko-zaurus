@@ -1,5 +1,7 @@
 ToDo
 ----
+I'm doing #3467481 for VocabularyManagerFrame::exportFolder.  I must do the same thing for VocabularyManagerFrame::exportVocab.
+
 Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)
 Load existing data in memory.  The new version is 17 (0x0011).  The old version is 16 (0x0010).
     If I set Translation::isOldFormat = true, the vocab data is all loaded.  

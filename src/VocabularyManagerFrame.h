@@ -31,6 +31,7 @@
 #include "Controller.h"
 #include "DigraphLineEdit.h"
 #include "DigraphMultiLineEdit.h"
+#include "ExportDialog.h"
 #include "PropertiesPanel.h"
 #include "SearchDialog.h"
 #include "SmartListView.h"

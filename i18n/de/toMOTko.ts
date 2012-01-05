@@ -19,6 +19,21 @@
     </message>
 </context>
 <context>
+    <name>ExportDialog</name>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished">Sprachen</translation>
+    </message>
+    <message>
+        <source>CheckAllLanguages</source>
+        <translation type="unfinished">Alle Sprachen auswählen</translation>
+    </message>
+    <message>
+        <source>IncludeStats</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>Actions</source>
@@ -1142,11 +1157,11 @@ Overwrite the current assignment?</source>
     </message>
     <message>
         <source>FolderExportSuccessful</source>
-        <translation>Der Ordner wurde erfolgreich exportiert.</translation>
+        <translation type="obsolete">Der Ordner wurde erfolgreich exportiert.</translation>
     </message>
     <message>
         <source>FolderExportFailed</source>
-        <translation>Ein Fehler ist aufgetreten. Der Ordner wurde nicht exportiert.</translation>
+        <translation type="obsolete">Ein Fehler ist aufgetreten. Der Ordner wurde nicht exportiert.</translation>
     </message>
     <message>
         <source>Import...</source>
