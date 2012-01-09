@@ -20,6 +20,7 @@
 #include "Comment.h"
 #include "PixMap.h"
 #include "Term.h"
+#include "minizip/zip.h"
 
 typedef QValueList<QString> UidList;
 typedef QValueList<int> IdList;
@@ -119,6 +120,8 @@ public:
     static QByteArray qUncompress( const QByteArray& byteArray );
 
     static QString fromUnicodeToUtf8( ushort unicode );
+
+    static int writeFileIntoZipFile( zipFile outputFile, const char* filename, const char* data, int length ); 
 
 private:
 

@@ -1434,7 +1434,7 @@ bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList
 #endif
 
     if( isOk && exportStats )
-        isOk = exportStatsIntoZip( outputFile, exportedTransUidList );
+        isOk = Statistics::instance()->exportIntoZip( outputFile, exportedTransUidList );
 
     if( zipClose( outputFile, "Closing comment" ) != 0 )
         return( false );
@@ -1477,7 +1477,7 @@ bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile,
                 QByteArray buffer = imageFile.readAll();
                 imageFile.close();
 
-                int err = writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
+                int err = Util::writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
                 if( err != ZIP_OK )
                     return( false );
             }
@@ -1496,23 +1496,7 @@ bool Controller::exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile,
     QTextStream ts( buffer, IO_WriteOnly );
     ts.setEncoding( QTextStream::UnicodeUTF8 );
     writeVocabularyInXml( ts, *vocab, languages, exportedTransUidList );
-    int err = writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
-
-    return( err == ZIP_OK );
-}
-
-bool Controller::exportStatsIntoZip( zipFile outputFile, QStringList& exportedTransUidList ) const {
-#ifdef DEBUG
-    cout << "exportStatsIntoZip" << endl;
-#endif
-    QCString dataFilename = QString( "/stats.xml" ).latin1();
-    const char* filenameInZip = (const char*)dataFilename.data();
-
-    QByteArray buffer;
-    QTextStream ts( buffer, IO_WriteOnly );
-    ts.setEncoding( QTextStream::UnicodeUTF8 );
-    writeStatsInXml( ts, *Statistics::instance(), exportedTransUidList );
-    int err = writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
+    int err = Util::writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
 
     return( err == ZIP_OK );
 }
@@ -1531,7 +1515,7 @@ bool Controller::exportData( Folder* folder, const QString& file, QStringList* l
     isOk = exportFolderRecIntoZip( folder, outputFile, QString::null, exportedTransUidList, languages );
 
     if( isOk && exportStats )
-        isOk = exportStatsIntoZip( outputFile, exportedTransUidList );
+        isOk = Statistics::instance()->exportIntoZip( outputFile, exportedTransUidList );
 
     if( zipClose( outputFile, "Closing comment" ) != 0 )
         return( false );
@@ -1566,7 +1550,7 @@ bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QSt
     ts.setEncoding( QTextStream::UnicodeUTF8 );
     writeFolderDataInXml( ts, *folder );
 
-    int err = writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
+    int err = Util::writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
     if( err != ZIP_OK )
         return( false );
 
@@ -1584,36 +1568,6 @@ bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QSt
     }
 
     return( true );
-}
-
-int Controller::writeFileIntoZipFile( zipFile outputFile, const char* filename, const char* data, int length ) const {
-    zip_fileinfo zipFileInfo;
-
-    zipFileInfo.tmz_date.tm_sec = zipFileInfo.tmz_date.tm_min = zipFileInfo.tmz_date.tm_hour =
-        zipFileInfo.tmz_date.tm_mday = zipFileInfo.tmz_date.tm_mon = zipFileInfo.tmz_date.tm_year = 0;
-    zipFileInfo.dosDate = 0;
-    zipFileInfo.internal_fa = 0;
-    zipFileInfo.external_fa = 0;
-    //filetime( filenameInZip, &zipFileInfo.tmz_date, &zipFileInfo.dosDate );
-
-    int err = zipOpenNewFileInZip3( outputFile, filename, &zipFileInfo,
-         NULL, 0, NULL, 0, NULL /* comment*/,
-         Z_DEFLATED /* method */,
-         5 /* level */, 0,
-         /* -MAX_WBITS, DEF_MEM_LEVEL, Z_DEFAULT_STRATEGY, */
-         -MAX_WBITS, DEF_MEM_LEVEL, Z_DEFAULT_STRATEGY,
-         NULL, 0 );
-    if( err )
-        return( err );
-
-    int writeErr = zipWriteInFileInZip( outputFile, data, length );
-
-    err = zipCloseFileInZip( outputFile );
-
-    if( writeErr || err )
-        return( writeErr ? writeErr : err );
-
-    return( ZIP_OK );
 }
 
 void Controller::writeFolderDataInXml( QTextStream& ts, const Folder& folder ) const {
@@ -1653,21 +1607,6 @@ void Controller::writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab,
     for( int i = 0; i < depth; i++ )
         ts << "\t";
     ts << QString( "</glossary>" ) << endl;
-}
-
-void Controller::writeStatsInXml( QTextStream& ts, const Statistics& stats, const QStringList& exportedTransUidList, bool writeXmlDirective /* = true */ ) const {
-    if( writeXmlDirective )
-        ts << QString( "<?xml version=\"1.0\"?>" ) << endl;
-
-    //ts << QString( "<glossary uid=\"" ) << vocab.getUid().toString() << "\" name=\"" << Util::escapeXml( vocab.getTitle() ) << "\" ";
-    //ts << QString( "author=\"" ) << Util::escapeXml( vocab.getAuthor() ) << "\">" << endl;
-
-    //ts << QString( "\t<desc>" ) << Util::escapeXml( vocab.getDescription() ) << QString( "</desc>" ) << endl;
-    //for( Vocabulary::TermMap::ConstIterator it = vocab.begin(); it != vocab.end(); it++ ) {
-    //    const Term& term = it.data();
-    //    ts << Util::term2Xml( term, exportedTransUidList, languages, depth + 1 );
-    //}
-    //ts << QString( "</glossary>" ) << endl;
 }
 
 bool Controller::saveVocabulary( Vocabulary* vocab, const QString& location ) const {

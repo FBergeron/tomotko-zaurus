@@ -111,7 +111,6 @@ public:
     bool exportData( Folder* folder, const QString& file, QStringList* languages = NULL, bool exportData = false );
     void writeFolderDataInXml( QTextStream& ts, const Folder& folder ) const;
     void writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab, QStringList* languages, QStringList& exportedTransUidList, bool writeXmlDirective = true, int depth = 0 ) const;
-    void writeStatsInXml( QTextStream& ts, const Statistics& stats, const QStringList& exportedTransUidList, bool writeXmlDirective = true ) const;
 
     void loadLegacyVocabulary( Folder* folder );
 
@@ -154,8 +153,6 @@ private:
     void getDataStandardDeviationRec( Folder* folder, const float& efAverage, int& efCount, const float& successRateAverage, int& successRateCount, float& efSquaredVariationSum, float& successRateSquaredVariationSum );
     void getDataStandardDeviationRec( Vocabulary* vocab, const float& efAverage, int& efCount, const float& successRateAverage, int& successRateCount, float& efSquaredVariationSum, float& successRateSquaredVariationSum );
 
-    int writeFileIntoZipFile( zipFile outputFile, const char* filename, const char* data, int length ) const; 
-
     void initMarkedForStudyRec( Folder* folder, UidList& folderUids, UidList& vocabUids, UidListMap& termUids );
     void initMarkedForStudyRec( Vocabulary* vocab, UidList& vocabUids, UidListMap& termUids );
     void initMarkedForStudyRec( Folder* folder, IdList& folderIds, IdList& vocabIds, IdListMap& termIds );
@@ -171,7 +168,6 @@ private:
     bool importImageFromZip( const QString& imgPath, zipFile inputFile );
     bool exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList& exportedTransUidList, QStringList* languages = NULL ) const;
     bool exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList& exportedTransUidList, QStringList* languages = NULL ) const;
-    bool exportStatsIntoZip( zipFile outputFile, QStringList& exportedTransUidList ) const;
 
     Vocabulary* makeCopy( Vocabulary* vocab, const QString& firstLang, const QString& testLang, bool copyUid = false ) const;
     Folder* makeCopy( Folder* folder, const QString& firstLang, const QString& testLang, bool copyUid = false ) const;

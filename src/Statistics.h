@@ -14,6 +14,7 @@
 #include "Folder.h"
 #include "Progress.h"
 #include "Util.h"
+#include "minizip/zip.h"
 
 class Statistics : public QObject {
 
@@ -29,7 +30,15 @@ public:
 
     TermData getTermData( const BiUidKey& key );
     void setTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& termData );
+
+    /**
+     * Load term data for all the specified language pair.
+     * @param firstLang First language of the language pair.
+     * @param testLang Test language of the language pair.
+     * @returns True if the data has been successfully read. Falseotherwise.
+     */
     bool loadTermData( const QString& firstLang, const QString& testLang );
+
     TermData loadTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang );
 
     /**
@@ -54,6 +63,8 @@ public:
      * Reset internal data structures.
      */
     void clear();
+
+    bool exportIntoZip( zipFile outputFile, QStringList& exportedTransUidList ) const;
 
 private:
 

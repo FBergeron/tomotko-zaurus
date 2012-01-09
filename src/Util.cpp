@@ -497,3 +497,34 @@ QString Util::fromUnicodeToUtf8( ushort unicode ) {
         return( QString::number( firstByte, 16 ) + QString::number( secondByte, 16 ) + QString::number( thirdByte, 16 ) );
     }
 }
+
+int Util::writeFileIntoZipFile( zipFile outputFile, const char* filename, const char* data, int length ) {
+    zip_fileinfo zipFileInfo;
+
+    zipFileInfo.tmz_date.tm_sec = zipFileInfo.tmz_date.tm_min = zipFileInfo.tmz_date.tm_hour =
+        zipFileInfo.tmz_date.tm_mday = zipFileInfo.tmz_date.tm_mon = zipFileInfo.tmz_date.tm_year = 0;
+    zipFileInfo.dosDate = 0;
+    zipFileInfo.internal_fa = 0;
+    zipFileInfo.external_fa = 0;
+    //filetime( filenameInZip, &zipFileInfo.tmz_date, &zipFileInfo.dosDate );
+
+    int err = zipOpenNewFileInZip3( outputFile, filename, &zipFileInfo,
+         NULL, 0, NULL, 0, NULL /* comment*/,
+         Z_DEFLATED /* method */,
+         5 /* level */, 0,
+         /* -MAX_WBITS, DEF_MEM_LEVEL, Z_DEFAULT_STRATEGY, */
+         -MAX_WBITS, DEF_MEM_LEVEL, Z_DEFAULT_STRATEGY,
+         NULL, 0 );
+    if( err )
+        return( err );
+
+    int writeErr = zipWriteInFileInZip( outputFile, data, length );
+
+    err = zipCloseFileInZip( outputFile );
+
+    if( writeErr || err )
+        return( writeErr ? writeErr : err );
+
+    return( ZIP_OK );
+}
+

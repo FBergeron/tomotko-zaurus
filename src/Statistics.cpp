@@ -724,3 +724,20 @@ QStringList Statistics::toString() const {
 
     return( str );
 }
+
+bool Statistics::exportIntoZip( zipFile outputFile, QStringList& exportedTransUidList ) const {
+#ifdef DEBUG
+    cout << "exportIntoZip" << endl;
+#endif
+    QCString dataFilename = QString( "/stats.xml" ).latin1();
+    const char* filenameInZip = (const char*)dataFilename.data();
+
+    QByteArray buffer;
+    QTextStream ts( buffer, IO_WriteOnly );
+    ts.setEncoding( QTextStream::UnicodeUTF8 );
+    //writeStatsInXml( ts, *Statistics::instance(), exportedTransUidList );
+    int err = Util::writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
+
+    return( err == ZIP_OK );
+}
+
