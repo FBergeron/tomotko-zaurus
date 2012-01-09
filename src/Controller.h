@@ -106,9 +106,9 @@ public:
     Folder* loadFolder( const QString& parentDir );
     bool saveFolder( Folder* folder, const QString& parentDir ) const;
 
-    bool saveVocabulary( Vocabulary* vocab, const QString& location ) const;
-    bool exportData( Vocabulary* vocab, const QString& file, QStringList* languages = NULL, bool exportStats = false ) const;
-    bool exportData( Folder* folder, const QString& file, QStringList* languages = NULL, bool exportData = false ) const;
+    bool saveVocabulary( Vocabulary* vocab, const QString& location )const;
+    bool exportData( Vocabulary* vocab, const QString& file, QStringList* languages = NULL, bool exportStats = false );
+    bool exportData( Folder* folder, const QString& file, QStringList* languages = NULL, bool exportData = false );
     void writeFolderDataInXml( QTextStream& ts, const Folder& folder ) const;
     void writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab, QStringList* languages, QStringList& exportedTransUidList, bool writeXmlDirective = true, int depth = 0 ) const;
     void writeStatsInXml( QTextStream& ts, const Statistics& stats, const QStringList& exportedTransUidList, bool writeXmlDirective = true ) const;

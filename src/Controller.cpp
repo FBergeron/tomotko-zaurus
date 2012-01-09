@@ -446,6 +446,11 @@ Vocabulary* Controller::loadVocabulary( const QString& parentDir ) {
 }
 
 Base* Controller::importData( Folder* folder, const QString& filename, const QStringList& languages ) {
+    // Save the data to get a clean state (without items marked for deletion).
+    bool isOk = saveData();
+    if( !isOk )
+        return( false );
+
     int status;
     Base* newItem = NULL;
 
@@ -1407,13 +1412,18 @@ void Controller::initMarkedForStudyRec( Vocabulary* vocab, IdList& vocabIds, IdL
     }
 }
 
-bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList* languages, bool exportStats /* = false */ ) const {
+bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList* languages, bool exportStats /* = false */ ) {
+    // Save the data to get a clean state (without items marked for deletion).
+    bool isOk = saveData();
+    if( !isOk )
+        return( false );
+
     zipFile outputFile = zipOpen( file.latin1(), APPEND_STATUS_CREATE );
     if( outputFile == NULL )
         return( false );
 
     QStringList exportedTransUidList;
-    bool isOk = exportVocabularyIntoZip( vocab, outputFile, QString::null, exportedTransUidList, languages );
+    isOk = exportVocabularyIntoZip( vocab, outputFile, QString::null, exportedTransUidList, languages );
 
 #ifdef DEBUG
     cout << "exportedTransUidList=" << endl;
@@ -1507,13 +1517,18 @@ bool Controller::exportStatsIntoZip( zipFile outputFile, QStringList& exportedTr
     return( err == ZIP_OK );
 }
 
-bool Controller::exportData( Folder* folder, const QString& file, QStringList* languages, bool exportStats /* = false */ ) const {
+bool Controller::exportData( Folder* folder, const QString& file, QStringList* languages, bool exportStats /* = false */ ) {
+    // Save the data to get a clean state (without items marked for deletion).
+    bool isOk = saveData();
+    if( !isOk )
+        return( false );
+
     zipFile outputFile = zipOpen( file.latin1(), APPEND_STATUS_CREATE );
     if( outputFile == NULL )
         return( false );
 
     QStringList exportedTransUidList;
-    bool isOk = exportFolderRecIntoZip( folder, outputFile, QString::null, exportedTransUidList, languages );
+    isOk = exportFolderRecIntoZip( folder, outputFile, QString::null, exportedTransUidList, languages );
 
     if( isOk && exportStats )
         isOk = exportStatsIntoZip( outputFile, exportedTransUidList );
