@@ -642,6 +642,12 @@ void Statistics::convertTermData( const QString& firstLang, const QString& testL
         termData.remove( keysToRemove[ i ] );
 }
 
+void Statistics::clear() {
+    currentLanguages = BilingualKey(); 
+    termData.clear();
+    deletedTranslations.clear();
+}
+
 QString Statistics::getTermDataFilename( const QString& firstLang, const QString& testLang ) const {
     if( !firstLang.isEmpty() && !testLang.isEmpty() ) {
         BilingualKey key( firstLang, testLang );

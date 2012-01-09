@@ -50,6 +50,11 @@ public:
 
     void convertTermData( const QString& firstLang, const QString& testLang, Folder* topFolder );
 
+    /**
+     * Reset internal data structures.
+     */
+    void clear();
+
 private:
 
     /**
