@@ -58,6 +58,16 @@ int Util::getDefaultFontSizeModifier() {
     return( 0 );
 }
 
+QString Util::getDateAsShortString( const QDate& date ) {
+    return( QString::number( date.year() ) + QString( "-" ) + 
+        Util::padWithLeadingZero( date.month() ) + QString( "-" ) + 
+            Util::padWithLeadingZero( date.day() ) );
+}
+
+QString Util::padWithLeadingZero( const int& number ) {
+    return( number < 10 ? QString( "0" ) + QString::number( number ) : QString::number( number ) );
+}
+
 int Util::getDefaultQuizLength() {
     return( 1 );
 }

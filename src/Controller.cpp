@@ -1434,7 +1434,7 @@ bool Controller::exportData( Vocabulary* vocab, const QString& file, QStringList
 #endif
 
     if( isOk && exportStats )
-        isOk = Statistics::instance()->exportIntoZip( outputFile, exportedTransUidList );
+        isOk = Statistics::instance()->exportIntoZip( outputFile, languages, exportedTransUidList );
 
     if( zipClose( outputFile, "Closing comment" ) != 0 )
         return( false );
@@ -1515,7 +1515,7 @@ bool Controller::exportData( Folder* folder, const QString& file, QStringList* l
     isOk = exportFolderRecIntoZip( folder, outputFile, QString::null, exportedTransUidList, languages );
 
     if( isOk && exportStats )
-        isOk = Statistics::instance()->exportIntoZip( outputFile, exportedTransUidList );
+        isOk = Statistics::instance()->exportIntoZip( outputFile, languages, exportedTransUidList );
 
     if( zipClose( outputFile, "Closing comment" ) != 0 )
         return( false );

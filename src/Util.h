@@ -111,6 +111,9 @@ public:
     static QString getDefaultFontFamily();
     static int getDefaultFontSizeModifier();
 
+    static QString getDateAsShortString( const QDate& date );
+    static QString padWithLeadingZero( const int& number );
+
     static QString getDigraph( const QString& buffer );
     static QAction* createAction( const QString& name, const char** icon, QObject* receiver, const char* slot, int defaultKey = -1, bool toggle = false );
     static QString describeKey( int key );

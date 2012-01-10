@@ -725,7 +725,7 @@ QStringList Statistics::toString() const {
     return( str );
 }
 
-bool Statistics::exportIntoZip( zipFile outputFile, QStringList& exportedTransUidList ) const {
+bool Statistics::exportIntoZip( zipFile outputFile, QStringList* languages, QStringList& exportedTransUidList ) const {
 #ifdef DEBUG
     cout << "exportIntoZip" << endl;
 #endif
@@ -735,9 +735,110 @@ bool Statistics::exportIntoZip( zipFile outputFile, QStringList& exportedTransUi
     QByteArray buffer;
     QTextStream ts( buffer, IO_WriteOnly );
     ts.setEncoding( QTextStream::UnicodeUTF8 );
-    //writeStatsInXml( ts, *Statistics::instance(), exportedTransUidList );
+
+    writeTermDataInXml( ts, languages, exportedTransUidList );
     int err = Util::writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
 
     return( err == ZIP_OK );
 }
 
+void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QStringList& exportedTransUidList ) const {
+#ifdef DEBUG
+    cout << "applicationDirName=" << applicationDirName << endl;
+    for( QStringList::ConstIterator it = languages->begin(); it != languages->end(); it++ ) {
+        const QString& lang = *it;
+        cout << "lang=@" << lang << "@" << endl;
+    }
+    for( QStringList::ConstIterator it = exportedTransUidList.begin(); it != exportedTransUidList.end(); it++ ) {
+        const QString& uid = *it;
+        cout << "uid=@" << uid << "@" << endl;
+    }
+#endif
+    QDir dataDir( applicationDirName );
+    for( uint i = 0; i < dataDir.count(); i++ ) {
+        if( dataDir[ i ].left( 9 ) == "termData_" ) {
+            QString firstLang = dataDir[ i ].mid( 9, 2 );
+            QString secondLang = dataDir[ i ].mid( 12, 2 );
+            if( languages->contains( firstLang ) && languages->contains( secondLang ) ) {
+#ifdef DEBUG
+                cout << "processing file " << dataDir[ i ] << endl;
+#endif
+                QFile dataFile( applicationDirName + "/" + dataDir[ i ] );
+                if( !dataFile.open( IO_ReadOnly ) ) {
+                    cerr << "Cannot open metadata file: " << dataFile.name() << endl;
+                    return;
+                }
+                
+                QByteArray data( dataFile.readAll() );
+                dataFile.close();
+
+                ts << "<?xml version=\"1.0\"?>" << endl;
+                ts << "<stats>" << endl;
+
+                QDataStream in( data, IO_ReadOnly );
+
+                Q_UINT32 tempMagicNumber;
+                Q_UINT16 tempVersion;
+                QString tempKey;
+                int tempInterval;
+                uint tempRepetition;
+                float tempEasinessFactor;
+                QDate tempNextRepetitionDate;
+                QDate tempLastRepetitionDate;
+                uint tempSuccessCount;
+                uint tempMissCount;
+               
+                in >> tempMagicNumber >> tempVersion;
+#ifdef DEBUG
+                cout << "tempMagicNumber=" << tempMagicNumber << " tempVersion=" << tempVersion << endl;
+#endif
+                if( tempMagicNumber != Statistics::magicNumber ) {
+                    cerr << "Wrong magic number: Incompatible statistics data file." << endl;
+                    return;
+                }
+                if( tempVersion > 0x0001 ) {
+                    cerr << "Statistics data file is from a more recent version.  Upgrade toMOTko." << endl;
+                    return;
+                }
+                if( tempVersion < 0x0001 ) {
+                    cerr << "Statistics data format too old.  You must use an anterior version of toMOTko." << endl;
+                    return;
+                }
+
+                in.setVersion( 3 );
+                while( !in.atEnd() ) {
+                    in >> tempKey >> tempInterval >> tempRepetition >> tempEasinessFactor >> tempNextRepetitionDate;
+                    in >> tempLastRepetitionDate >> tempSuccessCount >> tempMissCount;
+#ifdef DEBUG
+                    cout << "tempKey=" << tempKey << " tempInterval=" << tempInterval << " tempRepetition=" << tempRepetition << " tempEasinessFactor=" << tempEasinessFactor;
+                    cout << " tempSuccessCount=" << tempSuccessCount << " tempMissCount=" << tempMissCount << endl;
+#endif
+
+                    TermData aTermData;
+                    aTermData.interval = tempInterval;
+                    aTermData.repetition = tempRepetition;
+                    aTermData.easinessFactor = tempEasinessFactor;
+                    aTermData.nextRepetitionDate = tempNextRepetitionDate;
+                    aTermData.lastRepetitionDate = tempLastRepetitionDate;
+                    aTermData.successCount = tempSuccessCount;
+                    aTermData.missCount = tempMissCount;
+
+                    BiUidKey key( tempKey );
+                    //if( exportedTransUidList.contains( key.getFirstUid() ) && 
+                    //    exportedTransUidList.contains( key.getSecondUid() ) ) {
+                        ts << "<termData biTransUidKey=\"" << key.toString() << "\" ";
+                        ts << "interval=\"" << aTermData.interval << "\" ";
+                        ts << "repetition=\"" << aTermData.repetition << "\" "; 
+                        ts << "easinessFactor=\"" << aTermData.easinessFactor << "\" "; 
+                        ts << "nextRepetitionDate=\"" << Util::getDateAsShortString( aTermData.nextRepetitionDate ) << "\" "; 
+                        ts << "lastRepetitionDate=\"" << Util::getDateAsShortString( aTermData.lastRepetitionDate ) << "\" "; 
+                        ts << "successCount=\"" << aTermData.successCount << "\" "; 
+                        ts << "missCount=\"" << aTermData.missCount << "\" />" << endl; 
+                    //}
+                }
+
+                ts << "</stats>" << endl;
+            }
+        }
+    }
+}

@@ -64,7 +64,7 @@ public:
      */
     void clear();
 
-    bool exportIntoZip( zipFile outputFile, QStringList& exportedTransUidList ) const;
+    bool exportIntoZip( zipFile outputFile, QStringList* languages, QStringList& exportedTransUidList ) const;
 
 private:
 
@@ -82,6 +82,8 @@ private:
     bool insertTermData( const BiUidKey& key, const QString& firstLang, const QString& testLang, const TermData& newTermData );
 
     bool removeTermData( QValueList<QString>& transUidList, const QString& filename );
+
+    void writeTermDataInXml( QTextStream& ts, QStringList* languages, QStringList& exportedTransUidList ) const; 
 
     static Statistics* singleton;
 
