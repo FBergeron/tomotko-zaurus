@@ -1,10 +1,7 @@
 ToDo
 ----
 I'm doing #3467481 for VocabularyManagerFrame::exportFolder.  I must do the same thing for VocabularyManagerFrame::exportVocab.
-    If the Show all glossaries option is enabled when export data with stats, I must consider all languages.
-        To do this, I should move exportStatsIntoZip() from Controller to Stats and read data from files instead of memory.
-        I'm now implementing Statistics::writeTermDataInXml().
-            I wrote the data but there is a problem with uid and the if.
+    If the more than 2 languages are enabled when exporting data with stats, I must consider all languages.
 
 I've commented out the method writeVocabulariesInXML().  Remove it permanently?
 Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)

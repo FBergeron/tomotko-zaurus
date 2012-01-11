@@ -640,6 +640,8 @@ void Statistics::convertTermData( const QString& firstLang, const QString& testL
 
     for( uint i = 0; i < keysToRemove.count(); i++ )
         termData.remove( keysToRemove[ i ] );
+
+    Statistics::saveTermData( firstLang, testLang );
 }
 
 void Statistics::clear() {
@@ -824,8 +826,8 @@ void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QS
                     aTermData.missCount = tempMissCount;
 
                     BiUidKey key( tempKey );
-                    //if( exportedTransUidList.contains( key.getFirstUid() ) && 
-                    //    exportedTransUidList.contains( key.getSecondUid() ) ) {
+                    if( exportedTransUidList.contains( key.getFirstUid() ) && 
+                        exportedTransUidList.contains( key.getSecondUid() ) ) {
                         ts << "<termData biTransUidKey=\"" << key.toString() << "\" ";
                         ts << "interval=\"" << aTermData.interval << "\" ";
                         ts << "repetition=\"" << aTermData.repetition << "\" "; 
@@ -834,7 +836,7 @@ void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QS
                         ts << "lastRepetitionDate=\"" << Util::getDateAsShortString( aTermData.lastRepetitionDate ) << "\" "; 
                         ts << "successCount=\"" << aTermData.successCount << "\" "; 
                         ts << "missCount=\"" << aTermData.missCount << "\" />" << endl; 
-                    //}
+                    }
                 }
 
                 ts << "</stats>" << endl;
