@@ -1,5 +1,6 @@
 ToDo
 ----
+Do not create the stats.xml file if it's empy.
 Ok, I must make a binary version for Zaurus with the modifications to convert the data, invoke the Progress Dialog for all language pairs and quit the application.  Then, remove the convert code, remake a binary version and install it on Zaurus.  Export all data (all lang and include stats).  Check if the images are there.  If it works, that means that I have all my data in a readable/reimportable format.  Make a backup of the .toMOTko and the exported data.  Next step will be import!
     It's done:  The file AllGlossariesAndStats.tmk contains all the exported data. 
         The file tomotko.data.after.convertion.tar.gz

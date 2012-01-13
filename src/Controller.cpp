@@ -1572,13 +1572,16 @@ bool Controller::exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QSt
 
 void Controller::writeFolderDataInXml( QTextStream& ts, const Folder& folder ) const {
     ts << QString( "<?xml version=\"1.0\"?>" ) << endl;
-    ts << QString( "<folder uid=\"" ) << folder.getUid().toString() << QString( "\" name=\"" ) << Util::escapeXml( folder.getTitle() ) << QString( "\"" );
+    ts << QString( "<folder xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " ) << endl;
+    ts << QString( "xsi:schemaLocation=\"http://tomotko.sourceforge.net/xsd/folder-1.0 http://tomotko.sourceforge.net/xsd/tomotko-folder-1.0.xsd\" " ) << endl;
+    ts << QString( "xmlns=\"http://tomotko.sourceforge.net/xsd/folder-1.0\" " ) << endl;
+    ts << QString( " uid=\"" ) << folder.getUid().toString() << QString( "\" name=\"" ) << Util::escapeXml( folder.getTitle() ) << QString( "\"" );
 
-    if( !folder.getAuthor().isNull() )
+    if( !folder.getAuthor().isNull() && !folder.getAuthor().isEmpty() )
         ts << QString( " author=\"" ) << Util::escapeXml( folder.getAuthor() ) << QString( "\"" );
     ts << QString( ">" ) << endl;
 
-    if( !folder.getDescription().isNull() )
+    if( !folder.getDescription().isNull() && !folder.getDescription().isEmpty() )
         ts << QString( "\t<desc>" ) << Util::escapeXml( folder.getDescription() ) << QString( "</desc>" ) << endl;
     ts << QString( "</folder>" ) << endl;
 }
