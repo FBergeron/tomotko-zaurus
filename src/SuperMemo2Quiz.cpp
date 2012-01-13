@@ -43,7 +43,9 @@ void SuperMemo2Quiz::init( const QString& firstLang, const QString& testLang, Fo
     initRec( firstLang, testLang, rootFolder );
     shuffleTerms();
     currTermIndex = 0;
+#ifdef DEBUG
     cerr << "initTermCount=" << initTermCount << endl;
+#endif
 }
 
 void SuperMemo2Quiz::reinit() {
@@ -73,12 +75,14 @@ void SuperMemo2Quiz::initRec( const QString& firstLang, const QString& testLang,
                 //TermData termData = Statistics::instance()->loadTermData( termKey.getTermUid().toString(), firstLang, testLang );
                 BiUidKey key( firstLangTrans.getUid().toString(), testLangTrans.getUid().toString() );
                 TermData termData = Statistics::instance()->loadTermData( key, firstLang, testLang );
+#ifdef DEBUG
                 cerr << "uid=" << term.getUid().toString();
                 if( termData.nextRepetitionDate.isNull() )
                     cerr << "nr date is null" << endl;
                 else {
                     cerr << "currDate=" << QDate::currentDate().toString() << " nr date=" << termData.nextRepetitionDate.toString() << endl;
                 }
+#endif
                 if( termData.nextRepetitionDate.isNull() || QDate::currentDate().daysTo( termData.nextRepetitionDate ) <= 0 ) {
                     terms.append( termKey );
                     initTermCount++;
@@ -152,10 +156,11 @@ int SuperMemo2Quiz::getNextInterval( int interval, float easinessFactor, int rep
 
 void SuperMemo2Quiz::gradeAnswer( int grade ) {
     TermKey currTerm = terms[ currTermIndex ];
-    //TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
     BiUidKey key( currTerm.getFirstLanguageTranslationUid().toString(), currTerm.getTestLanguageTranslationUid().toString() );
     TermData termData = Statistics::instance()->getTermData( key );
+#ifdef DEBUG
     cerr << "TermData before: repetition=" << termData.repetition << " interval=" << termData.interval << " EF=" << termData.easinessFactor << " nextRepDate=" << ( termData.nextRepetitionDate.isNull() ? QString( "null" ) : termData.nextRepetitionDate.toString() ) << endl;
+#endif
     if( grade >= 3 ) {
         termData.successCount += 1;
         termData.interval = getNextInterval( termData.interval, termData.easinessFactor, termData.repetition );
@@ -175,8 +180,9 @@ void SuperMemo2Quiz::gradeAnswer( int grade ) {
     if( termData.easinessFactor < 1.3 )
         termData.easinessFactor = 1.3;
 
+#ifdef DEBUG
     cerr << "TermData after : repetition=" << termData.repetition << " interval=" << termData.interval << " EF=" << termData.easinessFactor << " nextRepDate=" << termData.nextRepetitionDate.toString() << endl;
-    //Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
+#endif
     Statistics::instance()->setTermData( key, firstLang, testLang, termData ); 
 }
 

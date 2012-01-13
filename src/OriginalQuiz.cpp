@@ -36,7 +36,9 @@ bool OriginalQuiz::load() {
     Q_UINT16 tempVersion;
 
     in >> tempMagicNumber >> tempVersion;
-cerr << "quiz ver=" << tempVersion << endl;
+#ifdef DEBUG
+    cerr << "quiz ver=" << tempVersion << endl;
+#endif
     if( tempMagicNumber != magicNumber ) {
         cerr << "Wrong magic number: Incompatible data file." << endl;
         return( false );
@@ -206,12 +208,16 @@ search:
     int nextPool = startPool; 
     do {
         const int poolSize = termPool[ nextPool ].count();
+#ifdef DEBUG
         cerr << "poolSize="<< poolSize << endl;
+#endif
         if( poolSize > 0 ) {
             const int index = rand() % poolSize;
             currTermPool = nextPool;
             currTerm = termPool[ nextPool ][ index ];
-cerr << "currTerm = " << currTerm.getTermUid().toString() << endl;
+#ifdef DEBUG
+            cerr << "currTerm = " << currTerm.getTermUid().toString() << endl;
+#endif
             return( currTerm );
         }
         nextPool = ( nextPool + 1 ) % OriginalQuiz::poolCount; 
@@ -251,11 +257,9 @@ void OriginalQuiz::gradeAnswer( int grade ) {
 }
 
 void OriginalQuiz::rightAnswer() {
-    //TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
     BiUidKey key( currTerm.getFirstLanguageTranslationUid().toString(), currTerm.getTestLanguageTranslationUid().toString() );
     TermData termData = Statistics::instance()->getTermData( key );
     termData.successCount += 1;
-    //Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
     Statistics::instance()->setTermData( key, firstLang, testLang, termData ); 
 
     if( currTermPool == OriginalQuiz::poolCount - 1 )
@@ -267,15 +271,19 @@ void OriginalQuiz::rightAnswer() {
 }
 
 void OriginalQuiz::wrongAnswer() {
+#ifdef DEBUG
     cerr << "wrongAnswer" << endl;
-    //TermData termData = Statistics::instance()->getTermData( currTerm.getTermUid().toString() );
+#endif
     BiUidKey key( currTerm.getFirstLanguageTranslationUid().toString(), currTerm.getTestLanguageTranslationUid().toString() );
     TermData termData = Statistics::instance()->getTermData( key );
+#ifdef DEBUG
     cerr << "miss=" << termData.missCount << endl;
+#endif
     termData.missCount += 1;
-    //Statistics::instance()->setTermData( currTerm.getTermUid().toString(), firstLang, testLang, termData ); 
     Statistics::instance()->setTermData( key, firstLang, testLang, termData ); 
+#ifdef DEBUG
     cerr << "ok" << endl;
+#endif
 
     increaseTermPriority();
     putCurrentTermOnStandby();

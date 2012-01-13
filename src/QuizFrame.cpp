@@ -366,7 +366,12 @@ void QuizFrame::askTerm( const Term& term ) {
     controller->initRevealingSequence();
     setTerm( term );
 
-    TermData termData = Statistics::instance()->getTermData( term.getUid().toString() );
+    QString firstLang( controller->getQuizFirstLanguage() );
+    QString testLang( controller->getQuizTestLanguage() );
+    Translation firstLangTrans = term.getTranslation( firstLang );
+    Translation testLangTrans = term.getTranslation( testLang );
+    BiUidKey key( firstLangTrans.getUid().toString(), testLangTrans.getUid().toString() );
+    TermData termData = Statistics::instance()->getTermData( key );
 
     emit( easinessFactorChanged( termData.easinessFactor ) );
     emit( repetitionChanged ( termData.repetition ) );
