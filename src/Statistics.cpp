@@ -756,6 +756,11 @@ void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QS
         cout << "uid=@" << uid << "@" << endl;
     }
 #endif
+    ts << "<?xml version=\"1.0\"?>" << endl;
+    ts << "<stats xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " << endl;
+    ts << "xsi:schemaLocation=\"http://tomotko.sourceforge.net/xsd/stats-1.0 http://tomotko.sourceforge.net/xsd/tomotko-stats-1.0.xsd\" " << endl;
+    ts << "xmlns=\"http://tomotko.sourceforge.net/xsd/stats-1.0\">" << endl;
+
     QDir dataDir( applicationDirName );
     for( uint i = 0; i < dataDir.count(); i++ ) {
         if( dataDir[ i ].left( 9 ) == "termData_" ) {
@@ -773,9 +778,6 @@ void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QS
                 
                 QByteArray data( dataFile.readAll() );
                 dataFile.close();
-
-                ts << "<?xml version=\"1.0\"?>" << endl;
-                ts << "<stats>" << endl;
 
                 QDataStream in( data, IO_ReadOnly );
 
@@ -838,9 +840,8 @@ void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QS
                         ts << "missCount=\"" << aTermData.missCount << "\" />" << endl; 
                     }
                 }
-
-                ts << "</stats>" << endl;
             }
         }
     }
+    ts << "</stats>" << endl;
 }
