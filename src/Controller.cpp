@@ -1595,12 +1595,21 @@ void Controller::writeVocabularyInXml( QTextStream& ts, const Vocabulary& vocab,
 
     for( int i = 0; i < depth; i++ )
         ts << "\t";
-    ts << QString( "<glossary uid=\"" ) << vocab.getUid().toString() << "\" name=\"" << Util::escapeXml( vocab.getTitle() ) << "\" ";
-    ts << QString( "author=\"" ) << Util::escapeXml( vocab.getAuthor() ) << "\">" << endl;
+    ts << QString( "<glossary xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " ) << endl;
+    ts << QString( "xsi:schemaLocation=\"http://tomotko.sourceforge.net/xsd/vocab-1.0 http://tomotko.sourceforge.net/xsd/tomotko-vocab-1.0.xsd\" " ) << endl;
+    ts << QString( "xmlns=\"http://tomotko.sourceforge.net/xsd/vocab-1.0\" " ) << endl;
+
+    ts << QString( "uid=\"" ) << vocab.getUid().toString();
+    if( !vocab.getTitle().isNull() && !vocab.getTitle().isEmpty() )
+        ts << "\" name=\"" << Util::escapeXml( vocab.getTitle() ) << "\" ";
+    if( !vocab.getAuthor().isNull() && !vocab.getAuthor().isEmpty() )
+        ts << QString( "author=\"" ) << Util::escapeXml( vocab.getAuthor() ) << "\"";
+    ts << QString( ">" ) << endl;
 
     for( int i = 0; i < depth; i++ )
         ts << "\t";
-    ts << QString( "\t<desc>" ) << Util::escapeXml( vocab.getDescription() ) << QString( "</desc>" ) << endl;
+    if( !vocab.getDescription().isNull() && !vocab.getDescription().isEmpty() )
+        ts << QString( "\t<desc>" ) << Util::escapeXml( vocab.getDescription() ) << QString( "</desc>" ) << endl;
     for( Vocabulary::TermMap::ConstIterator it = vocab.begin(); it != vocab.end(); it++ ) {
         const Term& term = it.data();
         for( int i = 0; i < depth; i++ )
