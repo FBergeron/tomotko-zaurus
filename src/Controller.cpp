@@ -882,14 +882,14 @@ void Controller::loadData() {
 
 void Controller::rightAnswer() {
     if( quiz ) {
-        quiz->gradeAnswer( 5 );
+        quiz->gradeAnswer( 4 );
         emit( progressChanged( getProgress() ) );
     }
 }
 
 void Controller::wrongAnswer() {
     if( quiz ) {
-        quiz->gradeAnswer( 0 );
+        quiz->gradeAnswer( 2 );
         emit( progressChanged( getProgress() ) );
     }
 }

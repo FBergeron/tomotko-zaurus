@@ -451,27 +451,27 @@ void QuizFrame::gradeAnswer( int grade ) {
 }
 
 void QuizFrame::gradeAnswer1() {
-    gradeAnswer( 1 );
+    gradeAnswer( 0 );
 }
 
 void QuizFrame::gradeAnswer2() {
-    gradeAnswer( 2 );
+    gradeAnswer( 1 );
 }
 
 void QuizFrame::gradeAnswer3() {
-    gradeAnswer( 3 );
+    gradeAnswer( 2 );
 }
 
 void QuizFrame::gradeAnswer4() {
-    gradeAnswer( 4 );
+    gradeAnswer( 3 );
 }
 
 void QuizFrame::gradeAnswer5() {
-    gradeAnswer( 5 );
+    gradeAnswer( 4 );
 }
 
 void QuizFrame::gradeAnswer6() {
-    gradeAnswer( 6 );
+    gradeAnswer( 5 );
 }
 
 void QuizFrame::reveal() {
