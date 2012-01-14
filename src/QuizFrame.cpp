@@ -223,7 +223,7 @@ void QuizFrame::buildAnswerButtons() {
             gradeAnswerButton->setEnabled( false );
             gradeAnswerButton->show();
             gradeAnswerButton->installEventFilter( this );
-            QToolTip::add( gradeAnswerButton, QString::number( i ) );
+            QToolTip::add( gradeAnswerButton, QString::number( i + 1 ) );
             connect( gradeAnswerButton, SIGNAL( clicked() ), gradeAnswerButton, SLOT( gradeAnswer() ) );
             connect( gradeAnswerButton, SIGNAL( gradeSubmitted( int ) ), this, SLOT( gradeAnswer( int ) ) );
 
