@@ -4,7 +4,7 @@ Section: qpe/applications
 Maintainer: Frederic Bergeron <fbergeron@tomotko.sourceforge.net>
 Architecture: arm
 Version: 0.12
-Depends: qpe-base ($QPE_VERSION),libz_1.2.3
+Depends: qpe-base ($QPE_VERSION),libz_1.2.5
 Licence: GPLv2
 Description: Vocabulary application
  Small application helping to learn new vocabulary.

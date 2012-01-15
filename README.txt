@@ -180,10 +180,10 @@ To round up a positive float number in C++: uint roundedValue = (uint)( val + 0.
 About zlib
 ----------
 I downloaded the source code from the zlib website (http://zlib.net).
-The latest version was zlib-1.2.3.
+The latest version was zlib-1.2.5.
 
 To build the .so file, as written in the INSTALL file :
-# cd ~/zlib-1.2.3
+# cd ~/zlib-1.2.5
 # source ../tomotko-zaurus/bin/dev-x86-qpe.sh
 # ./configure --shared
 # make clean;make
@@ -191,10 +191,10 @@ To build the .so file, as written in the INSTALL file :
 To install it at the right place :
 
 # su
-# cp libz.so.1.2.3 /opt/Qtopia/lib
+# cp libz.so.1.2.5 /opt/Qtopia/lib
 # cd /opt/Qtopia/lib
-# ln -s libz.so.1.2.3 libz.so
-# ln -s libz.so.1.2.3 libz.so.1
+# ln -s libz.so.1.2.5 libz.so
+# ln -s libz.so.1.2.5 libz.so.1
 
 I also had to install the header files (zlib.h, zconf.h, etc.).
 
@@ -203,15 +203,20 @@ I also had to install the header files (zlib.h, zconf.h, etc.).
 # cp zconf.h /opt/Qtopia/include
 
 To use zlib library in toMOTko, I added in toMOTko.pro a reference to the library : -lz
+I also added a dependency in toMOTko.control in the Depends: element.
 When I build the application in x86 environment, neither the compiler or the linker complain.  It works.
 
-After that, I need to do the same for ARM environment.  Instead of building a so file, I found one on Internet.  It's a file named : zlib_2.3_arm.ipk.  I renamed it to .tgz and extracted the so files that I installed into /opt/Qtopia/sharp/lib :
+After that, I need to do the same for ARM environment.  Instead of building a so file, I found one on Internet here:
+
+http://www.lyndonhill.com/Downloads/Zaurus/libz_1.2.5_arm.ipk
+
+I renamed it to .tgz and extracted the so files that I installed into /opt/Qtopia/sharp/lib :
 
 # su
-# cp libz.so.1.2.3 /opt/Qtopia/sharp/lib
+# cp libz.so.1.2.5 /opt/Qtopia/sharp/lib
 # cd /opt/Qtopia/sharp/lib
-# ln -s libz.so.1.2.3 libz.so
-# ln -s libz.so.1.2.3 libz.so.1
+# ln -s libz.so.1.2.5 libz.so
+# ln -s libz.so.1.2.5 libz.so.1
 
 To compile, it may be necessary to put some header files (zlib.h, zconf.h, etc.) into /opt/Qtopia/sharp/include.
 
