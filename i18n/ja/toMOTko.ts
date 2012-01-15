@@ -1181,6 +1181,10 @@ Overwrite the current assignment?</source>
         <source>MultipleTranslationsDetectedForRemoveItem</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ConfirmImportStats</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ZFileDialog</name>

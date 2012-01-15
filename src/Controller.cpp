@@ -445,7 +445,56 @@ Vocabulary* Controller::loadVocabulary( const QString& parentDir ) {
     return( vocab );
 }
 
-Base* Controller::importData( Folder* folder, const QString& filename, const QStringList& languages ) {
+bool Controller::isImportedDataWithStats( const QString& filename ) {
+    int status;
+    bool isStatsFileFound = false;
+    //Base* newItem = NULL;
+
+    zipFile inputFile = unzOpen( filename.latin1() );
+    if( inputFile == NULL )
+        return( false );
+
+    unz_global_info gi;
+    status = unzGetGlobalInfo( inputFile, &gi );
+
+    if( status == UNZ_OK ) {
+        // Handle all entries.
+        for( uLong i = 0; i < gi.number_entry; i++ ) {
+            char filename_inzip[ 256 ];
+            unz_file_info file_info;
+            status = unzGetCurrentFileInfo( inputFile, &file_info, filename_inzip, sizeof( filename_inzip ), NULL, 0, NULL, 0 );
+            if( status != UNZ_OK ) 
+                break;
+
+            QString filenameInZip( filename_inzip );
+            QFileInfo fileInfo( filenameInZip );
+
+            if( fileInfo.fileName() == "stats.xml" ) {
+                isStatsFileFound = true;
+                break;
+            }
+
+            status = unzGoToNextFile( inputFile );
+            if( status == UNZ_END_OF_LIST_OF_FILE ) {
+                status = UNZ_OK;
+                break;
+            }
+            else if( status != UNZ_OK ) {
+                // A problem occurred so exit loop.
+                break;
+            }
+        }
+    }
+
+    if( unzClose( inputFile ) != UNZ_OK )
+        return( false );
+
+    return( isStatsFileFound );
+}
+
+Base* Controller::importData( Folder* folder, const QString& filename, const QStringList& languages, bool importStats /* = false */ ) {
+
+cout << "importData importStats=" << importStats << endl;
     // Save the data to get a clean state (without items marked for deletion).
     bool isOk = saveData();
     if( !isOk )

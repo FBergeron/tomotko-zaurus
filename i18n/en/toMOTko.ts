@@ -1273,6 +1273,14 @@ many languages.  Please indicate
 which translations to delete.
 </translation>
     </message>
+    <message>
+        <source>ConfirmImportStats</source>
+        <translation>The glossary file that you want
+to import contains SM-2 
+statistics data.
+Do you want to also import 
+these data?</translation>
+    </message>
 </context>
 <context>
     <name>ZFileDialog</name>

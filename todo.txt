@@ -1,12 +1,6 @@
 ToDo
 ----
-Do not create the stats.xml file if it's empy.
-Ok, I must make a binary version for Zaurus with the modifications to convert the data, invoke the Progress Dialog for all language pairs and quit the application.  Then, remove the convert code, remake a binary version and install it on Zaurus.  Export all data (all lang and include stats).  Check if the images are there.  If it works, that means that I have all my data in a readable/reimportable format.  Make a backup of the .toMOTko and the exported data.  Next step will be import!
-    It's done:  The file AllGlossariesAndStats.tmk contains all the exported data. 
-        The file tomotko.data.after.convertion.tar.gz
-
-I'm doing #3467481 for VocabularyManagerFrame::exportFolder.  I must do the same thing for VocabularyManagerFrame::exportVocab.
-    If the more than 2 languages are enabled when exporting data with stats, I must consider all languages.
+Finish importData with importStats parameter.
 
 I've commented out the method writeVocabulariesInXML().  Remove it permanently?
 Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)
@@ -39,11 +33,8 @@ Save data properly with latest data format
                 Then, we compile and execute, invoke the Progress Dialog for all the language pairs, and quit.
                 Switch the commented lines in a), b) and c)
                 Recompile and reexecute.
-I must test the image processing.  Verify if the images are still pointing at the right location.  Test that on my Zaurus.
-Load data property with latest data format.
 
 Is there a tool that would find dead code? I have installed lcov.  Doc can be found in /usr/share/doc/lcov.  I have not really looked at it.
-
 
 It seems that the termData sometimes refer to terms that are not related to the selected languages.  I don't know if it's related to a previous bug or not.  How can make sure that a stat entry is not written in the wrong file?
 Load data from previous old format and convert if needed.

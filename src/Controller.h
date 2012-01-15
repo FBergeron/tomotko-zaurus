@@ -115,7 +115,8 @@ public:
     void loadLegacyVocabulary( Folder* folder );
 
     QStringList getTranslationLanguagesFromFile( const QString& filename ) const;
-    Base* importData( Folder* rootFolder, const QString& filename, const QStringList& languages );
+    bool isImportedDataWithStats( const QString& filename );
+    Base* importData( Folder* rootFolder, const QString& filename, const QStringList& languages, bool importStats = false );
 
     int getInitialTermCount() const;
 

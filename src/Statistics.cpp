@@ -738,13 +738,15 @@ bool Statistics::exportIntoZip( zipFile outputFile, QStringList* languages, QStr
     QTextStream ts( buffer, IO_WriteOnly );
     ts.setEncoding( QTextStream::UnicodeUTF8 );
 
-    writeTermDataInXml( ts, languages, exportedTransUidList );
-    int err = Util::writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
+    bool hasTermDataWritten = writeTermDataInXml( ts, languages, exportedTransUidList );
+    if( !hasTermDataWritten ) 
+        return( true );
 
+    int err = Util::writeFileIntoZipFile( outputFile, filenameInZip, buffer.data(), buffer.size() );
     return( err == ZIP_OK );
 }
 
-void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QStringList& exportedTransUidList ) const {
+bool Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QStringList& exportedTransUidList ) const {
 #ifdef DEBUG
     cout << "applicationDirName=" << applicationDirName << endl;
     for( QStringList::ConstIterator it = languages->begin(); it != languages->end(); it++ ) {
@@ -756,6 +758,8 @@ void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QS
         cout << "uid=@" << uid << "@" << endl;
     }
 #endif
+    bool hasSomeTermDataExported = false;
+
     ts << "<?xml version=\"1.0\"?>" << endl;
     ts << "<stats xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" " << endl;
     ts << "xsi:schemaLocation=\"http://tomotko.sourceforge.net/xsd/stats-1.0 http://tomotko.sourceforge.net/xsd/tomotko-stats-1.0.xsd\" " << endl;
@@ -773,7 +777,7 @@ void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QS
                 QFile dataFile( applicationDirName + "/" + dataDir[ i ] );
                 if( !dataFile.open( IO_ReadOnly ) ) {
                     cerr << "Cannot open metadata file: " << dataFile.name() << endl;
-                    return;
+                    return( false );
                 }
                 
                 QByteArray data( dataFile.readAll() );
@@ -798,15 +802,15 @@ void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QS
 #endif
                 if( tempMagicNumber != Statistics::magicNumber ) {
                     cerr << "Wrong magic number: Incompatible statistics data file." << endl;
-                    return;
+                    return( false );
                 }
                 if( tempVersion > 0x0001 ) {
                     cerr << "Statistics data file is from a more recent version.  Upgrade toMOTko." << endl;
-                    return;
+                    return( false );
                 }
                 if( tempVersion < 0x0001 ) {
                     cerr << "Statistics data format too old.  You must use an anterior version of toMOTko." << endl;
-                    return;
+                    return( false );
                 }
 
                 in.setVersion( 3 );
@@ -830,6 +834,9 @@ void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QS
                     BiUidKey key( tempKey );
                     if( exportedTransUidList.contains( key.getFirstUid() ) && 
                         exportedTransUidList.contains( key.getSecondUid() ) ) {
+
+                        hasSomeTermDataExported = true; 
+
                         ts << "<termData biTransUidKey=\"" << key.toString() << "\" ";
                         ts << "interval=\"" << aTermData.interval << "\" ";
                         ts << "repetition=\"" << aTermData.repetition << "\" "; 
@@ -844,4 +851,6 @@ void Statistics::writeTermDataInXml( QTextStream& ts, QStringList* languages, QS
         }
     }
     ts << "</stats>" << endl;
+
+    return( hasSomeTermDataExported );
 }

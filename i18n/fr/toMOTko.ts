@@ -1277,6 +1277,13 @@ traductions dans plusieurs
 langues.  Indiquez les traductions
 à effacer.</translation>
     </message>
+    <message>
+        <source>ConfirmImportStats</source>
+        <translation>Le fichier contient des données
+de statistiques SM-2.
+Voulez-vous aussi importer
+ces données?</translation>
+    </message>
 </context>
 <context>
     <name>ZFileDialog</name>

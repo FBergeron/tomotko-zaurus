@@ -321,7 +321,23 @@ void VocabularyManagerFrame::importData() {
                 }
 
                 QCopEnvelope busyEnvImport( "QPE/System", "busy()" ); 
-                Base* newItem = controller->importData( folder, dialog.selectedFile(), languagesToImport );
+                bool importStats = false;
+                bool isDataWithStats = controller->isImportedDataWithStats( dialog.selectedFile() );
+                if( isDataWithStats ) {
+                    QMessageBox msgBox( QObject::tr( "Warning" ), tr( "ConfirmImportStats" ),
+                        QMessageBox::Warning,
+                        QMessageBox::Yes,
+                        QMessageBox::No | QMessageBox::Default | QMessageBox::Escape,
+                        QMessageBox::NoButton,
+                        this );
+                    msgBox.setButtonText( QMessageBox::Yes, tr( "Yes" ) );
+                    msgBox.setButtonText( QMessageBox::No, tr( "No" ) );
+
+                    int response = msgBox.exec();
+                    if( response == QMessageBox::Yes )
+                        importStats = true;
+                }
+                Base* newItem = controller->importData( folder, dialog.selectedFile(), languagesToImport, importStats );
                 //cerr << "newItem=" << newItem << endl;
                 if( newItem ) {
                     TreeItem* newTreeItem = NULL;

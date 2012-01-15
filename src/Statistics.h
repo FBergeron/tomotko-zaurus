@@ -83,7 +83,14 @@ private:
 
     bool removeTermData( QValueList<QString>& transUidList, const QString& filename );
 
-    void writeTermDataInXml( QTextStream& ts, QStringList* languages, QStringList& exportedTransUidList ) const; 
+    /**
+     * Write the statistics for term data in XML.
+     * @param ts Destination stream where the XML is written.
+     * @param languages List of selected languages for exportation.
+     * @param exportedTransUidList List of translation uids that have been exported.  TermData related to these translations will be exported.  Others will be ignored.
+     * @returns true if at least one termData entry has been written.  False otherwise.
+     */
+    bool writeTermDataInXml( QTextStream& ts, QStringList* languages, QStringList& exportedTransUidList ) const; 
 
     static Statistics* singleton;
 

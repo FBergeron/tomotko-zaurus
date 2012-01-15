@@ -1193,6 +1193,10 @@ Die neuen Daten sind zur Zeit nicht sichtbar. Sie müssen die entsprechenden Spr
         <source>MultipleTranslationsDetectedForRemoveItem</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ConfirmImportStats</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ZFileDialog</name>

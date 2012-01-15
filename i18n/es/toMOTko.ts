@@ -1272,6 +1272,13 @@ los traducciones que usted
 quisiere borrar.
 </translation>
     </message>
+    <message>
+        <source>ConfirmImportStats</source>
+        <translation>El glosario contiene
+estadísticas SM-2.
+Quiere Usted importar 
+también estas data?</translation>
+    </message>
 </context>
 <context>
     <name>ZFileDialog</name>
