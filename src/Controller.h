@@ -25,6 +25,7 @@
 #include "Progress.h"
 #include "Sequence.h"
 #include "Statistics.h"
+#include "StatsParser.h"
 #include "SuperMemo2Quiz.h"
 #include "Term.h"
 #include "TermKey.h"
@@ -167,6 +168,7 @@ private:
     bool importFolderFromZip( Folder* folder, const QString& folderLocation, zipFile inputFile );
     bool importVocabularyFromZip( Vocabulary* vocab, const QString& vocabLocation, const QStringList& languages, zipFile inputFile );
     bool importImageFromZip( const QString& imgPath, zipFile inputFile );
+    bool importStatsFromZip( zipFile inputFile );
     bool exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList& exportedTransUidList, QStringList* languages = NULL ) const;
     bool exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList& exportedTransUidList, QStringList* languages = NULL ) const;
 

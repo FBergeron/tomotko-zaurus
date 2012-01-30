@@ -66,6 +66,7 @@ HEADERS += src/Base.h \
            src/LanguageUpdateNotifier.h \
            src/StudyLanguageItem.h \
            src/FolderParser.h \
+           src/StatsParser.h \
            src/VocabParser.h \
            src/Vocabulary.h \
            src/minizip/crypt.h \
@@ -128,6 +129,7 @@ SOURCES += src/Util.cpp \
            src/LanguageUpdateNotifier.cpp \
            src/StudyLanguageItem.cpp \
            src/FolderParser.cpp \
+           src/StatsParser.cpp \
            src/VocabParser.cpp \
            src/Vocabulary.cpp \
            src/minizip/ioapi.c \

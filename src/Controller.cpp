@@ -599,6 +599,9 @@ cout << "importData importStats=" << importStats << endl;
                     importVocabularyFromZip( newVocab, vocabLocation, languages, inputFile ); // Should we handle error here?
                     cerr << "handling data.xml ok" << endl;
                 }
+                else if( fileInfo.fileName() == "stats.xml" ) {
+                    importStatsFromZip( inputFile );
+                }
             }
 
             status = unzGoToNextFile( inputFile );
@@ -767,7 +770,7 @@ bool Controller::importFolderFromZip( Folder* folder, const QString& folderLocat
 
         if( readStatus == 0 ) {
             QTextStream ts2( ba, IO_ReadOnly );
-            FolderParser parser( *folder, folderLocation );
+            FolderParser parser( *folder );
             QXmlInputSource source( ts2 );
 
             QXmlSimpleReader reader;
@@ -787,6 +790,77 @@ bool Controller::importFolderFromZip( Folder* folder, const QString& folderLocat
                     cerr << "Could not create directory " << folderLocation << endl;
                     isOk = false;
                 }
+            }
+
+            //if( !isOk || !parser.isVocabularyFile() ) {
+            //    delete( vocab );
+            //    vocab = NULL;
+            //}
+        }
+    }
+
+    free( buf );
+
+    /*status =*/ unzCloseCurrentFile( inputFile );
+    //if( readStatus != UNZ_OK || status != UNZ_OK ) 
+    //    return( NULL );
+    return( isOk );
+}
+
+bool Controller::importStatsFromZip( zipFile inputFile ) {
+    int status = unzOpenCurrentFile( inputFile );
+    if( status != UNZ_OK )
+        return( false );
+
+    bool isOk = true;
+
+    char* buf = NULL;
+    uInt size_buf = 8192; // Arbitrary size for now.
+    buf = (char*)malloc( size_buf );
+    if( buf == NULL ) {
+        cerr << "Cannot allocate memory for unzip buffer." << endl;
+        status = UNZ_INTERNALERROR;
+    }
+
+    if( status == UNZ_OK ) {
+        QByteArray ba;
+        QTextStream ts( ba, IO_WriteOnly );
+
+        int totalByteCount = 0;
+        int readStatus;
+        for( ;; ) {
+            readStatus = unzReadCurrentFile( inputFile, buf, size_buf );
+            if( readStatus > 0 ) {
+                ts.writeRawBytes( buf, readStatus );
+                totalByteCount += readStatus;
+            }
+            else
+                break;
+        }
+
+        if( readStatus == 0 ) {
+            QTextStream ts2( ba, IO_ReadOnly );
+            StatsParser parser( *Statistics::instance() );
+            QXmlInputSource source( ts2 );
+
+            QXmlSimpleReader reader;
+            reader.setContentHandler( &parser );
+            isOk = reader.parse( source );
+
+            if( isOk ) {
+                // TODO
+                //// Create the containing folder if needed.
+                //isOk = Util::makeDirectory( folderLocation );
+                //if( isOk ) {
+                //    const QString& folderDataFilename( folderLocation + "/metadata.gz" );
+                //    isOk = folder->saveMetadata( folderDataFilename );
+                //    if( isOk )
+                //        folder->setDirty( false );
+                //}
+                //else {
+                //    cerr << "Could not create directory " << folderLocation << endl;
+                //    isOk = false;
+                //}
             }
 
             //if( !isOk || !parser.isVocabularyFile() ) {

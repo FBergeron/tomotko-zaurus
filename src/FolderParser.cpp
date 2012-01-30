@@ -1,6 +1,6 @@
 #include "FolderParser.h"
 
-FolderParser::FolderParser( Folder& folder, const QString& location ) : folder( folder ), isFolderFile( false ), location( location ) {
+FolderParser::FolderParser( Folder& folder ) : folder( folder ), folderFile( false ) {
 }
 
 bool FolderParser::startDocument() {
@@ -12,7 +12,7 @@ bool FolderParser::startElement( const QString&, const QString&, const QString& 
         folder.setTitle( attribs.value( QString( "name" ) ) );
         folder.setAuthor( attribs.value( QString( "author" ) ) );
         desc = QString();
-        isFolderFile = true;
+        folderFile = true;
     }
     else if( qname == QString( "desc" ) ) {
         mustKeepText = true;
@@ -51,6 +51,6 @@ bool FolderParser::fatalError( const QXmlParseException& exception ) {
     return( false );
 }
 
-bool FolderParser::isVocabularyFile() {
-    return( isFolderFile );
+bool FolderParser::isFolderFile() {
+    return( folderFile );
 }

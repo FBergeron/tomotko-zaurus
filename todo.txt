@@ -1,6 +1,7 @@
 ToDo
 ----
 Finish importData with importStats parameter.
+    I'm now implementing StatsParser
 
 I've commented out the method writeVocabulariesInXML().  Remove it permanently?
 Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)
