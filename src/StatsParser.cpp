@@ -1,6 +1,6 @@
 #include "StatsParser.h"
 
-StatsParser::StatsParser( Statistics& stats ) : stats( stats ), isStatsFile( false ) {
+StatsParser::StatsParser() : isStatsFile( false ) {
 }
 
 bool StatsParser::startDocument() {
@@ -18,21 +18,63 @@ bool StatsParser::startElement( const QString&, const QString&, const QString& q
     //    mustKeepText = true;
     //    tempCh = QString();
     //}
-    return( true );
-}
+    if( qname == QString( "stats" ) ) {
+        termData.clear();
+    }
+    else if ( qname == QString( "termData" ) ) {
+        int tempInterval;
+        uint tempRepetition;
+        float tempEasinessFactor; // EF
+        QDate tempNextRepetitionDate;
+        QDate tempLastRepetitionDate;
+        uint tempSuccessCount;
+        uint tempMissCount;
+        
+        bool isOk;
+        tempInterval = attribs.value( "interval" ).toInt( &isOk );
+        if( !isOk )
+            return( false );
 
-bool StatsParser::characters( const QString& characters ) {
-    //if( mustKeepText ) {
-    //    tempCh = characters.stripWhiteSpace();
-    //    mustKeepText = false;
-    //}
+        tempRepetition = attribs.value( "repetition" ).toUInt( &isOk );
+        if( !isOk )
+            return( false );
+
+        tempEasinessFactor = attribs.value( "easinessFactor" ).toFloat( &isOk );
+        if( !isOk )
+            return( false );
+
+        //tempNextRepetitionDate = attribs.value( "nextRepetitionDate" ).toDate( &isOk );
+        //if( !isOk )
+        //    return( false );
+
+        //tempLastRepetitionDate = attribs.value( "lastRepetitionDate" ).toDate( &isOk );
+        //if( !isOk )
+        //    return( false );
+
+        tempSuccessCount = attribs.value( "successCount" ).toUInt( &isOk );
+        if( !isOk )
+            return( false );
+
+        tempMissCount = attribs.value( "missCount" ).toUInt( &isOk );
+        if( !isOk )
+            return( false );
+
+        currTermData = new TermData();
+        currTermData->interval = tempInterval;
+        currTermData->repetition = tempRepetition;
+        currTermData->easinessFactor = tempEasinessFactor;
+        currTermData->nextRepetitionDate = tempNextRepetitionDate;
+        currTermData->lastRepetitionDate = tempLastRepetitionDate;
+        currTermData->successCount = tempSuccessCount;
+        currTermData->missCount = tempMissCount;
+    }
     return( true );
 }
 
 bool StatsParser::endElement( const QString&, const QString&, const QString& qname ) {
-    //if( qname == QString( "desc" ) ) {
-    //    desc = tempCh;
-    //    folder.setDescription( desc );
+    //if( qname == QString( "termData" ) ) {
+    //    termData[ key ] = *currTermData; 
+    //    delete( currTermData );
     //}
     
     return( true );

@@ -840,7 +840,7 @@ bool Controller::importStatsFromZip( zipFile inputFile ) {
 
         if( readStatus == 0 ) {
             QTextStream ts2( ba, IO_ReadOnly );
-            StatsParser parser( *Statistics::instance() );
+            StatsParser parser;
             QXmlInputSource source( ts2 );
 
             QXmlSimpleReader reader;
