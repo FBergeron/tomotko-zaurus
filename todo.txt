@@ -2,7 +2,7 @@ ToDo
 ----
 Finish importData with importStats parameter.
     I'm now implementing StatsParser
-        I'm initializing the currTermData but I need an utilitary function to parse a date stored in a string.
+        I'm initializing the currTermData
         The termData key must also be initialized.
 
 I've commented out the method writeVocabulariesInXML().  Remove it permanently?

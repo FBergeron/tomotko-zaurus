@@ -112,6 +112,7 @@ public:
     static int getDefaultFontSizeModifier();
 
     static QString getDateAsShortString( const QDate& date );
+    static QDate parseDate( const QString& strDate, bool* isOk );
     static QString padWithLeadingZero( const int& number );
 
     static QString getDigraph( const QString& buffer );

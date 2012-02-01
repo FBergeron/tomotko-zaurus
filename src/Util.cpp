@@ -64,6 +64,31 @@ QString Util::getDateAsShortString( const QDate& date ) {
             Util::padWithLeadingZero( date.day() ) );
 }
 
+QDate Util::parseDate( const QString& strDate, bool* isOk ) {
+    QDate date;
+
+    QStringList strItems = QStringList::split( "-", strDate );
+
+    int tempYear;
+    int tempMonth;
+    int tempDay;
+
+    tempYear = strItems[ 0 ].toInt( isOk );
+    if( !*isOk )
+        return( date );
+    
+    tempMonth = strItems[ 1 ].toInt( isOk );
+    if( !*isOk )
+        return( date );
+
+    tempDay = strItems[ 2 ].toInt( isOk );
+    if( !isOk )
+        return( date );
+
+    date.setYMD( tempYear, tempMonth, tempDay );
+    return( date );
+}
+
 QString Util::padWithLeadingZero( const int& number ) {
     return( number < 10 ? QString( "0" ) + QString::number( number ) : QString::number( number ) );
 }
