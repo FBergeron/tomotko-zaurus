@@ -1,9 +1,6 @@
 ToDo
 ----
 Finish importData with importStats parameter.
-    I'm now implementing StatsParser
-        I'm initializing the currTermData
-        The termData key must also be initialized.
 
 I've commented out the method writeVocabulariesInXML().  Remove it permanently?
 Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)

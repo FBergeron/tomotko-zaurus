@@ -8,16 +8,6 @@ bool StatsParser::startDocument() {
 }
 
 bool StatsParser::startElement( const QString&, const QString&, const QString& qname, const QXmlAttributes& attribs ) {
-    //if( qname == QString( "folder" ) ) {
-    //    folder.setTitle( attribs.value( QString( "name" ) ) );
-    //    folder.setAuthor( attribs.value( QString( "author" ) ) );
-    //    desc = QString();
-    //    isStatsFile = true;
-    //}
-    //else if( qname == QString( "desc" ) ) {
-    //    mustKeepText = true;
-    //    tempCh = QString();
-    //}
     if( qname == QString( "stats" ) ) {
         termData.clear();
     }
@@ -29,7 +19,9 @@ bool StatsParser::startElement( const QString&, const QString&, const QString& q
         QDate tempLastRepetitionDate;
         uint tempSuccessCount;
         uint tempMissCount;
-        
+       
+        currTermDataKey = BiUidKey( attribs.value( "biTransUidKey" ) ); 
+
         bool isOk;
         tempInterval = attribs.value( "interval" ).toInt( &isOk );
         if( !isOk )
@@ -43,13 +35,13 @@ bool StatsParser::startElement( const QString&, const QString&, const QString& q
         if( !isOk )
             return( false );
 
-        //tempNextRepetitionDate = attribs.value( "nextRepetitionDate" ).toDate( &isOk );
-        //if( !isOk )
-        //    return( false );
+        tempNextRepetitionDate = Util::parseDate( attribs.value( "nextRepetitionDate" ), &isOk );
+        if( !isOk )
+            return( false );
 
-        //tempLastRepetitionDate = attribs.value( "lastRepetitionDate" ).toDate( &isOk );
-        //if( !isOk )
-        //    return( false );
+        tempLastRepetitionDate = Util::parseDate( attribs.value( "lastRepetitionDate" ), &isOk );
+        if( !isOk )
+            return( false );
 
         tempSuccessCount = attribs.value( "successCount" ).toUInt( &isOk );
         if( !isOk )
@@ -72,10 +64,11 @@ bool StatsParser::startElement( const QString&, const QString&, const QString& q
 }
 
 bool StatsParser::endElement( const QString&, const QString&, const QString& qname ) {
-    //if( qname == QString( "termData" ) ) {
-    //    termData[ key ] = *currTermData; 
-    //    delete( currTermData );
-    //}
+    if( qname == QString( "termData" ) ) {
+        termData[ currTermDataKey ] = *currTermData; 
+        delete( currTermData );
+        currTermData = NULL;
+    }
     
     return( true );
 }
@@ -95,5 +88,9 @@ bool StatsParser::fatalError( const QXmlParseException& exception ) {
 
 bool StatsParser::isStatisticsFile() {
     return( isStatsFile );
+}
+
+QMap<BiUidKey,TermData> StatsParser::getTermData() {
+    return( termData );
 }
 

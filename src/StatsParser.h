@@ -10,6 +10,7 @@
 #include <string.h>
 #include "BiUidKey.h"
 #include "Progress.h"
+#include "Util.h"
 
 class StatsParser : public QXmlDefaultHandler {
 
@@ -25,10 +26,13 @@ public:
 
     bool isStatisticsFile();
 
+    QMap<BiUidKey,TermData> getTermData();
+
 private:
 
     QString desc;
 
+    BiUidKey currTermDataKey;
     TermData* currTermData;
     QMap<BiUidKey,TermData> termData;
     bool isStatsFile;

@@ -848,6 +848,17 @@ bool Controller::importStatsFromZip( zipFile inputFile ) {
             isOk = reader.parse( source );
 
             if( isOk ) {
+#ifdef DEBUG
+                QMap<BiUidKey,TermData> termData = parser.getTermData();
+                for( QMap<BiUidKey, TermData>::ConstIterator it = termData.begin(); it != termData.end(); it++ ) {
+                    BiUidKey key = it.key();
+                    TermData termData = it.data();
+                    cout << key.toString() << ":" << termData.interval << "," << termData.repetition << ",";
+                    cout << termData.easinessFactor << "," << termData.nextRepetitionDate.toString() << ",";
+                    cout << termData.lastRepetitionDate.toString() << "," << termData.successCount << "," << termData.missCount << endl;
+                }
+#endif
+
                 // TODO
                 //// Create the containing folder if needed.
                 //isOk = Util::makeDirectory( folderLocation );
