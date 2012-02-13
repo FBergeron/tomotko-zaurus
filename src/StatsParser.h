@@ -16,7 +16,7 @@ class StatsParser : public QXmlDefaultHandler {
 
 public:
 
-    StatsParser();
+    StatsParser( QMap<BiUidKey,TermData>& termData );
     bool startDocument();
     bool startElement( const QString&, const QString&, const QString&, const QXmlAttributes& attribs );
     bool endElement( const QString&, const QString&, const QString& qname );
@@ -26,15 +26,13 @@ public:
 
     bool isStatisticsFile();
 
-    QMap<BiUidKey,TermData> getTermData();
-
 private:
 
     QString desc;
 
     BiUidKey currTermDataKey;
     TermData* currTermData;
-    QMap<BiUidKey,TermData> termData;
+    QMap<BiUidKey,TermData>& termData;
     bool isStatsFile;
 
 };

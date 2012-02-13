@@ -517,6 +517,7 @@ cout << "importData importStats=" << importStats << endl;
         Vocabulary* newVocab = NULL;
         QUuid newVocabUid;
         QUuid newFolderUid;
+        QMap<BiUidKey,TermData> statsTermData;
             
         // Handle all entries.
         for( uLong i = 0; i < gi.number_entry; i++ ) {
@@ -600,7 +601,16 @@ cout << "importData importStats=" << importStats << endl;
                     cerr << "handling data.xml ok" << endl;
                 }
                 else if( fileInfo.fileName() == "stats.xml" ) {
-                    importStatsFromZip( inputFile );
+                    importStatsFromZip( statsTermData, inputFile );
+#ifdef DEBUG
+                    for( QMap<BiUidKey, TermData>::ConstIterator it = statsTermData.begin(); it != statsTermData.end(); it++ ) {
+                        BiUidKey key = it.key();
+                        TermData statsTermData = it.data();
+                        cout << key.toString() << ":" << statsTermData.interval << "," << statsTermData.repetition << ",";
+                        cout << statsTermData.easinessFactor << "," << statsTermData.nextRepetitionDate.toString() << ",";
+                        cout << statsTermData.lastRepetitionDate.toString() << "," << statsTermData.successCount << "," << statsTermData.missCount << endl;
+                    }
+#endif
                 }
             }
 
@@ -807,7 +817,7 @@ bool Controller::importFolderFromZip( Folder* folder, const QString& folderLocat
     return( isOk );
 }
 
-bool Controller::importStatsFromZip( zipFile inputFile ) {
+bool Controller::importStatsFromZip( QMap<BiUidKey,TermData>& termData, zipFile inputFile ) {
     int status = unzOpenCurrentFile( inputFile );
     if( status != UNZ_OK )
         return( false );
@@ -840,44 +850,17 @@ bool Controller::importStatsFromZip( zipFile inputFile ) {
 
         if( readStatus == 0 ) {
             QTextStream ts2( ba, IO_ReadOnly );
-            StatsParser parser;
+            StatsParser parser( termData );
             QXmlInputSource source( ts2 );
 
             QXmlSimpleReader reader;
             reader.setContentHandler( &parser );
             isOk = reader.parse( source );
 
-            if( isOk ) {
-#ifdef DEBUG
-                QMap<BiUidKey,TermData> termData = parser.getTermData();
-                for( QMap<BiUidKey, TermData>::ConstIterator it = termData.begin(); it != termData.end(); it++ ) {
-                    BiUidKey key = it.key();
-                    TermData termData = it.data();
-                    cout << key.toString() << ":" << termData.interval << "," << termData.repetition << ",";
-                    cout << termData.easinessFactor << "," << termData.nextRepetitionDate.toString() << ",";
-                    cout << termData.lastRepetitionDate.toString() << "," << termData.successCount << "," << termData.missCount << endl;
-                }
-#endif
-
-                // TODO
-                //// Create the containing folder if needed.
-                //isOk = Util::makeDirectory( folderLocation );
-                //if( isOk ) {
-                //    const QString& folderDataFilename( folderLocation + "/metadata.gz" );
-                //    isOk = folder->saveMetadata( folderDataFilename );
-                //    if( isOk )
-                //        folder->setDirty( false );
-                //}
-                //else {
-                //    cerr << "Could not create directory " << folderLocation << endl;
-                //    isOk = false;
-                //}
+            if( !isOk ) {
+                cerr << "Could not import stats properly.  The stats will be ignored." << endl;
+                termData.clear();
             }
-
-            //if( !isOk || !parser.isVocabularyFile() ) {
-            //    delete( vocab );
-            //    vocab = NULL;
-            //}
         }
     }
 

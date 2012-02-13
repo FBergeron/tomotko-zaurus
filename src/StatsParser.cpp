@@ -1,6 +1,6 @@
 #include "StatsParser.h"
 
-StatsParser::StatsParser() : isStatsFile( false ) {
+StatsParser::StatsParser(QMap<BiUidKey,TermData>& termData ) : termData( termData ), isStatsFile( false ) {
 }
 
 bool StatsParser::startDocument() {
@@ -88,9 +88,5 @@ bool StatsParser::fatalError( const QXmlParseException& exception ) {
 
 bool StatsParser::isStatisticsFile() {
     return( isStatsFile );
-}
-
-QMap<BiUidKey,TermData> StatsParser::getTermData() {
-    return( termData );
 }
 

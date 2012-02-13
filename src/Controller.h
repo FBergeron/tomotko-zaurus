@@ -168,7 +168,7 @@ private:
     bool importFolderFromZip( Folder* folder, const QString& folderLocation, zipFile inputFile );
     bool importVocabularyFromZip( Vocabulary* vocab, const QString& vocabLocation, const QStringList& languages, zipFile inputFile );
     bool importImageFromZip( const QString& imgPath, zipFile inputFile );
-    bool importStatsFromZip( zipFile inputFile );
+    bool importStatsFromZip( QMap<BiUidKey,TermData>& termData, zipFile inputFile );
     bool exportFolderRecIntoZip( Folder* folder, zipFile outputFile, QString path, QStringList& exportedTransUidList, QStringList* languages = NULL ) const;
     bool exportVocabularyIntoZip( Vocabulary* vocab, zipFile outputFile, QString path, QStringList& exportedTransUidList, QStringList* languages = NULL ) const;
 
