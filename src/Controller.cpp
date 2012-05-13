@@ -494,7 +494,6 @@ bool Controller::isImportedDataWithStats( const QString& filename ) {
 
 Base* Controller::importData( Folder* folder, const QString& filename, const QStringList& languages, bool importStats /* = false */ ) {
 
-cout << "importData importStats=" << importStats << endl;
     // Save the data to get a clean state (without items marked for deletion).
     bool isOk = saveData();
     if( !isOk )
@@ -517,6 +516,7 @@ cout << "importData importStats=" << importStats << endl;
         Vocabulary* newVocab = NULL;
         QUuid newVocabUid;
         QUuid newFolderUid;
+        QMap<QString,Translation> importedTransUidTable;
         QMap<BiUidKey,TermData> statsTermData;
             
         // Handle all entries.
@@ -597,20 +597,11 @@ cout << "importData importStats=" << importStats << endl;
 
                     QString vocabLocation = applicationDirName + "/" + folder->getPath() + convertPath( fileInfo.dirPath(), newFolders ) +
                         "/v-" + newVocab->getUid().toString();
-                    importVocabularyFromZip( newVocab, vocabLocation, languages, inputFile ); // Should we handle error here?
+                    importVocabularyFromZip( newVocab, vocabLocation, languages, inputFile, importedTransUidTable ); // Should we handle error here?
                     cerr << "handling data.xml ok" << endl;
                 }
-                else if( fileInfo.fileName() == "stats.xml" ) {
+                else if( fileInfo.fileName() == "stats.xml" && importStats ) {
                     importStatsFromZip( statsTermData, inputFile );
-#ifdef DEBUG
-                    for( QMap<BiUidKey, TermData>::ConstIterator it = statsTermData.begin(); it != statsTermData.end(); it++ ) {
-                        BiUidKey key = it.key();
-                        TermData statsTermData = it.data();
-                        cout << key.toString() << ":" << statsTermData.interval << "," << statsTermData.repetition << ",";
-                        cout << statsTermData.easinessFactor << "," << statsTermData.nextRepetitionDate.toString() << ",";
-                        cout << statsTermData.lastRepetitionDate.toString() << "," << statsTermData.successCount << "," << statsTermData.missCount << endl;
-                    }
-#endif
                 }
             }
 
@@ -624,6 +615,10 @@ cout << "importData importStats=" << importStats << endl;
                 break;
             }
         }
+
+        if( importStats && !importedTransUidTable.isEmpty() )
+            saveImportedStats( statsTermData, importedTransUidTable );
+
     }
 
     // If an error occurred, we recover memory if necessary.
@@ -638,6 +633,29 @@ cout << "importData importStats=" << importStats << endl;
         return( NULL );
 
     return( newItem );
+}
+
+bool Controller::saveImportedStats( const QMap<BiUidKey, TermData> statsTermData, const QMap<QString, Translation> importedTransUidTable ) {
+    for( QMap<BiUidKey, TermData>::ConstIterator it = statsTermData.begin(); it != statsTermData.end(); it++ ) {
+        BiUidKey key = it.key();
+        TermData statsTermData = it.data();
+
+        QString firstLangTransUid = key.getFirstUid();
+        QString secondLangTransUid = key.getSecondUid();
+
+        if( importedTransUidTable.contains( firstLangTransUid ) && importedTransUidTable.contains( secondLangTransUid ) ) {
+            Translation firstLangAssocTrans = importedTransUidTable[ firstLangTransUid ];
+            Translation secondLangAssocTrans = importedTransUidTable[ secondLangTransUid ];
+
+            BiUidKey key( firstLangAssocTrans.getUid().toString(), secondLangAssocTrans.getUid().toString() );
+            QString firstLang = firstLangAssocTrans.getLanguage();
+            QString secondLang = secondLangAssocTrans.getLanguage();
+
+            Statistics::instance()->setTermData( key, firstLang, secondLang, statsTermData );
+        }
+    }
+
+    return( true );
 }
 
 QStringList Controller::getTranslationLanguagesFromFile( const QString& filename ) const {
@@ -872,7 +890,7 @@ bool Controller::importStatsFromZip( QMap<BiUidKey,TermData>& termData, zipFile 
     return( isOk );
 }
 
-bool Controller::importVocabularyFromZip( Vocabulary* vocab, const QString& vocabLocation, const QStringList& languages, zipFile inputFile ) {
+bool Controller::importVocabularyFromZip( Vocabulary* vocab, const QString& vocabLocation, const QStringList& languages, zipFile inputFile, QMap<QString,Translation>& importedTransUidTable ) {
     int status = unzOpenCurrentFile( inputFile );
     if( status != UNZ_OK )
         return( false );
@@ -905,7 +923,7 @@ bool Controller::importVocabularyFromZip( Vocabulary* vocab, const QString& voca
 
         if( readStatus == 0 ) {
             QTextStream ts2( ba, IO_ReadOnly );
-            VocabParser parser( *vocab, languages );
+            VocabParser parser( *vocab, languages, &importedTransUidTable );
             QXmlInputSource source( ts2 );
 
             QXmlSimpleReader reader;

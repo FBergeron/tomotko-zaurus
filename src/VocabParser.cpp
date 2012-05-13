@@ -1,6 +1,6 @@
 #include "VocabParser.h"
 
-VocabParser::VocabParser( Vocabulary& vocab, const QStringList& languages/*, const QString& location*/ ) : vocabulary( vocab ), languages( languages ), isVocabFile( false )/*, location( location )*/ {
+VocabParser::VocabParser( Vocabulary& vocab, const QStringList& languages, QMap<QString,Translation>* importedTransUidTable /* = NULL */ /*, const QString& location*/ ) : vocabulary( vocab ), languages( languages ), isVocabFile( false ), importedTransUidTable( importedTransUidTable ) /*, location( location )*/ {
 }
 
 bool VocabParser::startDocument() {
@@ -25,6 +25,7 @@ bool VocabParser::startElement( const QString&, const QString&, const QString& q
     else if( qname == QString( "trans" ) ) {
         word = QString();
         alt = QString();
+        transUid = attribs.value( QString( "uid" ) );
         lang = attribs.value( QString( "lang" ) );
     }
     else if( qname == QString( "term" ) ) {
@@ -63,8 +64,11 @@ bool VocabParser::endElement( const QString&, const QString&, const QString& qna
         alt = tempCh;
     else if( qname == QString( "trans" ) ) {
         if( languages.count() == 0 || languages.contains( lang ) ) {
-            Translation translation( Util::createUuid(), lang, word, alt );
+            QUuid newTransUid = Util::createUuid();
+            Translation translation( newTransUid, lang, word, alt );
             term.addTranslation( translation ); 
+            if( importedTransUidTable )
+                (*importedTransUidTable)[ transUid ] = translation;
         }
     }
     else if( qname == QString( "term" ) ) {

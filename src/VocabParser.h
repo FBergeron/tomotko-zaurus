@@ -19,7 +19,7 @@ class VocabParser : public QXmlDefaultHandler {
 
 public:
 
-    VocabParser( Vocabulary& vocabulary, const QStringList& languages/*, const QString& location = QString::null*/ );
+    VocabParser( Vocabulary& vocabulary, const QStringList& languages, QMap<QString,Translation>* importedTransUidTable = NULL /*, const QString& location = QString::null*/ );
     bool startDocument();
     bool startElement( const QString&, const QString&, const QString&, const QXmlAttributes& attribs );
     bool characters( const QString& characters );
@@ -37,6 +37,7 @@ private:
     QString commentText;
     BilingualKey commentKey;
     QString alt;
+    QString transUid;
 
     QString desc;
 
@@ -47,6 +48,7 @@ private:
     Vocabulary& vocabulary;
     const QStringList& languages;
     bool isVocabFile;
+    QMap<QString,Translation>* importedTransUidTable;
     //const QString& location;
 
 };

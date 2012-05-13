@@ -243,6 +243,18 @@ To generate thumbnails for screenshots, we can use a command like this one :
 > done
 
 
+Git
+---
+I'm using Git to keep track of the changes of the source code. Usually, I open another terminal window in a different workspace and I also launch an instance of gitk using:
+
+gitk --all &
+
+The version of git on this version of Debian is a little bit old.  Most functionalities work as expected but not all the time.
+
+
+I use mainly 2 branches: master and dev.  Both are published on GitHub.  It's important to consider this when performing merge and rebase operations.
+
+
 Miscellaneous
 -------------
 To connect with ssh on tomotko's website:
