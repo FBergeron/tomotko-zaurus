@@ -321,8 +321,12 @@ void VocabularyManagerFrame::importData() {
                 }
 
                 QCopEnvelope busyEnvImport( "QPE/System", "busy()" ); 
+
                 bool importStats = false;
-                bool isDataWithStats = controller->isImportedDataWithStats( dialog.selectedFile() );
+                bool isDataWithStats;
+                bool isDataWithRootFolder;
+                controller->getImportedDataInfo( dialog.selectedFile(), isDataWithStats, isDataWithRootFolder );
+
                 if( isDataWithStats ) {
                     QMessageBox msgBox( QObject::tr( "Warning" ), tr( "ConfirmImportStats" ),
                         QMessageBox::Warning,

@@ -1,6 +1,7 @@
 ToDo
 ----
-Finish importData with importStats parameter.
+#3481315: Add option to import children items.
+    I wonder if I should add a checkbox to import dialog or if I should prompt the user when needed (if the imported file contains more than 1 vocabulary) in a similar way when stats are found in the imported file.  As it's not an operation that is done frequently, maybe the extra dialog would be ok.  This way, no need to have a ImportDialog class.
 
 I've commented out the method writeVocabulariesInXML().  Remove it permanently?
 Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)

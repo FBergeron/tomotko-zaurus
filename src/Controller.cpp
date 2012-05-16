@@ -445,14 +445,14 @@ Vocabulary* Controller::loadVocabulary( const QString& parentDir ) {
     return( vocab );
 }
 
-bool Controller::isImportedDataWithStats( const QString& filename ) {
+void Controller::getImportedDataInfo( const QString& filename, bool& hasStats, bool& hasRootFolder ) {
     int status;
-    bool isStatsFileFound = false;
-    //Base* newItem = NULL;
+    hasStats = false;
+    hasRootFolder = false;
 
     zipFile inputFile = unzOpen( filename.latin1() );
     if( inputFile == NULL )
-        return( false );
+        return;
 
     unz_global_info gi;
     status = unzGetGlobalInfo( inputFile, &gi );
@@ -468,9 +468,14 @@ bool Controller::isImportedDataWithStats( const QString& filename ) {
 
             QString filenameInZip( filename_inzip );
             QFileInfo fileInfo( filenameInZip );
+            if( !hasRootFolder ) {
+                QRegExp re( "^{........-....-....-....-............}" );    
+                if( fileInfo.dirPath().find( re ) != -1 )    
+                    hasRootFolder = true;
+            }
 
             if( fileInfo.fileName() == "stats.xml" ) {
-                isStatsFileFound = true;
+                hasStats = true;
                 break;
             }
 
@@ -486,10 +491,7 @@ bool Controller::isImportedDataWithStats( const QString& filename ) {
         }
     }
 
-    if( unzClose( inputFile ) != UNZ_OK )
-        return( false );
-
-    return( isStatsFileFound );
+    unzClose( inputFile );
 }
 
 Base* Controller::importData( Folder* folder, const QString& filename, const QStringList& languages, bool importStats /* = false */ ) {

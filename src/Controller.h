@@ -10,6 +10,7 @@
 #include <qfileinfo.h>
 #include <qobject.h>
 #include <qcstring.h>
+#include <qregexp.h>
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qtextcodec.h>
@@ -116,7 +117,7 @@ public:
     void loadLegacyVocabulary( Folder* folder );
 
     QStringList getTranslationLanguagesFromFile( const QString& filename ) const;
-    bool isImportedDataWithStats( const QString& filename );
+    void getImportedDataInfo( const QString& filename, bool& hasStats, bool& hasRootFolder );
     Base* importData( Folder* rootFolder, const QString& filename, const QStringList& languages, bool importStats = false );
 
     int getInitialTermCount() const;
