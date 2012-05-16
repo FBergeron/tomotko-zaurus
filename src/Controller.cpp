@@ -494,7 +494,7 @@ void Controller::getImportedDataInfo( const QString& filename, bool& hasStats, b
     unzClose( inputFile );
 }
 
-Base* Controller::importData( Folder* folder, const QString& filename, const QStringList& languages, bool importStats /* = false */ ) {
+Base* Controller::importData( Folder* folder, const QString& filename, const QStringList& languages, bool keepRootFolder /* = true */, bool importStats /* = false */ ) {
 
     // Save the data to get a clean state (without items marked for deletion).
     bool isOk = saveData();

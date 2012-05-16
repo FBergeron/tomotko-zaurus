@@ -1185,6 +1185,18 @@ Overwrite the current assignment?</source>
         <source>ConfirmImportStats</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ConfirmKeepRootFolder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ZFileDialog</name>

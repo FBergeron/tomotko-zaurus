@@ -1,7 +1,7 @@
 ToDo
 ----
 #3481315: Add option to import children items.
-    I wonder if I should add a checkbox to import dialog or if I should prompt the user when needed (if the imported file contains more than 1 vocabulary) in a similar way when stats are found in the imported file.  As it's not an operation that is done frequently, maybe the extra dialog would be ok.  This way, no need to have a ImportDialog class.
+    In VocabularyManagerFrame::importData(), I must consider the keepRootFolder parameter.  Remember to test import with images and deep folder hierarchy too.
 
 I've commented out the method writeVocabulariesInXML().  Remove it permanently?
 Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)

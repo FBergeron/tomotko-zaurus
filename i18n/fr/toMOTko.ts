@@ -1284,6 +1284,22 @@ de statistiques SM-2.
 Voulez-vous aussi importer
 ces données?</translation>
     </message>
+    <message>
+        <source>ConfirmKeepRootFolder</source>
+        <translation>Les données importées sont
+incluses dans un dossier.
+Voulez-vous conserver 
+le dossier englobant ou
+le rejeter?</translation>
+    </message>
+    <message>
+        <source>Keep</source>
+        <translation>Conserver</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Rejeter</translation>
+    </message>
 </context>
 <context>
     <name>ZFileDialog</name>

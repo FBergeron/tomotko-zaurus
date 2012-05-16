@@ -288,6 +288,7 @@ void VocabularyManagerFrame::importData() {
     if( selectedItem && selectedItem->isFolder() ) {
         FolderTreeItem* folderItem = (FolderTreeItem*)selectedItem;
         Folder* folder = folderItem->getFolder(); 
+cout << "selectedFolder=" << folder << endl;
         QDir dir( QPEApplication::documentDir() );
         ZFileDialog dialog( tr( "Import..." ), dir.path(), ZFileDialog::ExistingFile, false, this );
         dialog.setFilters( QStringList::split( QString( "," ), QString( ".tmk" ) ) );
@@ -323,9 +324,25 @@ void VocabularyManagerFrame::importData() {
                 QCopEnvelope busyEnvImport( "QPE/System", "busy()" ); 
 
                 bool importStats = false;
+                bool keepRootFolder = true;
                 bool isDataWithStats;
                 bool isDataWithRootFolder;
                 controller->getImportedDataInfo( dialog.selectedFile(), isDataWithStats, isDataWithRootFolder );
+
+                if( isDataWithRootFolder ) {
+                    QMessageBox msgBox( QObject::tr( "Warning" ), tr( "ConfirmKeepRootFolder" ),
+                        QMessageBox::Warning,
+                        QMessageBox::Yes | QMessageBox::Default | QMessageBox::Escape,
+                        QMessageBox::No,
+                        QMessageBox::NoButton,
+                        this );
+                    msgBox.setButtonText( QMessageBox::Yes, tr( "Keep" ) );
+                    msgBox.setButtonText( QMessageBox::No, tr( "Discard" ) );
+
+                    int response = msgBox.exec();
+                    if( response == QMessageBox::No )
+                        keepRootFolder = false;
+                }
 
                 if( isDataWithStats ) {
                     QMessageBox msgBox( QObject::tr( "Warning" ), tr( "ConfirmImportStats" ),
@@ -341,17 +358,40 @@ void VocabularyManagerFrame::importData() {
                     if( response == QMessageBox::Yes )
                         importStats = true;
                 }
-                Base* newItem = controller->importData( folder, dialog.selectedFile(), languagesToImport, importStats );
+
+                Base* newItem = controller->importData( folder, dialog.selectedFile(), languagesToImport, keepRootFolder, importStats );
                 //cerr << "newItem=" << newItem << endl;
                 if( newItem ) {
                     TreeItem* newTreeItem = NULL;
                     if( strcmp( newItem->className(), "Folder" ) == 0 ) {
-                        //cerr << "newItem is a folder" << endl;
                         Folder* newFolder = (Folder*)newItem;
                         newFolder->setModificationDate( QDateTime::currentDateTime() );
                         newFolder->setDirty( true );
-                        folder->add( newFolder );
-                        newTreeItem = buildTreeRec( vocabTreeView, folderItem, newFolder, true ); 
+                        if( keepRootFolder ) {
+                            //cerr << "newItem is a folder" << endl;
+                            folder->add( newFolder );
+                            newTreeItem = buildTreeRec( vocabTreeView, folderItem, newFolder, true ); 
+                        }
+                        else {
+                            for( Base* child = newFolder->first(); child; child = newFolder->next() ) {
+                                if( strcmp( child->className(), "Folder" ) == 0 ) {
+                                    Folder* childFolder = (Folder*)child;
+                                    folder->add( childFolder );
+                                    if( !newTreeItem ) 
+                                        newTreeItem = buildTreeRec( vocabTreeView, folderItem, childFolder, true );
+                                    else
+                                        buildTreeRec( vocabTreeView, folderItem, childFolder, true );
+                                }
+                                else if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
+                                    Vocabulary* childVocab = (Vocabulary*)child;
+                                    folder->add( childVocab );
+                                    if( !newTreeItem ) 
+                                        newTreeItem = buildTreeRec( folderItem, childVocab );
+                                    else 
+                                        buildTreeRec( folderItem, childVocab );
+                                }
+                            }
+                        }
                     }
                     else if( strcmp( newItem->className(), "Vocabulary" ) == 0 ) {
                         //cerr << "newItem is vocab" << endl;

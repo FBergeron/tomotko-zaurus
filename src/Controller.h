@@ -118,7 +118,7 @@ public:
 
     QStringList getTranslationLanguagesFromFile( const QString& filename ) const;
     void getImportedDataInfo( const QString& filename, bool& hasStats, bool& hasRootFolder );
-    Base* importData( Folder* rootFolder, const QString& filename, const QStringList& languages, bool importStats = false );
+    Base* importData( Folder* rootFolder, const QString& filename, const QStringList& languages, bool keepRootFolder = true, bool importStats = false );
 
     int getInitialTermCount() const;
 

@@ -1281,6 +1281,23 @@ statistics data.
 Do you want to also import 
 these data?</translation>
     </message>
+    <message>
+        <source>ConfirmKeepRootFolder</source>
+        <translation>The glossary file that you want
+to import contains data
+enclosed in a folder.
+Do you want to keep the
+enclosing folder or
+discard it?</translation>
+    </message>
+    <message>
+        <source>Keep</source>
+        <translation>Keep</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Discard</translation>
+    </message>
 </context>
 <context>
     <name>ZFileDialog</name>

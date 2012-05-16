@@ -1279,6 +1279,21 @@ estadísticas SM-2.
 Quiere Usted importar 
 también estas data?</translation>
     </message>
+    <message>
+        <source>ConfirmKeepRootFolder</source>
+        <translation>Las data estàn dentro
+de un archivo global.
+Quiere Usted conservarlo
+o descartarlo?</translation>
+    </message>
+    <message>
+        <source>Keep</source>
+        <translation>Conservar</translation>
+    </message>
+    <message>
+        <source>Discard</source>
+        <translation>Descartar</translation>
+    </message>
 </context>
 <context>
     <name>ZFileDialog</name>
