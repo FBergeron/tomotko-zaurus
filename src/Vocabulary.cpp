@@ -366,9 +366,9 @@ bool Vocabulary::save( const QString& filename ) const {
 }
 
 QDataStream& operator<<( QDataStream& out, const Vocabulary& vocab ) {
-#ifdef DEBUG
-    cout << "Vocabulary.operator<<" << endl;
-#endif
+//#ifdef DEBUG
+//    cout << "Vocabulary.operator<<" << endl;
+//#endif
     out << vocab.uid.toString() << vocab.title << vocab.terms;
     out << vocab.description << vocab.author << vocab.creationDate << vocab.modificationDate;
 

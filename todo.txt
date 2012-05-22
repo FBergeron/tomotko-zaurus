@@ -1,7 +1,9 @@
 ToDo
 ----
-#3481315: Add option to import children items.
-    In VocabularyManagerFrame::importData(), I must consider the keepRootFolder parameter.  Remember to test import with images and deep folder hierarchy too.
+One thing that must be verified!  Are the images properly exported and imported?  It doesn't seem to work on the simulator but does it work on the Zaurus?  If so, I must write that in the README somewhere.  Its too easy to forget.
+Try to setAutoDelete( true ) for newItems in Controller::importData().
+Not sure but I think there is the following bug: I put myself at the root folder and export my data when fr and ge is selected.  In the output, do I get vocabularies that have French translations (like Nemesis, other Spanish vocabularies)?  I think I should not get those except if the Show all vocab is enabled.  And even then, I'm not sure.
+If I import a vocabulary with languages that are not in my preferences, should I add (or ask) the languages automatically in my prefs?  I guess not.  Think about the best behavior.
 
 I've commented out the method writeVocabulariesInXML().  Remove it permanently?
 Comment out all functions that write something to disk. - OK (but I may have forgotten some places.)

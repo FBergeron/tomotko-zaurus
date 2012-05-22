@@ -151,6 +151,9 @@ private:
 
     uint getSelectedTermCount() const;
 
+    bool askKeepRootFolder();
+    bool askImportStats();
+
     int                     currentFolderId;
     int                     currentVocabId;
     int                     currentTermId;

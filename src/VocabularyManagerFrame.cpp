@@ -288,7 +288,6 @@ void VocabularyManagerFrame::importData() {
     if( selectedItem && selectedItem->isFolder() ) {
         FolderTreeItem* folderItem = (FolderTreeItem*)selectedItem;
         Folder* folder = folderItem->getFolder(); 
-cout << "selectedFolder=" << folder << endl;
         QDir dir( QPEApplication::documentDir() );
         ZFileDialog dialog( tr( "Import..." ), dir.path(), ZFileDialog::ExistingFile, false, this );
         dialog.setFilters( QStringList::split( QString( "," ), QString( ".tmk" ) ) );
@@ -310,9 +309,8 @@ cout << "selectedFolder=" << folder << endl;
                     int response = msgBox.exec();
                     if( response )
                         languagesToImport = msgBox.getSelectedLanguages();
-                    else  {
+                    else 
                         return; // Cancel import.
-                    }
                 }
 
                 for( QStringList::ConstIterator it = languagesToImport.begin(); it != languagesToImport.end(); it++ ) {
@@ -323,89 +321,54 @@ cout << "selectedFolder=" << folder << endl;
 
                 QCopEnvelope busyEnvImport( "QPE/System", "busy()" ); 
 
-                bool importStats = false;
-                bool keepRootFolder = true;
                 bool isDataWithStats;
                 bool isDataWithRootFolder;
                 controller->getImportedDataInfo( dialog.selectedFile(), isDataWithStats, isDataWithRootFolder );
 
-                if( isDataWithRootFolder ) {
-                    QMessageBox msgBox( QObject::tr( "Warning" ), tr( "ConfirmKeepRootFolder" ),
-                        QMessageBox::Warning,
-                        QMessageBox::Yes | QMessageBox::Default | QMessageBox::Escape,
-                        QMessageBox::No,
-                        QMessageBox::NoButton,
-                        this );
-                    msgBox.setButtonText( QMessageBox::Yes, tr( "Keep" ) );
-                    msgBox.setButtonText( QMessageBox::No, tr( "Discard" ) );
+                bool keepRootFolder = true;
+                if( isDataWithRootFolder )
+                    keepRootFolder = askKeepRootFolder();
 
-                    int response = msgBox.exec();
-                    if( response == QMessageBox::No )
-                        keepRootFolder = false;
-                }
+                bool importStats = false;
+                if( isDataWithStats )
+                    importStats = askImportStats();
 
-                if( isDataWithStats ) {
-                    QMessageBox msgBox( QObject::tr( "Warning" ), tr( "ConfirmImportStats" ),
-                        QMessageBox::Warning,
-                        QMessageBox::Yes,
-                        QMessageBox::No | QMessageBox::Default | QMessageBox::Escape,
-                        QMessageBox::NoButton,
-                        this );
-                    msgBox.setButtonText( QMessageBox::Yes, tr( "Yes" ) );
-                    msgBox.setButtonText( QMessageBox::No, tr( "No" ) );
-
-                    int response = msgBox.exec();
-                    if( response == QMessageBox::Yes )
-                        importStats = true;
-                }
-
-                Base* newItem = controller->importData( folder, dialog.selectedFile(), languagesToImport, keepRootFolder, importStats );
-                //cerr << "newItem=" << newItem << endl;
-                if( newItem ) {
-                    TreeItem* newTreeItem = NULL;
-                    if( strcmp( newItem->className(), "Folder" ) == 0 ) {
-                        Folder* newFolder = (Folder*)newItem;
-                        newFolder->setModificationDate( QDateTime::currentDateTime() );
-                        newFolder->setDirty( true );
-                        if( keepRootFolder ) {
-                            //cerr << "newItem is a folder" << endl;
+                QList<Base> newItems = controller->importData( folder, dialog.selectedFile(), languagesToImport, keepRootFolder, importStats );
+                if( !newItems.isEmpty() ) {
+                    for( Base* newItem = newItems.first(); newItem; newItem = newItems.next() ) {
+                        if( strcmp( newItem->className(), "Folder" ) == 0 ) {
+                            Folder* newFolder = (Folder*)newItem;
+                            newFolder->setModificationDate( QDateTime::currentDateTime() );
+                            newFolder->setDirty( true );
                             folder->add( newFolder );
-                            newTreeItem = buildTreeRec( vocabTreeView, folderItem, newFolder, true ); 
+                            buildTreeRec( vocabTreeView, folderItem, newFolder, true ); 
+                        }
+                        else if( strcmp( newItem->className(), "Vocabulary" ) == 0 ) {
+                            Vocabulary* newVocab = (Vocabulary*)newItem;
+                            newVocab->setModificationDate( QDateTime::currentDateTime() );
+                            newVocab->setDirty( true );
+                            folder->add( newVocab );
+                            buildTreeRec( folderItem, newVocab ); 
+                        }
+                    }
+                    //folderItem->enforceSortOrder();
+                    TreeItem* treeItemToSelect = NULL;
+                    for( TreeItem* treeItem = (TreeItem*)folderItem->firstChild(); treeItem; treeItem = (TreeItem*)folderItem->nextSibling() ) {
+                        if( treeItem->isFolder() ) {
+                            FolderTreeItem* folderTreeItem = (FolderTreeItem*)treeItem;
+                            if( newItems.contains( folderTreeItem->getFolder() ) > 0 )
+                                treeItemToSelect = treeItem;
                         }
                         else {
-                            for( Base* child = newFolder->first(); child; child = newFolder->next() ) {
-                                if( strcmp( child->className(), "Folder" ) == 0 ) {
-                                    Folder* childFolder = (Folder*)child;
-                                    folder->add( childFolder );
-                                    if( !newTreeItem ) 
-                                        newTreeItem = buildTreeRec( vocabTreeView, folderItem, childFolder, true );
-                                    else
-                                        buildTreeRec( vocabTreeView, folderItem, childFolder, true );
-                                }
-                                else if( strcmp( child->className(), "Vocabulary" ) == 0 ) {
-                                    Vocabulary* childVocab = (Vocabulary*)child;
-                                    folder->add( childVocab );
-                                    if( !newTreeItem ) 
-                                        newTreeItem = buildTreeRec( folderItem, childVocab );
-                                    else 
-                                        buildTreeRec( folderItem, childVocab );
-                                }
-                            }
+                            VocabTreeItem* vocabTreeItem = (VocabTreeItem*)treeItem;
+                            if( newItems.contains( vocabTreeItem->getVocabulary() ) > 0 )
+                                treeItemToSelect = treeItem;
                         }
                     }
-                    else if( strcmp( newItem->className(), "Vocabulary" ) == 0 ) {
-                        //cerr << "newItem is vocab" << endl;
-                        Vocabulary* newVocab = (Vocabulary*)newItem;
-                        newVocab->setModificationDate( QDateTime::currentDateTime() );
-                        newVocab->setDirty( true );
-                        folder->add( newVocab );
-                        newTreeItem = buildTreeRec( folderItem, newVocab ); 
-                    }
-                    //cerr << "newTreeItem=" << newTreeItem << endl;
-                    if( newTreeItem ) {
-                        vocabTreeView->ensureItemVisible( newTreeItem );
-                        vocabTreeView->setSelected( newTreeItem, true );
-                        newTreeItem->setOpen( true );
+                    if( treeItemToSelect ) {
+                        vocabTreeView->ensureItemVisible( treeItemToSelect );
+                        vocabTreeView->setSelected( treeItemToSelect, true );
+                        treeItemToSelect->setOpen( true );
                     }
                     else {
                         // This happens when the imported data is from a different language pair
@@ -413,7 +376,7 @@ cout << "selectedFolder=" << folder << endl;
                         vocabTreeView->setSelected( selectedItem, true );
                     }
                     QString msg = tr( "ImportSuccessful" );
-                    if( !newTreeItem )
+                    if( !treeItemToSelect )
                         msg += tr( "InvisibleImport" );
                     QMessageBox::information( this, QObject::tr( "OperationSuccessful" ), msg );
                 }
@@ -1375,6 +1338,40 @@ uint VocabularyManagerFrame::getSelectedTermCount() const {
         termItem = (TermListItem*)termItem->nextSibling();
     }
     return( count );
+}
+
+bool VocabularyManagerFrame::askKeepRootFolder() {
+    QMessageBox msgBox( QObject::tr( "Warning" ), tr( "ConfirmKeepRootFolder" ),
+        QMessageBox::Warning,
+        QMessageBox::Yes | QMessageBox::Default | QMessageBox::Escape,
+        QMessageBox::No,
+        QMessageBox::NoButton,
+        this );
+    msgBox.setButtonText( QMessageBox::Yes, tr( "Keep" ) );
+    msgBox.setButtonText( QMessageBox::No, tr( "Discard" ) );
+
+    int response = msgBox.exec();
+    if( response == QMessageBox::No )
+        return( false );
+    
+    return( true );
+}
+
+bool VocabularyManagerFrame::askImportStats() {
+    QMessageBox msgBox( QObject::tr( "Warning" ), tr( "ConfirmImportStats" ),
+        QMessageBox::Warning,
+        QMessageBox::Yes,
+        QMessageBox::No | QMessageBox::Default | QMessageBox::Escape,
+        QMessageBox::NoButton,
+        this );
+    msgBox.setButtonText( QMessageBox::Yes, tr( "Yes" ) );
+    msgBox.setButtonText( QMessageBox::No, tr( "No" ) );
+
+    int response = msgBox.exec();
+    if( response == QMessageBox::Yes )
+        return( true );
+
+    return( false );
 }
 
 QValueList<Term> VocabularyManagerFrame::getSelectedTerms() const {

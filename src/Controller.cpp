@@ -494,19 +494,20 @@ void Controller::getImportedDataInfo( const QString& filename, bool& hasStats, b
     unzClose( inputFile );
 }
 
-Base* Controller::importData( Folder* folder, const QString& filename, const QStringList& languages, bool keepRootFolder /* = true */, bool importStats /* = false */ ) {
+QList<Base> Controller::importData( Folder* folder, const QString& filename, const QStringList& languages, bool keepRootFolder /* = true */, bool importStats /* = false */ ) {
+    QList<Base> newTopItems;
+    //newTopItems.setAutoDelete( true );
 
     // Save the data to get a clean state (without items marked for deletion).
     bool isOk = saveData();
     if( !isOk )
-        return( false );
+        return( newTopItems );
 
     int status;
-    Base* newItem = NULL;
 
     zipFile inputFile = unzOpen( filename.latin1() );
     if( inputFile == NULL )
-        return( NULL );
+        return( newTopItems );
 
     unz_global_info gi;
     status = unzGetGlobalInfo( inputFile, &gi );
@@ -531,50 +532,56 @@ Base* Controller::importData( Folder* folder, const QString& filename, const QSt
 
             QString filenameInZip( filename_inzip );
             QFileInfo fileInfo( filenameInZip );
-            cout << "f=" << filename_inzip << " dp=" << fileInfo.dirPath() << " dpa=" << fileInfo.dirPath( true ) << " fn=" << fileInfo.fileName() << endl;
+            QString destFolder = findDestFolder( fileInfo.dirPath(), keepRootFolder );
+
+            cout << "f=" << filename_inzip << " dp=" << fileInfo.dirPath() << " dpa=" << fileInfo.dirPath( true ) << " fn=" << fileInfo.fileName() << " destFolder=" << destFolder << endl;
 
             if( fileInfo.extension() == "gif" || fileInfo.extension() == "png" ) {
                 QString importedVocabUid = findVocabUid( fileInfo.dirPath() );
                 if( newVocabs.contains( importedVocabUid ) )
                     newVocab = newVocabs[ importedVocabUid ];
-                else{
+                else {
                     newVocabUid = Util::createUuid();
                     newVocab = new Vocabulary( -1, QString::null, newVocabUid );
                     newVocabs.insert( importedVocabUid, newVocab );
-                    if( !newItem )
-                        newItem = newVocab;
-                    else {
-                        QString parentFolderUid = findParentFolderUid( fileInfo.dirPath() );
-                        if( !parentFolderUid.isNull() && newFolders.contains( parentFolderUid ) )
-                            newFolders[ parentFolderUid ]->add( newVocab ); 
-                    }
+
+                    QString parentFolderUid = findParentFolderUid( fileInfo.dirPath() );
+                    if( !parentFolderUid.isNull() && newFolders.contains( parentFolderUid ) )
+                        newFolders[ parentFolderUid ]->add( newVocab ); 
+
+                    QString parentDestFolderUid = findParentFolderUid( destFolder );
+                    if( parentDestFolderUid.isNull() )
+                        newTopItems.append( newVocab );
                 }
 
-                QString imageLocation = applicationDirName + "/" + folder->getPath() + convertPath( fileInfo.dirPath(), newFolders ) +
+                QString imageLocation = applicationDirName + "/" + folder->getPath() + convertPath( destFolder, newFolders ) +
                     "/v-" + newVocab->getUid().toString() + "/" + fileInfo.fileName();
                 importImageFromZip( imageLocation, inputFile );
             }
             else if( fileInfo.extension() == "xml" ) {
                 if( fileInfo.fileName() == "metadata.xml" ) {
-                    QString importedFolderUid = findFolderUid( fileInfo.dirPath() );
-                   
-                    if( newFolders.contains( importedFolderUid ) ) 
-                        newFolder = newFolders[ importedFolderUid ];
-                    else {
-                        newFolderUid = Util::createUuid();
-                        newFolder = new Folder( -1, QString::null, newFolderUid );
-                        newFolders.insert( importedFolderUid, newFolder );
-                        if( !newItem )
-                            newItem = newFolder;
+                    if( destFolder != "/" ) {
+                        QString importedFolderUid = findFolderUid( fileInfo.dirPath() );
+                       
+                        if( newFolders.contains( importedFolderUid ) ) 
+                            newFolder = newFolders[ importedFolderUid ];
                         else {
+                            newFolderUid = Util::createUuid();
+                            newFolder = new Folder( -1, QString::null, newFolderUid );
+                            newFolders.insert( importedFolderUid, newFolder );
+
                             QString parentFolderUid = findParentFolderUid( fileInfo.dirPath() );
                             if( parentFolderUid != -1 && newFolders.contains( parentFolderUid ) )
                                 newFolders[ parentFolderUid ]->add( newFolder ); 
+
+                            QString parentDestFolderUid = findParentFolderUid( destFolder );
+                            if( parentDestFolderUid.isNull() )
+                                newTopItems.append( newFolder );
                         }
+                    
+                        QString folderLocation = applicationDirName + "/" + folder->getPath() + convertPath( destFolder, newFolders );
+                        importFolderFromZip( newFolder, folderLocation, inputFile ); // Should we handle error here?
                     }
-                
-                    QString folderLocation = applicationDirName + "/" + folder->getPath() + convertPath( fileInfo.dirPath(), newFolders );
-                    importFolderFromZip( newFolder, folderLocation, inputFile ); // Should we handle error here?
                 }
                 else if( fileInfo.fileName() == "data.xml" ) {
                     QString importedVocabUid = findVocabUid( fileInfo.dirPath() );
@@ -584,23 +591,24 @@ Base* Controller::importData( Folder* folder, const QString& filename, const QSt
                         newVocabUid = Util::createUuid();
                         newVocab = new Vocabulary( -1, QString::null, newVocabUid );
                         newVocabs.insert( importedVocabUid, newVocab );
-                        if( !newItem )
-                            newItem = newVocab;
-                        else {
-                            QString parentFolderUid = findParentFolderUid( fileInfo.dirPath() );
-                            //cerr << "parentFolderUid=" << parentFolderUid << endl;
-                            //for( QMap<QString,Folder*>::Iterator it = newFolders.begin(); it != newFolders.end(); it++ ) {
-                            //    cerr << "map key=" << it.key() << endl;
-                            //}
-                            if( !parentFolderUid.isNull() && newFolders.contains( parentFolderUid ) )
-                                newFolders[ parentFolderUid ]->add( newVocab ); 
-                        }
+
+                        QString parentFolderUid = findParentFolderUid( fileInfo.dirPath() );
+                        //cerr << "parentFolderUid=" << parentFolderUid << endl;
+                        //for( QMap<QString,Folder*>::Iterator it = newFolders.begin(); it != newFolders.end(); it++ ) {
+                        //    cerr << "map key=" << it.key() << endl;
+                        //}
+                        if( !parentFolderUid.isNull() && newFolders.contains( parentFolderUid ) )
+                            newFolders[ parentFolderUid ]->add( newVocab ); 
+
+                        QString parentDestFolderUid = findParentFolderUid( destFolder );
+                        cout << "parentFolderUid=" << ( parentDestFolderUid.isNull() ? QString("null") : parentDestFolderUid ) << endl;
+                        if( parentDestFolderUid.isNull() )
+                            newTopItems.append( newVocab );
                     }
 
-                    QString vocabLocation = applicationDirName + "/" + folder->getPath() + convertPath( fileInfo.dirPath(), newFolders ) +
-                        "/v-" + newVocab->getUid().toString();
+                    QString vocabLocation = applicationDirName + "/" + folder->getPath() + 
+                        convertPath( destFolder, newFolders ) + "/v-" + newVocab->getUid().toString();
                     importVocabularyFromZip( newVocab, vocabLocation, languages, inputFile, importedTransUidTable ); // Should we handle error here?
-                    cerr << "handling data.xml ok" << endl;
                 }
                 else if( fileInfo.fileName() == "stats.xml" && importStats ) {
                     importStatsFromZip( statsTermData, inputFile );
@@ -625,16 +633,13 @@ Base* Controller::importData( Folder* folder, const QString& filename, const QSt
 
     // If an error occurred, we recover memory if necessary.
     if( status != UNZ_OK ) {
-        if( newItem ) {
-            delete( newItem );
-            newItem = NULL;
-        }
+        newTopItems.clear();
     }
 
     if( unzClose( inputFile ) != UNZ_OK )
-        return( NULL );
+        return( newTopItems );
 
-    return( newItem );
+    return( newTopItems );
 }
 
 bool Controller::saveImportedStats( const QMap<BiUidKey, TermData> statsTermData, const QMap<QString, Translation> importedTransUidTable ) {
@@ -1301,6 +1306,14 @@ QString Controller::findParentFolderUid( const QString& dirPath ) const {
             return( dirPath.left( lastSlashPos ) );
     }
     return( QString::null );
+}
+
+QString Controller::findDestFolder( const QString& dirPath, bool keepRootFolder ) const {
+    QString destFolder( dirPath );
+    if( keepRootFolder )
+        return( destFolder );
+    int firstSlash = destFolder.find( "/" );
+    return( firstSlash > 0 ? destFolder.right( destFolder.length() - firstSlash ) : QString( "/" ) );
 }
 
 int Controller::findVocabId( const QString& dirPath ) const {

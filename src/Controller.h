@@ -118,7 +118,7 @@ public:
 
     QStringList getTranslationLanguagesFromFile( const QString& filename ) const;
     void getImportedDataInfo( const QString& filename, bool& hasStats, bool& hasRootFolder );
-    Base* importData( Folder* rootFolder, const QString& filename, const QStringList& languages, bool keepRootFolder = true, bool importStats = false );
+    QList<Base> importData( Folder* rootFolder, const QString& filename, const QStringList& languages, bool keepRootFolder = true, bool importStats = false );
 
     int getInitialTermCount() const;
 
@@ -185,6 +185,7 @@ private:
     QString findFolderUid( const QString& dirPath ) const;
     int findParentFolderId( const QString& dirPath ) const;
     QString findParentFolderUid( const QString& dirPath ) const;
+    QString findDestFolder( const QString& zipFilename, bool keepRootFolder ) const;
     int findVocabId( const QString& filename ) const;
     QString findVocabUid( const QString& filename ) const;
     QString convertPath( const QString& path, QMap<int,Folder*>& newFolders ) const;
